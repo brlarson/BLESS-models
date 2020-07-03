@@ -3,8 +3,7 @@
 
 package vvi_mode
 public
-with  BLESS_Types,PP,Thread_Properties, SI,
- BLESS;  --BLESS property set including BLESS::Assertion
+with BLESS;  --BLESS property set including BLESS::Assertion
 
 annex Typedef {**
 	type time is quantity s
