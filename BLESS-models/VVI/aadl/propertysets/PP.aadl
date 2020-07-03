@@ -1,0 +1,17 @@
+--PP.aadl
+--pacing properties, used by cardiac models for physician's prescription
+
+property set PP is
+with Timing_Properties, vvi_mode;
+  Lower_Rate_Limit_Interval:--Timing_Properties::
+    Time => 1000 ms  --60 bpm
+    applies to ( vvi_mode::VVI);
+  Ventricular_Refractory_Period:--Timing_Properties::
+    Time => 300 ms
+    applies to ( vvi_mode::VVI);
+  Cardiac_Duration:
+    aadlstring => "quantity ms"
+    applies to ( vvi_mode::VVI);
+    
+end PP;
+
