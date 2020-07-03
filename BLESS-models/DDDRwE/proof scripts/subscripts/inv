@@ -1,0 +1,11 @@
+#inv  solve composed invariants
+#[serial 1110] Subcomponent's Invariant implies pg_process.imp's Invariant
+normalize
+axioms
+#[serial 1111] Subcomponent's Invariant implies PG.imp's Invariant
+normalize
+axioms
+normalize
+axioms
+normalize
+axioms

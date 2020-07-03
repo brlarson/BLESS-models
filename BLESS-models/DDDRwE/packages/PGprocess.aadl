@@ -1,0 +1,136 @@
+--PGprocess.aadl
+
+package PGprocess
+public
+with sw, BLESS, BLESS_Types, --Base_Types, PACEMAKER, 
+  PACE_data, rc, ATR, mark, Rx;
+flag renames data BLESS_Types::flag;
+ms renames data PACE_data::ms;
+milliG renames data PACE_data::milliG;
+
+process pg_process
+  features
+  --from front end
+  a : in event port;  --atrial signal
+  v : in event port;  --ventricular signal
+  tna : in data port flag;  --noise A-channel
+  tnv : in data port flag;  --noise V-channel
+  --to front end
+  ap: out event port	--pace atrium 
+    {BLESS::Assertion=>"<<AP_A(now) or now=0>>";};
+  vp: out event port	--pace ventricle, but not too soon 
+    {BLESS::Assertion=>"<<VP_A(now) and URL(now)>>";};
+  --to telemetry
+  settings : in out data port; 
+  --from accelerometer
+  xl : in data port milliG;
+  --from hall-effect switch
+  magnet : in data port flag;
+  --markers
+  mark_A: out data port;	--atrial marker to telemetry and history
+  mark_V: out data port;	--ventricular marker to telemetry and history
+  mark_X: out data port;	--extra-line marker to telemetry and history
+  properties
+    	BLESS::Invariant => "<<LRL(now)>>";  
+end pg_process;
+
+process implementation pg_process.imp
+  subcomponents
+    ddd: thread sw::DDD.imp;
+    rc: thread rc::RateController.normal in modes (normal);
+    atr_rc: thread rc::RateController.atr in modes (atr_mode);
+    atr: thread group ATR::AtrialTachyResponse.imp;
+    mkr: thread mark::Markers.imp;
+    stg: thread Rx::Settings.imp;
+  connections
+    --signals, paces, and noise
+    ad: port a->ddd.a;  --atrial signal
+    vd: port v->ddd.v;  --ventricular signal
+    tnad: port tna->ddd.tna;  --noise A-channel
+    tnvd: port tnv->ddd.tnv;  --noise V-channel
+    dap: port ddd.ap->ap; --pace atrium 
+    dvp: port ddd.vp->vp;  --pace ventricle
+    --telemetry
+    tel: port settings<->stg.settings;  --telemetry
+    --sensors
+    xlrc: port xl->rc.xl;
+    magrc: port magnet->rc.mag;
+    --settings to DDD
+    lsd: port stg.lrl->ddd.lrl;  --LRLi
+    usd: port stg.url->ddd.url;  --URLi
+    avsd: port stg.av->ddd.av;  --AV delay
+    osd: port stg.savo->ddd.savo;  --sensed AV delay offset
+    actsd: port stg.act->ddd.act;  --
+    vrpsd: port stg.vrp->ddd.vrp;  --
+    arpsd: port stg.arp->ddd.arp;  --
+    pvarpsd: port stg.pvarp->ddd.pvarp;  --
+    pvsd: port stg.pv->ddd.pv;  --
+    svsd: port stg.sv->ddd.sv;  --
+    pasd: port stg.pa->ddd.pa;  --
+    sasd: port stg.sa->ddd.sa;  --
+    inhsd: port stg.inhibit->ddd.inhibit;  --
+    trksd: port stg.track->ddd.track;  --
+    expsrc: port stg.ex_pvarp->ddd.ex_pvarp;  --
+    --settings to Rate Controller
+    hsd: port stg.hy->rc.hy;  --
+    lsrc: port stg.lrl->rc.lrl;
+    usrc: port stg.url->rc.url;
+    avsrc: port stg.av->rc.av;
+    rsrc: port stg.rr->rc.rr;  --
+    fsrc: port stg.rf->rc.rf;  --
+    mssrc: port stg.msr->rc.msr;  --
+    rtsrc: port stg.rt->rc.rt;  --
+    atsrc: port stg.at->rc.at;  --
+    ctsrc: port stg.ct->rc.ct;  --
+    mdavsrc: port stg.min_av->rc.min_av;  --
+    --ATR mode rate controller
+    atrfbt: port stg.fb_time->atr_rc.fb_time in modes(atr_mode);  --ATR fall-back time
+    --settings to ATR
+    amsa: port stg.atr_enable->atr.atr_enable;
+    adsa: port stg.atr_duration->atr.dur;
+    ---DDD to Rate Controller
+    ccidrc: port ddd.cci->rc.cci;
+    lvwvs: port ddd.last_v_was_vs -> rc.last_v_was_vs;
+    --Rate Controller to DDD
+    mnrcd: port rc.min_cci->ddd.min_cci in modes(normal);
+    mxrcd: port rc.max_cci->ddd.max_cci in modes(normal);
+    davrcd: port rc.dav->ddd.dav in modes(normal);
+    atr_mnrcd: port atr_rc.min_cci->ddd.min_cci in modes(normal);
+    atr_mxrcd: port atr_rc.max_cci->ddd.max_cci in modes(normal);
+    atr_davrcd: port atr_rc.dav->ddd.dav in modes(normal);
+    --DDD to Markers
+    apdm: port ddd.ap->mkr.ap;
+    vpdm: port ddd.vp->mkr.vp;
+    asdm: port ddd.as->mkr.as;
+    vsdm: port ddd.vs->mkr.vs;
+    atdm: port ddd.at->mkr.at;
+    pvcdm: port ddd.pvc->mkr.pvc;
+    rasdm: port ddd.ras->mkr.ras;
+    rvsdm: port ddd.rvs->mkr.rvs;
+    ccidm: port ddd.cci->mkr.cci;
+    --front-end to markers
+    tnam: port tna->mkr.tna;
+    tnvm: port tnv->mkr.tnv;
+    --Markers to history and telemetry
+    mka: port mkr.mark_A->mark_A;
+    mkv: port mkr.mark_V->mark_V;
+    mkx: port mkr.mark_X->mark_X;
+    --Atrial Tachycardia Response
+    fbad: port atr.fb->ddd.fb;
+--    fbarc: port atr.fb->rc.fb;
+    asda: port ddd.as->atr.as;
+    atda: port ddd.at->atr.at;
+    dctam: port atr.atr_detect->mkr.atr_dct;
+    fbam: port atr.atr_fallback->mkr.atr_fb;
+    endam: port atr.atr_end->mkr.atr_end;
+    --rate smoothing
+    drssd: port stg.drs->rc.drs;  --down-rate smoothing
+    urssd: port stg.urs->rc.urs;  --up-rate smoothing
+	modes
+	  normal : initial mode;
+	  atr_mode : mode;
+	  start_atr: normal -[atr.atr_fallback]-> atr_mode;
+	  end_atr: atr_mode -[atr.atr_end]-> normal;
+end pg_process.imp;
+
+end PGprocess;

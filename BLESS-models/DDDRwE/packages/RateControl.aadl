@@ -1,0 +1,204 @@
+--RateControl.aadl
+
+
+package rc
+public
+with BLESS, BLESS_Types, --Base_Types, PACEMAKER, 
+  PACE_data;
+
+flag renames data BLESS_Types::flag;
+ms renames data PACE_data::ms;
+milliG renames data PACE_data::milliG;
+--minimum3 renames subprogram MinMax::minimum3;
+--maximum3 renames subprogram MinMax::maximum3;
+
+
+thread RateController  --choose minimum and maximum cardiac cycle intervals
+  features
+  --outputs
+  min_cci: out data port ms  --minimum allowed CCI, like dynamic URLi
+    {BLESS::Assertion=>"<<:=MinCCI()>>";};
+  max_cci: out data port ms  --maximum allowed CCI, like dynamic LRLi 
+    {BLESS::Assertion=>"<<:=MaxCCI()>>";};
+  atr_max_cci: out data port ms  --maximum allowed CCI, during ATR
+    {BLESS::Assertion=>"<<:=FB_MaxCCI()>>";};
+  dav: out data port ms  --dynamic AV delay
+    {BLESS::Assertion=>"<<:=DAV_A()>>";};
+--inputs
+  cci: in event data port ms  --most recent cardiac cycle interval
+    {BLESS::Assertion=>"<<:=CCI>>";};
+  xl: in data port milliG;  --accelerometer measure of motion
+  mag: in data port flag;  --magnet mode (not used)
+  -- fb now handled by modes switch fron normal to atr_mode
+--  fb: in data port flag  --fall-back to LRL, ignore A-channel
+--    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
+  last_v_was_vs: in data port flag
+    {BLESS::Assertion=>"<<LAST_V_WAS_VS(now)>>";};
+--parameters  
+  rr: in data port flag;  --rate responsive
+  rf: in data port PACE_data::ResponseFactor;  --response factor
+  rt: in data port ms;  --reaction time
+  at: in data port milliG;  --activity threshold
+  ct: in data port ms;  --recovery time
+  lrl: in data port ms;  --lower rate limit interval 
+  url: in data port ms;  --upper rate limit interval 
+  msr: in data port ms;  --maximum sensor rate interval
+  av: in data port ms;  --AV delay (fixed)
+  min_av: in data port ms;  --minimum AV delay
+  drs: in data port PACE_data::percent;  --down-rate smoothing
+  urs: in data port PACE_data::percent;  --up-rate smoothing
+  fb_time : in data port BLESS_Types::Time;  --time to ATR fall back from URL to LRL
+  hy: in data port ms;  --hysteresis delay, added to max_cci when last v was vs
+  requires modes normal:mode; atr_mode:mode;
+end RateController;
+
+
+--normal mode behavior
+thread implementation RateController.normal
+annex BLESS
+{**
+assert
+
+-- 5.7 Rate-Adaptive Pacing
+-- The device shall have the ability to adjust the cardiac cycle in response 
+--   to metabolic need as measured from body motion using an accelerometer.
+<<SIRi_A: returns time := MAX(a:msr,b:(lrl- (rf*(xl-at))))>>  --sensor indicated rate interval
+<<Z_A: returns time := ((lrl-msr)*(lrl+msr)) / (2.0*(rt-lrl))>>  --up rate smoothing for reaction time (rt)
+<<Y_A: returns time := ((lrl-msr)*(lrl+msr)) / (2.0*(ct-lrl))>>  --down rate smoothing for recovery time (ct)
+<<UP_SIRi_A: returns time := MAX(a:SIRi_A(), b:(CCI-Z_A() ))>>  --includes reaction time
+<<DN_SIRi_A: returns time := MIN2(a:(CCI+Y_A()), b:SIRi_A() )>>  --includes recovery
+
+-- 5.9 Rate Smoothing
+-- Rate Smoothing shall limit the pacing rate change that occurs due to 
+--   precipitous changes in the intrinsic rate.
+-- Two programmable rate smoothing parameters shall be available to allow 
+--   the cardiac cycle interval change to be a percentage of the previous 
+--   cardiac cycle interval:
+-- 1. Rate Smoothing Up
+-- 2. Rate Smoothing Down
+-- The increase in pacing rate shall not exceed the Rate Smoothing Up percentage.
+-- The decrease in pacing rate shall not exceed the Rate Smoothing Down percentage.
+<<DOWN_A: returns time := CCI*(1.0+(drs/100.0))>>  --convert drs% to real
+<<UP_A: returns time := CCI*(1.0-(urs/100.0))>>  --convert urs% to real
+	
+invariant <<true>>
+
+variables
+  dur_met ~ time;  --ATR duration met, start of ATR fallback
+
+states
+first_rate : initial state;
+wait : complete state;
+check_zero_division : state;
+err : final state;  --division by zero detected
+done : final state;
+
+transitions
+RC0_init : first_rate -[ ]-> wait {} ;
+
+RC1_cci : wait -[on dispatch cci ]-> check_zero_division{};
+
+RC2_zero : check_zero_division -[
+   ((2.0*(rt? -lrl? ))=0.0)
+   or ((2.0*(ct? -lrl? ))=0.0)
+   or ((lrl? -url? )=0)
+   ]-> err{};
+   
+RC3_nonzero : check_zero_division -[   
+	 ((2.0*(rt? -lrl? ))<>0.0)
+   and ((2.0*(ct? -lrl? ))<>0.0)
+   and ((lrl? -url? )<>0)
+ ]-> wait
+{
+  <<((2.0*(rt -lrl ))<>0.0) and ((2.0*(ct -lrl ))<>0.0) and ((lrl -url )<>0)>>
+  declare  --transient, local variables
+    siri  ~ time := (if msr? >= (lrl? - (rf? *(xl? - at? ))) then msr?  else lrl? - (rf? *(xl? - at?)));  --sensor indicated rate interval
+    z  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0*(rt? -lrl? ));	 --up rate smoothing for reaction time (rt)
+    y  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0*(ct? -lrl? ));  --down rate smoothing for recovery time (ct)
+    up_siri  ~ time := (if (cci? -z) <= siri then siri else cci? -z);  --up rate sensor interval, max of siri and cci-z
+    dn_siri  ~ time := (if (cci? +y) <= siri then cci? +y else siri);  --down rate sensor interval, min of siri and cci+y
+    down  ~ time :=  cci? *(1.0+(drs? /100.0));  --down rate smoothing
+    up  ~ time := cci? *(1.0-(urs? /100.0));  --up rate smoothing
+    hylrl  ~ time := (last_v_was_vs? ?? lrl? + hy? : lrl? );  --hysteresis pacing
+  {  
+  <<(lrl -url )<>0 and z=Z_A() and y=Y_A()
+      and siri=SIRi_A() and dn_siri=DN_SIRi_A() and up_siri=UP_SIRi_A()
+      and down=DOWN_A() and up=UP_A() and hylrl=HyLRL(now)>>	
+  dav!((cci? *((av-min_av )/(lrl-url ))) + min_av )
+  &
+--  min_cci!((if url >(if up_siri > up then up_siri else up) then url else (if up_siri > up then up_siri else up)))  --(maximum3($url,up_siri,up))
+--  min_cci!(MinMax::maximum3( a:url, b:up_siri, c:up))
+  if
+  ((up_siri>=url) and (up_siri>=up))~> min_cci!(up_siri)
+  []
+  ((url>=up_siri) and (url>=up))~> min_cci!(url)
+  []
+  ((up>=url) and (up>=up_siri))~> min_cci!(up)
+  fi
+  &
+  if
+  ((dn_siri<=hylrl) and (dn_siri<=down))~> max_cci!(dn_siri)
+  []
+  ((hylrl<=dn_siri) and (hylrl<=down))~> max_cci!(hylrl)
+  []
+  ((down<=hylrl) and (down<=dn_siri))~> max_cci!(down)
+  fi
+--  max_cci!((if lrl <(if dn_siri<down then dn_siri else down) then lrl  else (if dn_siri<down then dn_siri else down)))  --(minimum3($dn_siri,down,lrl))
+--  max_cci!(MinMax::minimum3(a:dn_siri, b:down, c:lrl))
+  <<true>>
+  }
+};  --end of RC3_nonzero
+**};
+end RateController.normal;
+
+
+--in ATR mode
+thread implementation RateController.atr
+annex BLESS 
+{**
+	assert
+	<<AXIOM_FB_NONZERO: :fb_time<>0>>  --needed for fall_back rate division
+--Must slow pacing from URL to LRL over fallback time,  LRL until mode switch ends
+  <<FallBack_MaxCCI: dur_met~time, x~time returns time :=( if ((now-dur_met)>fb_time) then lrl 
+	  else url+(((x-dur_met)*(lrl-url))/fb_time))>>  --duration met at time dur_met
+  <<FB_MaxCCI: returns time :=FallBack_MaxCCI(dur_met:dur_met, x:now)>>
+invariant <<true>>	
+variables
+  dur_met ~ time;  --ATR duration met, start of ATR fallback
+states
+  start_atr : initial state;
+  atr_fallback : complete state;
+  check_atr : state;
+  done : final state;
+transitions
+--begin atrial tachycardia response fallback from URL to LRL
+ATR_RC1_start_fallback: start_atr -[ ]-> atr_fallback
+  { 
+  dur_met:=now
+    <<dur_met=now>>
+  };  --end of RC4_start_fallback
+  
+ATR_RC5_atr_cci: atr_fallback -[on dispatch cci]-> check_atr{};
+
+ATR_RC6_continure_atr: check_atr -[(now-dur_met) > fb_time]-> atr_fallback
+  {  <<(now-dur_met) > fb_time>>
+  atr_max_cci!(lrl)
+  };  --end of RC6_continure_atr
+ATR_RC_fallback: check_atr -[(now-dur_met) <= fb_time]-> atr_fallback 
+  {  <<(now-dur_met) <= fb_time and AXIOM_FB_NONZERO()>>
+  	declare
+  	  fallback_rate ~ time := url + (((now-dur_met)*(lrl-url))/fb_time);
+    {
+      <<fallback_rate=FB_MaxCCI() and (now-dur_met) <= fb_time>>
+    atr_max_cci!(fallback_rate)
+      <<(now-dur_met) <= fb_time>>
+    }
+  };   --end of RC_fallback
+  
+RCX : atr_fallback -[on dispatch stop]-> done{};
+  
+**};
+  
+end RateController.atr;
+
+end rc;

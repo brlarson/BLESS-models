@@ -1,0 +1,125 @@
+#ratecontrol
+push
+sort-by-component[rc::RateController.normal]
+#rc::RateController.normal
+#[serial 1073] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+make-an
+axioms
+#[serial 1074] Serban's Theorem:  disjunction of execute conditions leaving execution state first_rate, <<M(first_rate)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1075] Serban's Theorem:  disjunction of execute conditions leaving execution state check_zero_division, <<M(check_zero_division)>> -> <<e1 or e2 or . . . en>>
+replace<>
+cnf
+laws
+normalize
+axioms
+#[serial 1076]  <<M(first_rate)>> -> <<M(wait)>> for RC0_init:first_rate-[ ]->wait{};
+axioms
+#[serial 1077]  <<M(wait) and x>> -> <<M(check_zero_division)>> for RC1_cci:wait-[x]->check_zero_division{};
+axioms
+#[serial 1078]  <<M(check_zero_division) and x>> -> <<M(err)>> for RC2_zero:check_zero_division-[x]->err{};
+axioms
+#[serial 1079]  <<M(check_zero_division) and x>> A <<M(wait)>> for RC3_nonzero:check_zero_division-[x]->wait{A};
+reduce
+reduce
+reduce
+reduce
+axioms
+atomic
+normalize
+axioms
+laws
+normalize
+now
+split-post
+axioms
+guided-sub-equals[UP()]
+guided-sub-equals[UP_SIRi()]
+guided-sub-equals[DN_SIRi()]
+guided-sub-equals[DOWN()]
+guided-sub-equals[HyLRL(now)]
+push
+#rc::RateController.normal
+#[serial 1713]   normalization of [serial 1679
+make-an
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1727]   normalization of [serial 1683]
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1812] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+substitute-post
+substitute-post
+normalize
+guided-sub-equals[(((lrl-msr)*(lrl+msr))/((ct-lrl)*2.0))]
+guided-sub-equals[((lrl-time(rf*(xl-at))) <= msr??msr:lrl-time(rf*(xl-at)))]
+axioms
+#[serial 1813] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+normalize
+axioms
+#[serial 1814] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+normalize
+axioms
+#[serial 1815] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+normalize
+substitute-post
+normalize
+axioms
+#[serial 1816] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+axioms
+#[serial 1817] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+substitute-post
+normalize
+guided-sub-equals[(((lrl-msr)*(lrl+msr))/((rt-lrl)*2.0))]
+substitute-post
+normalize
+guided-sub-equals[((lrl-time(rf*(xl-at))) <= msr??msr:lrl-time(rf*(xl-at)))]
+axioms
+#[serial 1818] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+normalize
+axioms
+#[serial 1819] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-post
+normalize
+axioms
+#[serial 1824] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms
+#[serial 1825] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms
+#[serial 1826] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms
+#[serial 1833] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms
+#[serial 1834] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms
+#[serial 1835] Guided Substitution of Equals
+substitute-post
+normalize
+??
+axioms

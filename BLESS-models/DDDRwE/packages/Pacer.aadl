@@ -1,0 +1,724 @@
+--Pacer.aadl
+--main pacing thread
+
+package sw
+public
+with BLESS, BLESS_Types, PACE_Data; -- Base_Types, PACEMAKER, , Assertion;
+
+flag renames data BLESS_Types::flag;
+ms renames data PACE_Data::ms;
+milliG renames data PACE_Data::milliG;
+ResponseFactor renames data PACE_Data::ResponseFactor;
+CCcount renames data PACE_Data::CCcount; 
+
+
+thread DDD  --main PACEMAKER behavior thread
+  features
+  --signals from front-end, possibly from chamber contraction
+  a: in event port;	--atrial signal
+  v: in event port;  --ventricular signal
+  --noise indications from front-end
+  tna: in data port flag;  --A-channel noise
+  tnv: in data port flag;  --V-channel noise
+  --event to front-end causing it to pace the chamber
+  ap: out event port	--pace atrium 
+    {BLESS::Assertion=>"<<AP_A(now) or now=0>>";};
+  vp: out event port	--pace ventricle, but not too soon 
+    {BLESS::Assertion=>"<<VP_A(now) and URL(now)>>";};
+  --sense markers
+  as: out event port --non-refractory atrial sense
+    {BLESS::Assertion=>"<<AS_A(now) or now=0>>";};
+  at: out event port --non-refractory atrial sense above URL
+    {BLESS::Assertion=>"<<AT(now)>>";};
+  vs: out event port	--non-refractory ventricular sense
+    {BLESS::Assertion=>"<<VS_A(now) or now=0>>";};
+  pvc: out event port  --premature ventricular contraction
+    {BLESS::Assertion=>"<<PVC(now)>>";};
+  --refractory sense markers
+  ras: out event port --refractory atrial sense
+    {BLESS::Assertion=>"<<RAS(now)>>";};
+  rvs: out event port	--refractory ventricular sense
+    {BLESS::Assertion=>"<<RVS(now)>>";};
+  --length of most recent cardiac cycle interval to rate controller
+  cci: out event data port ms  --most recent cardiac cycle interval
+    {BLESS::Assertion=>"<<:=CCI>>";};
+  --last V-event was ventricular sense, causes hysteresis pace
+  last_v_was_vs: out data port flag
+    {BLESS::Assertion=>"<<LAST_V_WAS_VS(now)>>";};
+  --dynamic parameters from rate controller
+  min_cci: in data port ms  --minimum allowed CCI, dynamic URLi
+    {BLESS::Assertion=>"<<:=MinCCI()>>";};
+  max_cci: in data port ms
+    {BLESS::Assertion=>"<<:=MaxCCI()>>";};
+  atr_max_cci: in data port ms  --maximum allowed CCI, during ATR
+    {BLESS::Assertion=>"<<:=FallBack_MaxCCI(dur_met:dur_met, x:now)>>";};
+  dav: in data port ms  --dynamic AV delay
+    {BLESS::Assertion=>"<<:=DAV_A()>>";};
+  --ATR fallback
+  fb: in data port flag;  --fall-back to LRL, ignore A-channel, use atr_max_cci
+--    {BLESS::Assertion=>"<<FB(now)>>";};
+  --prescription values
+  lrl: in data port ms;  --lower rate limit interval 
+  url: in data port ms;  --upper rate limit interval 
+  av: in data port ms;  --AV delay (fixed)
+  savo: in data port ms;  --sensed AV delay offset (always negative or zero) 
+  act: in data port milliG;  --activity threshold 
+  vrp: in data port ms;  --ventricular refractory period
+  arp: in data port ms;  --atrial refractory period
+  pvarp: in data port ms;  --post-ventricular atrial refractory period
+  ex_pvarp: in data port ms;  --extended post-ventricular atrial refractory period
+  hy: in data port ms;   --hystersis time
+  min_av: in data port ms;  --minimum AV delay
+  --pacing mode
+  pv: in data port flag;  --pace ventricle
+  sv: in data port flag;  --sense ventricle
+  pa: in data port flag;  --pace atrium
+  sa: in data port flag;  --sense atrium
+  inhibit: in data port flag; --senses inhibit paces
+  track: in data port flag;
+  properties
+  	BLESS::Invariant => "<<LRL(now)>>";  -- and (SAV(now) or PAV(now) or VAI(now))>>";
+end DDD;
+
+thread implementation DDD.imp
+annex BLESS
+{**
+assert
+
+--lower rate limit, both A and V chambers
+--5.1	Lower Rate Limit (LRL)
+--  The Lower Rate Limit (LRL) is the number of generator pace pulses 
+--  delivered per minute (atrium or ventricle) in the absence of
+--   Sensed intrinsic activity. 
+--   Sensor-controlled pacing at a higher rate.
+--  The LRL is affected in the following ways:
+--    1. When Rate Hysteresis is disabled, the LRL shall define the 
+--       longest allowable pacing interval.
+--    2. In DXX or VXX modes, the LRL interval starts at a ventricular 
+--       sensed or paced event
+<<LRL:x~time:    
+    -- there has been a V-pace or a non-refractory V-sense 
+    exists t~time 
+      -- within the previous LRL interval
+      in (x-MAX_CCI)..x   --MAX_CCI is the maximum cardiac cycle interval
+      --may be longer than LRL for hysteresis pacing
+      -- in which a heartbeat was sensed, or caused by pacing
+      that (vs or vp)@t  >>
+
+--upper rate limit, only ventricle  
+--5.2	Upper Rate Limit (URL)
+--  The Upper Rate Limit (URL) is the maximum rate at which the paced 
+--  ventricular rate will track sensed atrial events.  
+--  The URL interval is the minimum time between a ventricular event  
+--  and the next ventricular pace.
+<<URL:x~time: --a V-pace never happens too soon after either V-sense or V-pace 
+  -- applied to vp: out event port, no pace (out event) too soon, URL is true when event is sent 
+  not -- there must not be V-sense or -pace not in previous URL open-interval ,, 
+   (exists tu~time 
+      in (x-MIN_CCI),,x  --MinCCI is the minimum (paced) cardiac cycle interval
+      that (vs or vp)@tu) >>       
+
+--atrial-ventricular delay
+--5.3	Atrial-Ventricular (AV) Delay
+--  The AV delay shall be the programmable time period from an 
+--  atrial event (either intrinsic or paced) to a ventricular pace.
+-- In atrial tracking modes, ventricular pacing shall occur in the 
+--  absence of a sensed ventricular event within the programmed AV delay 
+--  when the sensed atrial rate is between the programmed LRL and URL.
+--  AV delay shall either be 
+--    1. Fixed (absolute time) 
+--    2. Dynamic
+
+--paced AV delay
+--5.3.1	Paced AV Delay
+--  A paced AV (PAV) delay shall occur when the AV delay is initiated 
+--  by an atrial pace.
+<<PAV:x~time:	--dynamic
+  exists t~time in (x-dav?)..x that ap@t >> 
+
+--sensed AV delay
+--5.3.2	Sensed AV Delay
+--  A sensed AV (SAV) delay shall occur when the AV delay is initiated 
+--  by an atrial sense.
+--Sensed AV Delay Offset is always negative, then added to the
+--Fixed AV Delay to determine Sensed AV Delay 
+<<SAV:x~time: --dynamic, with offset
+  exists t~time in (x-(dav+savo))..x that as@t       
+  or  --a previous V-event prevents pacing above URL
+  (exists tu~time
+    in (x-max_cci)..x  
+    that (vs or vp)@tu)  >>
+    
+--vetricular refractory period:  
+--5.4.1	Ventricular Refractory Period (VRP_A)
+--  The Ventricular Refractory Period shall be the programmed time 
+--  interval following a ventricular event during which time 
+--  ventricular senses shall not inhibit nor trigger pacing.
+<<VRP_A: x~time :
+  exists tv~time
+	in (x-vrp),,x  --vrp is Ventricular Refractory Period
+	that (vs or vp)@tv  >>  
+
+--atrial refractory period
+--5.4.2	Atrial Refractory Period (ARP_A)
+--  For single chamber atrial modes, the Atrial Refractory Period (ARP_A) 
+--  shall be the programmed time interval following an atrial event 
+--  during which time atrial events shall not inhibit nor trigger pacing.
+<<ARP_A: x~time :
+  exists tar~time
+  	in (x-arp),,x  --arp is Atrial Refractory Period
+  	that (as or ap)@tar>>
+
+--post-ventricular atrial refractory period
+--5.4.3	Post Ventricular Atrial Refractory Period (PVARP_A)
+--  The Post Ventricular Atrial Refractory Period shall be available 
+--  in modes with ventricular pacing and atrial sensing. The Post 
+--  Ventricular Atrial Refractory Period shall be the programmable 
+--  time interval following a ventricular event when an atrial 
+--  cardiac event shall not 
+--    1. Inhibit an atrial pace. 
+--    2. Trigger a ventricular pace.
+<<PVARP_A: x~time : 
+  exists tv~time 
+    in (x-pvarp),,x
+    that (vs or vp)@tv >>
+
+--non-refractory ventricular sense occurs, asserted by port vs 
+--  there is a ventricular sense, and the ventricular refractory period
+--  has expired since previous vs or vp
+<<VS_A: x~time : 
+  sv@x   --sense ventricle  XVX or XDX
+  and v@x  --v-signal
+  and not tnv@x  --not noisy
+  and VRP_EXPIRED(x) >>  --not ventricular refractory period
+    
+--non-refractory atrial sense occurs, asserted by port as 
+--  there is an atrial sense,
+--  and the atrial refractory period has expired since previous as or ap
+--  and the post-ventricular atrial refractory period has expired
+--  since previous vs or vp
+<<AS_A: x~time : 
+  sa@x   --sense atrium  XAX or XDX
+  and a@x   --atrial signal
+  and not tna@x  --no noise
+  and ARP_EXPIRED(x)   --not atrial refractory period
+  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
+  and PAV_EXPIRED(x)    --not paced AV delay
+  and SAV_EXPIRED(x)  --not sensed AV delay
+--  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
+  and not fb@x  -- =FB(x)  --not in ATR fallback
+   >>
+
+<<AT: x~time : AS_A(x) and (as or ap)@last_ap_or_as and ((x-last_ap_or_as)<url)>>
+
+--ventricular pace 
+--  for DDD, vp! means either
+--  or  either vp or vs occurred max CCI interval ago and not since, 
+--  or ap occurred paced AV delay ago, or
+--  or as occurred sensed AV delay ago
+--    and no ventricular sense or pace
+--    occurred in the previous upper rate limit interval
+<<VP_A: x~time :
+	PACE_ON_MaxCCI(x)  -- (vp or vs) occurred maximum cardiac cycle interval ago
+    or  --ap occurred paced AV delay ago
+    PACE_ON_FIXED_AV_DELAY(x)  
+    or  --as occurred sensed AV delay ago, but not too fast
+    PACE_ON_SAV_DELAY(x) >>    
+    
+<<PACE_ON_MaxCCI: x~time :    --no intrinsic activity, pace at LRL
+  (vp or vs)@(x-max_cci)  
+      and --and not since
+      not (exists t~time
+        in (x-max_cci) ,, x  
+        --with a non-refractory ventricular sense or pace
+        that (vs or vp)@t) >>
+        
+<<PACE_ON_FIXED_AV_DELAY: x~time :  --track atrial pace
+    ap@(x-av)
+      and  --there have been no ventricular events in the upper-rate interval
+      not (exists tu~time
+--        in x-min_cci,,x 
+        in (x-min_cci) ,, x 
+        that (vs or vp)@tu )>>
+        
+<<PACE_ON_SAV_DELAY: x~time :	--track atrial sense
+    as@(x-(dav+savo)) 
+      and  --there have been no ventricular events in the upper-rate interval
+      not (exists tu~time
+--        in x-min_cci,,x 
+        in (x-min_cci) ,, x 
+        that (vs or vp)@tu )>>  
+
+--atrial pace
+--  the previous vs or vp occured VA interval perviously
+--    (VA interval = LRL interval - PAV delay)
+--  and there have been no ventricular senses since then
+--  nor atrial pace or sense since LRL
+<<AP_A: x~time :  --time out no activity since last ventricular sense or pace
+    (vp or vs)@(x-va_interval)
+      and --and not since
+      not (exists tv~time
+        in (x-va_interval),,x  
+        --with a ventricular or atrial sense
+        that (vs or vp)@tv) 
+      and  --not atrial-sensed since tops
+      not (exists ta~time
+        in tops,,now 
+        that a@ta ) >>
+ 
+-- 5.4.4 Extended PVARP_A
+--The Extended PVARP_A works as follows:
+--1. When Extended PVARP_A is enabled, an occurrence of a premature ventricular 
+--  contraction (PVC) shall cause the pulse generator to use the Extended 
+--  PVARP_A value for the post-ventricular atrial refractory period following the PVC.
+--2. The PVARP_A shall always return to its normal programmed value on the subsequent 
+--  cardiac cycle regardless of PVC and other events. At most one PVARP_A extension shall 
+--  occur every two cardiac cycles.
+<<ExPVARP: x~time : 
+  exists t~time
+    in (x-ex_pvarp) ,, x
+    that (vs or vp)@t >>
+    
+<<UseExPVARP: x~time : (ex_pvarp>pvarp)   --enabled when extended PVARP is longer than PVARP
+  and PVCinCC(x)    --a PVC occurred last CCI
+  and not XPlastCC(x)>>   --not use extended PVARP_A last cycle
+
+<<PVCinCC: x~time : exists t~time in (x-CCI) ,, x that PVC(t) >>
+
+<<XPlastCC: x~time : exists t~time in (x-max_cci) ,, x that UseExPVARP(t)>>
+
+--4.8.2 Premature Ventricular Contraction (PVC)
+-- A ventricular sense is deemed to be a premature ventricular contraction 
+-- if there has been no atrial event since the previous ventricular event.
+-- PVC occurs when there is a non-refractory ventricular sense at time $x$,
+-- with some time $y$ earlier than $x$ with a ventricular event, but no atrial event since.
+<<PVC: x~time : VS_A(x)  and  --non-refractory ventricular sense
+   (exists y~time which y < x that (vs or vp)@y  --with earler v-event
+    and  --with no a-event since
+    not (exists t~time in y..x that (as or ap)@t))>>  
+
+-- 5.8 Hysteresis Pacing
+-- When enabled, hysteresis pacing shall result in a longer period following a 
+-- sensed event before pacing. This encourages self-pacing during exercise by 
+-- waiting a little longer to pace after senses, hoping that another sense will inhibit the pace.
+-- To use hysteresis pacing:
+-- 1. Hysteresis pacing must be enabled (not Off).
+-- 2. The pacing mode must be inhibiting or tracking.
+-- 3. The current pacing rate must be faster than the Hysteresis Rate Limit (HRL), 
+--    which may be slower than the Lower Rate Limit (LRL).
+-- 4. When in AAI mode, a single, non-refractory sensed atrial event shall activate hysteresis pacing.
+-- 5. When in an inhibiting or tracking mode with ventricular pacing, a single, 
+--    non-refractory sensed ventricular event shall activate hysteresis pacing.
+<<LRL_Hy: x~time : --Lower Rate Limit with Hysteresis
+  exists t~time  --there was a moment
+  in (x-HyLRL(x)) .. x   --within the previous Hysteresis Pacing interval
+  that (vs@t or vp@t) >>  --with a pace or non-refractory sense  
+
+<<HyLRL: x~time returns time :=  --lengthen LRL upon VS_A 
+  (if LAST_V_WAS_VS(x) then lrl+hy else lrl) >>  --use Hysteresis Rate Limit if last V was VS_A.
+
+<<LAST_V_WAS_VS: x~time : exists t~time in (x-MaxCCI(x)) .. x that
+  (vs@t and  --v-sense at time t
+    not (exists t2~time in t,,x that  --no vs or vp since
+     (vs@t2 or vp@t2))) >>  
+ 
+ --Atrial-only pacing triggers hysteresis pacing when last A was AS_A.
+<<AtrialMaxCCI: x~time returns time :=  --lengthen LRL upon AS_A 
+  (if LAST_A_WAS_AS(x) then hy+max_cci else max_cci) >>  --use Hysteresis Rate Limit if last A was AS_A.
+
+<<LAST_A_WAS_AS: x~time : exists t~time in (x-max_cci) .. x that
+  (as@t and  --A-sense at time t
+    not (exists t2~time in t,,x that  --no as or ap since
+    (as@t2 or ap@t2))) >>  
+
+-- 5.3.3 Dynamic AV Delay
+-- If dynamic, the AV delay shall be determined individually for each 
+-- new cardiac cycle based on the duration of previous cardiac cycles. 
+-- The previous cardiac cycle length is multiplied by a factor stored 
+-- in device memory to create the dynamic AV delay.
+-- The AV delay shall vary between
+-- 1. A programmable maximum paced AV delay 
+-- 2. A programmable minimum paced AV delay          
+<<DAV_A: returns time := (CCI*((av-min_av)/(lrl-url))) + min_av>>
+
+-- 5.6 Atrial Tachycardia Response (ATR)
+-- The Atrial Tachycardia Response prevents long term pacing of a patient at 
+-- unacceptably high rates during atrial tachycardia. When Atrial Tachycardia 
+-- Response is enabled, the pulse generator shall declare an atrial tachycardia 
+-- if the intrinsic atrial rate exceeds the URL for a sufficient amount of time.
+
+-- 5.6.1 Atrial Tachycardia Detection
+-- The atrial tachycardia (AT) detection algorithm determines onset and cessation
+--   of atrial tachycardia.
+-- 1. AT onset shall be detected when the intervals between atrial senses are 
+--   predominately, but not exclusively, faster than URL.
+-- 2. AT cessation shall be detected when the intervals between atrial senses are 
+--   mostly, but not exclusively, SLOWER than URL.
+-- 3. The detection period shall be short enough so ATR therapy is not unnessarily 
+--   delayed nor continued.
+-- 4. The detection period shall be long enough that occasional premature atrial 
+--   contractions do not cause unnecessary ATR therapy, nor cease necessary ATR 
+--   therapy upon occasional slow beats.	
+<<ATR_DETECT: x~time :  --at least 5 of 7 A-events were AT
+  exists s~time which s<x that  --there is an earlier time s
+   ((7=(numberof t~time in s..x that as@t))  --seven atrial senses
+    and (5<=(numberof t~time in s..x that (as@t and at@t))))>>  --five or more were faster than URL
+    
+<<ATR_END: x~time :  --at most 3 of 7 A-events were AT
+  exists s~time which s<x that  --there is an earlier time s
+   ((7 = (numberof t~time in s..x that as@t))  --seven atrial senses
+    and ( 3 >= (numberof t~time in s..x that (as@t and at@t))))>>  --three or fewer were faster than URL
+
+-- 5.6.2 ATR Duration
+-- ATR Duration works as follows:
+-- 1. When atrial tachycardia is detected, the ATR algorithm shall enter an 
+--   ATR Duration state.
+-- 2. When in ATR Duration, the PG shall delay a programmed number of cardiac 
+--   cycles before entering Fallback.
+-- 3. The Duration delay shall be terminated immediately and Fallback shall 
+--   be avoided if, during the Duration delay, the ATR detection algorithm 
+--   determines that atrial tachycardia is over.
+<<ATR_DURATION: d~time, x~time:  --wait to be sure a-tachy continues
+  ATR_DETECT(d) and  --detection met at time d
+  (dur > (numberof t~time in d..x that as@t))  --cc since then is less than needed for fall-back
+  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
+ 
+-- 5.6.3 ATR Fallback
+-- If the atrial tachycardia condition exists after the ATR Duration delay 
+--   is over, the following shall occur:
+-- 1. The PG enters a Fallback state and switches to a VVIR Fallback Mode.
+-- 2. The pacing rate is dropped to the lower rate limit. The fallback time is 
+--   the total time required to drop the rate to the LRL.
+-- 3. During Fallback, if the ATR detection algorithm determines that atrial 
+--   tachycardia is over, the following shall occur:
+--     Fallback is terminated immediately
+--     The mode is switched back to normal
+-- 4. ATR-related mode switches shall always be synchronized to a ventricular 
+--   paced or sensed event. 
+<<FB: d~time, x~time : 
+  ATR_DETECT(d) and  --detection met at time d
+  (dur<=(numberof t~time in d..x that as@t))  --cc since then is more than needed for fall-back
+  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
+
+
+
+<<MaxCCI: returns time := MIN3(a:HyLRL(now), b:DN_SIRi_A(), c:DOWN_A())>>  
+-- <<MaxCCI: := MIN4(lrl, SIR_MaxCCI(), DOWN(), FB_MaxCCI())>>  
+<<MinCCI: returns time := MAX3(a:url, b:UP_SIRi_A(), c:UP_A())>>  
+--invariant of internal variables
+<<LAST : x~time : LAST_VP_OR_VS_A(x) and LAST_AP_OR_AS_A(x)>>
+
+--ventricular-atrial interval
+<<VAI: x~time : not (exists t~time in last_vp_or_vs,,x that (as or ap)@t)>>
+
+<<PAV_EXPIRED : x~time : LAST_AP_OR_AS_A(x) and DAV_A() <= (x-last_ap_or_as)>>
+<<SAV_EXPIRED : x~time : LAST_AP_OR_AS_A(x) and (DAV_A()+savo)<=(x-last_ap_or_as)>>
+<<VRP_EXPIRED : x~time : LAST_VP_OR_VS_A(x) and vrp<=(x-last_vp_or_vs)>>
+<<ARP_EXPIRED : x~time : LAST_AP_OR_AS_A(x) and arp<=(x-last_ap_or_as)>>
+<<PVARP_EXPIRED : x~time : LAST_VP_OR_VS_A(x) and pvarp<=(x-last_vp_or_vs)>>
+
+--interactive limit that LRL<URL 
+<<AXIOM_LRLi_gt_URLi_LIMIT : x~time :
+  (x-max_cci)<(x-min_cci) >>
+
+--time of previous atrial sense was no earlier than the time-of-previous-suspension
+<<AXIOM_LAST_AS_LE_TOPS : :last_ap_or_as<=tops>>
+
+--a is more recent than ap
+--<<AXIOM_LAST_AS_LT_LAST_AP : :last_as<last_ap>>
+--ap is more recent than a
+--<<AXIOM_LAST_AP_LT_LAST_AS : :last_ap<last_as>>
+--cardiac cycle interval is output of cci port
+<<AXIOM_CCI : :CCI=cci>> 
+
+--initial condition
+<<START : : (now=0) and (CCI=lrl)>>  --set first cardiac cycle interval to lrl
+
+invariant    --to prove this is always true at complete states, only externally-observed behavior
+<<INV : : 
+  LRL(now)   --lower rate limit property holds now, always
+  and 
+  (SAV(now)  --tracking atrial senses
+  or
+  PAV(now)  --tracking atrial paces
+  or
+  VAI(now))  --have V-paced or V-sensed, waiting for A-sense
+  and
+  LAST(now)  --invariant of internal variables
+  >>
+
+variables
+  last_vp_or_vs ~ time  --time of last ventricular pace or sense
+    <<LAST_VP_OR_VS_A : x~time : --Assertions of state variables must also be invariant
+      (vp@last_vp_or_vs or vs@last_vp_or_vs) and  --a V-event occurred at last_vp_or_vs time
+      not (exists t~time  --and not since
+       in last_vp_or_vs,,x   --note open interval
+       that (vs or vp)@t) >>;
+  last_ap_or_as ~ time   --time of last atrial pace or sense
+    <<LAST_AP_OR_AS_A:x~time : 
+      (ap@last_ap_or_as or as@last_ap_or_as) and -- A-event occurred at last_ap_or_as
+      not (exists t~time  --and not since
+       in last_ap_or_as,,x   
+       that (as or ap)@t) >>;
+  lastVwasVS ~ boolean  --most recent V-event was vs
+    <<LVVS : : lastVwasVS iff LAST_V_WAS_VS(now)>>;
+  va_interval ~ time  --ventrucular-atrial interval
+     <<AXIOM_VA_INTERVAL : : va_interval = (max_cci-DAV_A()) >>;
+  dur ~ time;
+
+states
+  go : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
+    <<(now=0) and (CCI = lrl)>>; --first instant of operation
+  off : final state;
+  sav : complete state  --an atrial sense occured 
+    <<SAV(now) and LRL(now) and LAST(now) >>;    --  in the previous Sensed AV Delay
+  sav_check_vrp : state  --ventricular sense during sensed AV delay
+  	<<v@now and SAV(now) and LRL(now) and LAST(now) and AXIOM_CCI() >>;  --was it in VRP_A? 
+  sav_check_url : state  --SAV delay timeout, check for URL before tracking
+    <<as@(now-(dav+savo)) and SAV(now) and LRL(now) and LAST(now) and AXIOM_CCI() >>;
+  pav : complete state  --an atrial pace occured 
+    <<PAV(now) and LRL(now)  and LAST(now)>>;       --  in the previous Paced AV Delay
+  pav_check_vrp : state  --ventricular sense during paced AV delay
+  	<<v@now and PAV(now) and LRL(now) and LAST(now) and AXIOM_CCI() >>;  --was it in VRP_A? 
+  va : complete state   --a V pace or sense occured in the previous VA interval
+    <<LRL(now) and LAST(now) and VAI(now)>>;   
+  check_atrial_refractories : state   --check if atrial sense is in PVARP_A or ARP_A
+    <<a@now and LRL(now) and LAST(now) -- and AXIOM_LAST_AS_LT_LAST_AP()
+       and VAI(now)>>;
+  check_vrp : state     --check if ventricular sense is premature ventricular contraction
+    <<v@now and LRL(now) and LAST(now) and VAI(now) and AXIOM_CCI() >>;
+
+transitions
+  T0_GO :	--start pacing immediately
+  go -[ ]-> va 
+    {<<(now=0) and (CCI = lrl)>>
+      { <<now=0>>
+      vs!   --fake, harmless event needed to establish LAST_VP_OR_VS_A
+        <<vs@now>> 
+      & 
+        <<CCI=lrl>>
+      cci!(lrl)  --set first cardiac cycle interval to lrl
+        <<CCI=lrl>>
+      &
+      last_vp_or_vs := now
+        <<last_vp_or_vs=now>>
+      &
+        <<now=0>> 
+      as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
+        <<as@now>>
+      &
+       last_ap_or_as := now
+        <<last_ap_or_as=now>>
+      }  --end of existential lattice quantification
+    <<LAST(now) and LRL(now) and last_ap_or_as<=last_vp_or_vs>>
+    }; 
+
+  T1_PACE_AFTER_LRL :	--fundamental lower-rate pacing; keeps patients "pink"
+  va,sav,pav -[on dispatch timeout (vp vs) max_cci]->va
+      { <<(vp or vs)@(now-max_cci)
+          and not (exists t~time 
+           in (now-max_cci),,now
+           that (vp or vs)@t)
+         and LAST_AP_OR_AS_A(now) and AXIOM_LAST_AS_LE_TOPS() and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+       vp! 
+         <<vp@now and not (exists t~time 
+          in (now-max_cci),,now
+          that (vp or vs)@t) 
+         and (vp or vs)@(now-max_cci)
+         and LAST_AP_OR_AS_A(now) 
+         and AXIOM_CCI()
+         and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+       ;
+         cci!(now-last_vp_or_vs)
+         <<vp@now and not (exists t~time 
+          in (now-max_cci),,now
+          that (vp or vs)@t) 
+         and (vp or vs)@(now-max_cci)
+         and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+       ;	--note seqential composition
+         last_vp_or_vs := now
+           <<vp@last_vp_or_vs and vp@now and AXIOM_LAST_AS_LE_TOPS()  
+           and (last_vp_or_vs=now) and LAST_AP_OR_AS_A(now)>>
+       };
+
+  T2_VS_AFTER_AS :    --ventricular sense during SAV delay
+  sav -[on dispatch v]-> sav_check_vrp{};  --go check whether in VRP_A
+  
+--  T3_AS_AFTER_AS :    --atrial sense after atrial sense
+--  sav -[on dispatch a]-> check_atrial_refractories{};  --is a too early?
+  
+  T4_VS_AFTER_AS_IN_VRP :  --ventricular sense during VRP_A, go back to sav
+  sav_check_vrp -[not sv? or tnv? or (vrp? > (now-last_vp_or_vs))]-> sav{};
+  
+  T5_VS_AFTER_AS_AFTER_VRP :  --ventricular sense after VRP_A, wait for atrial sense
+  sav_check_vrp -[sv? and not tnv? and (vrp? <= (now-last_vp_or_vs))]-> va
+    {
+      <<VS_A(now) and LAST_AP_OR_AS_A(now)>> 
+    vs!
+      <<vs@now and LAST_AP_OR_AS_A(now) and AXIOM_CCI()>>
+    ;
+    cci!(now-last_vp_or_vs)
+      <<vs@now and LAST_AP_OR_AS_A(now)>>
+    ; 
+    last_vp_or_vs := now 
+      <<vs@now and LAST_AP_OR_AS_A(now) and last_vp_or_vs=now and AXIOM_LAST_AS_LE_TOPS()>>
+    };   
+
+  T6_EXPIRED_SENSED_AV_DELAY :  --v pace after sensed av delay if no vs
+    sav -[on dispatch timeout (as) (av+savo)]-> sav_check_url{};
+  
+  T7_TRACKED_VP_TOO_SOON_AFTER_PREVIOUS_VS_OR_VP :  --tracked VP_A too close to previous vp or vs
+   sav_check_url -[last_vp_or_vs > (now-min_cci)]-> sav{};
+     --go back and wait for another AS_A to track, or for LRL to time-out forcing VP_A
+   
+  T8_TRACKED_VP_AFTER_AS :  --v-pace after a-sense, if not exceeding URL
+   sav_check_url -[last_vp_or_vs <= (now-min_cci)]-> va
+     {<<PACE_ON_SAV_DELAY(now) and LAST(now)
+       and (last_vp_or_vs <= (now-min_cci))>>  
+     vp!  --ventricular pace tracking atrial sense
+       <<vp@now and LAST(now) and AXIOM_CCI()>>
+     ;
+     cci!(now-last_vp_or_vs)
+       <<vp@now and LAST(now)>>
+     ;
+     last_vp_or_vs := now 
+       <<last_vp_or_vs=now and vp@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+     };
+   
+   
+  T9_VS_AFTER_AP :  --ventricular sense after atrial pace
+  pav -[on dispatch v]-> pav_check_vrp{};  --go check whether in VRP_A
+
+  T10_VS_AFTER_AP_IN_VRP :  --vs too soon after previous vs or vp, go back to pav
+  pav_check_vrp -[not (sv?) or tnv? or (vrp? > (now-last_vp_or_vs))]-> pav{};  
+  
+  T11_VS_AFTER_AP_AFTER_VRP :  --ventricular sense after VRP_A, wait for atrial sense 
+  pav_check_vrp -[sv? and not tnv? and (vrp? <= (now-last_vp_or_vs))]-> va  
+    { <<VS_A(now) and LAST(now)>> 
+      {
+        <<VS_A(now) and LAST_AP_OR_AS_A(now)>>
+      vs!
+        <<vs@now and LAST_AP_OR_AS_A(now) and AXIOM_CCI()
+        and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+      ;
+      cci!(now-last_vp_or_vs)
+        <<vs@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+      ; 
+      last_vp_or_vs := now 
+        <<(last_vp_or_vs=now) and vs@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+      }
+      <<vs@now and (last_vp_or_vs=now) and 
+        LAST_AP_OR_AS_A(now) and LAST_VP_OR_VS_A(now)>> };  
+
+    
+  T12_AS_AFTER_VS_OR_VP :   --a sense after v sense or v pace
+  va -[on dispatch a]-> check_atrial_refractories{};  --is a too early?
+  
+  T13_AS :  --non-refractory atrial sense 
+  check_atrial_refractories -[
+    sa?                               --atrial sensing mode?
+    and not tna?                      --no atrial noise?
+    and not fb?                       --not ATR fallback?
+    and (pvarp?<=(now-last_vp_or_vs))  --PVARP_A expired
+    and (arp?<=(now-last_ap_or_as))          --ARP_A after as expired
+--    and (arp?<=(now-last_ap))          --ARP_A after ap expired
+    and ((dav?+savo?)<=(now-last_ap_or_as))   --Dynamic Sended AV delay expired
+    and (dav?<=(now-last_ap_or_as))          --Dynamic Paced AV delay expired
+    and (url?<=(now-last_ap_or_as))             --not also AT
+        ]-> sav  
+    {<<AS_A(now) and LRL(now) and LAST_VP_OR_VS_A(now)>> 
+    as!
+     <<as@now and LRL(now) and LAST_VP_OR_VS_A(now) 
+       and AXIOM_LRLi_gt_URLi_LIMIT(now) >>
+    &
+    last_ap_or_as := now 
+     <<(last_ap_or_as=now)  and LAST_AP_OR_AS_A(now)>>};
+  
+  T14_AS_AT :  --non-refractory atrial sense, above URL
+  check_atrial_refractories -[
+    sa?                               --atrial sensing mode?
+    and not tna?                      --no atrial noise?
+    and not fb?                       --not ATR fallback?
+    and (pvarp?<=(now-last_vp_or_vs))  --PVARP_A expired
+    and (arp?<=(now-last_ap_or_as))          --ARP_A after as expired
+--    and (arp?<=(now-last_ap))          --ARP_A after ap expired
+    and ((dav?+savo?)<=(now-last_ap_or_as))   --Dynamic Sended AV delay expired
+    and (dav?<=(now-last_ap_or_as))          --Dynamic Paced AV delay expired
+    and ((now-last_ap_or_as)<url?)             --also AT
+        ]-> sav  
+    {<<AS_A(now) and LRL(now) and LAST_VP_OR_VS_A(now) and ((now-last_ap_or_as)<url)>> 
+    as!
+     <<as@now and LRL(now) and LAST_VP_OR_VS_A(now) 
+       and AXIOM_LRLi_gt_URLi_LIMIT(now) >>
+    &
+    at!
+      <<at@now>>
+    &
+    last_ap_or_as := now 
+     <<(last_ap_or_as=now)  and LAST_AP_OR_AS_A(now)>>};
+   
+  T15_STILL_IN_PVARP :  --a sense in PVARP_A, go back to va
+  check_atrial_refractories -[
+    not sa?   --not atrial sensing mode?
+    or tna?   --atrial noise?
+    or fb?    --ATR fallback?
+    or (pvarp?>(now-last_vp_or_vs))  --PVARP_A not expired
+    or (arp?>(now-last_ap_or_as))      --ARP_A after as not expired
+--    or (arp?>(now-last_ap))      --ARP_A after ap not expired
+    or ((dav?+savo?)>(now-last_ap_or_as))  --Dynamic Sended AV delay not expired
+    or (dav?>(now-last_ap_or_as))      --Dynamic Paced AV delay not expired
+      ]-> va{}; 
+  
+  T16_VS_AFTER_VS_OR_VP :  --v sense after v sense or v pace
+  va -[on dispatch v]-> check_vrp{};  
+  
+  T17_STILL_IN_VRP :  -- vs in VRP_A, go back to va
+  check_vrp -[ tnv? or not sv? or (vrp?>(now-last_vp_or_vs))]-> va{};  
+    
+  T18_VRP_EXPIRED :  --vs after VRP_A expired
+  check_vrp -[sv? and not tnv? and (vrp?<=(now-last_vp_or_vs))]-> va
+    {<<VS_A(now) and LAST_AP_OR_AS_A(now)>> 
+    vs!
+        <<vs@now and LAST_AP_OR_AS_A(now) and AXIOM_CCI()>>
+        -- and AXIOM_LRLi_gt_URLi_LIMIT(now)
+    ;
+    cci!(now-last_vp_or_vs)
+        <<vs@now and LAST_AP_OR_AS_A(now) and cci=(now-last_vp_or_vs)>>
+    ;
+    last_vp_or_vs := now 
+      <<(last_vp_or_vs=now) and vs@now and LAST_AP_OR_AS_A(now)>>
+    };  
+    
+  T19_AP_AFTER_TIMEOUT_VS_OR_VP :  --atrial pace if no atrial sense during V-A interval
+  va -[on dispatch timeout (vp vs) va_interval]-> pav
+  {
+    {<<AP_A(now) and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now) and
+       not (exists tv~time
+            in (now-va_interval) ,, now 
+            that (vp or vs)@tv ) and
+       not (exists ta~time in tops,,now that a@ta)>> 
+    ap! 
+     <<ap@now and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now) and
+       not (exists tap~time
+            in (now-va_interval) ,, now 
+            that (vp or vs)@tap )>>
+    &
+      <<LRL(now) >>
+    last_ap_or_as := now
+      <<(last_ap_or_as=now) and LRL(now) >> 
+    }
+    <<(last_ap_or_as=now) and LAST_AP_OR_AS_A(now) and LAST_VP_OR_VS_A(now) and
+     not (exists tv~time
+          in (now-va_interval) ,, now 
+          that (vp or vs)@tv ) 
+     and LRL(now) and ap@now >>
+  };  
+    
+  T20_STOP :  --turn off pacing
+  sav,pav,va -[on dispatch stop]-> off{};  
+  
+**};	--end of annex subclause 
+end DDD.imp;
+
+
+end sw;

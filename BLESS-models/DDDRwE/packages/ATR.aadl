@@ -1,0 +1,578 @@
+---ATR.aadl
+--atrial tachycardia response
+
+package ATR
+public
+with BLESS, BLESS_Types, PACE_Data;
+
+flag renames data BLESS_Types::flag;
+time renames data BLESS_Types::Time;
+
+
+thread group AtrialTachyResponse
+  features
+  atr_enable : in data port flag;
+  dur : in data port PACE_Data::CCcount;  --number of cci in duration before fallback
+  fb: out data port flag  --fall-back to LRL, ignore A-channel
+    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
+  as: in event port --non-refractory atrial sense
+    ;  --{BLESS::Assertion=>"<<AS_A(now) or now=0>>";};
+  at: in event port --non-refractory atrial sense above URL
+    ; --{BLESS::Assertion=>"<<AT(now)>>";};
+  atr_detect: out event port  --ATR detection met
+    {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
+  atr_fallback: out event port   --start fall-back to VVI; marker ATR-FB
+    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
+  atr_end: out event port  --resume DDD; marker ATR-End
+    {BLESS::Assertion=>"<<ATR_END(now)>>";};
+annex BLESS 
+	{**
+	assert
+-- 5.6 Atrial Tachycardia Response (ATR)
+-- The Atrial Tachycardia Response prevents long term pacing of a patient at 
+-- unacceptably high rates during atrial tachycardia. When Atrial Tachycardia 
+-- Response is enabled, the pulse generator shall declare an atrial tachycardia 
+-- if the intrinsic atrial rate exceeds the URL for a sufficient amount of time.
+
+-- 5.6.1 Atrial Tachycardia Detection
+-- The atrial tachycardia (AT) detection algorithm determines onset and cessation
+--   of atrial tachycardia.
+-- 1. AT onset shall be detected when the intervals between atrial senses are 
+--   predominately, but not exclusively, faster than URL.
+-- 2. AT cessation shall be detected when the intervals between atrial senses are 
+--   mostly, but not exclusively, SLOWER than URL.
+-- 3. The detection period shall be short enough so ATR therapy is not unnessarily 
+--   delayed nor continued.
+-- 4. The detection period shall be long enough that occasional premature atrial 
+--   contractions do not cause unnecessary ATR therapy, nor cease necessary ATR 
+--   therapy upon occasional slow beats.	
+<<ATR_DETECT: x~time :  --at least 5 of 7 A-events were AT
+  exists s~time which s<x that  --there is an earlier time s
+   ((7=(numberof t~time in s..x that as@t))  --seven atrial senses
+    and (5<=(numberof t~time in s..x that (as@t and at@t))))>>  --five or more were faster than URL
+    
+<<ATR_END: x~time :  --at most 3 of 7 A-events were AT
+  exists s~time which s<x that  --there is an earlier time s
+   ((7 = (numberof t~time in s..x that as@t))  --seven atrial senses
+    and ( 3 >= (numberof t~time in s..x that (as@t and at@t))))>>  --three or fewer were faster than URL
+
+-- 5.6.2 ATR Duration
+-- ATR Duration works as follows:
+-- 1. When atrial tachycardia is detected, the ATR algorithm shall enter an 
+--   ATR Duration state.
+-- 2. When in ATR Duration, the PG shall delay a programmed number of cardiac 
+--   cycles before entering Fallback.
+-- 3. The Duration delay shall be terminated immediately and Fallback shall 
+--   be avoided if, during the Duration delay, the ATR detection algorithm 
+--   determines that atrial tachycardia is over.
+<<ATR_DURATION: d~time, x~time:  --wait to be sure a-tachy continues
+  ATR_DETECT(d) and  --detection met at time d
+  (dur > (numberof t~time in d..x that as@t))  --cc since then is less than needed for fall-back
+  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
+ 
+-- 5.6.3 ATR Fallback
+-- If the atrial tachycardia condition exists after the ATR Duration delay 
+--   is over, the following shall occur:
+-- 1. The PG enters a Fallback state and switches to a VVIR Fallback Mode.
+-- 2. The pacing rate is dropped to the lower rate limit. The fallback time is 
+--   the total time required to drop the rate to the LRL.
+-- 3. During Fallback, if the ATR detection algorithm determines that atrial 
+--   tachycardia is over, the following shall occur:
+--     Fallback is terminated immediately
+--     The mode is switched back to normal
+-- 4. ATR-related mode switches shall always be synchronized to a ventricular 
+--   paced or sensed event. 
+<<FB: d~time, x~time : 
+  ATR_DETECT(d) and  --detection met at time d
+  (dur<=(numberof t~time in d..x that as@t))  --cc since then is more than needed for fall-back
+  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
+		
+	states unused : initial state;	--needed for BLESS annex subclause grammar to introduce ATR assertions
+	**};    
+end AtrialTachyResponse;
+
+thread group implementation AtrialTachyResponse.imp
+  subcomponents
+  	dc : thread AsCounter;
+  	ac : thread AtCounter;
+  	atr : thread ATRcontrol;
+  connections
+  	--from group to atr
+  	atren: port atr_enable -> atr.atr_enable;  --enamble ATR
+  	durc : port dur -> atr.dur;  --CCI after detection before fall-back (duration)
+  	--from atr to group
+  	fbo : port atr.fb -> fb;  --fall-back, stays on until end
+  	atrd : port atr.atr_detect -> atr_detect;  --A-tachy detected
+  	atrf : port atr.atr_fallback -> atr_fallback;  --fall-back start
+  	atre : port atr.atr_end -> atr_end;  --A-tachy ended
+  	--from group to dc
+  	asidc : port as -> dc.as;  --duration count
+  	--from group to ac
+  	atiac : port at -> ac.at;  --atrial pace
+  	--internal
+  	duren : port atr.denable -> dc.enable;  --do count duration
+  	dcnt : port dc.asCount -> atr.asCount;    --current duration count
+  	atcnt : port ac.atCount -> atr.atCount; --number of last seven as that were also at	
+end AtrialTachyResponse.imp; 	
+
+thread AsCounter
+  features
+  	enable : in data port flag;
+  	as : in event port;
+  	asCount : out data port BLESS_Types::Integer
+  	  {BLESS::Assertion=>"<<:=AS_COUNT()>>";};
+  	enable_time : out data port time  --enable time, zero if not enabled
+  	  {BLESS::Assertion=>"<<:=et>>";};
+  properties
+    Dispatch_Protocol => Aperiodic; 
+end AsCounter;	
+
+thread implementation AsCounter.imp
+annex BLESS
+{**  --needs counting rules for numberof
+  assert
+    <<DC: :DUR_COUNT() and LAS() and E(last_as)>>
+  <<AS_COUNT: returns quantity whole := (if enable then numberof t~time in et..now that (as and enable)@t else 0)>>
+  invariant  <<DC() or et=0.0>>
+  variables
+    c ~ quantity whole :=0  --count of as since enabled
+      <<DUR_COUNT: :c = (numberof t~time in et..last_as that (as and enable)@t)>>;
+    et ~ time := 0.0  --enable time
+      <<E: x~time : all t~time in et..x are enable@t>>;  --or et=0.0
+    last_as ~ time := 0.0  --last atrial sense
+      <<LAS: :(as and enable)@last_as and 
+        not (exists t~time in last_as,,now that (as and enable)@t)>>;
+  states
+    start: initial state <<et=0.0 and c=0>>;
+    wait : complete state <<et=0.0 and c=0>>;
+    go : complete state <<DC()>>;
+    check_wait : state <<et=0.0 and as@now and c=0>>;
+    check_go : state <<DC() and as@now>>;
+  transitions
+    dc_begin : --initial transition
+      start -[ ]-> wait;
+    dc_was : --not counting, waiting for as
+      wait -[on dispatch as]-> check_wait{};
+    dc_wnen : --waiting, not enabled count stays 0
+      check_wait -[not enable?]-> wait{asCount!(0)};
+    dc_wen :  --waiting, enabled, count is 1
+      check_wait -[enable?]-> go
+      { <<(as and enable)@now>>
+      	|c,last_as,et:=1,now,now|
+      	<<c=1 and last_as=now and et = now and (as and enable)@now and enable>>
+      	;
+      	asCount!(1) 
+      	<<DC()>>      	
+      	};
+    dc_gas : --counting, get as
+      go -[on dispatch as]-> check_go{};
+    dc_gnen :  --counting, lose enable -> wait
+      check_go -[not enable?]-> wait
+      {|c,et:=0,0.0| 
+      	;
+      	<<c=0 and et=0.0 and not enable>>
+      	asCount!(0)
+      };
+    dc_ggo : --increment count of as
+      check_go -[enable?]-> go
+      { 
+      	<<(as and enable)@now and DC()>>
+      	skip ;  -- need (as and enable)@now to extend count, have as@now and enable@now
+      	<<(c+1) = (numberof t~time in et..now that (as and enable)@t)
+         and (as and enable)@now and E(now)>>
+      |c,last_as:=c+1,now| ;
+        <<c = (numberof t~time in et..now that (as and enable)@t) and E(last_as) 
+          and enable and (as and enable)@last_as and last_as=now>>
+      asCount!(c)
+        <<DC()>>
+      };  --end of dc_ggo
+**};
+end AsCounter.imp;	
+	
+thread AtCounter
+  features
+  	enable : in data port flag;
+  	at : in event port;
+  	atCount : out data port BLESS_Types::Integer
+  	  {BLESS::Assertion=>"<<:=AT_COUNT()>>";};
+  	et : out data port time  --enable time, zero if not enabled
+  	  {BLESS::Assertion=>"<<:=et>>";};
+  properties
+    Dispatch_Protocol => Aperiodic; 
+--    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
+end AtCounter;	
+
+thread implementation AtCounter.imp
+annex BLESS
+{**
+  assert
+    <<ATC: :T_COUNT() and LAT() and ET_A(last_at)>>
+  <<AT_COUNT: returns quantity whole := (if enable then numberof t~time in et..now that (at and enable)@t else 0)>>
+  invariant  <<ATC() or et=0.0>>
+  variables
+    c ~ quantity whole:=0  --count of as since enabled
+      <<T_COUNT: :c = (numberof t~time in et..last_at that (at and enable)@t)>>;
+    et ~ time:=0.0  --enable time
+      <<ET_A:x~time: all t~time in et..x are enable@t>>;  --or et=0.0
+    last_at ~ time := 0.0  --last atrial sense
+      <<LAT: :(at and enable)@last_at and 
+        not (exists t~time in last_at,,now that (at and enable)@t)>>;
+  states
+    start: initial state <<et=0.0 and c=0>>;
+    wait : complete state <<et=0.0 and c=0>>;
+    go : complete state <<ATC()>>;
+    check_wait : state <<et=0.0 and at@now and c=0>>;
+    check_go : state <<ATC() and at@now>>;
+  transitions
+    dc_begin : --initial transition
+      start -[ ]-> wait;
+    dc_was : --not counting, waiting for at
+      wait -[on dispatch at]-> check_wait{};
+    dc_wnen : --waiting, not enabled count stays 0
+      check_wait -[not enable?]-> wait{atCount!(0)};
+    dc_wen :  --waiting, enabled, count is 1
+      check_wait -[enable?]-> go
+      { <<(at and enable)@now>>
+      	|c,last_at,et:=1,now,now|
+      	<<c=1 and last_at=now and et = now and (at and enable)@now and enable>>
+      	;
+      	atCount!(1) 
+      	<<ATC()>>      	
+      	};
+    dc_gas : --counting, get at
+      go -[on dispatch at]-> check_go{};
+    dc_gnen :  --counting, lose enable -> wait
+      check_go -[not enable?]-> wait
+      {|c,et:=0,0.0| 
+      	;
+      	<<c=0 and et=0.0 and not enable>>
+      	atCount!(0)
+      };
+    dc_ggo : --increment count of at
+      check_go -[enable?]-> go
+      { 
+      	<<(at and enable)@now and ATC()>>
+      	skip ;  -- need (at and enable)@now to extend count, have at@now and enable@now
+      	<<(c+1) = (numberof t~time in et..now that (at and enable)@t)
+         and (at and enable)@now and ET_A(now)>>
+      |c,last_at:=c+1,now| ;
+        <<c = (numberof t~time in et..now that (at and enable)@t) and ET_A(last_at) 
+          and enable and (at and enable)@last_at and last_at=now>>
+      atCount!(c)
+        <<ATC()>>
+      };  --end of dc_ggo
+**};
+end AtCounter.imp; 	
+	
+	
+	
+thread ATRcontrol
+  features
+  atr_enable : in data port flag;
+  dur : in data port PACE_Data::CCcount;  --number of cci in duration before fallback
+  fb: out data port flag  --fall-back to LRL, ignore A-channel
+    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
+  asCount : in data port BLESS_Types::Integer
+  	  {BLESS::Assertion=>"<<:=AS_COUNT()>>;";};
+  denable : out data port flag;
+  atCount : in data port BLESS_Types::Integer
+  	  {BLESS::Assertion=>"<<:=AT_COUNT()>>";}; 
+  atr_detect: out event port  --ATR detection met
+    {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
+  atr_fallback: out event port   --start fall-back to VVI; marker ATR-FB
+    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
+  atr_end: out event port  --resume DDD; marker ATR-End
+    {BLESS::Assertion=>"<<ATR_END(now)>>";};
+end ATRcontrol;
+
+
+
+
+--thread implementation AtrialTachyResponse.imp
+--annex BLESS
+--{**
+--assert
+--
+--<<AXIOM_ATR_DETECT:x: 5<=(numberof j:integer in 1 .. 7 that at^(-j)) iff ATR_DETECT(x)>>
+--<<AXIOM_ATR_END:x: 3>=(numberof j:integer in 1 .. 7 that at^(-j)) iff ATR_END(x)>>
+--<<NOT_ATR_END:x: (all t2:time in detection_time..x are not ATR_END(t2))>>
+--<<AXIOM_DUR_POSITIVE: :dur>0>>
+--
+--  	
+--invariant <<ATRD: :AS_IS_AT() and AT_COUNT()>>
+--
+--variables
+--  -- as or ap is clock for thread, even though not constant
+--  as_is_at : array [0 .. 7] of boolean:=false  --whether as is also at
+--    <<AS_IS_AT: :all j:integer in 1 .. 7 are as_is_at[j] iff at^(-j)>>;
+--  at_count : integer:=0  --count of at in last 7 as
+--    <<AT_COUNT: :at_count = (numberof j:integer in 1 .. 7 that at^(-j))>>;
+--  detection_time : time:=0.0;  --time ATR is detected  <<ATR_DETECT(detection_time)>>
+--  duration_count : integer  --number of cardiac cycles since detection
+--    <<DC:x:=(numberof t:time in detection_time,,x that as@t )>>;
+--  
+--states
+--  start : initial state 
+--    <<at_count=0 and detection_time=0.0 and (ATRD())'>>;  --Xtext oddity: by the grammar of TimedPredicate, parentheses should not be needed around a PredicateInvocation
+--  normal : complete state  --normal pacing
+--    <<detection_time=0.0 and ATRD()>>;
+--  duration: complete state  -- wait for duration count to not mode switch on brief AT
+--    <<(ATR_DETECT(detection_time))^(-1) --detection criteria met,
+--    and duration_count<dur^(-1)  --too few CCI since detection for mode switch
+--    and not (ATR_END(now))^(-1) --not ended or fallback
+--    and not (FB(d:detection_time,x:now))^(-1) 
+--    and duration_count=DC(now)^(-1)
+--    and ATRD()>>;  
+--  fallback: complete state  --switch to ventricle-only pacing at LRL
+--    <<(ATR_DETECT(detection_time))^(-1) 
+--    and duration_count>=dur^(-1)
+--    and not (ATR_END(now))^(-1) and ATRD()>>; --not ended
+--  check_normal: state 
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and detection_time=0.0 and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))>>;
+--  check_duration: state
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)>>;
+--  check_fallback: state
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)
+--      and duration_count>=dur>>;
+--  done : final state;
+--
+--transitions
+--  atrd_go: --transition out of initial state
+--    start -[ ]-> normal
+--    {detection_time':=detection_time <<detection_time' = 0.0 and (ATRD())'>>};
+--  atrd_as: normal -[on dispatch as]-> check_normal
+--    { <<as^0 and ATRD() and detection_time=0.0>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at?	
+--    ;  <<(as_is_at[0] iff at^0)	and (all j:integer in 1 .. 7 are as_is_at[j] iff at^(-j)) and 
+--       at_count = (numberof j:integer in 1 .. 7 that at^(-j)) and detection_time=0.0>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
+--        at_count = ((numberof j:integer in 1 .. 7 that at^(-j))-(if at^(-7) then 1 else 0)) and detection_time=0.0>> 
+--    skip ;
+--       <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
+--        at_count = (numberof j:integer in 1 .. 6 that at^(-j)) and detection_time=0.0>>      
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and detection_time=0.0 and
+--        (at_count-(if at^0 then 1 else 0)) = ((numberof j:integer in 0 .. 6 that at^(-j))-(if at^0 then 1 else 0))>>  
+--        
+--    };  --end of atrd_as
+--  atrd_ok: check_normal -[at_count<5 ]-> normal  --fewer that 5 of last seven are fast
+--    { <<at_count<5 and (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j)) and detection_time=0.0>>
+--    (at_count',detection_time' := at_count,detection_time)  --set at_count for next dispatch
+--    ;
+--    <<at_count'<5 and (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and detection_time'=0.0>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<at_count'<5 and (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and detection_time'=0.0>>       
+--    };  --end of atrd_ok
+--  atrd_detect: check_normal -[at_count>=5 ]-> duration  --met detection criteria of 5 of 7 fast
+--    {<<at_count>=5 and (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))>>
+--    --age at_count and as_is_at    
+--    at_count' := at_count  --set at_count for next dispatch
+--    ;
+--    <<at_count'>=5 and (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j))>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<at_count'>=5 and (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j))>>       
+--    ; <<AXIOM_ATR_DETECT(now) and AXIOM_DUR_POSITIVE()>>   
+--    --put out ATR detection marker, safe time-stamp, reset counter   
+--    {atr_detect! & detection_time':=now & duration_count':=0}
+--    <<ATR_DETECT(detection_time') --detection criteria met,
+--    and duration_count'<dur  --too few CCI since detection for mode switch
+--    and not ATR_END(now) --not ended or fallback
+--    and not FB(d:detection_time',x:now) 
+--    and (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j))
+--    and duration_count'=DC(now)>>   
+--    };  --end of atrd_detect
+-- atrd_dur_as: duration -[on dispatch as]-> check_duration
+--   { <<as^0 and ATR_DETECT(detection_time) 
+--    and duration_count=DC(now)^(-1)
+--    and ATRD()>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at	
+--    ;  <<(all j:integer in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j:integer in 0 .. 7 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 1 .. 6 that at^(-j))  --counts 1 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
+--    ;  --increment duration count
+--    duration_count:=duration_count+1
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)>>    
+--   };  --end of atrd_dur_as 
+-- atrd_cd_fb: check_duration -[(at_count>3) and (duration_count>=dur)]-> fallback
+--   { <<duration_count>=dur and at_count>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    { fb!(true) & atr_fallback! }  --enter ATR fallback 
+--    <<(all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>  
+--   };  --end of atrd_cd_fb 
+-- atrd_cd_end: check_duration -[at_count<=3]-> normal
+--   { <<at_count<=3 and (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j:integer in 0 .. 6 that at^(-j)) >>
+--   (duration_count',at_count':=0,at_count)    
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j:integer in 0 .. 6 that at^(-j))>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) >>  
+--    { atr_end! & fb!(false) }  --end ATR, no fallback
+--    <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) >>
+--   };  --end of atrd_cd_end
+-- atrd_dc_dur: check_duration -[(at_count>3) and (duration_count<dur)]-> duration
+--   { <<duration_count<dur and at_count>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'<dur and at_count'>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<(all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>     
+--   };  --end of atrd_dc_dur
+-- atrd_fb_as: fallback -[on dispatch as]-> check_fallback
+--   { <<as^0 and ATR_DETECT(detection_time) 
+--    and duration_count=DC(now)^(-1)
+--    and ATRD() and duration_count>=dur>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at	
+--    ;  <<(all j:integer in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j:integer in 0 .. 7 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 1 .. 6 that at^(-j))  --counts 1 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>  
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>  
+--    ;  --increment duration count
+--    duration_count:=duration_count+1
+--    <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)
+--      and duration_count>=dur>>    
+--   };  --end of atrd_fb_as 
+-- atrd_cf_end: check_fallback -[at_count<=3]-> normal
+--   { <<(all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j:integer in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)
+--      and duration_count>=dur and at_count<=3>>
+--    (duration_count',at_count':=0,at_count)    
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j:integer in 0 .. 6 that at^(-j))>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) >>  
+--    { atr_end! & fb!(false) }  --end ATR, no fallback
+--    <<duration_count'=0 and at_count'<=3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) >>  
+--   };  --end of atrd_cf_end
+-- atrd_cf_fb: check_fallback -[at_count>3]-> fallback
+--   { <<duration_count>=dur and at_count>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j:integer in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j:integer in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<(all j:integer in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j:integer in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'>=dur and 
+--      duration_count'=DC(now)>>     
+--   };     
+--**};
+--end AtrialTachyResponse.imp;
+
+end ATR;

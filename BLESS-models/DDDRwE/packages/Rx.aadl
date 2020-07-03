@@ -1,0 +1,55 @@
+--Rx.aadl
+
+package Rx
+public
+with PACE_data, BLESS_Types;
+
+
+flag renames data BLESS_Types::flag;
+ms renames data PACE_data::ms;
+milliG renames data PACE_data::milliG;
+ResponseFactor renames data PACE_data::ResponseFactor;
+CCcount renames data PACE_data::CCcount; 
+
+
+thread Settings
+  features
+  settings : in out data port;  --settings from telemetry
+  lrl: out data port ms;  --lower rate limit interval 
+  url: out data port ms;  --upper rate limit interval 
+  av: out data port ms;  --AV delay (fixed)
+  savo: out data port ms;   --sensed AV delay offset
+  act: out data port milliG;  --activity threshold 
+  vrp: out data port ms;  --ventricular refractory period
+  arp: out data port ms;  --atrial refractory period
+  pvarp: out data port ms;  --post-ventricular atrial refractory period
+  --pacing mode
+  pv: out data port flag;  --pace ventricle
+  sv: out data port flag;  --sense ventricle
+  pa: out data port flag;  --pace atrium
+  sa: out data port flag;  --sense atrium
+  inhibit: out data port flag; --senses inhibit paces
+  track: out data port flag;  --tracking
+  --rate modifiers
+  hy: out data port ms;  --hysteresis delay, added to l when PVC
+  rr: out data port flag;  --rate responsive
+  rf: out data port ResponseFactor;  --response factor
+  msr: out data port ms;  --maximum sensor rate interval
+  min_av: out data port ms;  --minimum dynamic AV delay
+  ex_pvarp: out data port ms;  --extended post-ventricular atrial refractory period
+  rt: out data port ms;  --reaction time
+  at: out data port milliG;  --activity threshold
+  ct: out data port ms;  --recovery time
+  --atrial tachycardia response
+  atr_enable : out data port flag;
+  atr_duration : out data port CCcount;
+  fb_time : out data port BLESS_Types::Time;  --time to fall back from URL to LRL
+  --rate smoothing
+  drs: out data port PACE_data::percent;  --down-rate smoothing
+  urs: out data port PACE_data::percent;  --up-rate smoothing  
+end Settings;
+
+thread implementation Settings.imp
+end Settings.imp;
+
+end Rx;

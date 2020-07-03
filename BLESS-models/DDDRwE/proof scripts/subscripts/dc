@@ -1,0 +1,26 @@
+#proof script for ATR::DurationCounter.imp
+push
+sort-by-component[ATR::DurationCounter.imp]
+make-an
+#[serial 1014] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+substitute-both
+normalize
+axioms
+#[serial 1015] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
+substitute-post
+normalize
+axioms
+#[serial 1016] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1017] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1018]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
+substitute-post
+normalize
+axioms
+#[serial 1019]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+axioms
+#[serial 1020]  <<M(check_wait) and x>> -> <<M(wait)>> for dc_wwa:check_wait-[x]->wait{};
+substitute-post

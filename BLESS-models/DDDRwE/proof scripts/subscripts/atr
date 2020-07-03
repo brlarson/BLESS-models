@@ -1,0 +1,286 @@
+#proof script for ATR::AtrialTachyResponse.imp
+push
+sort-by-component[ATR::AsCounter.imp]
+make-an
+axioms
+axioms
+normalize
+laws
+axioms
+#[serial 1018] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1019]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
+axioms
+#[serial 1020]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+normalize
+laws
+axioms
+#[serial 1021]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
+reduce
+atomic
+laws
+now
+??
+axioms
+#[serial 1022]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
+reduce
+atomic
+laws
+axioms
+normalize
+push
+#ATR::AsCounter.imp
+#[serial 1129] Law of And-Simplification:  P and true is P [serial 1125
+make-an
+split@
+normalize
+laws
+now
+axioms
+#[serial 1130] Law of And-Simplification:  P and true is P [serial 1126]
+split@
+normalize
+now
+laws
+axioms
+#[serial 1132]   normalization of [serial 1118]
+split@
+normalize
+axioms
+#[serial 1134]   normalization of [serial 1127]
+completesub
+guided-sub-equals[et]
+guided-sub-equals[last_as]
+laws
+normalize
+laws
+guided-sub-equals[c]
+counting
+counting
+laws
+quant
+split@
+laws
+normalize
+laws
+axioms
+#[serial 1136]   normalization of [serial 1128]
+??
+guided-sub-equals[et]
+now
+guided-sub-equals[asCount]
+counting
+counting
+now
+axioms
+#[serial 1023]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
+normalize
+axioms
+#[serial 1024]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
+reduce
+atomic
+laws
+normalize
+axioms
+??
+axioms
+now
+axioms
+#[serial 1025]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
+reduce
+completesub
+atomic
+normalize
+laws
+normalize
+axioms
+push
+#ATR::AsCounter.imp
+#[serial 1296] Law of And-Simplification:  P and true is P [serial 1290
+make-an
+split-post
+axioms
+split@
+normalize
+laws
+now
+axioms
+#[serial 1297] Law of And-Simplification:  P and true is P [serial 1291]
+split-post
+now
+laws
+axioms
+#[serial 1301]   normalization of [serial 1292]
+split-post
+axioms
+guided-sub-equals[last_as]
+axioms
+laws
+normalize
+axioms
+#[serial 1303]   normalization of [serial 1293]
+??
+now
+guided-sub-equals[asCount]
+axioms
+#[serial 1305]   normalization of [serial 1294]
+split-post
+axioms
+split@
+normalize
+axioms
+#[serial 1307]   normalization of [serial 1295]
+counting
+counting
+normalize
+split-post
+axioms
+normalize
+split@
+laws
+normalize
+qtiming
+axioms
+#[serial 1003] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+push
+sort-by-component[ATR::AtCounter.imp]
+make-an
+axioms
+#[serial 1003] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+axioms
+#[serial 1004] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
+axioms
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1007]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
+axioms
+#[serial 1008]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+normalize
+laws
+axioms
+#[serial 1009]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
+reduce
+atomic
+laws
+now
+??
+axioms
+#[serial 1010]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
+reduce
+atomic
+laws
+axioms
+normalize
+push
+#ATR::AtCounter.imp
+#[serial 1409]   normalization of [serial 1395
+make-an
+split@
+now
+laws
+axioms
+split@
+now
+laws
+axioms
+split@
+normalize
+axioms
+#[serial 1411]   normalization of [serial 1404]
+substitute-post
+substitute-post
+guided-sub-equals[et]
+guided-sub-equals[last_at]
+laws
+normalize
+laws
+guided-sub-equals[c]
+counting
+laws
+quant
+split@
+laws
+normalize
+axioms
+#[serial 1136]   normalization of [serial 1128]
+??
+guided-sub-equals[et]
+now
+guided-sub-equals[atCount]
+counting
+now
+axioms
+#[serial 1023]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
+normalize
+axioms
+#[serial 1024]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
+reduce
+atomic
+laws
+normalize
+axioms
+??
+axioms
+now
+axioms
+#[serial 1025]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
+reduce
+completesub
+atomic
+normalize
+laws
+normalize
+axioms
+push
+#ATR::AsCounter.imp
+#[serial 1296] Law of And-Simplification:  P and true is P [serial 1290
+make-an
+split-post
+axioms
+split@
+normalize
+laws
+now
+axioms
+#[serial 1297] Law of And-Simplification:  P and true is P [serial 1291]
+split-post
+now
+laws
+axioms
+#[serial 1301]   normalization of [serial 1292]
+split-post
+axioms
+guided-sub-equals[last_at]
+axioms
+laws
+normalize
+axioms
+#[serial 1303]   normalization of [serial 1293]
+??
+now
+guided-sub-equals[atCount]
+axioms
+#[serial 1305]   normalization of [serial 1294]
+split-post
+axioms
+split@
+normalize
+axioms
+#[serial 1307]   normalization of [serial 1295]
+counting
+normalize
+split-post
+axioms
+split@
+laws
+normalize
+qtiming
+axioms
