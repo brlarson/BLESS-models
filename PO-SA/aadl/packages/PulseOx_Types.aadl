@@ -1,0 +1,95 @@
+--PulseOx_Types.aadl
+--holds data components defining types used in ICE Pulse Oximeter Apps and Interfaces
+
+package PulseOx_Types
+ public
+  with Data_Model;      --data modeling annex standard properties
+  with Base_Types;      --data modeling annex standard data types
+  with PulseOx_Properties;  --properties for ICE components
+--  with ICE_Types;       --properties common to many or all ICE apps and interfaces
+  with PulseOx_Properties;  --properties for ICE Pulse Oximeter apps and device interfaces
+--  with IEEE11073_Nomenclature;
+  with BLESS;
+
+annex Unit
+{**
+	m m m/s [ flow rate ] <cubic meter per second> cumps, <milliliter per hour> ml_per_hr / 3.6e-3, <microliter per hour> ul_per_hr / 3.6e-6 ;
+**};
+
+annex Typedef
+  {**
+  type spo2_samples is array [#PulseOx_Properties::Num_Trending_Samples] of quantity percent
+  type heartrate_samples is array [#PulseOx_Properties::Num_Trending_Samples] of quantity Hz	
+  type spo2_window is array [#PulseOx_Properties::Max_Window_Samples] of quantity percent
+  type bad_window is array [#PulseOx_Properties::Max_Window_Samples] of boolean
+  **};
+
+ --fraction of blood haemoblobin in oxygenated state, SpO2
+data SpO2
+  properties
+		BLESS::Typed=>"quantity percent";
+    Data_Model::Base_Type => (classifier(Percent));
+--    IEEE11073_Nomenclature::OID => IEEE11073_Nomenclature::MDC_PULS_OXIM_SAT_O2; 
+end SpO2;
+
+ --number of heart beats per minute
+data Heart_Rate 
+  properties
+		BLESS::Typed=>"quantity Hz";
+    Data_Model::Data_Representation => Integer;
+    Data_Model::Base_Type => (classifier(Base_Types::Unsigned_8));  --one byte for 0-255 beats per minute
+    Data_Model::Integer_Range => 0 .. 255;
+end Heart_Rate;
+
+data Percent
+	properties
+		BLESS::Typed=>"quantity percent";
+		Data_Model::Data_Representation => Integer;
+		Data_Model::Base_Type => (classifier (Base_Types::Unsigned_8)); --one byte for 0-100 percent
+		Data_Model::Integer_Range => 0 .. 100;
+--		IEEE11073_Nomenclature::OID => IEEE11073_Nomenclature::MDC_DIM_PERCENT;
+end Percent;
+
+ --data type for SpO2 trending 
+data SpO2Samples  
+  properties
+		BLESS::Typed=>"spo2_samples";
+    Data_Model::Data_Representation => Array;
+    Data_Model::Base_Type => (classifier(Percent));  
+    Data_Model::Dimension => (PulseOx_Properties::Num_Trending_Samples);
+end SpO2Samples;
+
+ --data type for Heart Rate trending 
+data HeartRateSamples  
+  properties
+		BLESS::Typed=>"heartrate_samples";
+    Data_Model::Data_Representation => Array;
+    Data_Model::Base_Type => (classifier(Heart_Rate));  
+    Data_Model::Dimension => (PulseOx_Properties::Num_Trending_Samples);
+end HeartRateSamples;
+
+ --data type for SpO2 "window" for averaging and rapid decline
+data SpO2Window  
+  properties
+		BLESS::Typed=>"spo2_window";
+    Data_Model::Data_Representation => Array;
+    Data_Model::Base_Type => (classifier(Percent));  
+    Data_Model::Dimension => (PulseOx_Properties::Max_Window_Samples);
+end SpO2Window;
+
+ --data type for SpO2 "window" for averaging and rapid decline
+data BadWindow  
+  properties
+		BLESS::Typed=>"bad_window";
+    Data_Model::Data_Representation => Array;
+    Data_Model::Base_Type => (classifier(Base_Types::Boolean));  
+    Data_Model::Dimension => (PulseOx_Properties::Max_Window_Samples);
+end BadWindow;
+
+
+data Second_Count extends Base_Types::Integer
+	properties
+		BLESS::Typed=>"quantity whole";
+end Second_Count;
+
+end PulseOx_Types;

@@ -1,0 +1,14 @@
+--MDCF_Properties.aadl
+--holds properties set for ICE Pulse Oximeter App
+
+property set MDCF_Properties is
+ --app name
+  App_Name : aadlstring applies to (all);-- => "PulseOxSmartAlm" applies to (all); --may want to make this more specific
+ --time between sensor readings
+  Time_Between_Sensor_Samples : --Timing_Properties::
+    Time => 300 ms applies to (all);
+ --pulseox name
+  PO_Name : aadlstring => "ThePulseOxDevice" applies to (all);
+  
+  
+end MDCF_Properties;

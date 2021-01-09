@@ -1,0 +1,24 @@
+--PulseOx_Properties.aadl
+--holds property set for ICE Pulse Oximeter App and device interface
+
+property set PulseOx_Properties is
+--  with Timing_Properties;
+--  with AADL_Project;
+--  with PO;
+ --time between SpO2 measurements by pulse oximeter, default 1 second
+  SpO2_Sampling_Period : --Timing_Properties::
+    --AADL_Project::
+    Time => 500 ms applies to (all);
+ --how long must bad SpO2 measurements persist before alaming
+  Motion_Artifact_Duration_Limit : --Timing_Properties::
+    Time => 10 sec applies to (all);
+  Motion_Artifact_Sample_Limit : aadlinteger => 10 --(Motion_Artifact_Duration_Limit/SpO2_Sampling_Period) 
+      applies to (all);
+ --number of trending samples displayed to clinician, default 30
+  Num_Trending_Samples : aadlinteger => 30 applies to (all);
+ --time between trending samples, default 1 minute
+  Time_Between_Trending_Samples : --Timing_Properties::
+    Time => 1 min applies to (all);  --(PO::SpO2TrendThread, PO::HeartRateTrendThread);
+ --maximum window size for SpO2 average and rapid decline 
+  Max_Window_Samples : aadlinteger => 600 applies to (all);
+end PulseOx_Properties;

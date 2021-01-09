@@ -1,0 +1,14 @@
+package ICE_Display
+public
+	device Screen
+	features
+		Image : in data port;
+		Touch : out event data port;
+	end Screen;
+
+	device Speaker
+	features
+		Sound : in data port;
+	end Speaker;
+
+end ICE_Display;
