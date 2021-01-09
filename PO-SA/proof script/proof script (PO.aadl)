@@ -45,7 +45,6 @@ axioms
 #[serial 1034]  <<M(start) and x>> A <<M(fail)>> for SpAT0a:start-[x]->fail{A};
 atomic
 axioms
-stop******
 #[serial 1035]  <<M(fillingWindow) and x>> A <<M(chooseToRun)>> for SpAT1:fillingWindow-[x]->chooseToRun{A};
 reduce
 reduce
@@ -61,6 +60,7 @@ normalize
 axioms
 qtiming
 axioms
+stop******
 #[serial 1036]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
 completesub
 alldist^

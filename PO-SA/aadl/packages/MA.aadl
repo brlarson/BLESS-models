@@ -1,0 +1,75 @@
+package MA
+public
+
+with BLESS, BLESS_Types;
+
+thread MotionArtifactThread
+  features
+    SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
+    MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
+    MotionArtifactAlarm : out event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+      {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
+      ;
+  properties
+    --Thread_Properties::
+        Dispatch_Protocol => Periodic;  
+    ----Timing_Properties::
+        
+        Period => PulseOx_Properties::SpO2_Sampling_Period;
+    ----Timing_Properties::
+        
+        Deadline => PulseOx_Properties::SpO2_Sampling_Period;
+    --Timing_Properties::
+        Compute_Execution_Time => 0 ms .. 5 ms;
+    -- This is the default set of properties we expect a thread to have.  Note the period is equal to the deadline,
+    -- and the execution time is quite short.
+end MotionArtifactThread;
+
+thread implementation MotionArtifactThread.imp
+annex BLESS 
+{**
+assert
+  <<NUMBAD: :all j~quantity whole in 0 .. (numBadReadings - 1) are MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j)>>	
+invariant   
+  <<MOINV: :all j~quantity whole 
+        in 1 ..numBadReadings are MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j)>>      
+variables numBadReadings~quantity whole := 0;  
+states
+  start : initial state <<numBadReadings=0>>;
+  run : complete state <<MOINV()>>;
+  halt : final state;
+transitions
+  mat0 : start-[ ]->run{};
+  mat1 : run-[on dispatch]->run
+    { <<MOINV()>> 
+    if 
+      --good SpO2 reading, reset counter
+      (SensorConnected? and not MotionArtifact?)~>
+      <<SensorConnected^0 and not MotionArtifact^0>>
+      numBadReadings := 0 
+      <<NUMBAD()>>
+    []  --bad SpO2, not enough bad reading to alarm
+      (MotionArtifact? or not SensorConnected?)~>
+      <<all j~quantity whole in 0 .. numBadReadings are MotionArtifact^(-j) or not SensorConnected^(-j)>> 
+      numBadReadings :=numBadReadings+1 
+      <<NUMBAD()>>
+    fi
+    <<NUMBAD()>>
+    ;
+    if
+    ((numBadReadings - 1) < #PulseOx_Properties::Motion_Artifact_Sample_Limit)~>
+      <<NUMBAD()>> skip <<NUMBAD()>>
+    [] --bad SpO2 and more than enough to alarm
+      ((numBadReadings - 1) >= #PulseOx_Properties::Motion_Artifact_Sample_Limit)~>
+         <<NUMBAD() and ((numBadReadings - 1) >= #PulseOx_Properties::Motion_Artifact_Sample_Limit)>>
+        MotionArtifactAlarm!  
+         <<NUMBAD()>>
+    fi  
+    <<NUMBAD()>>
+    }; 
+  mat2 : run-[on dispatch stop]->halt{};
+**};
+end MotionArtifactThread.imp;
+
+	
+end MA;
