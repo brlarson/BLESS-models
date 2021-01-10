@@ -1,0 +1,72 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sat Jan 09 22:20:35 CST 2021 by brianlarson
+push
+sort-by-component[RD::RapidDeclineThread]
+make-an
+#[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+substitute-pre
+axioms
+#[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+substitute-pre
+axioms
+#[serial 1060] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1061] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1062]  <<M(start)>> A <<M(fill)>> for rdt0:start-[ ]->fill{A};
+substitute-post
+alldist^
+atomic
+split-post
+axioms
+guided-sub-equals[num_samples]
+laws
+quant
+normalize
+axioms
+#[serial 1063]  <<M(fill) and x>> A <<M(check)>> for rdt1:fill-[x]->check{A};
+reduce
+reduce
+axioms
+normalize
+atomic
+normalize
+axioms
+laws
+normalize
+substitute-both
+normalize
+push
+make-an
+#[serial 1152]   normalization of [serial 1143]
+qtiming
+axioms
+#[serial 1166]   normalization of [serial 1161]
+zeroquantlb
+elim-subtract
+normalize
+laws
+normalize
+axioms
+#[serial 1173]   normalization of [serial 1168]
+replace-qv
+axioms
+#[serial 1175]   normalization of [serial 1169]
+replace-qv
+axioms
+#[serial 1064]  <<M(check) and x>> A <<M(fill)>> for chk:check-[x]->fill{A};
+substitute-both
+normalize
+alldist^
+atomic
+axioms
+#[serial 1065]  <<M(check) and x>> A <<M(run)>> for chk2:check-[x]->run{A};
+substitute-both
+normalize
+alldist^
+atomic
+axioms
+#[serial 1066]  <<M(check) and x>> -> <<M(halt)>> for chk3:check-[x]->halt{};
+axioms

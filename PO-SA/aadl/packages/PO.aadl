@@ -28,6 +28,7 @@ annex Unit
 {**  --create 'percent' unit
 	base [ unitless ] u , < ratio times one hundred > percent * 100 ;
 **};
+
 	
 	
 annex Assertion 
@@ -45,8 +46,8 @@ ghost variables
   def SPO2_MOVING_AVERAGE_WINDOW_SAMPLES~quantity whole
   def SUPPL_OXY_ALARM_ENABLED~boolean
   def ADULT_RAPID_DECLINE_ALARM_ENABLED~boolean
-  def SPO2_HISTORY~array[1 .. #PulseOx_Properties::Max_Window_Samples] of quantity percent
-  def HEART_RATE_HISTORY~array[1 .. #PulseOx_Properties::Max_Window_Samples] of quantity Hz
+  def SPO2_HISTORY~spo2_samples
+  def HEART_RATE_HISTORY~heartrate_samples
   def NUM_SAMPLES~quantity whole
   
   
@@ -69,7 +70,6 @@ ghost variables
          are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 else SPO2^(-s))>>
   <<HR_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
          are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 else HEART_RATE^(-s))>>
-  <<AXIOM_CR: : (NUM_SAMPLES - 2) < (NUM_SAMPLES - 1)>>
 **};
 
 system ICEpoSystem

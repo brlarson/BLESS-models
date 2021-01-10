@@ -16,10 +16,8 @@ thread MotionArtifactThread
     --Thread_Properties::
         Dispatch_Protocol => Periodic;  
     ----Timing_Properties::
-        
         Period => PulseOx_Properties::SpO2_Sampling_Period;
-    ----Timing_Properties::
-        
+    ----Timing_Properties::     
         Deadline => PulseOx_Properties::SpO2_Sampling_Period;
     --Timing_Properties::
         Compute_Execution_Time => 0 ms .. 5 ms;
@@ -47,12 +45,12 @@ transitions
     if 
       --good SpO2 reading, reset counter
       (SensorConnected? and not MotionArtifact?)~>
-      <<SensorConnected^0 and not MotionArtifact^0>>
+      <<SENSOR_CONNECTED^0 and not MOTION_ARTIFACT^0>>
       numBadReadings := 0 
       <<NUMBAD()>>
     []  --bad SpO2, not enough bad reading to alarm
       (MotionArtifact? or not SensorConnected?)~>
-      <<all j~quantity whole in 0 .. numBadReadings are MotionArtifact^(-j) or not SensorConnected^(-j)>> 
+      <<all j~quantity whole in 0 .. numBadReadings are MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j)>> 
       numBadReadings :=numBadReadings+1 
       <<NUMBAD()>>
     fi

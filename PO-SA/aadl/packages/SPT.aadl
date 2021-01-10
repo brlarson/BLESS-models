@@ -28,6 +28,7 @@ annex BLESS
   assert
     <<HOLD:n~quantity whole: all s~quantity whole in 1 ..n --holds current values for SpO2; spo2_a[1]=SpO2^0
          are spo2_a[s]=(if MOTION_ARTIFACT^(1-s) or not SENSOR_CONNECTED^(1-s) then 0 else SpO2^(1-s))>>
+    <<AXIOM_CR: : (num_samples - 2) < (num_samples - 1)>>
   invariant 
     <<SpO2_INV: :all s~quantity whole in 1 ..num_samples 
          are spo2_a[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 else SpO2^(-s))>>  
