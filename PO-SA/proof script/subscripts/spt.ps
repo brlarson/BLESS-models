@@ -1,0 +1,242 @@
+#spt.ps
+push
+sort-by-component SPT::SpO2TrendThread.imp
+#[serial 1023] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+make-an
+substitute-pre
+#[serial 1024] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
+axioms
+substitute-pre
+#[serial 1025] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+axioms
+normalize
+laws
+#[serial 1027]  <<M(start)>> A <<M(loading)>> for sptt0:start-[ ]->loading{A};
+axioms
+substitute-post
+normalize
+alldist^
+atomic
+split-post
+axioms
+normalize
+guided-sub-equals[num_samples]
+laws
+quant
+#[serial 1028]  <<M(loading) and x>> A <<M(check)>> for sptt1:loading-[x]->check{A};
+axioms
+reduce
+reduce
+remove-axioms-post
+atomic
+normalize
+laws
+normalize
+axioms
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1151]   normalization of [serial 1121
+make-an
+substitute-post
+normalize
+replace-qv
+#[serial 1157]   normalization of [serial 1129]
+axioms
+substitute-pre
+normalize
+replace-qv
+#[serial 1163]   normalization of [serial 1131]
+axioms
+substitute-post
+normalize
+#[serial 1165]   normalization of [serial 1144]
+axioms
+split-post
+axioms
+??
+laws
+#[serial 1167]   normalization of [serial 1133]
+axioms
+split-post
+axioms
+substitute-pre
+zeroquantlb
+elim-subtract
+normalize
+laws
+normalize
+#[serial 1169]   normalization of [serial 1134]
+axioms
+split-post
+axioms
+substitute-post
+normalize
+#[serial 1171]   normalization of [serial 1145]
+axioms
+split-post
+axioms
+??
+laws
+#[serial 1173]   normalization of [serial 1136]
+axioms
+split-post
+axioms
+substitute-pre
+zeroquantlb
+elim-subtract
+normalize
+laws
+normalize
+#[serial 1175]   normalization of [serial 1146]
+axioms
+qtiming
+#[serial 1183]   normalization of [serial 1148]
+axioms
+substitute-both
+normalize
+laws
+guided-sub-equals[NUM_SAMPLES]
+guided-sub-equals[SPO2_HISTORY]
+#[serial 1226]   normalization of [serial 1205]
+axioms
+substitute-pre
+normalize
+laws
+now
+guided-sub-equals[NumSamples]
+#[serial 1029]  <<M(check) and x>> A <<M(loading)>> for sptt2a:check-[x]->loading{A};
+axioms
+substitute-both
+alldist^
+atomic
+normalize
+#[serial 1030]  <<M(check) and x>> A <<M(run)>> for sptt2b:check-[x]->run{A};
+axioms
+substitute-both
+alldist^
+atomic
+normalize
+#[serial 1031]  <<M(check) and x>> -> <<M(fail)>> for sptt2c:check-[x]->fail{};
+axioms
+#[serial 1032]  <<M(run) and x>> A <<M(run)>> for sptt3:run-[x]->run{A};
+axioms
+reduce
+reduce
+remove-axioms-post
+normalize
+laws
+normalize
+axioms
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1392]   normalization of [serial 1370
+make-an
+substitute-post
+alldist^
+replace-qv
+#[serial 1394]   normalization of [serial 1378]
+axioms
+substitute-both
+normalize
+zeroquantlb
+elim-subtract
+normalize
+contract-uqr
+replace-qv
+axioms
+#[serial 1396]   normalization of [serial 1377]
+atomic
+normalize
+axioms
+#[serial 1402]   normalization of [serial 1381]
+atomic
+split-post
+axioms
+??
+laws
+axioms
+#[serial 1404]   normalization of [serial 1382]
+substitute-pre
+normalize
+split-post
+axioms
+zeroquantlb
+elim-subtract
+normalize
+laws
+normalize
+axioms
+#[serial 1408]   normalization of [serial 1384]
+atomic
+split-post
+axioms
+normalize
+??
+laws
+axioms
+#[serial 1410]   normalization of [serial 1385]
+substitute-pre
+normalize
+laws
+normalize
+split-post
+axioms
+zeroquantlb
+sub-equals-and
+laws
+normalize
+elim-subtract
+normalize
+sub-equals-and
+elim-subtract
+normalize
+axioms
+#[serial 1412]   normalization of [serial 1387]
+qtiming
+axioms
+#[serial 1414]   normalization of [serial 1386]
+atomic
+normalize
+axioms
+#[serial 1416]   normalization of [serial 1376]
+atomic
+normalize
+axioms
+#[serial 1440] Associativity: (b.c).a = a.b.c [serial 1400]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1443] Law of And-Simplification:  P and true is P [serial 1420]
+atomic
+laws
+axioms
+substitute-both
+laws
+normalize
+guided-sub-equals[NUM_SAMPLES]
+guided-sub-equals[SPO2_HISTORY]
+axioms
+#[serial 1444] Law of And-Simplification:  P and true is P [serial 1422]
+atomic
+laws
+axioms
+substitute-pre
+laws
+normalize
+now
+guided-sub-equals[NumSamples]
+axioms
+#[serial 1458]   normalization of [serial 1441]
+substitute-post
+normalize
+laws
+normalize
+axioms
+#[serial 1033]  <<M(loading) and x>> -> <<M(halt)>> for sptt4:loading-[x]->halt{};
+axioms
+#[serial 1034]  <<M(run) and x>> -> <<M(halt)>> for sptt4:run-[x]->halt{};
+axioms

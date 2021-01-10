@@ -1,0 +1,35 @@
+#sox.ps
+push
+sort-by-component SO::SupplemetalOxygenThread.imp
+make-an
+#[serial 1049] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+axioms
+#[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+laws
+normalize
+replace<=
+normalize
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1052]  <<M(start)>> -> <<M(run)>> for so0:start-[ ]->run{};
+normalize
+axioms
+#[serial 1053]  <<M(run) and x>> -> <<M(check)>> for so1:run-[x]->check{};
+axioms
+#[serial 1054]  <<M(check) and x>> A <<M(run)>> for so2:check-[x]->run{A};
+normalize
+reduce
+atomic
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1055]  <<M(check) and x>> -> <<M(run)>> for so3:check-[x]->run{};
+normalize
+axioms
+#[serial 1056]  <<M(run) and x>> -> <<M(halt)>> for so4:run-[x]->halt{};
+axioms

@@ -1,75 +1,211 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Sat Jan 09 20:01:02 CST 2021 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/mat.ps
+#sat.ps
 push
-sort-by-component MA::MotionArtifactThread.imp
-#MA::MotionArtifactThread.imp
-#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+sort-by-component SPA::SpO2AverageThread.imp
+#SPA::SpO2AverageThread.imp
+#[serial 1009] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definition
 make-an
 substitute-pre
-normalize
-#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1005]  <<M(start)>> -> <<M(run)>> for mat0:start-[ ]->run{};
-axioms
-substitute-post
-normalize
-sub-equals
 laws
+#[serial 1010] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+axioms
+substitute-pre
+laws
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
+axioms
+normalize
+laws
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+normalize
+replace<=
+laws
+#[serial 1013]  <<M(start) and x>> A <<M(fillingWindow)>> for SpAT0:start-[x]->fillingWindow{A};
+axioms
+normalize
+substitute-both
+normalize
+substitute-both
+substitute-both
 alldist^
+atomic
+laws
+sub-all-eq
+normalize
+laws
 quant
-#[serial 1006]  <<M(run) and x>> A <<M(run)>> for mat1:run-[x]->run{A};
-axioms
-reduce
-reduce
 normalize
 laws
 normalize
+sub-equals-and
+normalize
+sub-equals-and
+#[serial 1014]  <<M(start) and x>> A <<M(fail)>> for SpAT0a:start-[x]->fail{A};
 axioms
-substitute-post
+atomic
+#[serial 1015]  <<M(fillingWindow) and x>> A <<M(chooseToRun)>> for SpAT1:fillingWindow-[x]->chooseToRun{A};
+axioms
+reduce
+reduce
+reduce
 atomic
 normalize
 laws
 normalize
-quant
 axioms
-substitute-both
+completesub
+laws
 normalize
 axioms
-push
-make-an
-#MA::MotionArtifactThread.imp
-#[serial 1213] substituted Assertions' predicates for  labels  [serial 1127]
- 
 qtiming
+#[serial 1016]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
 axioms
-#[serial 1222]   normalization of [serial 1214]
-replace<=
-laws
-axioms
-#[serial 1224]   normalization of [serial 1215]
-and-over-or-post
-laws
-normalize
-axioms
-#[serial 1226]   normalization of [serial 1216]
-contract-uqr
-axioms
-#[serial 1228]   normalization of [serial 1217]
+completesub
 alldist^
-zeroquantlb
+laws
+atomic
+normalize
+#[serial 1017]  <<M(chooseToRun) and x>> A <<M(run)>> for SpAT3:chooseToRun-[x]->run{A};
+axioms
+completesub
+alldist^
+laws
+normalize
+atomic
+normalize
+#[serial 1018]  <<M(chooseToRun) and x>> A <<M(fail)>> for SpAT3a:chooseToRun-[x]->fail{A};
+axioms
+atomic
+#[serial 1019]  <<M(run) and x>> A <<M(run)>> for SpAt4:run-[x]->run{A};
+axioms
+reduce
+reduce
+reduce
+remove-axioms-post
+normalize
+laws
 normalize
 axioms
-#[serial 1007]  <<M(run) and x>> -> <<M(halt)>> for mat2:run-[x]->halt{};
-axioms
-#[serial 1009] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definition.
 substitute-both
-substitute-pre
-normalize
 laws
+normalize
+push
+#SPA::SpO2AverageThread.imp
+#[serial 1503]   normalization of [serial 1471
+make-an
+atomic
+normalize
+qtiming
+sub-equals
+qtiming
+sub-equals
+qtiming
+laws
+#[serial 1590]   normalization of [serial 1566]
 axioms
-#[serial 1010] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+atomic
+#[serial 1592]   normalization of [serial 1568]
+axioms
+replace<=
+normalize
+laws
+#[serial 1594]   normalization of [serial 1574]
+axioms
+qtiming
+#[serial 1596]   normalization of [serial 1575]
+axioms
+atomic
+normalize
+laws
+normalize
+#[serial 1598]   normalization of [serial 1576]
+axioms
+atomic
+normalize
+guided-sub-equals[totalSpO2]
+normalize
+laws
+normalize
+qtiming
+#[serial 1600]   normalization of [serial 1578]
+axioms
+atomic
+normalize
+laws
+normalize
+laws
+normalize
+#[serial 1602]   normalization of [serial 1579]
+axioms
+atomic
+normalize
+laws
+normalize
+#[serial 1604]   normalization of [serial 1580]
+axioms
+atomic
+normalize
+#[serial 1606]   normalization of [serial 1581]
+axioms
+substitute-post
+laws
+normalize
+#[serial 1608]   normalization of [serial 1582]
+axioms
+atomic
+normalize
+laws
+normalize
+axioms
+replaceNEwithLTorGT
+normalize
+axioms
+substitute-pre
+substitute-pre
+laws
+normalize
+substitute-pre
+now
+sub-equals
+guided-sub-equals[totalSpO2]
+guided-sub-equals[goodCount]
+normalize
+#[serial 1610]   normalization of [serial 1583]
+axioms
+completesub
+contract-uqr
+laws
+#[serial 1612]   normalization of [serial 1584]
+axioms
+substitute-pre
 substitute-pre
 normalize
 laws
+normalize
+qtiming
+#[serial 1614]   normalization of [serial 1585]
+axioms
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+split-post
+normalize
+qtiming
+#[serial 1616]   normalization of [serial 1586]
+axioms
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+#[serial 1618]   normalization of [serial 1587]
+axioms
+completesub
+alldist^
+#[serial 1020]  <<M(fillingWindow) and x>> -> <<M(halt)>> for SpATstop:fillingWindow-[x]->halt{};
+axioms
+#[serial 1021]  <<M(run) and x>> -> <<M(halt)>> for SpATstop:run-[x]->halt{};
+axioms
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 axioms
