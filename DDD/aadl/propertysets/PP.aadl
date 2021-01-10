@@ -1,0 +1,27 @@
+--PP.aadl
+--pacing properties, used by cardiac models for physician's prescription
+
+property set PP is
+with ddd_mode;
+  Lower_Rate_Limit_Interval:Time => 1000 ms  --60 bpm
+    applies to (ddd_mode::DDD);
+  Upper_Rate_Limit_Interval:Time => 400 ms  --150 bpm
+    applies to (ddd_mode::DDD);
+  Ventricular_Refractory_Period:Time => 300 ms
+    applies to ( --vvi_mode::VVI, 
+        ddd_mode::DDD);
+  Fixed_AV_Delay:Time => 150 ms
+    applies to (ddd_mode::DDD);
+  Sensed_AV_Delay:Time => 130 ms
+    applies to (ddd_mode::DDD);
+  Atrial_Refractory_Period:Time => 150 ms
+    applies to (ddd_mode::DDD);
+  PVARP:Time => 200 ms
+    applies to (ddd_mode::DDD);
+--  VAI:Time => (PP::Lower_Rate_Limit_Interval-PP:Fixed_AV_Delay)
+--    applies to (ddd_mode::DDD);
+    
+  
+end PP;
+
+   

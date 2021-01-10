@@ -1,0 +1,7 @@
+base.package.name=
+eclipse.preferences.version=1
+embed.art=true
+gen.bless.entry.points=true
+gen.transpiler.artifacts=true
+ipc.mechanism=Message Queue
+output.directory=/Users/brl/Desktop

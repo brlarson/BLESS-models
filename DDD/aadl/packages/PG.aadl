@@ -1,0 +1,75 @@
+package PG
+public
+	with ddd_mode, BLESS;
+	
+
+system Pacemaker
+end Pacemaker;
+
+system implementation Pacemaker.imp
+  subcomponents
+  	fe : device FrontEnd;
+  	alead : bus AtrialLead.imp;
+  	vlead : bus VentricularLead.imp;
+  	ddd : process DDDprocess.imp;
+  connections
+  	a_header : bus access alead <-> fe.atrial_lead;
+  	v_header : bus access vlead <-> fe.ventricular_lead;
+  	fd_a : port fe.a -> ddd.a;
+  	fd_v : port fe.v -> ddd.v;
+  	fd_ap : port ddd.ap -> fe.ap;
+  	fd_vp : port ddd.vp -> fe.vp;
+end Pacemaker.imp;
+
+device FrontEnd
+  features	
+	atrial_lead : requires bus access AtrialLead.imp;  --lead to atrium
+	ventricular_lead : requires bus access VentricularLead.imp;  --lead to ventricle
+    a : out event port;  --signal in atrium
+    v : out event port;  --signal in ventricle
+    ap : in event port;  --pace atrium
+    vp : in event port;  --pace ventricle   	
+end FrontEnd;		
+
+device implementation FrontEnd.imp
+end FrontEnd.imp;	
+		
+bus AtrialLead
+end AtrialLead;
+	
+bus implementation AtrialLead.imp
+end AtrialLead.imp;
+	
+bus VentricularLead
+end VentricularLead;
+	
+bus implementation VentricularLead.imp
+end VentricularLead.imp;
+
+process DDDprocess
+  features
+  a: in event port;	--atrial signal
+  v: in event port;	--ventricular signal
+  ap: out event port	--pace atrium 
+    {BLESS::Assertion=>"<<AP(now)>>";};
+  vp: out event port	--pace ventricle, but not too soon 
+    {BLESS::Assertion=>"<<VP(now) and URL(now)>>";};
+  as: out event port --non-refractory atrial sense
+    {BLESS::Assertion=>"<<AS(now)>>";};
+  vs: out event port	--non-refractory ventricular sense
+    {BLESS::Assertion=>"<<VS(now)>>";};
+end DDDprocess;		
+
+process implementation DDDprocess.imp
+  subcomponents
+  	ddd : thread ddd_mode::DDD.i;
+  connections
+  	ca : port a->ddd.a;
+  	cv : port v->ddd.v;
+  	cap: port ddd.ap->ap;
+  	cvp: port ddd.vp->vp;
+--  	cas: port ddd.as->as;
+--  	cvs: port ddd.vs->vs;
+end DDDprocess.imp;	
+
+end PG;
