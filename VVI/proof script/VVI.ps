@@ -1,0 +1,197 @@
+#VVI.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sun Jan 10 14:11:56 CST 2021 by brianlarson
+#vvi_mode::VVI.i
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
+make-an
+substitute-both
+split-quant
+normalize
+axioms
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
+substitute-pre
+normalize
+split-quant
+axioms
+#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+substitute-pre
+split-quant
+normalize
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+laws
+axioms
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
+reduce
+atomic
+laws
+axioms
+substitute-post
+normalize
+split-post
+axioms
+replace-qv
+quant
+axioms
+equivalent
+equivalent
+axioms
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
+axioms
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
+axioms
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
+substitute-both
+normalize
+laws
+normalize
+reduce
+atomic
+laws
+axioms
+load
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
+substitute-both
+split-quant
+load
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
+#vvi_mode::VVI.i
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
+make-an
+substitute-post
+normalize
+axioms
+substitute-pre
+split-quant
+normalize
+axioms
+#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+substitute-pre
+split-quant
+normalize
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+laws
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+substitute-pre
+normalize
+replace<=
+normalize
+laws
+axioms
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
+reduce
+atomic
+normalize
+laws
+axioms
+substitute-post
+equivalent
+normalize
+split-post
+axioms
+normalize
+quant
+axioms
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
+axioms
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
+axioms
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
+reduce
+atomic
+normalize
+laws
+axioms
+substitute-post
+normalize
+axioms
+equivalent
+split-post
+axioms
+normalize
+quant
+axioms
+#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
+normalize
+axioms
+#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
+axioms
+#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
+reduce
+atomic
+laws
+normalize
+axioms
+substitute-post
+substitute-pre
+substitute-post
+normalize
+laws
+equivalent
+split-post
+axioms
+split@
+normalize
+axioms
+quant
+axioms
+#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
+reduce
+normalize
+atomic
+laws
+axioms
+substitute-post
+normalize
+axioms
+equivalent
+split-post
+axioms
+normalize
+quant
+axioms
+#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
+normalize
+axioms
+#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
+axioms
+#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
+reduce
+atomic
+normalize
+laws
+axioms
+substitute-post
+substitute-pre
+substitute-post
+normalize
+equivalent
+split-post
+axioms
+normalize
+quant
+split-post
+split@
+normalize
+axioms
+laws
+axioms
+#Q.E.D.

@@ -1,0 +1,160 @@
+--VVI.aadl
+--simple single-chamber pacemaker, VVI mode
+
+package vvi_mode
+public
+with -- BLESS_Types,PP,Thread_Properties, SI,
+ BLESS;  --BLESS property set including BLESS::Assertion
+
+annex Typedef {**
+	type time is quantity s
+**};
+ 
+data CardiacDuration
+	properties
+		BLESS::Typed => "quantity ms";
+end CardiacDuration;
+
+thread VVI
+  features
+    s: in event port;	--a ventricular contraction has been sensed
+    p: out event port	--pace ventricle
+      {BLESS::Assertion => "<<VP()>>";};
+    n: out event port	--non-refractory ventricular sense
+      {BLESS::Assertion => "<<(now=0) or VS()>>";};
+    lrl: in data port CardiacDuration;  --lower rate limit interval
+    vrp: in data port CardiacDuration;  --ventricular refractory period 
+  properties
+    Thread_Properties::Dispatch_Protocol => Aperiodic;
+    BLESS::Invariant => "<<LRL()>>";  
+end VVI;
+
+thread implementation VVI.i
+annex BLESS
+{**
+assert	     
+  << notVRP: : --Ventricular Refractory Period
+    (n or p)@last_beat --last beat before now,
+    and ((now-last_beat)>=vrp)>>  --older than VRP
+  << VS: : --ventricular sense detected, not in VRP
+    s@now and notVRP() >>
+  << VP: : --cause ventricular pace
+    (n or p)@(now-lrl)  --last beat occurred LRL interval ago,
+    and --not since then
+      not (exists t~time  --there is no time  
+        in (now-lrl),,now  --since then, ",," means open interval
+        that (n or p)@t) >>  --with a beat
+  << PACE:x~time: --pace occurred in the previous LRL interval
+    p@last_beat and  --previous beat was a pace
+    (exists t~time  --there is a time 
+      in (x-lrl)..x  --in the previous LRL interval 
+      that p@t) >>  --with a ventricular pace     
+  << SENSE:x~time:  --sense occurred in the previous LRL interval
+    n@last_beat and  --previous beat was a sense
+    (exists t~time  --there is a time 
+      in (x-lrl)..x  --in the previous LRL interval
+      that n@t) >>  --with a non-refractory sense 
+    
+invariant  
+  << LRL: : --Lower Rate Limit
+    exists t~time  --there was a moment
+      in (now-lrl)..now   --within the previous LRL interval
+      that (n@t or p@t) >>  --with a pace or non-refractory sense	
+
+variables
+  last_beat ~ time
+    --the last pace or non-refractory sense occurred at last_beat
+  << LAST: :(n or p)@last_beat>>  
+ 
+states
+  power_on : initial state  --powered-up, 
+    <<now=0>>	--start with "sense"
+  pace : complete state 
+      --a ventricular pace has occured in the 
+      --previous LRL-interval milliseconds
+    << PACE(now)>> 
+  sense : complete state  
+      --a ventricular sense has occured in the 
+      --previous LRL-interval milliseconds
+    << SENSE(now)>>   
+  check_pace_vrp : state  
+      --execute state to check if s is in vrp after pace
+    <<s@now and PACE(now)>>
+  check_sense_vrp : state  
+      --execute state to check if s is in vrp after sense
+    <<s@now and SENSE(now)>>
+  off : final state  --upon "stop"
+
+transitions  
+  T1_POWER_ON:	--initialization
+  power_on -[ ]-> sense 
+    {
+    	<<now=0>>
+    n! <<n@now>>   --first "sense" at initialization
+    & 
+    last_beat:=now 
+    <<last_beat=now>>
+    };	  
+
+  T2_STOP:		--turn off pacing
+  pace,sense -[on dispatch stop]-> off{}
+
+  T3_PACE_LRL_AFTER_VP:	--pace when LRL times out
+  pace -[on dispatch timeout (n or p) lrl]-> pace
+    { << VP()>>
+    p! <<p@now>>   --cause pace when LRL times out
+    & last_beat:=now <<last_beat=now>>}  
+
+  T4_VS_AFTER_VP:	--sense after pace=>check if in VRP
+  pace -[on dispatch s]-> check_pace_vrp{}  
+
+  T5_VS_AFTER_VP_IN_VRP:  -- s in VRP,  go back to "pace" state
+  check_pace_vrp -[(now-last_beat)<vrp]-> pace{}  
+
+  T6_VS_AFTER_VP_IS_NR:	--s after VRP, 
+    --go to "sense" state, send n!, reset timeouts
+  check_pace_vrp -[(now-last_beat)>=vrp]-> sense	   
+    {  << VS()>>
+    n! <<n@now>>  --send n! to reset timeouts
+    & last_beat:=now <<last_beat=now>>}  
+
+  T7_PACE_LRL_AFTER_VS:	--pace when LRL times out after VS
+  sense -[on dispatch timeout (p or n) lrl]-> pace
+    {<< VP()>>
+    p! <<p@now>>
+    & last_beat:=now <<last_beat=now>>} 
+
+  T8_VS_AFTER_VS:	--check if s in VRP
+  sense -[on dispatch s]-> check_sense_vrp{}  
+
+  T9_VS_AFTER_VS_IN_VRP:  -- s in VRP,  go back to "sense" state
+  check_sense_vrp -[(now-last_beat)<vrp]-> sense{}  
+
+  T10_VS_AFTER_VS_IS_NR:  --s after VRP is non-refractory
+  check_sense_vrp -[(now-last_beat)>=vrp]-> sense	
+    --reset timeouts with n! port send
+    {  << VS()>>
+    n! <<n@now>>  --non-refractory ventricular sense
+    & last_beat:=now <<last_beat=now>>
+    }  
+**};	--end of annex subclause 
+end VVI.i;  --end thread 
+
+system PG
+end PG;
+
+system implementation PG.i
+	subcomponents
+		pp : process P.i;
+end PG.i;
+
+process P
+end P;
+
+process implementation P.i
+	subcomponents
+		t : thread VVI.i;
+end P.i;
+
+end vvi_mode;  --end package
+--end of VVI.aadl
