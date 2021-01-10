@@ -5,12 +5,14 @@ with PulseOx_Types, BLESS_Types, BLESS;
 
 thread HeartRateTrendThread
   features
-    HeartRate : in data port PulseOx_Types::Heart_Rate;	--oxygen saturation from pulse oximater device
-    SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
-    MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
+    HeartRate : in data port PulseOx_Types::Heart_Rate	--oxygen saturation from pulse oximater device
+      {BLESS::Assertion=>"<<:=HEART_RATE>>";};
+    SensorConnected : in data port BLESS_Types::Boolean  --sensor is attached to patient
+      {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";};
+    MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
+      {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples  --one HeartRate reading each minute for the past half-hour
-      {BLESS::Assertion=>"<<HR_TREND()>>";}
-         ;  
+      {BLESS::Assertion=>"<<HR_TREND()>>";};  
     NumSamples : out data port BLESS_Types::Integer
       {BLESS::Assertion=>"<<:= NUM_SAMPLES>>";};
   properties

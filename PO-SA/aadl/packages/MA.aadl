@@ -5,8 +5,10 @@ with BLESS, BLESS_Types;
 
 thread MotionArtifactThread
   features
-    SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
-    MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
+    SensorConnected : in data port BLESS_Types::Boolean  --sensor is attached to patient
+      {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";};
+    MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
+      {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};
     MotionArtifactAlarm : out event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;

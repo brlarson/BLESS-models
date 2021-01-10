@@ -6,11 +6,16 @@ public
 
 thread RapidDeclineThread
   features
-    SpO2 : in data port PulseOx_Types::Percent;  --oxygen saturation from pulse oximater device
-    SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
-    MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
-    AdultRapidDeclineAlarmEnabled : in data port BLESS_Types::Boolean;  -- enabled derived alarm for rapid SpO2 decline in adult patient 
-    MaxSpO2Decline : in data port PulseOx_Types::Percent;
+    SpO2 : in data port PulseOx_Types::Percent  --oxygen saturation from pulse oximater device
+      {BLESS::Assertion=>"<<:=SPO2>>";};
+    SensorConnected : in data port BLESS_Types::Boolean  --sensor is attached to patient
+      {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";}; 
+    MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
+      {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};  
+    AdultRapidDeclineAlarmEnabled : in data port BLESS_Types::Boolean  -- enabled derived alarm for rapid SpO2 decline in adult patient 
+      {BLESS::Assertion=>"<<ADULT_RAPID_DECLINE_ALARM_ENABLED>>";};  
+    MaxSpO2Decline : in data port PulseOx_Types::Percent
+      {BLESS::Assertion=>"<<:=MAX_SPO2_DECLINE>>";};
     AverageSpO2 : in data port PulseOx_Types::Percent
       {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";};
     RapidSpO2DeclineAlarm : out event port	-- decreasing SpO2 in adult alarm
@@ -27,11 +32,11 @@ thread implementation RapidDeclineThread.imp
 annex BLESS 
 {**
   assert
-    <<HOLD_RD:n~quantity whole:all s~quantity whole in 1 ..n --holds current values for SpO2; spo2[1]=SpO2^0
-         are spo2[s]=SpO2^(1-s)>>
+    <<HOLD_RD:n~quantity whole:all s~quantity whole in 1 ..n --holds current values for SpO2; spo2[1]=SPO2^0
+         are spo2[s]=SPO2^(1-s)>>
   invariant 
     <<SpO2_RD: :all s~quantity whole in 1 ..num_samples 
-         are spo2[s]=SpO2^(-s)>>  
+         are spo2[s]=SPO2^(-s)>>  
   variables
     nts~quantity whole := #PulseOx_Properties::Max_Window_Samples;
     spo2 ~  array [1 .. #PulseOx_Properties::Max_Window_Samples] of quantity percent;  --:=0;  --holds SpO2 history
@@ -54,27 +59,27 @@ annex BLESS
       <<SpO2_RD() and (num_samples < #PulseOx_Properties::Max_Window_Samples)>>
       forall i in 1 .. num_samples
         {
-          <<spo2[i]=SpO2^(-i)>>
+          <<spo2[i]=SPO2^(-i)>>
         spo2_nxt[i+1]:=spo2[i] --shift old samples
-          <<spo2_nxt[i+1]=SpO2^(-i)>>
+          <<spo2_nxt[i+1]=SPO2^(-i)>>
         }
       <<SHFT_RD: :all i~quantity whole in 1 ..num_samples 
-         are spo2_nxt[i+1]=SpO2^(-i)>>
+         are spo2_nxt[i+1]=SPO2^(-i)>>
       ;  
           spo2_nxt[1]:=SpO2?
-        <<(spo2_nxt[1]=SpO2^0) and
-          (all i~quantity whole in 2 ..(num_samples+1) are spo2_nxt[i]=SpO2^(1-i))>>
+        <<(spo2_nxt[1]=SPO2^0) and
+          (all i~quantity whole in 2 ..(num_samples+1) are spo2_nxt[i]=SPO2^(1-i))>>
       ;    
       num_samples:=num_samples+1  --increment count of samples
-      <<all i~quantity whole in 1 ..num_samples are spo2_nxt[i]=SpO2^(1-i)>>
+      <<all i~quantity whole in 1 ..num_samples are spo2_nxt[i]=SPO2^(1-i)>>
       ;
       forall i in 1 ..num_samples
         {
-          <<spo2_nxt[i]=SpO2^(1-i)>>
+          <<spo2_nxt[i]=SPO2^(1-i)>>
         spo2[i]:=spo2_nxt[i] --copy back
-          <<spo2[i]=SpO2^(1-i)>>
+          <<spo2[i]=SPO2^(1-i)>>
         }
-      <<all i~quantity whole in 1 ..num_samples are spo2[i]=SpO2^(1-i)>>
+      <<all i~quantity whole in 1 ..num_samples are spo2[i]=SPO2^(1-i)>>
       };
    chk: check -[num_samples < #PulseOx_Properties::Max_Window_Samples]-> fill
      {|spo2',num_samples':=spo2,num_samples|};  

@@ -6,14 +6,15 @@ public
 thread SupplemetalOxygenThread
   features
     SpO2Avg : in data port PulseOx_Types::Percent	--oxygen saturation average from SpO2AverageThread
-      {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";}
-      ;
-    SpO2LowerLimit : in event data port PulseOx_Types::Percent;  -- minimum allowed SpO2 to/from device
-    SupplOxyAlarmEnabled : in data port BLESS_Types::Boolean;   -- enable derived alarm for patient using supplementary oxygen
-    SpO2LevelAdj : in data port PulseOx_Types::Percent;  -- value used to decrease SpO2 level to obtain "derived" parameter
+      {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";};
+    SpO2LowerLimit : in event data port PulseOx_Types::Percent  -- minimum allowed SpO2 to/from device
+      {BLESS::Assertion=>"<<:=SPO2_LOWER_LIMIT>>";};
+    SupplOxyAlarmEnabled : in data port BLESS_Types::Boolean   -- enable derived alarm for patient using supplementary oxygen
+      {BLESS::Assertion=>"<<SUPPL_OXY_ALARM_ENABLED>>";};  
+    SpO2LevelAdj : in data port PulseOx_Types::Percent  -- value used to decrease SpO2 level to obtain "derived" parameter
+      {BLESS::Assertion=>"<<:=SPO2_LOWER_LIMIT_ADJ>>";};
     SpO2DerivedLowerLimitAlarm : out event port  -- alarm triggered when derived patient SpO2 level is below SpO2LowerLimit
-      {BLESS::Assertion=>"<<SUPPL_O2_ALARM()>>";}
-      ;
+      {BLESS::Assertion=>"<<SUPPL_O2_ALARM()>>";};
   properties
     --Thread_Properties::
         Dispatch_Protocol => Periodic;  
