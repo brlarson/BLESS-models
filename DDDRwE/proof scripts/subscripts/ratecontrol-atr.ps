@@ -1,0 +1,55 @@
+#ratecontrol-atr
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sun Jan 24 19:52:12 CST 2021 by brianlarson
+push
+sort-by-component[rc::RateController.atr]
+#[serial 1004] <<M(atr_fallback)>> -> <<I>> from invariant I when complete state atr_fallback has Assertion <<M(atr_fallback)>> in its definition
+make-an
+axioms
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start_atr, <<M(start_atr)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atr, <<M(check_atr)>> -> <<e1 or e2 or . . . en>>
+replace<=
+normalize
+laws
+axioms
+#[serial 1007]  <<M(start_atr)>> A <<M(atr_fallback)>> for ATR_RC1_start_fallback:start_atr-[ ]->atr_fallback{A};
+reduce
+atomic
+laws
+axioms
+normalize
+axioms
+#[serial 1008]  <<M(atr_fallback) and x>> -> <<M(check_atr)>> for ATR_RC5_atr_cci:atr_fallback-[x]->check_atr{};
+axioms
+#[serial 1009]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC6_continure_atr:check_atr-[x]->atr_fallback{A};
+reduce
+atomic
+now
+substitute-post
+normalize
+axioms
+replace-port
+??
+axioms
+#[serial 1010]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC_fallback:check_atr-[x]->atr_fallback{A};
+reduce
+reduce
+remove-axioms-post
+reduce
+axioms
+atomic
+laws
+normalize
+axioms
+completesub
+now
+guided-sub-equals[atr_max_cci]
+axioms
+replace<=
+normalize
+replace-port
+??
+axioms
+#[serial 1011]  <<M(atr_fallback) and x>> -> <<M(done)>> for RCX:atr_fallback-[x]->done{};
+axioms

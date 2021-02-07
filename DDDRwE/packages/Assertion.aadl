@@ -1,0 +1,353 @@
+--Assertions.aadl
+--put all BLESS Assertions in same place
+package Assertion
+public
+--with BLESS;
+
+annex Typedef {**
+type time is quantity s
+type percent is quantity scalar 
+**};
+
+--annex Unit {**
+--	extension mpss, <gravity> G / 9.8, <milliG> milliG / 9.8e-3 ;
+--	s s s / m [response factor] ssspm, <ms per milliG> rf / 9.8 ;
+--**};
+
+annex Assertion
+{**
+ghost variables
+  def AS ~ boolean  --atrial sense
+  def AP ~ boolean  --atrial pace
+  def VS ~ boolean  --ventricular sense
+  def VP ~ boolean  --ventricular pace
+  def SV ~ boolean  --sense ventricle in mode XVX or XDX
+  def SA ~ boolean  --sense atrium in mode XAX or XDX
+  def PV ~ boolean  --pace ventricle in mode VXX or DXX
+  def PA ~ boolean  --pace atrium in mode AXX or DXX
+  def INHIBIT ~ boolean  --senses inhibit paces
+  def TRACK ~ boolean  --paces track senses
+  def V  ~ boolean  --signal detected by front end in ventricle
+  def A  ~ boolean  --signal detected by front end in atrium
+  def TNA ~ boolean --noise detected in atrium
+  def TNV ~ boolean --noide detected in ventricle
+  def FB ~ boolean  --in ATR fallback
+  def FB_START ~ boolean  --start of ATR fallback
+  def ARP ~ time    --atrial refractory period
+  def VRP ~ time    --ventricular refractory period
+  def PVARP ~ time  --post-ventricular atrial refractory period
+  def SAVO ~  time  --sensed A-V delay offset
+  def MAX_CCI~time  --maximum cardiac cycle interval
+  def MIN_CCI~time  --minimum cardiac cycle interval
+  def CCI ~ time  --current cardiac cycle interval
+  def XL ~ quantity milliG  --accelerometer reading
+  def MAG ~ boolean --magnet mode
+  def RR ~ boolean --rr: in data port flag;  --rate responsive
+  def RESPONSE_FACTOR ~ quantity rf --rf: in data port PACE_data::ResponseFactor;  --response factor
+  def REACTION_TIME ~ time --rt: in data port ms;  --reaction time
+  def ACTIVITY_THRESHOLD ~ quantity milliG --  at: in data port milliG;  --activity threshold
+  def RECOVERY_TIME ~ time  --  ct: in data port ms;  --recovery time
+  def LRL ~ time --  lrl: in data port ms;  --lower rate limit interval 
+  def URL ~ time --  url: in data port ms;  --upper rate limit interval 
+  def MSR ~ time --  msr: in data port ms;  --maximum sensor rate interval
+  def AV ~ time  --  av: in data port ms;  --AV delay (fixed)
+  def MIN_AV ~ time --  min_av: in data port ms;  --minimum AV delay
+  def DRS ~ percent --  drs: in data port PACE_data::percent;  --down-rate smoothing
+  def URS ~ percent  --  urs: in data port PACE_data::percent;  --up-rate smoothing
+  def FBT ~ time  --  fb_time : in data port BLESS_Types::Time;  --time to ATR fall back from URL to LRL
+  def HY ~ time  --  hy: in data port ms;  --hysteresis delay, added to max_cci when last v was vs
+--  def VA_INTERVAL ~ time  --ventricular-atrial interval
+  def EX_PVARP ~ time -- extended post-ventricular atrial refractory period
+  def ATR_ET ~ time  --atrial tachycardia response enable time
+  def ATR_ENABLE ~ boolean  --atrial tachycardia response enabled
+  def AT ~ boolean  --atrial sense was fast (tachycardia)
+  
+  
+  
+--lower rate limit, both A and V chambers
+--5.1	Lower Rate Limit (LRL)
+--  The Lower Rate Limit (LRL) is the number of generator pace pulses 
+--  delivered per minute (atrium or ventricle) in the absence of
+--   Sensed intrinsic activity. 
+--   Sensor-controlled pacing at a higher rate.
+--  The LRL is affected in the following ways:
+--    1. When Rate Hysteresis is disabled, the LRL shall define the 
+--       longest allowable pacing interval.
+--    2. In DXX or VXX modes, the LRL interval starts at a ventricular 
+--       sensed or paced event
+<<LRL_A:x~time:    
+    -- there has been a V-pace or a non-refractory V-sense 
+    exists t~time 
+      -- within the previous LRL interval
+      in (x-MAX_CCI)..x   --MAX_CCI is the maximum cardiac cycle interval
+      --may be longer than LRL for hysteresis pacing
+      -- in which a heartbeat was sensed, or caused by pacing
+      that (VS@t or VP@t)  >>
+
+--upper rate limit, only ventricle  
+--5.2	Upper Rate Limit (URL)
+--  The Upper Rate Limit (URL) is the maximum rate at which the paced 
+--  ventricular rate will track sensed atrial events.  
+--  The URL interval is the minimum time between a ventricular event  
+--  and the next ventricular pace.
+<<URL_A:x~time: --a V-pace never happens too soon after either V-sense or V-pace 
+  -- applied to vp: out event port, no pace (out event) too soon, URL is true when event is sent 
+  not -- there must not be V-sense or -pace not in previous URL open-interval ,, 
+   (exists tu~time 
+      in (x-MIN_CCI),,x  --MinCCI is the minimum (paced) cardiac cycle interval
+      that (VS@tu or VP@tu)) >>       
+
+--atrial-ventricular delay
+--5.3	Atrial-Ventricular (AV) Delay
+--  The AV delay shall be the programmable time period from an 
+--  atrial event (either intrinsic or paced) to a ventricular pace.
+-- In atrial tracking modes, ventricular pacing shall occur in the 
+--  absence of a sensed ventricular event within the programmed AV delay 
+--  when the sensed atrial rate is between the programmed LRL and URL.
+--  AV delay shall either be 
+--    1. Fixed (absolute time) 
+--    2. Dynamic
+
+--paced AV delay
+--5.3.1	Paced AV Delay
+--  A paced AV (PAV) delay shall occur when the AV delay is initiated 
+--  by an atrial pace.
+<<PAV:x~time:	--dynamic
+  exists t~time in (x-DAV_A())..x that AP@t >> 
+
+--sensed AV delay
+--5.3.2	Sensed AV Delay
+--  A sensed AV (SAV) delay shall occur when the AV delay is initiated 
+--  by an atrial sense.
+--Sensed AV Delay Offset is always negative, then added to the
+--Fixed AV Delay to determine Sensed AV Delay 
+<<SAV:x~time: --dynamic, with offset
+  exists t~time in (x-(DAV_A()+SAVO))..x that AS@t       
+  or  --a previous V-event prevents pacing above URL
+  (exists tu~time
+    in (x-MAX_CCI)..x  
+    that (VS@tu or VP@tu))  >>
+    
+-- 5.3.3 Dynamic AV Delay
+-- If dynamic, the AV delay shall be determined individually for each 
+-- new cardiac cycle based on the duration of previous cardiac cycles. 
+-- The previous cardiac cycle length is multiplied by a factor stored 
+-- in device memory to create the dynamic AV delay.
+-- The AV delay shall vary between
+-- 1. A programmable maximum paced AV delay 
+-- 2. A programmable minimum paced AV delay          
+<<DAV_A: returns time := (CCI*((AV-MIN_AV)/(LRL-URL))) + MIN_AV>>
+    
+--vetricular refractory period:  
+--5.4.1	Ventricular Refractory Period (VRP_A)
+--  The Ventricular Refractory Period shall be the programmed time 
+--  interval following a ventricular event during which time 
+--  ventricular senses shall not inhibit nor trigger pacing.
+<<VRP_A: x~time :
+  exists tv~time
+	in (x-VRP),,x  --vrp is Ventricular Refractory Period
+	that (VS@tv or VP@tv)  >>  
+
+--atrial refractory period
+--5.4.2	Atrial Refractory Period (ARP_A)
+--  For single chamber atrial modes, the Atrial Refractory Period (ARP_A) 
+--  shall be the programmed time interval following an atrial event 
+--  during which time atrial events shall not inhibit nor trigger pacing.
+<<ARP_A: x~time :
+  exists tar~time
+  	in (x-ARP),,x  --arp is Atrial Refractory Period
+  	that (AS@tar or AP@tar) >>
+
+--post-ventricular atrial refractory period
+--5.4.3	Post Ventricular Atrial Refractory Period (PVARP_A)
+--  The Post Ventricular Atrial Refractory Period shall be available 
+--  in modes with ventricular pacing and atrial sensing. The Post 
+--  Ventricular Atrial Refractory Period shall be the programmable 
+--  time interval following a ventricular event when an atrial 
+--  cardiac event shall not 
+--    1. Inhibit an atrial pace. 
+--    2. Trigger a ventricular pace.
+<<PVARP_A: x~time : 
+  exists tv~time 
+    in (x-PVARP),,x
+    that (VS@tv or VP@tv) >>
+
+--non-refractory ventricular sense occurs, asserted by port vs 
+--  there is a ventricular sense, and the ventricular refractory period
+--  has expired since previous vs or vp
+<<VS_A: x~time : 
+  SV@x   --sense ventricle  XVX or XDX
+  and V@x  --v-signal
+  and not TNV@x  --not noisy in ventricle
+--  and VRP_EXPIRED(x) 
+  >>  --not ventricular refractory period
+    
+--non-refractory atrial sense occurs, asserted by port as 
+--  there is an atrial sense,
+--  and the atrial refractory period has expired since previous as or ap
+--  and the post-ventricular atrial refractory period has expired
+--  since previous vs or vp
+<<AS_A: x~time : 
+  SA@x   --sense atrium  XAX or XDX
+  and A@x   --atrial signal
+  and not TNA@x  --no noise
+--  and ARP_EXPIRED(x)   --not atrial refractory period
+--  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
+--  and PAV_EXPIRED(x)    --not paced AV delay
+--  and SAV_EXPIRED(x)  --not sensed AV delay
+--  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
+  and not FB@x  -- =FB(x)  --not in ATR fallback
+   >>
+
+--ventricular pace 
+--  for DDD, vp! means either
+--  or  either vp or vs occurred max CCI interval ago and not since, 
+--  or ap occurred paced AV delay ago, or
+--  or as occurred sensed AV delay ago
+--    and no ventricular sense or pace
+--    occurred in the previous upper rate limit interval
+<<VP_A: x~time :
+	PACE_ON_MaxCCI(x)  -- (vp or vs) occurred maximum cardiac cycle interval ago
+    or  --ap occurred paced AV delay ago
+    PACE_ON_FIXED_AV_DELAY(x)  
+    or  --as occurred sensed AV delay ago, but not too fast
+    PACE_ON_SAV_DELAY(x) >>    
+    
+<<PACE_ON_MaxCCI: x~time :    --no intrinsic activity, pace at LRL
+  (VP@(x-MAX_CCI) or VS@(x-MAX_CCI))  
+      and --and not since
+      not (exists t~time
+        in (x-MAX_CCI) ,, x  
+        --with a non-refractory ventricular sense or pace
+        that (VS@t or VP@t)) >>
+        
+<<PACE_ON_FIXED_AV_DELAY: x~time :  --track atrial pace
+    AP@(x-AV)
+      and  --there have been no ventricular events in the upper-rate interval
+      not (exists tu~time
+        in (x-MIN_CCI) ,, x 
+        that (VS@tu or VP@tu) ) >>
+        
+<<PACE_ON_SAV_DELAY: x~time :	--track atrial sense
+    AS@(x-(DAV_A()+SAVO)) 
+      and  --there have been no ventricular events in the upper-rate interval
+      not (exists tu~time
+        in (x-MIN_CCI) ,, x 
+        that (VS@tu or VP@tu) ) >>  
+
+--atrial pace
+--  the previous vs or vp occured VA interval perviously
+--    (VA interval = LRL interval - PAV delay)
+--  and there have been no ventricular senses since then
+--  nor atrial pace or sense since LRL
+<<AP_A: x~time :  --time out no activity since last ventricular sense or pace
+    (VP@(x-VA_INTERVAL_A()) or VS@(x-VA_INTERVAL_A()))
+      and --and not since
+      not (exists tv~time
+        in (x-VA_INTERVAL_A()),,x  
+        --with a ventricular or atrial sense
+        that (VS@tv) or VP@tv) 
+      and  --not atrial-sensed since tops
+      not (exists ta~time
+        in tops,,now 
+        that A@ta ) >>
+
+<<VA_INTERVAL_A: returns time := MAX_CCI-DAV_A() >>
+ 
+-- 5.4.4 Extended PVARP_A
+--The Extended PVARP_A works as follows:
+--1. When Extended PVARP_A is enabled, an occurrence of a premature ventricular 
+--  contraction (PVC) shall cause the pulse generator to use the Extended 
+--  PVARP_A value for the post-ventricular atrial refractory period following the PVC.
+--2. The PVARP_A shall always return to its normal programmed value on the subsequent 
+--  cardiac cycle regardless of PVC and other events. At most one PVARP_A extension shall 
+--  occur every two cardiac cycles.
+<<ExPVARP: x~time : 
+  exists t~time
+    in (x-EX_PVARP) ,, x
+    that (VS@t or VP@t) >>
+    
+<<UseExPVARP: x~time : (EX_PVARP>PVARP)   --enabled when extended PVARP is longer than PVARP
+  and PVCinCC(x)    --a PVC occurred last CCI
+  and not XPlastCC(x) >>   --not use extended PVARP_A last cycle
+
+<<PVCinCC: x~time : exists t~time in (x-CCI) ,, x that PVC(t) >>
+
+<<XPlastCC: x~time : exists t~time in (x-MAX_CCI) ,, x that UseExPVARP(t)>>
+
+--4.8.2 Premature Ventricular Contraction (PVC)
+-- A ventricular sense is deemed to be a premature ventricular contraction 
+-- if there has been no atrial event since the previous ventricular event.
+-- PVC occurs when there is a non-refractory ventricular sense at time $x$,
+-- with some time $y$ earlier than $x$ with a ventricular event, but no atrial event since.
+<<PVC: x~time : VS@x  and  --non-refractory ventricular sense
+   (exists y~time which y < x that (VS@y or VP@y)  --with earler v-event
+    and  --with no a-event since
+    not (exists t~time in y..x that (AS@t or AP@t))) >>  
+
+<<LAST_V_WAS_VS: x~time : exists t~time in (x-MAX_CCI) .. x that
+  (VS@t and  --v-sense at time t
+    not (exists t2~time in t,,x that  --no vs or vp since
+     (VS@t2 or VP@t2))) >>  
+
+<<LAST_A_WAS_AS: x~time : exists t~time in (x-MAX_CCI) .. x that
+  (AS@t and  --A-sense at time t
+    not (exists t2~time in t,,x that  --no as or ap since
+    (AS@t2 or AP@t2))) >>  
+
+-- 5.7 Rate-Adaptive Pacing
+-- The device shall have the ability to adjust the cardiac cycle in response 
+--   to metabolic need as measured from body motion using an accelerometer.
+<<SIRi_A: returns time := MAX(a:MSR,b:(LRL- (RESPONSE_FACTOR*(XL-ACTIVITY_THRESHOLD))))>>  --sensor indicated rate interval
+<<Z_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0*(REACTION_TIME-LRL))>>  --up rate smoothing for reaction time (RT)
+<<Y_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0*(RECOVERY_TIME-LRL))>>  --down rate smoothing for recovery time (CT)
+<<UP_SIRi_A: returns time := MAX(a:SIRi_A(), b:(CCI-Z_A() ))>>  --includes reaction time
+<<DN_SIRi_A: returns time := MIN2(a:(CCI+Y_A()), b:SIRi_A() )>>  --includes recovery
+<<MaxCCI: returns time := MIN3(a:HyLRL(now), b:DN_SIRi_A(), c:DOWN_A())>>  
+-- <<MaxCCI: := MIN4(lrl, SIR_MaxCCI(), DOWN(), FB_MaxCCI())>>  
+<<MinCCI: returns time := MAX3(a:URL, b:UP_SIRi_A(), c:UP_A())>>  
+ 
+-- 5.9 Rate Smoothing
+-- Rate Smoothing shall limit the pacing rate change that occurs due to 
+--   precipitous changes in the intrinsic rate.
+-- Two programmable rate smoothing parameters shall be available to allow 
+--   the cardiac cycle interval change to be a percentage of the previous 
+--   cardiac cycle interval:
+-- 1. Rate Smoothing Up
+-- 2. Rate Smoothing Down
+-- The increase in pacing rate shall not exceed the Rate Smoothing Up percentage.
+-- The decrease in pacing rate shall not exceed the Rate Smoothing Down percentage.
+<<DOWN_A: returns time := CCI*(1.0+(DRS/100.0))>>  --convert drs% to real
+<<UP_A: returns time := CCI*(1.0-(URS/100.0))>>  --convert urs% to real
+
+
+
+-- 5.8 Hysteresis Pacing
+-- When enabled, hysteresis pacing shall result in a longer period following a 
+-- sensed event before pacing. This encourages self-pacing during exercise by 
+-- waiting a little longer to pace after senses, hoping that another sense will inhibit the pace.
+-- To use hysteresis pacing:
+-- 1. Hysteresis pacing must be enabled (not Off).
+-- 2. The pacing mode must be inhibiting or tracking.
+-- 3. The current pacing rate must be faster than the Hysteresis Rate Limit (HRL), 
+--    which may be slower than the Lower Rate Limit (LRL).
+-- 4. When in AAI mode, a single, non-refractory sensed atrial event shall activate hysteresis pacing.
+-- 5. When in an inhibiting or tracking mode with ventricular pacing, a single, 
+--    non-refractory sensed ventricular event shall activate hysteresis pacing.
+<<LRL_Hy: x~time : --Lower Rate Limit with Hysteresis
+  exists t~time  --there was a moment
+  in (x-HyLRL(x)) .. x   --within the previous Hysteresis Pacing interval
+  that (VS@t or VP@t) >>  --with a pace or non-refractory sense  
+
+--hystersis LRL value
+<<HyLRL: x~time returns time :=  --lengthen LRL upon VS_A 
+  (if LAST_V_WAS_VS(x) then LRL+HY else LRL) >>  --use Hysteresis Rate Limit if last V was VS_A.
+
+--equivlances of ghost variables and assertions
+<<AXIOM_MAX_CCI: :  MAX_CCI = MaxCCI() >>
+<<AXIOM_MIN_CCI: :  MIN_CCI = MinCCI() >>
+  
+**};
+
+
+end Assertion;

@@ -1,0 +1,165 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sat Jan 16 18:12:39 CST 2021 by brianlarson
+push
+sort-by-component[ATR::AsCounter.imp]
+#[serial 1034] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+make-an
+axioms
+#[serial 1035] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
+axioms
+#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
+normalize
+now
+laws
+axioms
+#[serial 1038] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1039]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
+axioms
+#[serial 1040]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+normalize
+laws
+axioms
+#[serial 1041]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
+reduce
+atomic
+laws
+now
+??
+axioms
+#[serial 1042]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
+reduce
+atomic
+laws
+axioms
+normalize
+push
+#ATR::AsCounter.imp
+#[serial 1143]   normalization of [serial 1127
+make-an
+split@
+normalize
+now
+axioms
+#[serial 1145]   normalization of [serial 1136]
+substitute-post
+normalize
+split-post
+push
+#ATR::AsCounter.imp
+#[serial 1166] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1164
+make-an
+substitute-post
+guided-sub-equals[c]
+guided-sub-equals[et]
+guided-sub-equals[last_as]
+normalize
+counting
+axioms
+#[serial 1167] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1164]
+substitute-post
+guided-sub-equals[et]
+split@
+laws
+axioms
+#[serial 1168] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1164]
+substitute-post
+normalize
+guided-sub-equals[last_as]
+quant
+normalize
+laws
+normalize
+axioms
+#[serial 1147]   normalization of [serial 1137]
+??
+guided-sub-equals[et]
+now
+guided-sub-equals[asCount]
+counting
+now
+laws
+axioms
+#[serial 1149]   normalization of [serial 1140]
+split-post
+axioms
+now
+axioms
+#[serial 1151]   normalization of [serial 1141]
+split-post
+axioms
+now
+axioms
+#[serial 1043]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
+normalize
+axioms
+#[serial 1044]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
+reduce
+atomic
+laws
+normalize
+axioms
+now
+laws
+normalize
+axioms
+??
+axioms
+#[serial 1045]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
+reduce
+normalize
+axioms
+push
+#ATR::AsCounter.imp
+#[serial 1255]   normalization of [serial 1249
+make-an
+split@
+laws
+axioms
+#[serial 1258]   normalization of [serial 1251]
+atomic
+substitute-both
+substitute-both
+normalize
+laws
+normalize
+counting
+normalize
+axioms
+#[serial 1260]   normalization of [serial 1252]
+substitute-both
+normalize
+atomic
+normalize
+split-post
+axioms
+laws
+axioms
+split@
+laws
+now
+axioms
+#[serial 1262]   normalization of [serial 1253]
+atomic
+normalize
+laws
+normalize
+??
+now
+guided-sub-equals[asCount]
+axioms
+substitute-both
+substitute-post
+normalize
+laws
+normalize
+split-post
+axioms
+guided-sub-equals[last_as]
+laws
+normalize
+axioms

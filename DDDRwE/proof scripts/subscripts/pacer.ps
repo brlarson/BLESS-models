@@ -1,0 +1,871 @@
+#pacer  proof script for Pacer.aadl
+push
+sort-by-component[sw::DDD.imp]
+#[serial 1047] <<I>> -> BLESS::Invariant of thread DDD.im
+make-an
+axioms
+#[serial 1048] <<M(pav)>> -> <<I>> from invariant I when complete state pav has Assertion <<M(pav)>> in its definition.
+or-over-and-post
+axioms
+#[serial 1049] <<M(sav)>> -> <<I>> from invariant I when complete state sav has Assertion <<M(sav)>> in its definition.
+or-over-and-post
+axioms
+#[serial 1050] <<M(va)>> -> <<I>> from invariant I when complete state va has Assertion <<M(va)>> in its definition.
+or-over-and-post
+axioms
+#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state pav_check_vrp, <<M(pav_check_vrp)>> -> <<e1 or e2 or . . . en>>
+replace<=
+normalize
+laws
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1052] Serban's Theorem:  disjunction of execute conditions leaving execution state go, <<M(go)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1053] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_vrp, <<M(sav_check_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1054] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atrial_refractories, <<M(check_atrial_refractories)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+cnf
+laws
+normalize
+axioms
+#[serial 1055] Serban's Theorem:  disjunction of execute conditions leaving execution state check_vrp, <<M(check_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+cnf
+laws
+normalize
+axioms
+#[serial 1056] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_url, <<M(sav_check_url)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1057]  <<M(go)>> A <<M(va)>> for T0_GO:go-[ ]->va{A};
+reduce
+axioms
+reduce
+normalize
+reduce
+remove-axioms-post
+normalize
+atomic
+laws
+normalize
+axioms
+split-post
+axioms
+guided-sub-equals[last_ap_or_as]
+guided-sub-equals[last_vp_or_vs]
+laws
+axioms
+substitute-both
+substitute-both
+normalize
+laws
+normalize
+push
+#[serial 1229]   normalization of [serial 1212
+make-an
+replace-port
+laws
+normalize
+now
+axioms
+#[serial 1268]   normalization of [serial 1261]
+split-quant
+quant
+normalize
+axioms
+#[serial 1270]   normalization of [serial 1262]
+sub-equals-and
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1272]   normalization of [serial 1263]
+sub-equals-and
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1290]   normalization of [serial 1283]
+split-post
+guided-sub-equals[last_vp_or_vs]
+normalize
+axioms
+guided-sub-equals[last_ap_or_as]
+axioms
+laws
+normalize
+axioms
+#[serial 1292]   normalization of [serial 1284]
+extend-eqr
+axioms
+#[serial 1058]  <<M(va) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:va-[x]->va{A};
+reduce
+atomic
+remove-axioms-post
+normalize
+laws
+axioms
+normalize
+push
+#[serial 1366]   normalization of [serial 1352
+make-an
+substitute-post
+laws
+split-post
+normalize
+axioms
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+split-quant
+quant
+normalize
+axioms
+substitute-post
+normalize
+split-post
+normalize
+axioms
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 1368]   normalization of [serial 1356]
+substitute-pre
+guided-sub-equals[VP]
+normalize
+split-post
+substitute-post
+normalize
+replace-port
+extend-eqr
+replace-qv
+laws
+normalize
+dist^
+normalize
+axioms
+substitute-post
+normalize
+and-over-or-post
+normalize
+laws
+normalize
+split-post
+normalize
+axioms
+replace-qv
+axioms
+#[serial 1398]   normalization of [serial 1386]
+replace-port
+laws
+normalize
+axioms
+#[serial 1400]   normalization of [serial 1391]
+split-post
+axioms
+substitute-pre
+laws
+axioms
+#[serial 1402]   normalization of [serial 1393]
+split-post
+axioms
+replace-port
+axioms
+#[serial 1059]  <<M(sav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:sav-[x]->va{A};
+reduce
+atomic 
+normalize
+laws
+normalize
+remove-axioms-post
+normalize
+laws
+axioms
+split-post
+axioms
+substitute-post
+normalize
+split-post
+distribute
+normalize
+axioms
+push
+#[serial 1565]   normalization of [serial 1555
+make-an
+replace-port
+substitute-pre
+normalize
+guided-sub-equals[VP]
+substitute-post
+normalize
+laws
+split-post
+normalize
+push
+#[serial 1691]   normalization of [serial 1688
+make-an
+split@
+replace-port
+normalize
+extend-eqr
+replace-qv
+axioms
+#[serial 1693]   normalization of [serial 1689]
+substitute-post
+split@
+normalize
+axioms
+#[serial 1596]   normalization of [serial 1584]
+replace-port
+laws
+normalize
+axioms
+#[serial 1646]   normalization of [serial 1636]
+split-quant
+quant
+normalize
+axioms
+#[serial 1656] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1644]
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1660] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1634]
+replace-port
+split@
+split-quant
+normalize
+axioms
+#[serial 1661] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1648]
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 1662] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1657]
+substitute-pre
+substitute-pre
+split@
+split-quant
+normalize
+laws
+axioms
+#[serial 1669]   normalization of [serial 1658]
+substitute-pre
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1671]   normalization of [serial 1659]
+replace-port
+split@
+axioms
+#[serial 1060]  <<M(pav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:pav-[x]->va{A};
+reduce
+atomic 
+normalize
+laws
+normalize
+remove-axioms-post
+normalize
+laws
+axioms
+split-post
+axioms
+substitute-post
+normalize
+split-post
+distribute
+normalize
+axioms
+push
+#[serial 1775]   normalization of [serial 1765
+make-an
+#[serial 1806]   normalization of [serial 1794
+make-an
+replace-port
+laws
+normalize
+axioms
+substitute-pre
+normalize
+guided-sub-equals[VP]
+substitute-post
+normalize
+laws
+split-post
+normalize
+push
+#[serial 1907]   normalization of [serial 1904
+make-an
+split@
+replace-port
+normalize
+extend-eqr
+replace-qv
+axioms
+#[serial 1909]   normalization of [serial 1905]
+substitute-post
+split@
+normalize
+axioms
+#[serial 1856]   normalization of [serial 1846]
+split-quant
+quant
+normalize
+axioms
+#[serial 1866] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1854]
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1870] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1844]
+replace-port
+split@
+split-quant
+normalize
+axioms
+#[serial 1871] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1858]
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 1872] Distribution of preconditions, and over or, and distribution of postcondtitions, or over and [serial 1867]
+substitute-pre
+substitute-pre
+split@
+split-quant
+normalize
+laws
+axioms
+#[serial 1879]   normalization of [serial 1868]
+substitute-pre
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1881]   normalization of [serial 1869]
+replace-port
+split@
+axioms
+#[serial 1061]  <<M(sav) and x>> -> <<M(sav_check_vrp)>> for T2_VS_AFTER_AS:sav-[x]->sav_check_vrp{};
+laws
+normalize
+axioms
+#[serial 1062]  <<M(sav_check_vrp) and x>> -> <<M(sav)>> for T4_VS_AFTER_AS_IN_VRP:sav_check_vrp-[x]->sav{};
+axioms
+#[serial 1063]  <<M(sav_check_vrp) and x>> A <<M(va)>> for T5_VS_AFTER_AS_AFTER_VRP:sav_check_vrp-[x]->va{A};
+reduce
+atomic 
+normalize
+laws
+normalize
+axioms
+remove-axioms-post
+laws
+axioms
+split-post
+substitute-post
+normalize
+axioms
+split-post
+normalize
+axioms
+push
+#[serial 1988]   normalization of [serial 1978
+make-an
+substitute-pre
+normalize
+laws
+guided-sub-equals[VS]
+normalize
+substitute-post
+axioms
+#[serial 2019]   normalization of [serial 2007]
+replace-port
+laws
+normalize
+axioms
+#[serial 2044]   normalization of [serial 2035]
+split-quant
+quant
+normalize
+axioms
+#[serial 2046]   normalization of [serial 2036]
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 2057] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2042]
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 2058] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2048]
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 2068]   normalization of [serial 2059]
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1064]  <<M(sav) and x>> -> <<M(sav_check_url)>> for T6_EXPIRED_SENSED_AV_DELAY:sav-[x]->sav_check_url{};
+laws
+normalize
+split-post
+axioms
+replace-port
+normalize
+laws
+normalize
+axioms
+#[serial 1065]  <<M(sav_check_url) and x>> -> <<M(sav)>> for T7_TRACKED_VP_TOO_SOON_AFTER_PREVIOUS_VS_OR_VP:sav_check_url-[x]->sav{};
+axioms
+#[serial 1066]  <<M(sav_check_url) and x>> A <<M(va)>> for T8_TRACKED_VP_AFTER_AS:sav_check_url-[x]->va{A};
+reduce
+atomic 
+normalize
+laws
+normalize
+axioms
+remove-axioms-post
+normalize
+laws
+axioms
+split-post
+axioms
+push
+make-an
+#[serial 2156]   normalization of [serial 2146]
+substitute-pre
+guided-sub-equals[VP]
+normalize
+substitute-post
+split-post
+normalize
+laws
+axioms
+substitute-post
+normalize
+axioms
+#[serial 2185]   normalization of [serial 2174]
+replace-port
+laws
+normalize
+axioms
+#[serial 2204] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2154]
+substitute-post
+normalize
+split-quant
+quant
+normalize
+axioms
+#[serial 2205] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2154]
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 2208] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2201]
+substitute-post
+normalize
+push
+make-an
+#[serial 2252]   normalization of [serial 2250]
+split-post
+push
+make-an
+#[serial 2254] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2252]
+replace-port
+normalize
+axioms
+#[serial 2255] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2252]
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+split@
+normalize
+replace-port
+extend-eqr
+replace-qv
+axioms
+#[serial 1067]  <<M(pav) and x>> -> <<M(pav_check_vrp)>> for T9_VS_AFTER_AP:pav-[x]->pav_check_vrp{};
+laws
+axioms
+#[serial 1068]  <<M(pav_check_vrp) and x>> -> <<M(pav)>> for T10_VS_AFTER_AP_IN_VRP:pav_check_vrp-[x]->pav{};
+axioms
+#[serial 1069]  <<M(pav_check_vrp) and x>> A <<M(va)>> for T11_VS_AFTER_AP_AFTER_VRP:pav_check_vrp-[x]->va{A};
+reduce
+reduce
+reduce
+remove-axioms-post
+laws
+normalize
+push
+make-an
+#[serial 2297]   normalization of [serial 2279]
+split-post
+push
+make-an
+#[serial 2317] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2297]
+substitute-post
+normalize
+axioms
+#[serial 2318] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2297]
+substitute-post
+normalize
+split-quant
+quant
+normalize
+axioms
+#[serial 2319] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2297]
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+#[serial 2299]   normalization of [serial 2283]
+split-post
+axioms
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 2301]   normalization of [serial 2291]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 2303]   normalization of [serial 2292]
+split-post
+axioms
+substitute-pre
+laws
+axioms
+#[serial 2305]   normalization of [serial 2293]
+atomic
+laws
+axioms
+substitute-pre
+guided-sub-equals[VS]
+normalize
+laws
+substitute-post
+axioms
+#[serial 2307]   normalization of [serial 2294]
+atomic
+laws
+axioms
+replace-port
+laws
+normalize
+axioms
+#[serial 2309]   normalization of [serial 2295]
+atomic
+laws
+axioms
+#[serial 1070]  <<M(va) and x>> -> <<M(check_atrial_refractories)>> for T12_AS_AFTER_VS_OR_VP:va-[x]->check_atrial_refractories{};
+laws
+axioms
+#[serial 1053]  <<M(check_atrial_refractories) and x>> A <<M(sav)>> for T13_AS:check_atrial_refractories-[x]->sav{A};
+reduce
+laws
+normalize
+atomic
+laws
+normalize
+remove-axioms-post
+laws
+axioms
+push
+make-an
+#[serial 2393]   normalization of [serial 2387]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+split-quant
+normalize
+quant
+normalize
+axioms
+#[serial 2404] applied port output <<pre>> -> <<M[as]>> [serial 2395]
+substitute-pre
+laws
+guided-sub-equals[AS]
+normalize
+substitute-post
+normalize
+axioms
+#[serial 2416]   normalization of [serial 2409]
+substitute-pre
+laws
+axioms
+#[serial 2421] Law of And-Simplification:  P and true is P [serial 2419]
+split-post
+axioms
+push
+make-an
+#[serial 2455] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2421]
+substitute-post
+normalize
+axioms
+#[serial 2456] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2421]
+substitute-pre
+laws
+axioms
+[serial 1054]  <<M(check_atrial_refractories) and x>> A <<M(sav)>> for T14_AS_AT:check_atrial_refractories-[x]->sav{A};
+reduce
+atomic
+remove-axioms-post
+normalize
+laws
+axioms
+normalize
+push
+#[serial 2477]   normalization of [serial 2464
+make-an
+substitute-pre
+laws
+split-post
+push
+#[serial 2515] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2514
+make-an
+substitute-post
+normalize
+axioms
+#[serial 2516] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2514]
+substitute-post
+axioms
+#[serial 2517] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2514]
+substitute-post
+split-quant
+normalize
+laws
+quant
+normalize
+axioms
+#[serial 2479]   normalization of [serial 2468]
+substitute-pre
+guided-sub-equals[AS]
+substitute-post
+normalize
+axioms
+#[serial 2481]   normalization of [serial 2470]
+substitute-pre
+guided-sub-equals[AT]
+substitute-post
+normalize
+axioms
+#[serial 2508]   normalization of [serial 2501]
+split-post
+axioms
+push
+make-an
+#[serial 2546] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2508]
+substitute-post
+normalize
+axioms
+#[serial 2549] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2508]
+now
+replace-port
+axioms
+#[serial 2510]   normalization of [serial 2502]
+split-post
+axioms
+substitute-post
+normalize
+split-post
+axioms
+replace-port
+axioms
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+split@
+axioms
+#[serial 1073]  <<M(check_atrial_refractories) and x>> -> <<M(va)>> for T15_STILL_IN_PVARP:check_atrial_refractories-[x]->va{};
+split-post
+split-post
+axioms
+#[serial 1074]  <<M(va) and x>> -> <<M(check_vrp)>> for T16_VS_AFTER_VS_OR_VP:va-[x]->check_vrp{};
+laws
+axioms
+#[serial 1075]  <<M(check_vrp) and x>> -> <<M(va)>> for T17_STILL_IN_VRP:check_vrp-[x]->va{};
+axioms
+#[serial 1076]  <<M(check_vrp) and x>> A <<M(va)>> for T18_VRP_EXPIRED:check_vrp-[x]->va{A};
+reduce
+atomic
+remove-axioms-post
+laws
+normalize
+laws
+axioms
+push
+make-an
+#[serial 2602]   normalization of [serial 2585]
+split-post
+axioms
+substitute-post
+guided-sub-equals[last_vp_or_vs]
+laws
+normalize
+axioms
+split-quant
+quant
+normalize
+axioms
+#[serial 2604]   normalization of [serial 2589]
+substitute-pre
+guided-sub-equals[VS]
+substitute-post
+normalize
+laws
+axioms
+#[serial 2608]   normalization of [serial 2596]
+split-post
+axioms
+now
+axioms
+#[serial 2610]   normalization of [serial 2597]
+replace-port
+laws
+normalize
+axioms
+#[serial 2614]   normalization of [serial 2600]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1077]  <<M(va) and x>> A <<M(pav)>> for T19_AP_AFTER_TIMEOUT_VS_OR_VP:va-[x]->pav{A};
+reduce
+reduce
+reduce
+normalize
+remove-axioms-post
+laws
+normalize
+push
+#[serial 2675]   normalization of [serial 2664
+make-an
+split-post
+axioms
+substitute-post
+normalize
+quant
+axioms
+#[serial 2679]   normalization of [serial 2668]
+axioms
+#[serial 2681]   normalization of [serial 2669]
+split-post
+axioms
+replace-qv
+axioms
+#[serial 2683]   normalization of [serial 2670]
+atomic
+laws
+normalize
+split-post
+axioms
+push
+#[serial 2721] applied port output <<pre>> -> <<M[ap]>> [serial 2683
+make-an
+substitute-pre
+guided-sub-equals[AP]
+normalize
+laws
+normalize
+laws
+substitute-post
+normalize
+axioms
+#[serial 2730] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2726]
+replace-qv
+axioms
+#[serial 2685]   normalization of [serial 2671]
+atomic
+laws
+normalize
+axioms
+#[serial 2696] Law of And-Simplification:  P and true is P [serial 2694]
+split-post
+axioms
+push
+#[serial 2753] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2696
+make-an
+substitute-post
+normalize
+split-post
+axioms
+substitute-pre
+normalize
+guided-sub-equals[VA_INTERVAL_A()]
+split@
+axioms
+normalize
+laws
+axioms
+#[serial 2705]   normalization of [serial 2697]
+split-post
+axioms
+push
+make-an
+#[serial 2780] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2705]
+replace-port
+axioms
+#[serial 2783] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2705]
+replace-qv
+axioms
+#[serial 2784] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2705]
+replace-port
+replace-qv
+axioms
+#[serial 1078]  <<M(sav) and x>> -> <<M(off)>> for T20_STOP:sav-[x]->off{};
+axioms
+#[serial 1079]  <<M(pav) and x>> -> <<M(off)>> for T20_STOP:pav-[x]->off{};
+axioms
+#[serial 1080]  <<M(va) and x>> -> <<M(off)>> for T20_STOP:va-[x]->off{};
+axioms

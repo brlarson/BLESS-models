@@ -1,0 +1,50 @@
+--Mark.aadl
+
+
+package mark
+public
+with BLESS, BLESS_Types, PACE_data;
+
+flag renames data BLESS_Types::flag;
+ms renames data PACE_data::ms;
+
+thread Markers
+  features
+		tna: in data port flag;  --A-channel noise
+  tnv: in data port flag;  --V-channel noise
+  cci: in data port ms  --most recent cardiac cycle interval
+    {BLESS::Assertion=>"<<:=CCI>>";};
+  mark_A: out data port;	--atrial marker to telemetry and history
+  mark_V: out data port;	--ventricular marker to telemetry and history
+  mark_X: out data port;	--extra-line marker to telemetry and history
+--  telem: in out data port;
+  ap: in event port	--pace atrium 
+    {BLESS::Assertion=>"<<AP>>";};
+  vp: in event port	--pace ventricle, but not too soon 
+    {BLESS::Assertion=>"<<VP>>";};
+  --sense markers
+  as: in event port --non-refractory atrial sense
+    {BLESS::Assertion=>"<<AS>>";};
+  at: in event port --non-refractory atrial sense above URL
+    {BLESS::Assertion=>"<<AT>>";};
+  vs: in event port	--non-refractory ventricular sense
+    {BLESS::Assertion=>"<<VS>>";};
+  pvc: in event port  --premature ventricular contraction
+    {BLESS::Assertion=>"<<PVC(now)>>";};
+  --refractory sense markers
+  ras: in event port --refractory atrial sense
+    {BLESS::Assertion=>"<<RAS(now)>>";};
+  rvs: in event port	--refractory ventricular sense
+    {BLESS::Assertion=>"<<RVS(now)>>";};
+		atr_dct: in event port  --ATR detection met
+    {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
+  atr_fb: in event port   --start fall-back to VVI; marker ATR-FB
+    {BLESS::Assertion=>"<<FB_START>>";};
+  atr_end: in event port  --resume DDD; marker ATR-End
+    {BLESS::Assertion=>"<<ATR_END(now)>>";};
+	end Markers;
+
+thread implementation Markers.imp
+end Markers.imp;
+
+end mark;

@@ -1,0 +1,87 @@
+package MinMax
+--minimum and maximum functions
+public
+  with BLESS_Types,BLESS;
+
+annex Assertion
+{**
+<<MIN2:a~time, b~time returns time := (if a<=b then a else b)>>
+<<MIN3:a~time, b~time, c~time returns time := (case (a<=b and a<=c -> a) (b<=a and b<=c -> b) (c<=a and c<=b -> c) )>>
+<<MAX:a~time, b~time returns time := (if a>=b then a else b)>>
+<<MAX3:a~time, b~time, c~time returns time := (case (a>=b and a>=c -> a) (b>=a and b>=c -> b) (c>=a and c>=b -> c) )>>
+**};
+
+
+subprogram minimum
+features
+  a: in parameter BLESS_Types::Time;
+  b: in parameter BLESS_Types::Time;
+  result: out parameter BLESS_Types::Time
+    {BLESS::Assertion=>"<<:=MIN(a:a,b:b)>>";};
+annex Action
+{**
+post <<result=MIN2(a:a,b:b)>>
+  {
+    <<true>>
+  result := (a<=b ?? a : b)   --((a<=b) -> a, (b<=a) -> b)  
+    <<result=MIN2(a:a,b:b)>>
+  }	
+**};  
+end minimum;
+
+--subprogram minimum3
+--features
+--  a: in parameter BLESS_Types::Real;
+--  b: in parameter BLESS_Types::Real;
+--  c: in parameter BLESS_Types::Real;
+--  result: out parameter BLESS_Types::Real
+--    {BLESS::Assertion=>"<<:=MIN3(a:a,b:b,c:c)>>";};
+--annex Action
+--{**
+--post <<result=MIN3(a:a,b:b,c:c)>>
+--  {
+--    <<true>>
+--  result := MinMax::minimum(a:a,b:MinMax::minimum(a:c,b:b))
+--	<<result=MIN3(a:a,b:b,c:c)>>
+--  }	
+--**};  
+--end minimum3;
+--
+--subprogram maximum
+--features
+--  a: in parameter BLESS_Types::Real;
+--  b: in parameter BLESS_Types::Real;
+--  result: out parameter BLESS_Types::Real
+--    {BLESS::Assertion=>"<<:=MAX(a:a,b:b)>>";};
+--annex Action
+--{**
+--post <<result=MAX(a:a,b:b)>>
+--  {
+--    <<true>>
+--  result := (a>=b ?? a : b) --((a>=b) -> a, (b>=a) -> b) 
+--    <<result=MAX(a:a,b:b)>> 
+--  }	
+--**};  
+--end maximum;
+--
+--
+--subprogram maximum3
+--features
+--  a: in parameter BLESS_Types::Real;
+--  b: in parameter BLESS_Types::Real;
+--  c: in parameter BLESS_Types::Real;
+--  result: out parameter BLESS_Types::Real
+--    {BLESS::Assertion=>"<<:=MAX3(a:a,b:b,c:c)>>";};
+--annex Action
+--{**
+--post <<result=MAX3(a:a,b:b,c:c)>>
+--  {
+--    <<true>>
+--    result := MinMax::maximum(a:a,b:MinMax::maximum(a:c,b:b))
+--    <<result=MAX3(a:a,b:b,c:c)>>
+--  }	
+--**};  
+--end maximum3;
+
+	
+end MinMax;

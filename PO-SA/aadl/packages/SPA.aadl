@@ -114,7 +114,7 @@ annex BLESS
     	(totalSpO2=(sum k~quantity whole in lb..ub of SSQ(k-ub))) and
     	(goodCount=(numberof k~quantity whole in lb..ub 
       	  that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub)))) and
-      	(all k~quantity whole in lb..ub 
+      (all k~quantity whole in lb..ub 
     	  are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples] iff
     	   (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub)))>>
       ;

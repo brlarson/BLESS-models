@@ -1,0 +1,109 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sun Jan 24 19:34:05 CST 2021 by brianlarson
+push
+sort-by-component[rc::RateController.normal]
+#[serial 1013] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+make-an
+axioms
+#[serial 1014] Serban's Theorem:  disjunction of execute conditions leaving execution state first_rate, <<M(first_rate)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1015] Serban's Theorem:  disjunction of execute conditions leaving execution state check_zero_division, <<M(check_zero_division)>> -> <<e1 or e2 or . . . en>>
+replace<>
+cnf
+laws
+normalize
+axioms
+#[serial 1016]  <<M(first_rate)>> -> <<M(wait)>> for RC0_init:first_rate-[ ]->wait{};
+axioms
+#[serial 1017]  <<M(wait) and x>> -> <<M(check_zero_division)>> for RC1_cci:wait-[x]->check_zero_division{};
+axioms
+#[serial 1018]  <<M(check_zero_division) and x>> -> <<M(err)>> for RC2_zero:check_zero_division-[x]->err{};
+axioms
+#[serial 1019]  <<M(check_zero_division) and x>> A <<M(wait)>> for RC3_nonzero:check_zero_division-[x]->wait{A};
+reduce
+reduce
+reduce
+reduce
+axioms
+atomic
+normalize
+axioms
+remove-axioms-post
+replace-port
+laws
+normalize
+now
+split-post
+axioms
+push
+#[serial 1244]   normalization of [serial 1212
+make-an
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1244]   normalization of [serial 1212]
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1282] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+substitute-post
+substitute-post
+guided-sub-equals[dn_siri]
+guided-sub-equals[y]
+guided-sub-equals[siri]
+normalize
+substitute-post
+normalize
+laws
+axioms
+#[serial 1283] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[down]
+substitute-post
+normalize
+laws
+axioms
+#[serial 1284] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[hylrl]
+substitute-post
+substitute-post
+normalize
+laws
+axioms
+#[serial 1285] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+substitute-post
+substitute-post
+guided-sub-equals[siri]
+normalize
+laws
+axioms
+#[serial 1286] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[up]
+substitute-post
+normalize
+laws
+axioms
+#[serial 1287] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[up_siri]
+substitute-post
+substitute-post
+normalize
+guided-sub-equals[siri]
+guided-sub-equals[z]
+substitute-post
+normalize
+laws
+axioms
+#[serial 1288] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[y]
+substitute-post
+normalize
+laws
+axioms
+#[serial 1289] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1272]
+guided-sub-equals[z]
+substitute-post
+normalize
+laws
+axioms

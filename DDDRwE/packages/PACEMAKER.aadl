@@ -1,0 +1,122 @@
+package PACEMAKER
+public
+with BLESS, BLESS_Types, --Base_Types, sw, 
+  PACE_data, PGprocess;
+T renames data BLESS_Types::Time;
+flag renames data BLESS_Types::flag;
+milliG renames data PACE_data::milliG;
+
+system PG
+--the pulse generator, connects to atrial and ventricular leads through header
+--talks with DCM through RF or inductive coupling
+features
+  toDCM : requires bus access;  --inductive or rf link between PG and DCM
+  A_lead : requires bus access;  --lead to right atrium
+  V_lead : requires bus access;  --lead to right ventricle
+end PG;
+
+system implementation PG.imp
+--contains susbsystems for analog front-end, telemetry, and history
+--the process holds all the threads
+--full model will have (physical) processor, memory, and buses 
+--just logical (software) architecture for now.
+  subcomponents
+    front_end : system front_end.imp;
+    telemetry : system Telemetry.imp;
+    history : system History.imp;
+    DDD : process PGprocess::pg_process.imp;
+    accelerometer : device accelerometer.imp;
+    hall : device HallEffect.imp;
+  connections
+    --header to front-end
+    abus : bus access A_lead <-> front_end.A_lead;
+    vbus : bus access V_lead <-> front_end.V_lead;
+    --telemetry
+  	tbus : bus access toDCM <-> telemetry.toDCM;
+  	ts : port telemetry.settings <-> DDD.settings;
+  	th : port telemetry.episodes <-> history.episodes;
+    --front end to pg_process
+    asig : port front_end.a -> DDD.a;  --atrial signal
+    vsig : port front_end.v -> DDD.v;  --ventricular signal
+    anoise : port front_end.tna -> DDD.tna;  --atrial noise detected
+    vnoise : port front_end.tnv -> DDD.tnv;  --ventricular noise detected
+    --markers
+    amarkt : port DDD.mark_A -> telemetry.mark_A;
+    vmarkt : port DDD.mark_V -> telemetry.mark_V;
+    xmarkt : port DDD.mark_X -> telemetry.mark_X;
+    amarkh : port DDD.mark_A -> history.mark_A;
+    vmarkh : port DDD.mark_V -> history.mark_V;
+    xmarkh : port DDD.mark_X -> history.mark_X;
+    --pg_process to front end
+    pa : port DDD.ap -> front_end.ap;
+    pv : port DDD.vp -> front_end.vp;
+    --XL
+    axl : port accelerometer.xl -> DDD.xl;
+    --Hall-effect switch
+    hes: port hall.magnet -> DDD.magnet;
+  properties
+  	BLESS::Invariant => "<<LRL_A(now)>>";  
+end PG.imp;
+
+--analog front end connects to leads, filters heart signals, delivers paces, and detects noise
+system front_end
+  features
+	A_lead : requires bus access;
+	V_lead : requires bus access;
+	a : out event port;  --atrial signal
+	v : out event port;  --ventricular signal
+	tna : out data port flag;  --noise A-channel
+	tnv : out data port flag;  --noise V-channel
+	ap : in event port	--pace atrium 
+      {BLESS::Assertion=>"<<AP>>";};
+	vp : in event port	--pace ventricle, but not too soon 
+      {BLESS::Assertion=>"<<VP>>";};
+end front_end;
+
+system implementation front_end.imp
+end front_end.imp;
+
+system Telemetry
+  features
+    toDCM : requires bus access;
+    mark_A : in data port;
+    mark_V : in data port;
+    mark_X : in data port;
+    episodes : in out data port; --to history
+    settings : in out data port;  --to settings
+end Telemetry;
+
+system implementation Telemetry.imp
+end Telemetry.imp;
+
+system History
+  features
+    mark_A : in data port;
+    mark_V : in data port;
+    mark_X : in data port;
+    episodes : in out data port;  --to telemetry
+end History;
+
+system implementation History.imp
+end History.imp;
+
+device accelerometer
+  features
+    xl : out data port milliG;  --measure current motion
+end accelerometer;
+
+device implementation accelerometer.imp
+end accelerometer.imp;
+
+--Hall-effect switch detects doughnut magnet
+device HallEffect
+  features
+    magnet : out data port flag;  --magnet mode
+end HallEffect;
+
+device implementation HallEffect.imp
+end HallEffect.imp;
+
+
+
+end PACEMAKER;

@@ -1,0 +1,46 @@
+--PACE_Data.aadl
+--data components used by PACEMAKER
+
+package PACE_Data
+public
+with BLESS;
+
+annex Unit {**
+	extension mpss, <gravity> G / 9.8, <milliG> milliG / 9.8e-3 ;
+	s s s / m [response factor] ssspm, <ms per milliG> rf / 9.8 ;
+**};
+
+-------DATA------------
+data ms  --millisecond 
+  properties
+  BLESS::Typed=>"quantity ms";
+end ms;
+
+data milliG  --thousandth of Earth's gravity 
+properties
+    BLESS::Typed=>"quantity milliG";
+end milliG;
+
+data ResponseFactor  --to motion
+--integer 1 to 16
+  properties
+    BLESS::Typed=>"quantity whole [1 .. 16]";
+end ResponseFactor;
+
+data PacingMode  --pacing modes NO TRIGGER PACING
+  properties
+    BLESS::Typed=>
+  "enumeration(Off DD VDD DDI DOO AOO AAI VOO VVI DDDR VDDR DDIR DOOR AOOR AAIR VOOR VVIR) ";
+end PacingMode;
+
+data CCcount
+  properties
+    BLESS::Typed=>"quantity whole";
+end CCcount;
+
+data percent
+  properties
+  BLESS::Typed=>"quantity scalar";
+end percent;
+
+end PACE_data;
