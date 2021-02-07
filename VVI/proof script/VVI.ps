@@ -1,7 +1,4 @@
 #VVI.ps
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Sun Jan 10 14:11:56 CST 2021 by brianlarson
-#vvi_mode::VVI.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
 make-an
 substitute-both
@@ -33,100 +30,55 @@ laws
 axioms
 #[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
 reduce
+axioms
 atomic
 laws
-axioms
-substitute-post
 normalize
-split-post
 axioms
-replace-qv
-quant
-axioms
-equivalent
-equivalent
-axioms
-#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
-axioms
-#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
-axioms
-#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
-substitute-both
-normalize
-laws
-normalize
-reduce
-atomic
-laws
-axioms
-load
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
-substitute-both
-split-quant
-load
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
-#vvi_mode::VVI.i
-#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
+push
+#[serial 1057]   normalization of [serial 1049
 make-an
 substitute-post
 normalize
-axioms
-substitute-pre
-split-quant
-normalize
-axioms
-#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
-substitute-pre
-split-quant
-normalize
-axioms
-#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
-normalize
-replace<=
-normalize
-laws
-axioms
-#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
-normalize
-substitute-pre
-normalize
-replace<=
-normalize
-laws
-axioms
-#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
-reduce
-atomic
-normalize
-laws
-axioms
-substitute-post
-equivalent
-normalize
 split-post
+equivalent
 axioms
 normalize
 quant
+axioms
+#[serial 1061]   normalization of [serial 1053]
+replace-port
+normalize
 axioms
 #[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
 axioms
 #[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
 axioms
 #[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
-reduce
-atomic
+substitute-both
 normalize
 laws
+normalize
+reduce
+atomic
+laws
 axioms
+normalize
+split-post
+normalize
+push
+make-an
+#[serial 1092] P -> P1 in concurrent composition for [serial 1090]
 substitute-post
 normalize
 axioms
-equivalent
-split-post
+#[serial 1104]   normalization of [serial 1097]
+replace-port
 axioms
-normalize
+#[serial 1107] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1102]
+equivalent
+axioms
+#[serial 1113]   normalization of [serial 1108]
 quant
 axioms
 #[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
@@ -140,33 +92,59 @@ atomic
 laws
 normalize
 axioms
-substitute-post
-substitute-pre
+push
+make-an
+#[serial 1134]   normalization of [serial 1125]
 substitute-post
 normalize
-laws
-equivalent
 split-post
 axioms
+substitute-post
+normalize
+split-post
+axioms
+substitute-pre
 split@
 normalize
+laws
 axioms
+#[serial 1136]   normalization of [serial 1126]
+substitute-post
+normalize
+split-post
+equivalent
+axioms
+normalize
 quant
+axioms
+#[serial 1140]   normalization of [serial 1130]
+replace-port
+normalize
 axioms
 #[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
 reduce
-normalize
 atomic
 laws
+normalize
+laws
 axioms
+push
+make-an
+#[serial 1193]   normalization of [serial 1183]
 substitute-post
 normalize
-axioms
 equivalent
 split-post
-axioms
 normalize
+axioms
 quant
+axioms
+#[serial 1196]   normalization of [serial 1187]
+replace-port
+axioms
+#[serial 1203] Associativity: (b.c).a = a.b.c [serial 1191]
+substitute-post
+normalize
 axioms
 #[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
 normalize
@@ -176,22 +154,35 @@ axioms
 #[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
 reduce
 atomic
-normalize
 laws
+normalize
+axioms
+push
+make-an
+#[serial 1236]   normalization of [serial 1227]
+substitute-post
+normalize
+split-post
 axioms
 substitute-post
+normalize
+split-post
+axioms
 substitute-pre
-substitute-post
-normalize
-equivalent
-split-post
-axioms
-normalize
-quant
-split-post
 split@
 normalize
-axioms
 laws
 axioms
-#Q.E.D.
+#[serial 1238]   normalization of [serial 1228]
+substitute-post
+equivalent
+normalize
+split-post
+axioms
+quant
+normalize
+axioms
+#[serial 1242]   normalization of [serial 1232]
+replace-port
+normalize
+axioms
