@@ -1,0 +1,8 @@
+property set CTCS_Properties is
+
+--with  AADL_Project;
+MAsize : aadlinteger =>3 applies to (all) ;
+start : aadlreal => 0.0 applies to (all) ;
+SB_Rate : aadlreal =>-0.8 applies to (all);
+EB_Rate: aadlinteger =>1 applies to (all);
+end CTCS_Properties;

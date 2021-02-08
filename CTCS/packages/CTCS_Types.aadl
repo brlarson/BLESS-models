@@ -1,0 +1,102 @@
+package CTCS_Types
+public
+with -- Data_Model, Base_Types, BLESS_Types, 
+  BLESS, CTCS_Properties;
+
+annex Typedef
+	{**
+	type trainModes is enumeration (FS CO)	
+	type segment is record (
+ 	  v1 :  quantity kph
+ 	  v2 :  quantity kph
+    e :   quantity m
+    m:    trainModes )
+  type movementAuthority is array[#CTCS_Properties::MAsize] of segment
+	**};
+
+annex Assertion
+	{**
+	ghost variables
+	  def IMA ~ movementAuthority
+	  def POSITION ~ quantity m
+	  def VELOCITY ~ quantity kph
+	**};
+
+Data Position
+end Position;
+
+Data DMI_Message
+end DMI_Message;
+
+Data Velocity
+Properties
+  BLESS::Typed => "quantity kph";
+--Data_Model::Data_Representation => Float;
+--Data_Model::Measurement_Unit => "km/h";
+end Velocity;
+
+Data Acceleration
+Properties
+  BLESS::Typed => "quantity mpss";
+end Acceleration;
+
+Data Time --extends Base_Types::Float
+Properties
+  BLESS::Typed => "quantity s";
+end Time;
+
+
+Data Deceleration
+Properties
+  BLESS::Typed => "quantity mpss";
+end Deceleration;
+
+Data RBC_Permission
+end RBC_Permission;
+
+Data LUA
+end LUA;
+
+Data LU
+end LU;
+
+--Data MA_Size --number of segments in MA
+--properties
+--  BLESS::Typed => "quantity whole";
+----Data_Model::Data_Representation =>Integer;
+----Data_Model::Initial_Value => ("3");
+--end MA_Size;
+
+Data DriverConfirmation
+end DriverConfirmation;
+
+Data ModeTypes
+properties
+  BLESS::Typed=> "trainModes";
+--  Data_Model::Data_Representation => Enum;
+--  Data_Model::Enumerators => ("FS","CO");    
+end ModeTypes;
+
+Data MA_Request
+end MA_Request;
+
+Data EOA
+end EOA;
+------------------------------------------MA with Segments-------------------
+Data Segment
+properties
+   BLESS::Typed => "segment";
+--Data_Model::Data_Representation =>Struct;
+--Data_Model::Element_Names =>  (	"v1", "v2", "e","m");
+-- Data_Model::Base_Type => (classifier(Velocity), classifier(Velocity), classifier(Position), classifier(ModeTypes));
+end Segment;
+
+Data MovementAuthority
+properties
+BLESS::Typed => "movementAuthority";
+--Data_Model::Data_Representation => Array;
+--Data_Model::Base_Type => (classifier (CTCS_Types::Segment));
+--Data_Model::Dimension => (CTCS_Properties::MAsize); --number of segments, 3 in our example
+end MovementAuthority;
+
+end CTCS_Types;

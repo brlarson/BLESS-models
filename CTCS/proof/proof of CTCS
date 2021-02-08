@@ -1,0 +1,6217 @@
+
+Theorem (1)                               [serial 1003] 
+P [121] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [107] ->
+Q [107] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (2)                               [serial 1004] 
+P [124] <<SBL() and DSPV2()>>
+S [107] ->
+Q [107] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (3)                               [serial 1005] 
+P [126] <<not SBL() or not DSPV2()>>
+S [107] ->
+Q [107] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (4)                               [serial 1006] 
+P [128] <<not EBL() or not DSPV1()>>
+S [107] ->
+Q [107] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (5)                               [serial 1025] 
+P [127] <<not SBL() or not DSPV2()>>
+S [127] ->
+Q [127] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (6)                               [serial 1007] 
+P [127] <<not SBL() or not DSPV2()>>
+S [127] ->
+Q [127] <<(((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))
+or (not (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))))>>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 5:
+Theorem (5) [serial 1025] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1007]
+ 
+
+
+Theorem (7)                               [serial 1027] 
+P [125] <<SBL() and DSPV2()>>
+S [125] ->
+Q [125] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (8)                               [serial 1026] 
+P [125] <<SBL() and DSPV2()>>
+S [125] ->
+Q [125] <<not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))
+or ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))
+or not (v < iSeg.v1)
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 7:
+Theorem (7) [serial 1027] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1026]
+ 
+
+
+Theorem (9)                               [serial 1008] 
+P [125] <<SBL() and DSPV2()>>
+S [125] ->
+Q [125] <<(not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))
+or (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))
+or (not (v < iSeg.v1)
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+by Associativity: (b.c).a = a.b.c
+and theorem 8:
+Theorem (8) [serial 1026] used for:
+  Associativity: (b.c).a = a.b.c [serial 1008]
+ 
+
+
+Theorem (10)                               [serial 1009] 
+P [123] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [123] ->
+Q [123] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (11)                               [serial 1028] 
+P [122] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [122] ->
+Q [122] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (12)                               [serial 1010] 
+P [122] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [122] ->
+Q [122] <<(not (iMA = )) or (iMA = )>>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 11:
+Theorem (11) [serial 1028] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1010]
+ 
+
+
+Theorem (13)                               [serial 1029] 
+P [120] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [120] ->
+Q [133] <<(i = 0) and (s = CTCS_Properties::start)>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (14)                               [serial 1048] 
+P [137] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+S [121] ->
+Q [91] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (15)                               [serial 1044] 
+P [137] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+S [121] ->
+Q [91] <<((CTCS_Properties::start)^1 = (s)^1)
+  and
+  ((i)^1 = (0)^1)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 14:
+Theorem (14) [serial 1048] used for:
+    normalization of [serial 1044]
+ 
+
+
+Theorem (16)                               [serial 1038] 
+P [137] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+S [121] ->
+Q [91] <<(CTCS_Properties::start = s)^1 and (i = 0)^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 15:
+Theorem (15) [serial 1044] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1038]
+ 
+
+
+Theorem (17)                               [serial 1033] 
+P [137] <<((i)^1 = 0)
+  and
+  ((s)^1 = CTCS_Properties::start)>>
+S [121] ->
+Q [91] <<((i = 0)^1 and (s = CTCS_Properties::start)^1)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 16:
+Theorem (16) [serial 1038] used for:
+    normalization of [serial 1033]
+ 
+
+
+Theorem (18)                               [serial 1030] 
+P [137] <<(i' = 0) and (s' = CTCS_Properties::start)>>
+S [121] ->
+Q [91] <<((i = 0) and (s = CTCS_Properties::start))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 17:
+Theorem (17) [serial 1033] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1030]
+ 
+
+
+Theorem (19)                               [serial 1057] 
+P [133] <<CTCS_Properties::start = s and i = 0>>
+S [134] ->
+Q [1] <<(e-SR) <= s or CTCS_Properties::start = s>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (20)                               [serial 1053] 
+P [133] <<CTCS_Properties::start = s and i = 0>>
+S [134] ->
+Q [1] <<(s = CTCS_Properties::start) or (s >= (e-SR))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 19:
+Theorem (19) [serial 1057] used for:
+    normalization of [serial 1053]
+ 
+
+
+Theorem (21)                               [serial 1059] 
+P [134] <<r^0 and (CTCS_Properties::start = s and i = 0)>>
+S [134] ->
+Q [135] <<CTCS_Properties::start = s and i = 0>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (22)                               [serial 1054] 
+P [134] <<(CTCS_Properties::start = s and i = 0) and r^0>>
+S [134] ->
+Q [135] <<CTCS_Properties::start = s and i = 0>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 21:
+Theorem (21) [serial 1059] used for:
+    normalization of [serial 1054]
+ 
+
+
+Theorem (23)                               [serial 1036] 
+P [133] <<CTCS_Properties::start = s and i = 0>>
+S [134] r!
+Q [135] <<CTCS_Properties::start = s and i = 0>>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 20 22:
+Theorem (20) [serial 1053] used for:
+  applied port output <<pre>> -> <<M(r)>> [serial 1036]
+ 
+Theorem (22) [serial 1054] used for:
+  applied port output <<pre and r^0>> -> <<post>> [serial 1036]
+ 
+
+
+Theorem (24)                               [serial 1031] 
+P [133] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [134] r!
+Q [135] <<(i = 0) and (s = CTCS_Properties::start)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 23:
+Theorem (23) [serial 1036] used for:
+    normalization of [serial 1031]
+ 
+
+
+Theorem (25)                               [serial 1061] 
+P [135] <<CTCS_Properties::start = s and i = 0>>
+S [136] ->
+Q [137] <<CTCS_Properties::start = s and i = 0>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (26)                               [serial 1063] 
+P [135] <<CTCS_Properties::start = s and i = 0>>
+S [136] ->
+Q [137] <<CTCS_Properties::start = s and i = 0>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (27)                               [serial 1055] 
+P [135] <<CTCS_Properties::start = s and i = 0>>
+S [136] ->
+Q [137] <<i = 0 and s = CTCS_Properties::start>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorems 25 26:
+Theorem (25) [serial 1061] used for:
+    normalization of [serial 1055]
+ 
+Theorem (26) [serial 1063] used for:
+    normalization of [serial 1055]
+ 
+
+
+Theorem (28)                               [serial 1040] 
+P [135] <<CTCS_Properties::start = s and i = 0>>
+S [136] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [137] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+by Simultaneous Assignment
+and theorem 27:
+Theorem (27) [serial 1055] used for:
+  applied wp for simultaneous assignment [serial 1040]
+ 
+
+
+Theorem (29)                               [serial 1034] 
+P [135] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [136] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [137] <<((i)^1 = 0)
+  and
+  ((s)^1 = CTCS_Properties::start)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 28:
+Theorem (28) [serial 1040] used for:
+    normalization of [serial 1034]
+ 
+
+
+Theorem (30)                               [serial 1032] 
+P [135] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [136] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [137] <<(i' = 0) and (s' = CTCS_Properties::start)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 29:
+Theorem (29) [serial 1034] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1032]
+ 
+
+
+Theorem (31)                               [serial 1011] 
+P [120] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [134] <<(i = 0) and (s = CTCS_Properties::start)>>
+r!
+;
+<<(i = 0) and (s = CTCS_Properties::start)>>
+( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+<<(i' = 0) and (s' = CTCS_Properties::start)>>
+Q [121] <<((i = 0) and (s = CTCS_Properties::start))^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 13 18 24 30:
+Theorem (13) [serial 1029] used for:
+  P -> P1 in sequential composition for [serial 1011]
+ 
+Theorem (18) [serial 1030] used for:
+  Q1 -> Q in sequential composition for [serial 1011]
+ 
+Theorem (24) [serial 1031] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1011]
+ 
+Theorem (30) [serial 1032] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1011]
+ 
+
+
+Theorem (32)                               [serial 1073] 
+P [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+S [122] ->
+Q [122] <<CTCS_Properties::start = s and i = 0>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (33)                               [serial 1069] 
+P [142] <<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+S [122] ->
+Q [122] <<(i = 0) and (s = CTCS_Properties::start)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 32:
+Theorem (32) [serial 1073] used for:
+    normalization of [serial 1069]
+ 
+
+
+Theorem (34)                               [serial 1089] 
+P [141] <<CTCS_Properties::start = s and i = 0 and IMA = iMA>>
+S [141] ->
+Q [141] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (35)                               [serial 1084] 
+P [141] <<IMA = iMA and (CTCS_Properties::start = s and i = 0)>>
+S [141] ->
+Q [141] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Associativity: (b.c).a = a.b.c
+and theorem 34:
+Theorem (34) [serial 1089] used for:
+  Associativity: (b.c).a = a.b.c [serial 1084]
+ 
+
+
+Theorem (36)                               [serial 1081] 
+P [141] <<(CTCS_Properties::start = s and i = 0) and iMA = IMA>>
+S [141] ->
+Q [141] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 35:
+Theorem (35) [serial 1084] used for:
+    normalization of [serial 1081]
+ 
+
+
+Theorem (37)                               [serial 1075] 
+P [121] <<CTCS_Properties::start = s and i = 0>>
+S [141] m?(iMA)
+Q [141] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 36:
+Theorem (36) [serial 1081] used for:
+  applied port input of value <<pre and iMA=M(m)>> -> <<post>> [serial 1075]
+ 
+
+
+Theorem (38)                               [serial 1070] 
+P [121] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [141] m?(iMA)
+Q [141] <<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 37:
+Theorem (37) [serial 1075] used for:
+    normalization of [serial 1070]
+ 
+
+
+Theorem (39)                               [serial 1090] 
+P [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0 and e = ea>>
+S [142] ->
+Q [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (40)                               [serial 1086] 
+P [142] <<e = ea and (CTCS_Properties::start = s and IMA = iMA and i = 0)>>
+S [142] ->
+Q [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Associativity: (b.c).a = a.b.c
+and theorem 39:
+Theorem (39) [serial 1090] used for:
+  Associativity: (b.c).a = a.b.c [serial 1086]
+ 
+
+
+Theorem (41)                               [serial 1082] 
+P [142] <<(CTCS_Properties::start = s and IMA = iMA and i = 0) and e = ea>>
+S [142] ->
+Q [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 40:
+Theorem (40) [serial 1086] used for:
+    normalization of [serial 1082]
+ 
+
+
+Theorem (42)                               [serial 1077] 
+P [141] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+S [142] ea?(e)
+Q [142] <<CTCS_Properties::start = s and IMA = iMA and i = 0>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 41:
+Theorem (41) [serial 1082] used for:
+  applied port input of value <<pre and e=M(ea)>> -> <<post>> [serial 1077]
+ 
+
+
+Theorem (43)                               [serial 1071] 
+P [141] <<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+S [142] ea?(e)
+Q [142] <<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 42:
+Theorem (42) [serial 1077] used for:
+    normalization of [serial 1071]
+ 
+
+
+Theorem (44)                               [serial 1012] 
+P [121] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [141] m?(iMA)
+;
+<<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+ea?(e)
+<<(i = 0) and (s = CTCS_Properties::start) and (iMA = IMA)>>
+Q [122] <<(i = 0) and (s = CTCS_Properties::start)>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 33 38 43:
+Theorem (33) [serial 1069] used for:
+  Q1 -> Q in sequential composition for [serial 1012]
+ 
+Theorem (38) [serial 1070] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1012]
+ 
+Theorem (43) [serial 1071] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1012]
+ 
+
+
+Theorem (45)                               [serial 1091] 
+P [148] <<(SBL() and DSPV2())^1>>
+S [124] ->
+Q [124] <<(SBL() and DSPV2())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (46)                               [serial 1129] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [95] <<CTCS_Properties::start = s or v < iSeg.v2>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (47)                               [serial 1124] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [95] <<(CTCS_Properties::start = s or v < iSeg.v2)>>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 46:
+Theorem (46) [serial 1129] used for:
+    normalization of [serial 1124]
+ 
+
+
+Theorem (48)                               [serial 1131] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [98] <<CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (49)                               [serial 1125] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [98] <<(CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 48:
+Theorem (48) [serial 1131] used for:
+    normalization of [serial 1125]
+ 
+
+
+Theorem (50)                               [serial 1119] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [148] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 47 49:
+Theorem (47) [serial 1124] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1119]
+ 
+Theorem (49) [serial 1125] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1119]
+ 
+
+
+Theorem (51)                               [serial 1133] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [95] <<CTCS_Properties::start = s or v < iSeg.v2>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (52)                               [serial 1126] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [95] <<(CTCS_Properties::start = s or v < iSeg.v2)>>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 51:
+Theorem (51) [serial 1133] used for:
+    normalization of [serial 1126]
+ 
+
+
+Theorem (53)                               [serial 1135] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [98] <<CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (54)                               [serial 1127] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [98] <<(CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 53:
+Theorem (53) [serial 1135] used for:
+    normalization of [serial 1127]
+ 
+
+
+Theorem (55)                               [serial 1121] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [148] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 52 54:
+Theorem (52) [serial 1126] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1121]
+ 
+Theorem (54) [serial 1127] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1121]
+ 
+
+
+Theorem (56)                               [serial 1117] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ->
+Q [148] <<(s = CTCS_Properties::start or v < iSeg.v2)
+  and
+  (s = CTCS_Properties::start
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*iSeg.e*2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 50 55:
+Theorem (50) [serial 1119] used for:
+    normalization of [serial 1117]
+ 
+Theorem (55) [serial 1121] used for:
+    normalization of [serial 1117]
+ 
+
+
+Theorem (57)                               [serial 1114] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v2]^1+(b^1*iSeg.e^1*2)))>>
+by Simultaneous Assignment
+and theorem 56:
+Theorem (56) [serial 1117] used for:
+  applied wp for simultaneous assignment [serial 1114]
+ 
+
+
+Theorem (58)                               [serial 1112] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v2]^1+((b)^1*(2)^1*
+  (iSeg.e)^1)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 57:
+Theorem (57) [serial 1114] used for:
+    normalization of [serial 1112]
+ 
+
+
+Theorem (59)                               [serial 1110] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v2]^1+(b*2*iSeg.e)^1))>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 58:
+Theorem (58) [serial 1112] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1110]
+ 
+
+
+Theorem (60)                               [serial 1108] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v2])^1+(b*2*iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 59:
+Theorem (59) [serial 1110] used for:
+    normalization of [serial 1108]
+ 
+
+
+Theorem (61)                               [serial 1106] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 60:
+Theorem (60) [serial 1108] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1106]
+ 
+
+
+Theorem (62)                               [serial 1104] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(((CTCS_Properties::start)^1 = (s)^1)
+  or ((v)^1 < (iSeg.v2)^1))
+  and
+  (((CTCS_Properties::start)^1 = (s)^1)
+  or (((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 61:
+Theorem (61) [serial 1106] used for:
+    normalization of [serial 1104]
+ 
+
+
+Theorem (63)                               [serial 1102] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<((CTCS_Properties::start = s)^1 or (v < iSeg.v2)^1)
+  and
+  ((CTCS_Properties::start = s)^1
+  or (((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 62:
+Theorem (62) [serial 1104] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1102]
+ 
+
+
+Theorem (64)                               [serial 1100] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 63:
+Theorem (63) [serial 1102] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1100]
+ 
+
+
+Theorem (65)                               [serial 1098] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<((CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 64:
+Theorem (64) [serial 1100] used for:
+    normalization of [serial 1098]
+ 
+
+
+Theorem (66)                               [serial 1095] 
+P [122] <<CTCS_Properties::start = s and i = 0 and not iMA = >>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<((CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 65:
+Theorem (65) [serial 1098] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1095]
+ 
+
+
+Theorem (67)                               [serial 1093] 
+P [122] <<(i = 0)
+  and
+  (s = CTCS_Properties::start)
+  and
+  (not (iMA = ))>>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 66:
+Theorem (66) [serial 1095] used for:
+    normalization of [serial 1093]
+ 
+
+
+Theorem (68)                               [serial 1092] 
+P [122] <<(i = 0)
+  and
+  (s = CTCS_Properties::start)
+  and
+  (not (iMA = ))>>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [148] <<(SBL() and DSPV2())^1>>
+by Substitution of Assertion Labels
+and theorem 67:
+Theorem (67) [serial 1093] used for:
+  substituted Assertions' predicates for  labels  [serial 1092]
+ 
+
+
+Theorem (69)                               [serial 1013] 
+P [122] <<(i = 0)
+  and
+  (s = CTCS_Properties::start)
+  and
+  (not (iMA = ))>>
+S [147] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(SBL() and DSPV2())^1>>
+Q [124] <<(SBL() and DSPV2())^1>>
+by Introduction of Existential Quantification (bl.aapost)
+and theorems 45 68:
+Theorem (45) [serial 1091] used for:
+  as <<post>> -> <<Q>> in <<P>> {  S <<post>> } <<Q>> [serial 1013]
+ 
+Theorem (68) [serial 1092] used for:
+  as <<P>> S <<post>> in <<P>> {  S <<post>> } <<Q>> [serial 1013]
+ 
+
+
+Theorem (70)                               [serial 1140] 
+P [167] <<SBL() and DSPV2()>>
+S [125] ->
+Q [125] <<SBL() and DSPV2()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (71)                               [serial 1154] 
+P [124] <<DSPV2() and SBL()>>
+S [153] ->
+Q [153] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (72)                               [serial 1143] 
+P [124] <<SBL() and DSPV2()>>
+S [153] ->
+Q [153] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 71:
+Theorem (71) [serial 1154] used for:
+    normalization of [serial 1143]
+ 
+
+
+Theorem (73)                               [serial 1187] 
+P [153] <<DSPV2() and SBL()>>
+S [153] ->
+Q [153] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (74)                               [serial 1201] 
+P [154] <<POSITION = s and VELOCITY = v and DSPV2() and SBL()>>
+S [154] ->
+Q [154] <<POSITION = s and VELOCITY = v and DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (75)                               [serial 1188] 
+P [154] <<(POSITION = s) and (VELOCITY = v) and (DSPV2()) and (SBL())>>
+S [154] ->
+Q [154] <<VELOCITY = v and DSPV2() and SBL() and POSITION = s>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 74:
+Theorem (74) [serial 1201] used for:
+    normalization of [serial 1188]
+ 
+
+
+Theorem (76)                               [serial 1212] 
+P [154] <<DSPV2() and SBL() and POSITION = s>>
+S [154] ->
+Q [154] <<POSITION = s>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (77)                               [serial 1203] 
+P [154] <<POSITION = s and (DSPV2() and SBL())>>
+S [154] ->
+Q [154] <<POSITION = s>>
+by Associativity: (b.c).a = a.b.c
+and theorem 76:
+Theorem (76) [serial 1212] used for:
+  Associativity: (b.c).a = a.b.c [serial 1203]
+ 
+
+
+Theorem (78)                               [serial 1194] 
+P [154] <<(DSPV2() and SBL()) and s = POSITION>>
+S [154] ->
+Q [154] <<POSITION = s>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 77:
+Theorem (77) [serial 1203] used for:
+    normalization of [serial 1194]
+ 
+
+
+Theorem (79)                               [serial 1189] 
+P [153] <<DSPV2() and SBL()>>
+S [154] cs?(s)
+Q [154] <<POSITION = s>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 78:
+Theorem (78) [serial 1194] used for:
+  applied port input of value <<pre and s=M(cs)>> -> <<post>> [serial 1189]
+ 
+
+
+Theorem (80)                               [serial 1213] 
+P [154] <<DSPV2() and SBL() and VELOCITY = v>>
+S [154] ->
+Q [154] <<VELOCITY = v and DSPV2() and SBL()>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (81)                               [serial 1205] 
+P [154] <<VELOCITY = v and (DSPV2() and SBL())>>
+S [154] ->
+Q [154] <<VELOCITY = v and DSPV2() and SBL()>>
+by Associativity: (b.c).a = a.b.c
+and theorem 80:
+Theorem (80) [serial 1213] used for:
+  Associativity: (b.c).a = a.b.c [serial 1205]
+ 
+
+
+Theorem (82)                               [serial 1195] 
+P [154] <<(DSPV2() and SBL()) and v = VELOCITY>>
+S [154] ->
+Q [154] <<VELOCITY = v and DSPV2() and SBL()>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 81:
+Theorem (81) [serial 1205] used for:
+    normalization of [serial 1195]
+ 
+
+
+Theorem (83)                               [serial 1190] 
+P [153] <<DSPV2() and SBL()>>
+S [154] cv?(v)
+Q [154] <<VELOCITY = v and DSPV2() and SBL()>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 82:
+Theorem (82) [serial 1195] used for:
+  applied port input of value <<pre and v=M(cv)>> -> <<post>> [serial 1190]
+ 
+
+
+Theorem (84)                               [serial 1183] 
+P [153] <<DSPV2() and SBL()>>
+S [154] <<DSPV2() and SBL()>>
+cs?(s)
+<<POSITION = s>>
+&
+cv?(v)
+<<VELOCITY = v and DSPV2() and SBL()>>
+Q [154] <<VELOCITY = v and DSPV2() and SBL() and POSITION = s>>
+by Concurrent Composition Rule:
+ <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
+ <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
+ <<Q1 and Q2 and  . . . and Qn>> -> <<Q>>
+ -----------------------------------------------
+       <<P>> S <<Q>> where S is
+ <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
+and theorems 73 75 79 83:
+Theorem (73) [serial 1187] used for:
+  P -> P1 in concurrent composition for [serial 1183]
+ 
+Theorem (75) [serial 1188] used for:
+  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1183]
+ 
+Theorem (79) [serial 1189] used for:
+  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1183]
+ 
+Theorem (83) [serial 1190] used for:
+  <<P>> S2 <<Q2>> in concurrent composition for [serial 1183]
+ 
+
+
+Theorem (85)                               [serial 1156] 
+P [153] <<DSPV2() and SBL()>>
+S [154] <<DSPV2() and SBL()>>
+cs?(s)
+<<POSITION = s>>
+&
+cv?(v)
+<<VELOCITY = v and DSPV2() and SBL()>>
+Q [154] <<POSITION = s and (VELOCITY = v and DSPV2() and SBL())>>
+by Associativity: (b.c).a = a.b.c
+and theorem 84:
+Theorem (84) [serial 1183] used for:
+  Associativity: (b.c).a = a.b.c [serial 1156]
+ 
+
+
+Theorem (86)                               [serial 1144] 
+P [153] <<SBL() and DSPV2()>>
+S [154] <<SBL() and DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<SBL() and DSPV2() and v = VELOCITY>>
+Q [154] <<(s = POSITION) and (SBL() and DSPV2() and v = VELOCITY)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 85:
+Theorem (85) [serial 1156] used for:
+    normalization of [serial 1144]
+ 
+
+
+Theorem (87)                               [serial 1184] 
+P [154] <<VELOCITY = v and DSPV2() and SBL() and POSITION = s>>
+S [153] ->
+Q [156] <<DSPV2() and SBL()>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (88)                               [serial 1158] 
+P [154] <<POSITION = s and (VELOCITY = v and DSPV2() and SBL())>>
+S [153] ->
+Q [156] <<DSPV2() and SBL()>>
+by Associativity: (b.c).a = a.b.c
+and theorem 87:
+Theorem (87) [serial 1184] used for:
+  Associativity: (b.c).a = a.b.c [serial 1158]
+ 
+
+
+Theorem (89)                               [serial 1145] 
+P [154] <<(s = POSITION) and (SBL() and DSPV2() and v = VELOCITY)>>
+S [153] ->
+Q [156] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 88:
+Theorem (88) [serial 1158] used for:
+    normalization of [serial 1145]
+ 
+
+
+Theorem (90)                               [serial 1141] 
+P [124] <<SBL() and DSPV2()>>
+S [153] {
+<<SBL() and DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<SBL() and DSPV2() and v = VELOCITY>>
+} 
+Q [156] <<SBL() and DSPV2()>>
+by Introduction of Existential Quantification (bl.elq)
+and theorems 72 86 89:
+Theorem (72) [serial 1143] used for:
+  <<P and x=e>> -> <<A>> in existential lattice quantification for [serial 1141]
+ 
+Theorem (86) [serial 1144] used for:
+  {A} T {B} in existential lattice quantification for [serial 1141]
+ 
+Theorem (89) [serial 1145] used for:
+  <<B>> -> <<Q>> in existential lattice quantification for [serial 1141]
+ 
+
+
+Theorem (91)                               [serial 1185] 
+P [156] <<DSPV2() and SBL()>>
+S [157] ->
+Q [157] <<true>>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (92)                               [serial 1160] 
+P [156] <<DSPV2() and SBL()>>
+S [157] ->
+Q [157] <<(e-SR) <= s or not (e-SR) <= s>>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 91:
+Theorem (91) [serial 1185] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1160]
+ 
+
+
+Theorem (93)                               [serial 1146] 
+P [156] <<SBL() and DSPV2()>>
+S [157] ->
+Q [157] <<(s >= (e-SR))
+or (not (s >= (e-SR)))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 92:
+Theorem (92) [serial 1160] used for:
+    normalization of [serial 1146]
+ 
+
+
+Theorem (94)                               [serial 1186] 
+P [157] <<DSPV2() and SBL() and (e-SR) <= s>>
+S [157] ->
+Q [158] <<(e-SR) <= s and DSPV2() and SBL()>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (95)                               [serial 1162] 
+P [157] <<(e-SR) <= s and (DSPV2() and SBL())>>
+S [157] ->
+Q [158] <<(e-SR) <= s and DSPV2() and SBL()>>
+by Associativity: (b.c).a = a.b.c
+and theorem 94:
+Theorem (94) [serial 1186] used for:
+  Associativity: (b.c).a = a.b.c [serial 1162]
+ 
+
+
+Theorem (96)                               [serial 1147] 
+P [157] <<(SBL() and DSPV2()) and (s >= (e-SR))>>
+S [157] ->
+Q [158] <<SBL() and DSPV2() and (s >= (e-SR))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 95:
+Theorem (95) [serial 1162] used for:
+    normalization of [serial 1147]
+ 
+
+
+Theorem (97)                               [serial 1197] 
+P [158] <<(e-SR) <= s and DSPV2() and SBL()>>
+S [159] ->
+Q [1] <<(e-SR) <= s or CTCS_Properties::start = s>>
+by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+
+Theorem (98)                               [serial 1191] 
+P [158] <<(e-SR) <= s and DSPV2() and SBL()>>
+S [159] ->
+Q [1] <<(s = CTCS_Properties::start) or (s >= (e-SR))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 97:
+Theorem (97) [serial 1197] used for:
+    normalization of [serial 1191]
+ 
+
+
+Theorem (99)                               [serial 1211] 
+P [159] <<(e-SR) <= s and DSPV2() and SBL() and r^0>>
+S [159] ->
+Q [160] <<DSPV2() and SBL()>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (100)                               [serial 1199] 
+P [159] <<r^0 and ((e-SR) <= s and DSPV2() and SBL())>>
+S [159] ->
+Q [160] <<DSPV2() and SBL()>>
+by Associativity: (b.c).a = a.b.c
+and theorem 99:
+Theorem (99) [serial 1211] used for:
+  Associativity: (b.c).a = a.b.c [serial 1199]
+ 
+
+
+Theorem (101)                               [serial 1192] 
+P [159] <<((e-SR) <= s and DSPV2() and SBL()) and r^0>>
+S [159] ->
+Q [160] <<DSPV2() and SBL()>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 100:
+Theorem (100) [serial 1199] used for:
+    normalization of [serial 1192]
+ 
+
+
+Theorem (102)                               [serial 1164] 
+P [158] <<(e-SR) <= s and DSPV2() and SBL()>>
+S [159] r!
+Q [160] <<DSPV2() and SBL()>>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 98 101:
+Theorem (98) [serial 1191] used for:
+  applied port output <<pre>> -> <<M(r)>> [serial 1164]
+ 
+Theorem (101) [serial 1192] used for:
+  applied port output <<pre and r^0>> -> <<post>> [serial 1164]
+ 
+
+
+Theorem (103)                               [serial 1148] 
+P [158] <<SBL() and DSPV2() and (s >= (e-SR))>>
+S [159] r!
+Q [160] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 102:
+Theorem (102) [serial 1164] used for:
+    normalization of [serial 1148]
+ 
+
+
+Theorem (104)                               [serial 1166] 
+P [160] <<DSPV2() and SBL()>>
+S [157] ->
+Q [167] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (105)                               [serial 1149] 
+P [160] <<SBL() and DSPV2()>>
+S [157] ->
+Q [167] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 104:
+Theorem (104) [serial 1166] used for:
+    normalization of [serial 1149]
+ 
+
+
+Theorem (106)                               [serial 1168] 
+P [157] <<not (e-SR) <= s and (DSPV2() and SBL())>>
+S [157] ->
+Q [163] <<DSPV2() and SBL()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (107)                               [serial 1150] 
+P [157] <<(SBL() and DSPV2())
+  and
+  (not (s >= (e-SR)))>>
+S [157] ->
+Q [163] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 106:
+Theorem (106) [serial 1168] used for:
+    normalization of [serial 1150]
+ 
+
+
+Theorem (108)                               [serial 1193] 
+P [163] <<DSPV2() and SBL()>>
+S [164] ->
+Q [165] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (109)                               [serial 1170] 
+P [163] <<DSPV2() and SBL()>>
+S [164] skip
+Q [165] <<DSPV2() and SBL()>>
+by Skip Means Implication:  <<P>> skip <<Q>>  is  <<P>> -> <<Q>> (bl.skip)
+and theorem 108:
+Theorem (108) [serial 1193] used for:
+    <<P>> -> <<Q>>
+  for [serial 1170]
+ 
+
+
+Theorem (110)                               [serial 1151] 
+P [163] <<SBL() and DSPV2()>>
+S [164] skip
+Q [165] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 109:
+Theorem (109) [serial 1170] used for:
+    normalization of [serial 1151]
+ 
+
+
+Theorem (111)                               [serial 1172] 
+P [165] <<DSPV2() and SBL()>>
+S [157] ->
+Q [167] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (112)                               [serial 1152] 
+P [165] <<SBL() and DSPV2()>>
+S [157] ->
+Q [167] <<SBL() and DSPV2()>>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 111:
+Theorem (111) [serial 1172] used for:
+    normalization of [serial 1152]
+ 
+
+
+Theorem (113)                               [serial 1142] 
+P [156] <<SBL() and DSPV2()>>
+S [157] if 
+(s >= (e-SR))~> 
+  <<SBL() and DSPV2() and (s >= (e-SR))>>
+  r!
+  <<SBL() and DSPV2()>> 
+[]
+(not (s >= (e-SR)))~> 
+  <<SBL() and DSPV2()>>
+  skip
+  <<SBL() and DSPV2()>> 
+fi
+Q [167] <<SBL() and DSPV2()>>
+by Alternative Rule:
+ <<P and B1>> -> <<P1>>, <<P and B2>> -> <<P2>>, . . . , <<P and Bn>> -> <<Pn>>,
+ <<B1 and P1>> S1 <<Q1>>, <<B2 and P2>> S2 <<Q2>>, . . . , <<Bn and Pn>> Sn <<Qn>>,
+ <<Q1>> -> <<Q>>, <<Q2>> -> <<Q>>, . . . <<Qn>> -> <<Q>>
+ -------------------------------------------------------------------------
+ <<P>> if B1-><<P1>>S1<<Q1>> [] B2-><<P2>>S2<<Q2>> [] . . . [] Bn-><<Pn>>Sn<<Qn>> fi <<Q>> (bl.iffi)
+and theorems 93 96 103 105 107 110 112:
+Theorem (93) [serial 1146] used for:
+    <<P>> -> <<B1 or B2 or ... or Bn>>  in if-[]-fi  for [serial 1142]
+ 
+Theorem (96) [serial 1147] used for:
+    <<P and B0>> -> <<P0>>  for [serial 1142]
+ 
+Theorem (103) [serial 1148] used for:
+    <<P0>> S0 <<Q0>>  for [serial 1142]
+ 
+Theorem (105) [serial 1149] used for:
+    <<Q0>> -> <<Q>>  for [serial 1142]
+ 
+Theorem (107) [serial 1150] used for:
+    <<P and B1>> -> <<P1>>  for [serial 1142]
+ 
+Theorem (110) [serial 1151] used for:
+    <<P1>> S1 <<Q1>>  for [serial 1142]
+ 
+Theorem (112) [serial 1152] used for:
+    <<Q1>> -> <<Q>>  for [serial 1142]
+ 
+
+
+Theorem (114)                               [serial 1014] 
+P [124] <<SBL() and DSPV2()>>
+S [154] {
+<<SBL() and DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<SBL() and DSPV2() and v = VELOCITY>>
+} 
+;
+<<SBL() and DSPV2()>>
+if 
+(s >= (e-SR))~> 
+  <<SBL() and DSPV2() and (s >= (e-SR))>>
+  r!
+  <<SBL() and DSPV2()>> 
+[]
+(not (s >= (e-SR)))~> 
+  <<SBL() and DSPV2()>>
+  skip
+  <<SBL() and DSPV2()>> 
+fi
+<<SBL() and DSPV2()>>
+Q [125] <<SBL() and DSPV2()>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 70 90 113:
+Theorem (70) [serial 1140] used for:
+  Q1 -> Q in sequential composition for [serial 1014]
+ 
+Theorem (90) [serial 1141] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1014]
+ 
+Theorem (113) [serial 1142] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1014]
+ 
+
+
+Theorem (115)                               [serial 1220] 
+P [125] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [125] ->
+Q [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (116)                               [serial 1218] 
+P [125] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))
+  and
+  (not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or not ((s = CTCS_Properties::start)
+  or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [125] ->
+Q [174] <<not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 115:
+Theorem (115) [serial 1220] used for:
+    normalization of [serial 1218]
+ 
+
+
+Theorem (117)                               [serial 1214] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or not ((s = CTCS_Properties::start)
+  or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [125] ->
+Q [174] <<not SBL() or not DSPV2()>>
+by Substitution of Assertion Labels
+and theorem 116:
+Theorem (116) [serial 1218] used for:
+  substituted Assertions' predicates for  labels  [serial 1214]
+ 
+
+
+Theorem (118)                               [serial 1215] 
+P [176] <<(not SBL() or not DSPV2())^1>>
+S [126] ->
+Q [91] <<(not SBL() or not DSPV2())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (119)                               [serial 1225] 
+P [174] <<CTCS_Properties::SB_Rate = ca and (not DSPV2() or not SBL())>>
+S [174] ->
+Q [174] <<not DSPV2() or not SBL()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (120)                               [serial 1223] 
+P [174] <<(not SBL() or not DSPV2())
+  and
+  (ca = (CTCS_Properties::SB_Rate))^0>>
+S [174] ->
+Q [174] <<not SBL() or not DSPV2()>>
+by Assume Present:  P = P@now = P^0 
+and theorem 119:
+Theorem (119) [serial 1225] used for:
+  Assume Present:  P = P@now = P^0  [serial 1223]
+ 
+
+
+Theorem (121)                               [serial 1227] 
+P [174] <<not DSPV2() or not SBL()>>
+S [174] ->
+Q [102] <<not DSPV2() or not SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (122)                               [serial 1224] 
+P [174] <<not SBL() or not DSPV2()>>
+S [174] ->
+Q [102] <<(not SBL() or not DSPV2())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 121:
+Theorem (121) [serial 1227] used for:
+    normalization of [serial 1224]
+ 
+
+
+Theorem (123)                               [serial 1216] 
+P [174] <<not SBL() or not DSPV2()>>
+S [174] ca!(CTCS_Properties::SB_Rate)
+Q [174] <<not SBL() or not DSPV2()>>
+by Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+and theorems 120 122:
+Theorem (120) [serial 1223] used for:
+  applied port output <<pre and (ca=CTCS_Properties::SB_Rate)^0>> -> <<post>> [serial 1216]
+ 
+Theorem (122) [serial 1224] used for:
+  applied port output of conditional expression <<pre>> -> <<(not SBL() or not DSPV2())>> where (not SBL() or not DSPV2()) -> CTCS_Properties::SB_Rate for ca!(CTCS_Properties::SB_Rate) 
+[serial 1216]
+ 
+
+
+Theorem (124)                               [serial 1260] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ->
+Q [176] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (125)                               [serial 1262] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ->
+Q [176] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (126)                               [serial 1258] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ->
+Q [176] <<not (s = CTCS_Properties::start or v < iSeg.v2)
+or not (s = CTCS_Properties::start
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*iSeg.e*2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 124 125:
+Theorem (124) [serial 1260] used for:
+    normalization of [serial 1258]
+ 
+Theorem (125) [serial 1262] used for:
+    normalization of [serial 1258]
+ 
+
+
+Theorem (127)                               [serial 1255] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v2]^1+(b^1*iSeg.e^1*2)))>>
+by Simultaneous Assignment
+and theorem 126:
+Theorem (126) [serial 1258] used for:
+  applied wp for simultaneous assignment [serial 1255]
+ 
+
+
+Theorem (128)                               [serial 1253] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v2]^1+((b)^1*(2)^1*(iSeg.e)^1)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 127:
+Theorem (127) [serial 1255] used for:
+    normalization of [serial 1253]
+ 
+
+
+Theorem (129)                               [serial 1251] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v2]^1+(b*2*iSeg.e)^1))>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 128:
+Theorem (128) [serial 1253] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1251]
+ 
+
+
+Theorem (130)                               [serial 1249] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v2])^1+(b*2*iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 129:
+Theorem (129) [serial 1251] used for:
+    normalization of [serial 1249]
+ 
+
+
+Theorem (131)                               [serial 1247] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 130:
+Theorem (130) [serial 1249] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1247]
+ 
+
+
+Theorem (132)                               [serial 1245] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (((CTCS_Properties::start)^1 = (s)^1)
+or ((v)^1 < (iSeg.v2)^1))
+or not (((CTCS_Properties::start)^1 = (s)^1)
+or (((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 131:
+Theorem (131) [serial 1247] used for:
+    normalization of [serial 1245]
+ 
+
+
+Theorem (133)                               [serial 1243] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not ((CTCS_Properties::start = s)^1 or (v < iSeg.v2)^1)
+or not ((CTCS_Properties::start = s)^1
+or (((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 132:
+Theorem (132) [serial 1245] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1243]
+ 
+
+
+Theorem (134)                               [serial 1241] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not (CTCS_Properties::start = s or v < iSeg.v2)^1
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 133:
+Theorem (133) [serial 1243] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1241]
+ 
+
+
+Theorem (135)                               [serial 1239] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<not ((CTCS_Properties::start = s or v < iSeg.v2))^1
+or not ((CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 134:
+Theorem (134) [serial 1241] used for:
+    normalization of [serial 1239]
+ 
+
+
+Theorem (136)                               [serial 1237] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<(not (CTCS_Properties::start = s or v < iSeg.v2))^1
+or (not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 135:
+Theorem (135) [serial 1239] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1237]
+ 
+
+
+Theorem (137)                               [serial 1235] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<((not (CTCS_Properties::start = s or v < iSeg.v2))^1
+or (not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 136:
+Theorem (136) [serial 1237] used for:
+    normalization of [serial 1235]
+ 
+
+
+Theorem (138)                               [serial 1232] 
+P [174] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<(not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 137:
+Theorem (137) [serial 1235] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1232]
+ 
+
+
+Theorem (139)                               [serial 1230] 
+P [174] <<not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<(not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 138:
+Theorem (138) [serial 1232] used for:
+    normalization of [serial 1230]
+ 
+
+
+Theorem (140)                               [serial 1217] 
+P [174] <<not SBL() or not DSPV2()>>
+S [175] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [176] <<(not SBL() or not DSPV2())^1>>
+by Substitution of Assertion Labels
+and theorem 139:
+Theorem (139) [serial 1230] used for:
+  substituted Assertions' predicates for  labels  [serial 1217]
+ 
+
+
+Theorem (141)                               [serial 1015] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or not ((s = CTCS_Properties::start)
+  or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [174] <<not SBL() or not DSPV2()>>
+ca!(CTCS_Properties::SB_Rate)
+;
+<<not SBL() or not DSPV2()>>
+( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(not SBL() or not DSPV2())^1>>
+Q [126] <<(not SBL() or not DSPV2())^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 117 118 123 140:
+Theorem (117) [serial 1214] used for:
+  P -> P1 in sequential composition for [serial 1015]
+ 
+Theorem (118) [serial 1215] used for:
+  Q1 -> Q in sequential composition for [serial 1015]
+ 
+Theorem (123) [serial 1216] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1015]
+ 
+Theorem (140) [serial 1217] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1015]
+ 
+
+
+Theorem (142)                               [serial 1265] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+S [125] ->
+Q [181] <<SBL() and DSPV2()>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (143)                               [serial 1266] 
+P [183] <<(SBL() and DSPV2())^1>>
+S [124] ->
+Q [91] <<(SBL() and DSPV2())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (144)                               [serial 1272] 
+P [181] <<ca = xl and (DSPV2() and SBL())>>
+S [181] ->
+Q [181] <<DSPV2() and SBL()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (145)                               [serial 1270] 
+P [181] <<(SBL() and DSPV2()) and (ca = xl)^0>>
+S [181] ->
+Q [181] <<SBL() and DSPV2()>>
+by Assume Present:  P = P@now = P^0 
+and theorem 144:
+Theorem (144) [serial 1272] used for:
+  Assume Present:  P = P@now = P^0  [serial 1270]
+ 
+
+
+Theorem (146)                               [serial 1274] 
+P [181] <<DSPV2() and SBL()>>
+S [181] ->
+Q [104] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (147)                               [serial 1271] 
+P [181] <<SBL() and DSPV2()>>
+S [181] ->
+Q [104] <<(SBL() and DSPV2())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 146:
+Theorem (146) [serial 1274] used for:
+    normalization of [serial 1271]
+ 
+
+
+Theorem (148)                               [serial 1267] 
+P [181] <<SBL() and DSPV2()>>
+S [181] ca!(xl)
+Q [181] <<SBL() and DSPV2()>>
+by Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+and theorems 145 147:
+Theorem (145) [serial 1270] used for:
+  applied port output <<pre and (ca=xl)^0>> -> <<post>> [serial 1267]
+ 
+Theorem (147) [serial 1271] used for:
+  applied port output of conditional expression <<pre>> -> <<(SBL() and DSPV2())>> where (SBL() and DSPV2()) -> xl for ca!(xl) 
+[serial 1267]
+ 
+
+
+Theorem (149)                               [serial 1276] 
+P [181] <<SBL() and DSPV2()>>
+S [182] ->
+Q [182] <<SBL() and DSPV2()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (150)                               [serial 1268] 
+P [181] <<SBL() and DSPV2()>>
+S [182] ( --begining of simultaneous assignment
+ i,
+ iSeg,
+ nSeg
+:=
+ i+1,
+ nSeg,
+ iMA[i+2]
+) --end of simultaneous assignment
+
+Q [182] <<SBL() and DSPV2()>>
+by Simultaneous Assignment
+and theorem 149:
+Theorem (149) [serial 1276] used for:
+  applied wp for simultaneous assignment [serial 1268]
+ 
+
+
+Theorem (151)                               [serial 1303] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ->
+Q [183] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (152)                               [serial 1305] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ->
+Q [183] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (153)                               [serial 1301] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ->
+Q [183] <<(s = CTCS_Properties::start or v < iSeg.v2)
+  and
+  (s = CTCS_Properties::start
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*iSeg.e*2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 151 152:
+Theorem (151) [serial 1303] used for:
+    normalization of [serial 1301]
+ 
+Theorem (152) [serial 1305] used for:
+    normalization of [serial 1301]
+ 
+
+
+Theorem (154)                               [serial 1298] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v2]^1+(b^1*iSeg.e^1*2)))>>
+by Simultaneous Assignment
+and theorem 153:
+Theorem (153) [serial 1301] used for:
+  applied wp for simultaneous assignment [serial 1298]
+ 
+
+
+Theorem (155)                               [serial 1296] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v2]^1+((b)^1*(2)^1*
+  (iSeg.e)^1)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 154:
+Theorem (154) [serial 1298] used for:
+    normalization of [serial 1296]
+ 
+
+
+Theorem (156)                               [serial 1294] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v2]^1+(b*2*iSeg.e)^1))>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 155:
+Theorem (155) [serial 1296] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1294]
+ 
+
+
+Theorem (157)                               [serial 1292] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v2])^1+(b*2*iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 156:
+Theorem (156) [serial 1294] used for:
+    normalization of [serial 1292]
+ 
+
+
+Theorem (158)                               [serial 1290] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 157:
+Theorem (157) [serial 1292] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1290]
+ 
+
+
+Theorem (159)                               [serial 1288] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(((CTCS_Properties::start)^1 = (s)^1)
+  or ((v)^1 < (iSeg.v2)^1))
+  and
+  (((CTCS_Properties::start)^1 = (s)^1)
+  or (((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 158:
+Theorem (158) [serial 1290] used for:
+    normalization of [serial 1288]
+ 
+
+
+Theorem (160)                               [serial 1286] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<((CTCS_Properties::start = s)^1 or (v < iSeg.v2)^1)
+  and
+  ((CTCS_Properties::start = s)^1
+  or (((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 159:
+Theorem (159) [serial 1288] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1286]
+ 
+
+
+Theorem (161)                               [serial 1284] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 160:
+Theorem (160) [serial 1286] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1284]
+ 
+
+
+Theorem (162)                               [serial 1282] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<((CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 161:
+Theorem (161) [serial 1284] used for:
+    normalization of [serial 1282]
+ 
+
+
+Theorem (163)                               [serial 1279] 
+P [182] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<((CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 162:
+Theorem (162) [serial 1282] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1279]
+ 
+
+
+Theorem (164)                               [serial 1277] 
+P [182] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 163:
+Theorem (163) [serial 1279] used for:
+    normalization of [serial 1277]
+ 
+
+
+Theorem (165)                               [serial 1269] 
+P [182] <<SBL() and DSPV2()>>
+S [183] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [183] <<(SBL() and DSPV2())^1>>
+by Substitution of Assertion Labels
+and theorem 164:
+Theorem (164) [serial 1277] used for:
+  substituted Assertions' predicates for  labels  [serial 1269]
+ 
+
+
+Theorem (166)                               [serial 1016] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+S [181] <<SBL() and DSPV2()>>
+ca!(xl)
+;
+<<SBL() and DSPV2()>>
+( --begining of simultaneous assignment
+ i,
+ iSeg,
+ nSeg
+:=
+ i+1,
+ nSeg,
+ iMA[i+2]
+) --end of simultaneous assignment
+
+;
+<<SBL() and DSPV2()>>
+( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(SBL() and DSPV2())^1>>
+Q [124] <<(SBL() and DSPV2())^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 142 143 148 150 165:
+Theorem (142) [serial 1265] used for:
+  P -> P1 in sequential composition for [serial 1016]
+ 
+Theorem (143) [serial 1266] used for:
+  Q2 -> Q in sequential composition for [serial 1016]
+ 
+Theorem (148) [serial 1267] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1016]
+ 
+Theorem (150) [serial 1268] used for:
+  <<Q0 and P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1016]
+ 
+Theorem (165) [serial 1269] used for:
+  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1016]
+ 
+
+
+Theorem (167)                               [serial 1309] 
+P [126] <<not SBL() or not DSPV2()>>
+S [188] ->
+Q [188] <<not SBL() or not DSPV2()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (168)                               [serial 1312] 
+P [188] <<not SBL() or not DSPV2()>>
+S [188] ->
+Q [188] <<not SBL() or not DSPV2()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (169)                               [serial 1328] 
+P [189] <<POSITION = s and VELOCITY = v and (not DSPV2() or not SBL())>>
+S [189] ->
+Q [189] <<VELOCITY = v and (not DSPV2() or not SBL()) and POSITION = s>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (170)                               [serial 1317] 
+P [189] <<POSITION = s and VELOCITY = v and (not DSPV2() or not SBL())>>
+S [189] ->
+Q [189] <<POSITION = s and (VELOCITY = v and (not DSPV2() or not SBL()))>>
+by Associativity: (b.c).a = a.b.c
+and theorem 169:
+Theorem (169) [serial 1328] used for:
+  Associativity: (b.c).a = a.b.c [serial 1317]
+ 
+
+
+Theorem (171)                               [serial 1313] 
+P [189] <<(s = POSITION)
+  and
+  ((not SBL() or not DSPV2()))
+  and
+  ((v = VELOCITY))>>
+S [189] ->
+Q [189] <<(s = POSITION)
+  and
+  ((not SBL() or not DSPV2()) and (v = VELOCITY))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 170:
+Theorem (170) [serial 1317] used for:
+    normalization of [serial 1313]
+ 
+
+
+Theorem (172)                               [serial 1333] 
+P [189] <<POSITION = s and (not DSPV2() or not SBL())>>
+S [189] ->
+Q [189] <<POSITION = s>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (173)                               [serial 1330] 
+P [189] <<(not DSPV2() or not SBL()) and s = POSITION>>
+S [189] ->
+Q [189] <<POSITION = s>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 172:
+Theorem (172) [serial 1333] used for:
+    normalization of [serial 1330]
+ 
+
+
+Theorem (174)                               [serial 1319] 
+P [188] <<not DSPV2() or not SBL()>>
+S [189] cs?(s)
+Q [189] <<POSITION = s>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 173:
+Theorem (173) [serial 1330] used for:
+  applied port input of value <<pre and s=M(cs)>> -> <<post>> [serial 1319]
+ 
+
+
+Theorem (175)                               [serial 1314] 
+P [188] <<not SBL() or not DSPV2()>>
+S [189] cs?(s)
+Q [189] <<s = POSITION>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+and theorem 174:
+Theorem (174) [serial 1319] used for:
+    normalization of [serial 1314]
+ 
+
+
+Theorem (176)                               [serial 1335] 
+P [189] <<VELOCITY = v and (not DSPV2() or not SBL())>>
+S [189] ->
+Q [190] <<VELOCITY = v and (not DSPV2() or not SBL())>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (177)                               [serial 1331] 
+P [189] <<(not DSPV2() or not SBL()) and v = VELOCITY>>
+S [189] ->
+Q [190] <<VELOCITY = v and (not DSPV2() or not SBL())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 176:
+Theorem (176) [serial 1335] used for:
+    normalization of [serial 1331]
+ 
+
+
+Theorem (178)                               [serial 1321] 
+P [188] <<not DSPV2() or not SBL()>>
+S [189] cv?(v)
+Q [190] <<VELOCITY = v and (not DSPV2() or not SBL())>>
+by Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>> (bl.pi)
+and theorem 177:
+Theorem (177) [serial 1331] used for:
+  applied port input of value <<pre and v=M(cv)>> -> <<post>> [serial 1321]
+ 
+
+
+Theorem (179)                               [serial 1315] 
+P [188] <<not SBL() or not DSPV2()>>
+S [189] cv?(v)
+Q [190] <<(not SBL() or not DSPV2()) and (v = VELOCITY)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 178:
+Theorem (178) [serial 1321] used for:
+    normalization of [serial 1315]
+ 
+
+
+Theorem (180)                               [serial 1310] 
+P [188] <<not SBL() or not DSPV2()>>
+S [189] <<not SBL() or not DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<(not SBL() or not DSPV2()) and (v = VELOCITY)>>
+Q [189] <<(s = POSITION)
+  and
+  ((not SBL() or not DSPV2()) and (v = VELOCITY))>>
+by Concurrent Composition Rule:
+ <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
+ <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
+ <<Q1 and Q2 and  . . . and Qn>> -> <<Q>>
+ -----------------------------------------------
+       <<P>> S <<Q>> where S is
+ <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
+and theorems 168 171 175 179:
+Theorem (168) [serial 1312] used for:
+  P -> P1 in concurrent composition for [serial 1310]
+ 
+Theorem (171) [serial 1313] used for:
+  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1310]
+ 
+Theorem (175) [serial 1314] used for:
+  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1310]
+ 
+Theorem (179) [serial 1315] used for:
+  <<P>> S2 <<Q2>> in concurrent composition for [serial 1310]
+ 
+
+
+Theorem (181)                               [serial 1329] 
+P [189] <<VELOCITY = v and (not DSPV2() or not SBL()) and POSITION = s>>
+S [188] ->
+Q [127] <<not DSPV2() or not SBL()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (182)                               [serial 1323] 
+P [189] <<POSITION = s and (VELOCITY = v and (not DSPV2() or not SBL()))>>
+S [188] ->
+Q [127] <<not DSPV2() or not SBL()>>
+by Associativity: (b.c).a = a.b.c
+and theorem 181:
+Theorem (181) [serial 1329] used for:
+  Associativity: (b.c).a = a.b.c [serial 1323]
+ 
+
+
+Theorem (183)                               [serial 1311] 
+P [189] <<(s = POSITION)
+  and
+  ((not SBL() or not DSPV2()) and (v = VELOCITY))>>
+S [188] ->
+Q [127] <<not SBL() or not DSPV2()>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 182:
+Theorem (182) [serial 1323] used for:
+    normalization of [serial 1311]
+ 
+
+
+Theorem (184)                               [serial 1308] 
+P [126] <<not SBL() or not DSPV2()>>
+S [188] {
+<<not SBL() or not DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<(not SBL() or not DSPV2()) and (v = VELOCITY)>>
+} 
+Q [127] <<not SBL() or not DSPV2()>>
+by Introduction of Existential Quantification (bl.elq)
+and theorems 167 180 183:
+Theorem (167) [serial 1309] used for:
+  <<P and x=e>> -> <<A>> in existential lattice quantification for [serial 1308]
+ 
+Theorem (180) [serial 1310] used for:
+  {A} T {B} in existential lattice quantification for [serial 1308]
+ 
+Theorem (183) [serial 1311] used for:
+  <<B>> -> <<Q>> in existential lattice quantification for [serial 1308]
+ 
+
+
+Theorem (185)                               [serial 1017] 
+P [126] <<not SBL() or not DSPV2()>>
+S [188] {
+<<not SBL() or not DSPV2()>>
+cs?(s)
+<<s = POSITION>>
+&
+cv?(v)
+<<(not SBL() or not DSPV2()) and (v = VELOCITY)>>
+} 
+Q [127] <<not SBL() or not DSPV2()>>
+by Introduction of Existential Quantification (bl.aanone)
+and theorem 184:
+Theorem (184) [serial 1308] used for:
+  as <<P>> S <<Q>> in <<P>> { S } <<Q>> [serial 1017]
+ 
+
+
+Theorem (186)                               [serial 1351] 
+P [127] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))
+  and
+  (not DSPV2() or not SBL())>>
+S [127] ->
+Q [95] <<CTCS_Properties::start = s or v < iSeg.v2>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (187)                               [serial 1346] 
+P [127] <<((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not DSPV2() or not SBL())>>
+S [127] ->
+Q [95] <<CTCS_Properties::start = s or v < iSeg.v2>>
+by Associativity: (b.c).a = a.b.c
+and theorem 186:
+Theorem (186) [serial 1351] used for:
+  Associativity: (b.c).a = a.b.c [serial 1346]
+ 
+
+
+Theorem (188)                               [serial 1343] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [127] ->
+Q [95] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 187:
+Theorem (187) [serial 1346] used for:
+    normalization of [serial 1343]
+ 
+
+
+Theorem (189)                               [serial 1352] 
+P [127] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))
+  and
+  (not DSPV2() or not SBL())>>
+S [127] ->
+Q [98] <<CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (190)                               [serial 1348] 
+P [127] <<((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not DSPV2() or not SBL())>>
+S [127] ->
+Q [98] <<CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))>>
+by Associativity: (b.c).a = a.b.c
+and theorem 189:
+Theorem (189) [serial 1352] used for:
+  Associativity: (b.c).a = a.b.c [serial 1348]
+ 
+
+
+Theorem (191)                               [serial 1344] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [127] ->
+Q [98] <<((s = CTCS_Properties::start)
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 190:
+Theorem (190) [serial 1348] used for:
+    normalization of [serial 1344]
+ 
+
+
+Theorem (192)                               [serial 1342] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [127] ->
+Q [197] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 188 191:
+Theorem (188) [serial 1343] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1342]
+ 
+Theorem (191) [serial 1344] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1342]
+ 
+
+
+Theorem (193)                               [serial 1338] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [127] ->
+Q [197] <<SBL() and DSPV2()>>
+by Substitution of Assertion Labels
+and theorem 192:
+Theorem (192) [serial 1342] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1338]
+ 
+
+
+Theorem (194)                               [serial 1339] 
+P [201] <<(SBL() and DSPV2())^1>>
+S [124] ->
+Q [91] <<(SBL() and DSPV2())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (195)                               [serial 1355] 
+P [198] <<ca = xl and (DSPV2() and SBL())>>
+S [198] ->
+Q [199] <<DSPV2() and SBL()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (196)                               [serial 1353] 
+P [198] <<(SBL() and DSPV2()) and (ca = xl)^0>>
+S [198] ->
+Q [199] <<SBL() and DSPV2()>>
+by Assume Present:  P = P@now = P^0 
+and theorem 195:
+Theorem (195) [serial 1355] used for:
+  Assume Present:  P = P@now = P^0  [serial 1353]
+ 
+
+
+Theorem (197)                               [serial 1357] 
+P [197] <<DSPV2() and SBL()>>
+S [198] ->
+Q [104] <<DSPV2() and SBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (198)                               [serial 1354] 
+P [197] <<SBL() and DSPV2()>>
+S [198] ->
+Q [104] <<(SBL() and DSPV2())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 197:
+Theorem (197) [serial 1357] used for:
+    normalization of [serial 1354]
+ 
+
+
+Theorem (199)                               [serial 1340] 
+P [197] <<SBL() and DSPV2()>>
+S [198] ca!(xl)
+Q [199] <<SBL() and DSPV2()>>
+by Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+and theorems 196 198:
+Theorem (196) [serial 1353] used for:
+  applied port output <<pre and (ca=xl)^0>> -> <<post>> [serial 1340]
+ 
+Theorem (198) [serial 1354] used for:
+  applied port output of conditional expression <<pre>> -> <<(SBL() and DSPV2())>> where (SBL() and DSPV2()) -> xl for ca!(xl) 
+[serial 1340]
+ 
+
+
+Theorem (200)                               [serial 1386] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ->
+Q [201] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (201)                               [serial 1388] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ->
+Q [201] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (202)                               [serial 1384] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ->
+Q [201] <<(s = CTCS_Properties::start or v < iSeg.v2)
+  and
+  (s = CTCS_Properties::start
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*iSeg.e*2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 200 201:
+Theorem (200) [serial 1386] used for:
+    normalization of [serial 1384]
+ 
+Theorem (201) [serial 1388] used for:
+    normalization of [serial 1384]
+ 
+
+
+Theorem (203)                               [serial 1381] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v2]^1+(b^1*iSeg.e^1*2)))>>
+by Simultaneous Assignment
+and theorem 202:
+Theorem (202) [serial 1384] used for:
+  applied wp for simultaneous assignment [serial 1381]
+ 
+
+
+Theorem (204)                               [serial 1379] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v2]^1+((b)^1*(2)^1*
+  (iSeg.e)^1)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 203:
+Theorem (203) [serial 1381] used for:
+    normalization of [serial 1379]
+ 
+
+
+Theorem (205)                               [serial 1377] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v2]^1+(b*2*iSeg.e)^1))>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 204:
+Theorem (204) [serial 1379] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1377]
+ 
+
+
+Theorem (206)                               [serial 1375] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v2])^1+(b*2*iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 205:
+Theorem (205) [serial 1377] used for:
+    normalization of [serial 1375]
+ 
+
+
+Theorem (207)                               [serial 1373] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+  and
+  (s^1 = CTCS_Properties::start
+  or ((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 206:
+Theorem (206) [serial 1375] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1373]
+ 
+
+
+Theorem (208)                               [serial 1371] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(((CTCS_Properties::start)^1 = (s)^1)
+  or ((v)^1 < (iSeg.v2)^1))
+  and
+  (((CTCS_Properties::start)^1 = (s)^1)
+  or (((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 207:
+Theorem (207) [serial 1373] used for:
+    normalization of [serial 1371]
+ 
+
+
+Theorem (209)                               [serial 1369] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<((CTCS_Properties::start = s)^1 or (v < iSeg.v2)^1)
+  and
+  ((CTCS_Properties::start = s)^1
+  or (((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 208:
+Theorem (208) [serial 1371] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1369]
+ 
+
+
+Theorem (210)                               [serial 1367] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 209:
+Theorem (209) [serial 1369] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1367]
+ 
+
+
+Theorem (211)                               [serial 1365] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<((CTCS_Properties::start = s or v < iSeg.v2)^1
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 210:
+Theorem (210) [serial 1367] used for:
+    normalization of [serial 1365]
+ 
+
+
+Theorem (212)                               [serial 1362] 
+P [199] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<((CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 211:
+Theorem (211) [serial 1365] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1362]
+ 
+
+
+Theorem (213)                               [serial 1360] 
+P [199] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 212:
+Theorem (212) [serial 1362] used for:
+    normalization of [serial 1360]
+ 
+
+
+Theorem (214)                               [serial 1341] 
+P [199] <<SBL() and DSPV2()>>
+S [200] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [201] <<(SBL() and DSPV2())^1>>
+by Substitution of Assertion Labels
+and theorem 213:
+Theorem (213) [serial 1360] used for:
+  substituted Assertions' predicates for  labels  [serial 1341]
+ 
+
+
+Theorem (215)                               [serial 1018] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))))>>
+S [198] <<SBL() and DSPV2()>>
+ca!(xl)
+;
+<<SBL() and DSPV2()>>
+( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(SBL() and DSPV2())^1>>
+Q [124] <<(SBL() and DSPV2())^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 193 194 199 214:
+Theorem (193) [serial 1338] used for:
+  P -> P1 in sequential composition for [serial 1018]
+ 
+Theorem (194) [serial 1339] used for:
+  Q1 -> Q in sequential composition for [serial 1018]
+ 
+Theorem (199) [serial 1340] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1018]
+ 
+Theorem (214) [serial 1341] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1018]
+ 
+
+
+Theorem (216)                               [serial 1391] 
+P [209] <<(not SBL() or not DSPV2())^1>>
+S [126] ->
+Q [126] <<(not SBL() or not DSPV2())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (217)                               [serial 1423] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ->
+Q [209] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (218)                               [serial 1425] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ->
+Q [209] <<not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (219)                               [serial 1421] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ->
+Q [209] <<not (s = CTCS_Properties::start or v < iSeg.v2)
+or not (s = CTCS_Properties::start
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*iSeg.e*2)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 217 218:
+Theorem (217) [serial 1423] used for:
+    normalization of [serial 1421]
+ 
+Theorem (218) [serial 1425] used for:
+    normalization of [serial 1421]
+ 
+
+
+Theorem (220)                               [serial 1418] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v2]^1+(b^1*iSeg.e^1*2)))>>
+by Simultaneous Assignment
+and theorem 219:
+Theorem (219) [serial 1421] used for:
+  applied wp for simultaneous assignment [serial 1418]
+ 
+
+
+Theorem (221)                               [serial 1416] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v2]^1+((b)^1*(2)^1*(iSeg.e)^1)))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 220:
+Theorem (220) [serial 1418] used for:
+    normalization of [serial 1416]
+ 
+
+
+Theorem (222)                               [serial 1414] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v2]^1+(b*2*iSeg.e)^1))>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 221:
+Theorem (221) [serial 1416] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1414]
+ 
+
+
+Theorem (223)                               [serial 1412] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v2])^1+(b*2*iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 222:
+Theorem (222) [serial 1414] used for:
+    normalization of [serial 1412]
+ 
+
+
+Theorem (224)                               [serial 1410] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (s^1 = CTCS_Properties::start or v^1 < iSeg.v2^1)
+or not (s^1 = CTCS_Properties::start
+or ((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 223:
+Theorem (223) [serial 1412] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1410]
+ 
+
+
+Theorem (225)                               [serial 1408] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (((CTCS_Properties::start)^1 = (s)^1)
+or ((v)^1 < (iSeg.v2)^1))
+or not (((CTCS_Properties::start)^1 = (s)^1)
+or (((v**2)+(b*s*2))^1 < (iMA[nSeg.v2]+(b*2*iSeg.e))^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 224:
+Theorem (224) [serial 1410] used for:
+    normalization of [serial 1408]
+ 
+
+
+Theorem (226)                               [serial 1406] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not ((CTCS_Properties::start = s)^1 or (v < iSeg.v2)^1)
+or not ((CTCS_Properties::start = s)^1
+or (((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 225:
+Theorem (225) [serial 1408] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1406]
+ 
+
+
+Theorem (227)                               [serial 1404] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not (CTCS_Properties::start = s or v < iSeg.v2)^1
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 226:
+Theorem (226) [serial 1406] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1404]
+ 
+
+
+Theorem (228)                               [serial 1402] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<not ((CTCS_Properties::start = s or v < iSeg.v2))^1
+or not ((CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 227:
+Theorem (227) [serial 1404] used for:
+    normalization of [serial 1402]
+ 
+
+
+Theorem (229)                               [serial 1400] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<(not (CTCS_Properties::start = s or v < iSeg.v2))^1
+or (not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 228:
+Theorem (228) [serial 1402] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1400]
+ 
+
+
+Theorem (230)                               [serial 1398] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<((not (CTCS_Properties::start = s or v < iSeg.v2))^1
+or (not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 229:
+Theorem (229) [serial 1400] used for:
+    normalization of [serial 1398]
+ 
+
+
+Theorem (231)                               [serial 1395] 
+P [127] <<not ((CTCS_Properties::start = s or v < iSeg.v2)
+    and
+    (CTCS_Properties::start = s
+    or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))
+  and
+  (not (CTCS_Properties::start = s or v < iSeg.v2)
+  or not (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<(not (CTCS_Properties::start = s or v < iSeg.v2)
+or not (CTCS_Properties::start = s
+or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e))))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 230:
+Theorem (230) [serial 1398] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1395]
+ 
+
+
+Theorem (232)                               [serial 1393] 
+P [127] <<(not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  or not ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))
+  and
+  (not (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<(not ((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+or not ((s = CTCS_Properties::start)
+or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 231:
+Theorem (231) [serial 1395] used for:
+    normalization of [serial 1393]
+ 
+
+
+Theorem (233)                               [serial 1392] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (not (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [209] <<(not SBL() or not DSPV2())^1>>
+by Substitution of Assertion Labels
+and theorem 232:
+Theorem (232) [serial 1393] used for:
+  substituted Assertions' predicates for  labels  [serial 1392]
+ 
+
+
+Theorem (234)                               [serial 1019] 
+P [127] <<(not SBL() or not DSPV2())
+  and
+  (not (((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+    and
+    ((s = CTCS_Properties::start)
+    or ((((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e)))))))>>
+S [208] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(not SBL() or not DSPV2())^1>>
+Q [126] <<(not SBL() or not DSPV2())^1>>
+by Introduction of Existential Quantification (bl.aapost)
+and theorems 216 233:
+Theorem (216) [serial 1391] used for:
+  as <<post>> -> <<Q>> in <<P>> {  S <<post>> } <<Q>> [serial 1019]
+ 
+Theorem (233) [serial 1392] used for:
+  as <<P>> S <<post>> in <<P>> {  S <<post>> } <<Q>> [serial 1019]
+ 
+
+
+Theorem (235)                               [serial 1429] 
+P [122] <<CTCS_Properties::start = s and i = 0 and iMA = >>
+S [213] ->
+Q [123] <<CTCS_Properties::start = s and i = 0>>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (236)                               [serial 1020] 
+P [122] <<(i = 0) and (s = CTCS_Properties::start) and (iMA = )>>
+S [213] ->
+Q [123] <<(i = 0) and (s = CTCS_Properties::start)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 235:
+Theorem (235) [serial 1429] used for:
+    normalization of [serial 1020]
+ 
+
+
+Theorem (237)                               [serial 1443] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ->
+Q [121] <<CTCS_Properties::start = s and i = 0>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (238)                               [serial 1445] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ->
+Q [121] <<CTCS_Properties::start = s and i = 0>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (239)                               [serial 1441] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ->
+Q [121] <<i = 0 and s = CTCS_Properties::start>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorems 237 238:
+Theorem (237) [serial 1443] used for:
+    normalization of [serial 1441]
+ 
+Theorem (238) [serial 1445] used for:
+    normalization of [serial 1441]
+ 
+
+
+Theorem (240)                               [serial 1438] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<i^1 = 0 and s^1 = CTCS_Properties::start>>
+by Simultaneous Assignment
+and theorem 239:
+Theorem (239) [serial 1441] used for:
+  applied wp for simultaneous assignment [serial 1438]
+ 
+
+
+Theorem (241)                               [serial 1436] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<((CTCS_Properties::start)^1 = (s)^1)
+  and
+  ((i)^1 = (0)^1)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Constants are always the same
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 240:
+Theorem (240) [serial 1438] used for:
+    normalization of [serial 1436]
+ 
+
+
+Theorem (242)                               [serial 1434] 
+P [123] <<CTCS_Properties::start = s and i = 0>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<(CTCS_Properties::start = s)^1 and (i = 0)^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 241:
+Theorem (241) [serial 1436] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1434]
+ 
+
+
+Theorem (243)                               [serial 1432] 
+P [123] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<((i = 0)^1 and (s = CTCS_Properties::start)^1)>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 242:
+Theorem (242) [serial 1434] used for:
+    normalization of [serial 1432]
+ 
+
+
+Theorem (244)                               [serial 1431] 
+P [123] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<((i = 0) and (s = CTCS_Properties::start))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 243:
+Theorem (243) [serial 1432] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1431]
+ 
+
+
+Theorem (245)                               [serial 1021] 
+P [123] <<(i = 0) and (s = CTCS_Properties::start)>>
+S [215] ( --begining of simultaneous assignment
+ i',
+ s'
+:=
+ i,
+ s
+) --end of simultaneous assignment
+
+Q [121] <<((i = 0) and (s = CTCS_Properties::start))^1>>
+by Introduction of Existential Quantification (bl.aanone)
+and theorem 244:
+Theorem (244) [serial 1431] used for:
+  as <<P>> S <<Q>> in <<P>> { S } <<Q>> [serial 1021]
+ 
+
+
+Theorem (246)                               [serial 1456] 
+P [125] <<(CTCS_Properties::start = s or v < iSeg.v2)
+  and
+  (CTCS_Properties::start = s
+  or ((v**2)+(b*s*2)) < (iMA[nSeg.v2]+(b*2*iSeg.e)))
+  and
+  (not v < iSeg.v1
+  or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))>>
+S [125] ->
+Q [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (247)                               [serial 1452] 
+P [125] <<((s = CTCS_Properties::start) or ((v < iSeg.v2)))
+  and
+  ((s = CTCS_Properties::start)
+  or (((v**2)+(2*b*s)) < (iMA[nSeg.v2]+(2*b*iSeg.e))))
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [125] ->
+Q [219] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Reflexivity of Multiplication: a*b=b*a
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 246:
+Theorem (246) [serial 1456] used for:
+    normalization of [serial 1452]
+ 
+
+
+Theorem (248)                               [serial 1448] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [125] ->
+Q [219] <<not EBL() or not DSPV1()>>
+by Substitution of Assertion Labels
+and theorem 247:
+Theorem (247) [serial 1452] used for:
+  substituted Assertions' predicates for  labels  [serial 1448]
+ 
+
+
+Theorem (249)                               [serial 1449] 
+P [221] <<(not EBL() or not DSPV1())^1>>
+S [128] ->
+Q [91] <<(not EBL() or not DSPV1())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (250)                               [serial 1503] 
+P [219] <<(ca = ( -b))^0
+  and
+  (not v < iSeg.v1
+  or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))>>
+S [219] ->
+Q [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (251)                               [serial 1498] 
+P [219] <<(not v < iSeg.v1
+  or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))
+  and
+  (ca = ( -b))^0>>
+S [219] ->
+Q [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 250:
+Theorem (250) [serial 1503] used for:
+    normalization of [serial 1498]
+ 
+
+
+Theorem (252)                               [serial 1516] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [219] ->
+Q [103] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (253)                               [serial 1514] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [219] ->
+Q [103] <<not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))
+or not ((v < iSeg.v1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 252:
+Theorem (252) [serial 1516] used for:
+    normalization of [serial 1514]
+ 
+
+
+Theorem (254)                               [serial 1505] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [219] ->
+Q [103] <<not DSPV1() or not EBL()>>
+by Substitution of Assertion Labels
+and theorem 253:
+Theorem (253) [serial 1514] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1505]
+ 
+
+
+Theorem (255)                               [serial 1499] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [219] ->
+Q [103] <<(not EBL() or not DSPV1())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 254:
+Theorem (254) [serial 1505] used for:
+    normalization of [serial 1499]
+ 
+
+
+Theorem (256)                               [serial 1458] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [219] ca!(- b)
+Q [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+and theorems 251 255:
+Theorem (251) [serial 1498] used for:
+  applied port output <<pre and (ca=- b)^0>> -> <<post>> [serial 1458]
+ 
+Theorem (255) [serial 1499] used for:
+  applied port output of conditional expression <<pre>> -> <<(not EBL() or not DSPV1())>> where (not EBL() or not DSPV1()) -> - b for ca!(- b) 
+[serial 1458]
+ 
+
+
+Theorem (257)                               [serial 1453] 
+P [219] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+S [219] ca!(- b)
+Q [219] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 256:
+Theorem (256) [serial 1458] used for:
+    normalization of [serial 1453]
+ 
+
+
+Theorem (258)                               [serial 1450] 
+P [219] <<not EBL() or not DSPV1()>>
+S [219] ca!(- b)
+Q [219] <<not EBL() or not DSPV1()>>
+by Substitution of Assertion Labels
+and theorem 257:
+Theorem (257) [serial 1453] used for:
+  substituted Assertions' predicates for  labels  [serial 1450]
+ 
+
+
+Theorem (259)                               [serial 1507] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ->
+Q [221] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (260)                               [serial 1509] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ->
+Q [221] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (261)                               [serial 1500] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ->
+Q [221] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*iSeg.e*2))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 259 260:
+Theorem (259) [serial 1507] used for:
+    normalization of [serial 1500]
+ 
+Theorem (260) [serial 1509] used for:
+    normalization of [serial 1500]
+ 
+
+
+Theorem (262)                               [serial 1493] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not v^1 < iSeg.v1^1
+or not ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v1]^1+(b^1*iSeg.e^1*2))>>
+by Simultaneous Assignment
+and theorem 261:
+Theorem (261) [serial 1500] used for:
+  applied wp for simultaneous assignment [serial 1493]
+ 
+
+
+Theorem (263)                               [serial 1489] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not v^1 < iSeg.v1^1
+or not (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v1]^1+((b)^1*(2)^1*
+(iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 262:
+Theorem (262) [serial 1493] used for:
+    normalization of [serial 1489]
+ 
+
+
+Theorem (264)                               [serial 1487] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not v^1 < iSeg.v1^1
+or not ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v1]^1+(b*2*iSeg.e)^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 263:
+Theorem (263) [serial 1489] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1487]
+ 
+
+
+Theorem (265)                               [serial 1483] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not v^1 < iSeg.v1^1
+or not ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v1])^1+(b*2*iSeg.e)^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 264:
+Theorem (264) [serial 1487] used for:
+    normalization of [serial 1483]
+ 
+
+
+Theorem (266)                               [serial 1481] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not v^1 < iSeg.v1^1
+or not ((v**2)+(b*s*2))^1 < (iMA[nSeg.v1]+(b*2*iSeg.e))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 265:
+Theorem (265) [serial 1483] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1481]
+ 
+
+
+Theorem (267)                               [serial 1477] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not ((v)^1 < (iSeg.v1)^1)
+or not (((v**2)+(b*s*2))^1 < (iMA[nSeg.v1]+(b*2*iSeg.e))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 266:
+Theorem (266) [serial 1481] used for:
+    normalization of [serial 1477]
+ 
+
+
+Theorem (268)                               [serial 1473] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<not (v < iSeg.v1)^1
+or not (((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 267:
+Theorem (267) [serial 1477] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1473]
+ 
+
+
+Theorem (269)                               [serial 1471] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<(not v < iSeg.v1)^1
+or (not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 268:
+Theorem (268) [serial 1473] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1471]
+ 
+
+
+Theorem (270)                               [serial 1467] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<((not v < iSeg.v1)^1
+or (not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 269:
+Theorem (269) [serial 1471] used for:
+    normalization of [serial 1467]
+ 
+
+
+Theorem (271)                               [serial 1460] 
+P [219] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<(not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 270:
+Theorem (270) [serial 1467] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1460]
+ 
+
+
+Theorem (272)                               [serial 1454] 
+P [219] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<(not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 271:
+Theorem (271) [serial 1460] used for:
+    normalization of [serial 1454]
+ 
+
+
+Theorem (273)                               [serial 1451] 
+P [219] <<not EBL() or not DSPV1()>>
+S [220] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [221] <<(not EBL() or not DSPV1())^1>>
+by Substitution of Assertion Labels
+and theorem 272:
+Theorem (272) [serial 1454] used for:
+  substituted Assertions' predicates for  labels  [serial 1451]
+ 
+
+
+Theorem (274)                               [serial 1022] 
+P [125] <<SBL()
+  and
+  DSPV2()
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [219] <<not EBL() or not DSPV1()>>
+ca!(- b)
+;
+<<not EBL() or not DSPV1()>>
+( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(not EBL() or not DSPV1())^1>>
+Q [128] <<(not EBL() or not DSPV1())^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 248 249 258 273:
+Theorem (248) [serial 1448] used for:
+  P -> P1 in sequential composition for [serial 1022]
+ 
+Theorem (249) [serial 1449] used for:
+  Q1 -> Q in sequential composition for [serial 1022]
+ 
+Theorem (258) [serial 1450] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1022]
+ 
+Theorem (273) [serial 1451] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1022]
+ 
+
+
+Theorem (275)                               [serial 1519] 
+P [128] <<v = 0 and (not DSPV1() or not EBL())>>
+S [223] ->
+Q [129] <<v = 0 and (not DSPV1() or not EBL())>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (276)                               [serial 1023] 
+P [128] <<(not EBL() or not DSPV1()) and (v = 0)>>
+S [223] ->
+Q [129] <<(not EBL() or not DSPV1()) and v = 0>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 275:
+Theorem (275) [serial 1519] used for:
+    normalization of [serial 1023]
+ 
+
+
+Theorem (277)                               [serial 1527] 
+P [126] <<(not DSPV2() or not SBL())
+  and
+  (not v < iSeg.v1
+  or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))>>
+S [126] ->
+Q [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (278)                               [serial 1525] 
+P [126] <<(not SBL() or not DSPV2())
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [126] ->
+Q [227] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 277:
+Theorem (277) [serial 1527] used for:
+    normalization of [serial 1525]
+ 
+
+
+Theorem (279)                               [serial 1521] 
+P [126] <<(not SBL() or not DSPV2())
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [126] ->
+Q [227] <<not EBL() or not DSPV1()>>
+by Substitution of Assertion Labels
+and theorem 278:
+Theorem (278) [serial 1525] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1521]
+ 
+
+
+Theorem (280)                               [serial 1522] 
+P [229] <<(not EBL() or not DSPV1())^1>>
+S [128] ->
+Q [91] <<(not EBL() or not DSPV1())^1>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (281)                               [serial 1529] 
+P [227] <<(not EBL() or not DSPV1())
+  and
+  (ca = ( -b))^0>>
+S [227] ->
+Q [227] <<not EBL() or not DSPV1()>>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (282)                               [serial 1532] 
+P [227] <<not DSPV1() or not EBL()>>
+S [227] ->
+Q [103] <<not DSPV1() or not EBL()>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (283)                               [serial 1530] 
+P [227] <<not EBL() or not DSPV1()>>
+S [227] ->
+Q [103] <<(not EBL() or not DSPV1())>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Disjunction: (m or k) = (k or m)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 282:
+Theorem (282) [serial 1532] used for:
+    normalization of [serial 1530]
+ 
+
+
+Theorem (284)                               [serial 1523] 
+P [227] <<not EBL() or not DSPV1()>>
+S [227] ca!(- b)
+Q [227] <<not EBL() or not DSPV1()>>
+by Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+and theorems 281 283:
+Theorem (281) [serial 1529] used for:
+  applied port output <<pre and (ca=- b)^0>> -> <<post>> [serial 1523]
+ 
+Theorem (283) [serial 1530] used for:
+  applied port output of conditional expression <<pre>> -> <<(not EBL() or not DSPV1())>> where (not EBL() or not DSPV1()) -> - b for ca!(- b) 
+[serial 1523]
+ 
+
+
+Theorem (285)                               [serial 1560] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ->
+Q [229] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (286)                               [serial 1562] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ->
+Q [229] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+by Identity (id):  P->P is tautology
+
+
+Theorem (287)                               [serial 1558] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ->
+Q [229] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*iSeg.e*2))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+and theorems 285 286:
+Theorem (285) [serial 1560] used for:
+    normalization of [serial 1558]
+ 
+Theorem (286) [serial 1562] used for:
+    normalization of [serial 1558]
+ 
+
+
+Theorem (288)                               [serial 1555] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not v^1 < iSeg.v1^1
+or not ((v^1**2)+(b^1*s^1*2)) < (iMA[nSeg.v1]^1+(b^1*iSeg.e^1*2))>>
+by Simultaneous Assignment
+and theorem 287:
+Theorem (287) [serial 1558] used for:
+  applied wp for simultaneous assignment [serial 1555]
+ 
+
+
+Theorem (289)                               [serial 1553] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not v^1 < iSeg.v1^1
+or not (((v)^1**(2)^1)+((b)^1*(s)^1*(2)^1)) < (iMA[nSeg.v1]^1+((b)^1*(2)^1*
+(iSeg.e)^1))>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Constants are always the same
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 288:
+Theorem (288) [serial 1555] used for:
+    normalization of [serial 1553]
+ 
+
+
+Theorem (290)                               [serial 1551] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not v^1 < iSeg.v1^1
+or not ((v**2)^1+(b*s*2)^1) < (iMA[nSeg.v1]^1+(b*2*iSeg.e)^1)>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 289:
+Theorem (289) [serial 1553] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1551]
+ 
+
+
+Theorem (291)                               [serial 1549] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not v^1 < iSeg.v1^1
+or not ((v**2)^1+(b*s*2)^1) < ((iMA[nSeg.v1])^1+(b*2*iSeg.e)^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 290:
+Theorem (290) [serial 1551] used for:
+    normalization of [serial 1549]
+ 
+
+
+Theorem (292)                               [serial 1547] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not v^1 < iSeg.v1^1
+or not ((v**2)+(b*s*2))^1 < (iMA[nSeg.v1]+(b*2*iSeg.e))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 291:
+Theorem (291) [serial 1549] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1547]
+ 
+
+
+Theorem (293)                               [serial 1545] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not ((v)^1 < (iSeg.v1)^1)
+or not (((v**2)+(b*s*2))^1 < (iMA[nSeg.v1]+(b*2*iSeg.e))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 292:
+Theorem (292) [serial 1547] used for:
+    normalization of [serial 1545]
+ 
+
+
+Theorem (294)                               [serial 1543] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<not (v < iSeg.v1)^1
+or not (((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 293:
+Theorem (293) [serial 1545] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1543]
+ 
+
+
+Theorem (295)                               [serial 1541] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<(not v < iSeg.v1)^1
+or (not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 294:
+Theorem (294) [serial 1543] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1541]
+ 
+
+
+Theorem (296)                               [serial 1539] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<((not v < iSeg.v1)^1
+or (not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1)>>
+by Normalization
+  Normalization Axioms:
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 295:
+Theorem (295) [serial 1541] used for:
+    normalization of [serial 1539]
+ 
+
+
+Theorem (297)                               [serial 1536] 
+P [227] <<not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<(not v < iSeg.v1
+or not ((v**2)+(b*s*2)) < (iMA[nSeg.v1]+(b*2*iSeg.e)))^1>>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 296:
+Theorem (296) [serial 1539] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1536]
+ 
+
+
+Theorem (298)                               [serial 1534] 
+P [227] <<not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e))))>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<(not ((v < iSeg.v1))
+or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))^1>>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Multiplication: a*b=b*a
+    Zero is unique element: x+0 = x      x-0 = x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 297:
+Theorem (297) [serial 1536] used for:
+    normalization of [serial 1534]
+ 
+
+
+Theorem (299)                               [serial 1524] 
+P [227] <<not EBL() or not DSPV1()>>
+S [228] ( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+Q [229] <<(not EBL() or not DSPV1())^1>>
+by Substitution of Assertion Labels
+and theorem 298:
+Theorem (298) [serial 1534] used for:
+  substituted Assertions' predicates for  labels  [serial 1524]
+ 
+
+
+Theorem (300)                               [serial 1024] 
+P [126] <<(not SBL() or not DSPV2())
+  and
+  (not (v < iSeg.v1)
+  or not ((((v**2)+(2*b*s)) < (iMA[nSeg.v1]+(2*b*iSeg.e)))))>>
+S [227] <<not EBL() or not DSPV1()>>
+ca!(- b)
+;
+<<not EBL() or not DSPV1()>>
+( --begining of simultaneous assignment
+ iSeg',
+ nSeg',
+ i',
+ v',
+ s',
+ b',
+ iMA'
+:=
+ iSeg,
+ nSeg,
+ i,
+ v,
+ s,
+ b,
+ iMA
+) --end of simultaneous assignment
+
+<<(not EBL() or not DSPV1())^1>>
+Q [128] <<(not EBL() or not DSPV1())^1>>
+by Sequential Composition Rule:
+ <<P1>> S1 <<Q1 and P2>>
+ <<Q1 and P2>> S2 <<Q2 and P3>>
+ . . .
+ <<Qk-1 and Pk>> Sk <<Qk>>
+ _____________________________________________
+ <<P1>> S1 <<Q1>> ; <<P2>> S2 <<Q2> ; . . . ; <<Pk>> Sk <<Qk>> (bl.sck)
+and theorems 279 280 284 299:
+Theorem (279) [serial 1521] used for:
+  P -> P1 in sequential composition for [serial 1024]
+ 
+Theorem (280) [serial 1522] used for:
+  Q1 -> Q in sequential composition for [serial 1024]
+ 
+Theorem (284) [serial 1523] used for:
+  <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1024]
+ 
+Theorem (299) [serial 1524] used for:
+  <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1024]
+ 
+
+
+Theorem (301)                               [serial 1002] 
+P [119] << >>
+S [107] ->
+Q [119] <<Controller.impl proof obligations>>
+by Initial Thread Obligations
+and theorems 1 2 3 4 6 9 10 12 31 44 69 114 141 166 185 215 234 236 245 274 276 300:
+Theorem (1) [serial 1003] used for:
+  <<M(GMA)>> -> <<I>> from invariant I when complete state GMA has Assertion <<M(GMA)>> in its definition.
+ 
+Theorem (2) [serial 1004] used for:
+  <<M(MFR)>> -> <<I>> from invariant I when complete state MFR has Assertion <<M(MFR)>> in its definition.
+ 
+Theorem (3) [serial 1005] used for:
+  <<M(SBI)>> -> <<I>> from invariant I when complete state SBI has Assertion <<M(SBI)>> in its definition.
+ 
+Theorem (4) [serial 1006] used for:
+  <<M(EBI)>> -> <<I>> from invariant I when complete state EBI has Assertion <<M(EBI)>> in its definition.
+ 
+Theorem (6) [serial 1007] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state CSB, <<M(CSB)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (9) [serial 1008] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state CMF, <<M(CMF)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (10) [serial 1009] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state RETRY, <<M(RETRY)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (12) [serial 1010] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state CMA, <<M(CMA)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (31) [serial 1011] used for:
+   <<M(READY)>> A <<M(GMA)>> for T0_go:READY-[ ]->GMA{A};
+ 
+Theorem (44) [serial 1012] used for:
+   <<M(GMA) and x>> A <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{A};
+ 
+Theorem (69) [serial 1013] used for:
+   <<M(CMA) and x>> A <<M(MFR)>> for T2_MA_Ok:CMA-[x]->MFR{A};
+ 
+Theorem (114) [serial 1014] used for:
+   <<M(MFR) and x>> A <<M(CMF)>> for T3_Move_Check:MFR-[x]->CMF{A};
+ 
+Theorem (141) [serial 1015] used for:
+   <<M(CMF) and x>> A <<M(SBI)>> for T4_SBI_Point:CMF-[x]->SBI{A};
+ 
+Theorem (166) [serial 1016] used for:
+   <<M(CMF) and x>> A <<M(MFR)>> for T5_Move_Ok:CMF-[x]->MFR{A};
+ 
+Theorem (185) [serial 1017] used for:
+   <<M(SBI) and x>> A <<M(CSB)>> for T6_SBI_Check:SBI-[x]->CSB{A};
+ 
+Theorem (215) [serial 1018] used for:
+   <<M(CSB) and x>> A <<M(MFR)>> for T7_SBI_Out:CSB-[x]->MFR{A};
+ 
+Theorem (234) [serial 1019] used for:
+   <<M(CSB) and x>> A <<M(SBI)>> for T8_SBI_Ok:CSB-[x]->SBI{A};
+ 
+Theorem (236) [serial 1020] used for:
+   <<M(CMA) and x>> -> <<M(RETRY)>> for T9_MA_NotOk:CMA-[x]->RETRY{};
+ 
+Theorem (245) [serial 1021] used for:
+   <<M(RETRY)>> A <<M(GMA)>> for T10_MA_Retry:RETRY-[ ]->GMA{A};
+ 
+Theorem (274) [serial 1022] used for:
+   <<M(CMF) and x>> A <<M(EBI)>> for T11_EBI_Point:CMF-[x]->EBI{A};
+ 
+Theorem (276) [serial 1023] used for:
+   <<M(EBI) and x>> -> <<M(STOP)>> for T12_Stop:EBI-[x]->STOP{};
+ 
+Theorem (300) [serial 1024] used for:
+   <<M(SBI) and x>> A <<M(EBI)>> for T13_EBI_Point:SBI-[x]->EBI{A};
+ 
+
+
+Theorem (302)                               [serial 1001] 
+P     
+S     
+Q     
+by Initial Thread Obligations
+and theorem 301:
+Theorem (301) [serial 1002] used for:
+  Initial proof obligations for Controller.impl
+ 
+
+
+proof duration:  36.5 seconds 
+
+done step:  axioms
+Done executing proof script
+closing dump.txt
+closing dump.txt file "/Applications/osate2.0.8/osate2.0.8.app/Contents/MacOS/dump.txt"
+closing dump.txt file; 

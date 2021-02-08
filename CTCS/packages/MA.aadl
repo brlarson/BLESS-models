@@ -1,0 +1,271 @@
+--created and proved by Ehsan Ahmad
+
+--Below is model of the Movement Authority scenario of Chinese Train Control System level 3 (CTS-3)
+package MA
+public
+with CTCS_Types, CTCS_Properties, BLESS;
+system sysMA
+end sysMA; 
+system implementation sysMA.impl
+  subcomponents
+    Train: abstract Train.impl;
+    pController: process pController.impl;
+    RBC : device RBC.impl;
+--DMI : device DMI.impl;
+connections
+conn_position: port Train.ts -> pController.ps;
+conn_velocity: port Train.tv -> pController.pv;
+conn_acc: port pController.pa -> Train.ta;
+conn_req: port pController.pr -> RBC.r;
+conn_ma: port RBC.m -> pController.pm;
+conn_ea: port RBC.ea -> pController.pea;
+--conn_msg : port pController.pmsg -> DMI.msg;
+end sysMA.impl;
+
+-----Train abstract component---------
+abstract Train
+  features
+   
+    ts : out data port CTCS_Types::Position ; --{BLESS::Assertion=> "<<:=POSITION>>";};
+    tv : out data port CTCS_Types::Velocity ; --{BLESS::Assertion=> "<<:=VELOCITY>>";};
+ 	ta : in data port CTCS_Types::Acceleration ; 
+ 
+ end Train;
+
+abstract implementation Train.impl
+annex hybrid{**
+	
+  variables
+   ts : CTCS_Types::Position -- train position
+   tv : CTCS_Types::Velocity -- train velocity
+   ta : CTCS_Types::Acceleration --train acceleration
+   t : CTCS_Types::Time     -- train clock time
+  constants
+   b = 1 mpss    --maximum deceleration of the train, assumed as 1 mpss
+  behavior
+   Train ::= 'DT 1 ts = tv' & 'DT 1 tv = ta' & 'DT 1 t = 1'
+             [[> ts!(ts), tv!(tv),ta?(ta) ]]> Continue
+   Continue ::= skip
+   RunningTrain ::= ts:= 0 & tv:=0 & ta:=0 & REPEAT(Train)
+**};
+end Train.impl;
+
+-----Controller process and thread----
+process pController
+features
+ps: in data port CTCS_Types::Position; 
+pv: in data port CTCS_Types::Velocity; 
+pa : out data port  CTCS_Types::Acceleration;     --check - {BLESS::Assertion=> "<<TDELAY()>>";};
+pr: out event port ; --check - {BLESS::Assertion=> "<<s=0 or s>=iSeg.e>>";};  --make sure iSeg must be the second last segment here, req has EOA
+pea: in data port CTCS_Types::EOA;
+pm: in event data port CTCS_Types::MovementAuthority; --check - {BLESS::Assertion=> "<<CHECKV1()>>";} ;
+--pmsg : out event data port  CTCS_Types::DMI_Message;
+end pController;
+process implementation pController.impl
+subcomponents
+Controller: thread Controller.impl;
+connections
+conn_s: port ps->Controller.cs; 
+conn_v: port pv->Controller.cv;
+conn_a: port Controller.ca ->pa;
+conn_req: port Controller.r->pr;
+conn_ma: port pm->Controller.m;
+conn_ea: port  pea ->Controller.ea;
+--connn_msg: port Controller.msg ->pmsg;
+end pController.impl;
+------Controller Thread-------------
+thread Controller
+features
+  r: out event port  {BLESS::Assertion=> "<<(s= 0 m ) or (s>=(e-SR))>>";};  
+  m: in event data port CTCS_Types::MovementAuthority {BLESS::Assertion=> "<<:=IMA>>";} ;
+  ea: in data port CTCS_Types::EOA;
+  cs: in data port CTCS_Types::Position {BLESS::Assertion=> "<<:=POSITION>>";}; 
+  cv: in data port CTCS_Types::Velocity {BLESS::Assertion=> "<<:=VELOCITY>>";};  
+  ca : out data port  CTCS_Types::Acceleration {BLESS::Assertion=> "<<:=Acceleration()>>";};   
+--msg: out event data port CTCS_Types::DMI_Message {BLESS::Assertion=>"<<iMA=null>>";}; --message to DMI
+properties
+Dispatch_Protocol => Periodic;  
+Period => 200 ms;
+end Controller;
+
+thread implementation Controller.impl
+annex BLESS{**
+assert 
+	--<<SRL:x: exists t:CTCS_Types::Time in x-sr .. x that (s@t and v@t)>> --sampling rate limit
+	<<SBL: : s = 0 m or v < iSeg.v2 >> --service brake limit
+	<<EBL: :  (v < iSeg.v1) >> --emergency brake limit
+	<<DSPV1: : (((v*v) + (2*b*s)) < (iMA[track].v1 + (2*b*iSeg.e))) >> --DSP for V1
+	<<DSPV2: : (s = 0 m) or  (((v*v) + (2*b*s)) < (iMA[track].v2 + (2*b*iSeg.e))) >> --DSP for V2
+	
+  <<TRAIN_XL: returns quantity mpss := [
+  (EBL() or DSPV1() )-> 0,                                 			
+  (not SBL() or not DSPV2() )-> #CTCS_Properties::SB_Rate, 
+  (not EBL() or not DSPV1() )-> -b,    --CTCS_Properties::EB_Rate = b   			
+  (SBL() and DSPV2() )-> xl ] >> 
+  
+invariant 
+	<<true>>
+	
+variables
+	track ~ quantity whole := 0 
+	b ~ quantity mpss 
+	v ~ quantity kph :=0 kph
+	s ~ quantity m
+	e ~ trainModes
+	xl ~ quantity mpss
+	iMA ~ movementAuthority := null
+	iSeg ~ segment := null
+	nSeg ~ segment := null
+	
+states 
+	READY : initial state <<(track=0) and (s= 0 m )>>  
+	GMA   : complete state  <<(track=0) and (s= 0 m )>>  
+	CMA   : state <<(track=0) and (s= 0 m )>>
+	RETRY : state <<(track=0) and (s= 0 m )>>
+	MFR   : complete state << SBL() and DSPV2()>>
+	CMF   : state <<SBL() and DSPV2()>>
+	SBI   : complete state << not SBL() or not DSPV2() >> 
+	CSB   : state << not SBL() or not DSPV2() >>
+	EBI   : complete state << not EBL() or not DSPV1()  >>
+	DONE  : final state << (not EBL() or not DSPV1()) and v=0 kph>> 
+																	
+ transitions
+	T0_go: READY -[]-> GMA 
+	  { 
+		<<track=0 and s= 0 m >> 
+		r!; 
+		<<track=0 and s= 0 m >> 
+		|track',s':=track,s| 
+		<<track'=0 and s'= 0 m >>
+		} 
+	
+	T1_MA_Check: GMA -[on dispatch]-> CMA 
+	  {
+		m?(iMA) ; <<(track=0) and (s= 0 m ) and (iMA=IMA) >> 
+		ea?(e) <<(track=0) and (s= 0 m ) and (iMA=IMA) >>
+	  } 
+	
+	
+	T2_MA_Ok: CMA -[not (iMA=null)]-> MFR
+	  {
+		|iSeg',nSeg',track',v',s',b',iMA':=iSeg, nSeg,track,v,s,b,iMA| 
+		<<(SBL() and DSPV2())^1>>
+		}
+		
+	T3_Move_Check: MFR -[on dispatch]-> CMF
+	  { { <<SBL() and DSPV2()>> 
+				cs?(s) 
+				  <<s=POSITION>>
+				& 
+				cv?(v) 	
+				  <<SBL() and DSPV2() and v=VELOCITY>> 
+		  }
+		;  <<SBL() and DSPV2()>>
+		if 
+		  ( s>=(e-SR) )~>
+    		<<SBL() and DSPV2() and (s>=(e-SR))>>
+    	r!   --- how to check the MA is extended or not
+    		<<SBL() and DSPV2()>>	
+    []
+    	(not (s>=(e-SR)) )~>
+    		<<SBL() and DSPV2()>>
+    	skip
+    		<<SBL() and DSPV2()>>	
+    fi  
+    <<SBL() and DSPV2()>> 
+    }
+    											
+	T4_SBI_Point:  CMF -[not (s= 0 m  or v < iSeg.v2) or
+						not (s = 0 m or v*v + 2*b*s < iMA[track].v2 + 2*b*iSeg.e)]-> SBI
+		{
+		  <<not SBL() or not DSPV2()>> 
+		ca!(#CTCS_Properties::SB_Rate)
+		; <<not SBL() or not DSPV2()>>
+		|iSeg',nSeg',track',v',s',b',iMA':=iSeg, nSeg,track,v,s,b,iMA| 
+		  <<(not SBL() or not DSPV2())^1>>
+		}  
+	
+	T5_Move_Ok: CMF -[s= 0 m or v < iSeg.v2 or  v**2 + 2*b*s < iMA[track].v2 + 2*b*iSeg.e]-> MFR
+		{
+		  <<SBL() and DSPV2()>>  ca!(xl); <<SBL() and DSPV2()>> 
+		|track,iSeg,nSeg:=track+1,nSeg,iMA[track+2]|
+		; <<SBL() and DSPV2()>>   -- What if the MA is extended and what if not, have to update values accordingly
+	  |iSeg',nSeg',track',v',s',b', iMA':=iSeg, nSeg,track,v,s,b, iMA|
+	    <<(SBL() and DSPV2())^1>>
+	  } 
+  
+  	 
+	T6_SBI_Check: SBI -[on dispatch]-> CSB 
+	{ 
+		<<not SBL() or not DSPV2() >>
+		cs?(s) <<s=POSITION>> 
+		& 
+		cv?(v) 	
+		<<(not SBL() or not DSPV2()) and v=VELOCITY >> 
+	}
+	
+	
+	T7_SBI_Out: CSB-[ (s= 0 m  or v < iSeg.v2) and 
+		  (s= 0 m  or v*v + 2*b*s < iMA[track].v2 + 2*b*iSeg.e) ]-> MFR
+		{
+		  <<SBL() and DSPV2()>>
+		ca!(xl); 
+		  <<SBL() and DSPV2()>>
+		|iSeg',nSeg',track',v',s',b', iMA':=iSeg, nSeg,track,v,s,b, iMA|
+		  <<(SBL() and DSPV2())^1>>
+		}
+		
+	
+	T8_SBI_Ok: CSB -[not ((s= 0 m  or v < iSeg.v2) and 
+		  (s= 0 m  or v*v + 2*b*s < iMA[track].v2 + 2*b*iSeg.e)) ]-> SBI
+	 {
+	 |iSeg',nSeg',track',v',s',b',iMA':=iSeg, nSeg,track,v,s,b,iMA|
+			<<(not SBL() or not DSPV2())^1>>
+	 }
+
+	
+	T9_MA_NotOk: CMA-[iMA=null]-> RETRY {};
+ 
+  T10_MA_Retry: RETRY -[]-> GMA { |track',s':=track,s| }
+	
+	T11_EBI_Point: CMF -[not (v < iSeg.v1) or not (v**2 + 2*b*s < iMA[track].v1 + 2*b*iSeg.e) ]-> EBI
+		{
+			<<not EBL() or not DSPV1()>> ca!(-b); <<not EBL() or not DSPV1()>> --ca!(CTCS_Properties::EB_Rate)
+		|iSeg',nSeg',track',v',s',b',iMA':=iSeg, nSeg,track,v,s,b,iMA| 
+			<<(not EBL() or not DSPV1())^1>>
+		};
+		  
+	T12_Stop: EBI -[v = 0 kph]-> DONE {};
+	
+	T13_EBI_Point: SBI -[not (v < iSeg.v1) or not (v**2 + 2*b*s < iMA[track].v1 + 2*b*iSeg.e)]-> EBI
+		{
+			<<not EBL() or not DSPV1()>> ca!(-b); <<not EBL() or not DSPV1()>> --ca!(CTCS_Properties::EB_Rate)
+		|iSeg',nSeg',track',v',s',b',iMA':=iSeg, nSeg,track,v,s,b,iMA| 
+			<<(not EBL() or not DSPV1())^1>>
+		};
+		
+  **};
+
+end Controller.impl;
+
+
+
+-----RBC Device----
+device RBC
+features
+r: in event port;
+m: out event data port CTCS_Types::MovementAuthority;
+ea: out data port CTCS_Types::EOA;
+end RBC; 
+device implementation RBC.impl
+end RBC.impl;
+
+-----RBC Device----
+--device DMI
+--features
+--msg: in event data port CTCS_Types::DMI_Message;
+--end DMI; 
+--device implementation DMI.impl
+--end DMI.impl;
+end MA;
+
