@@ -44,7 +44,7 @@ annex BLESS
     num_samples~quantity whole:=0;  --counts samples while filling      
   states
     start : initial state 
-      <<(num_samples<#PulseOx_Properties::Max_Window_Samples) and (num_samples=0)>>;
+      <<(num_samples < #PulseOx_Properties::Max_Window_Samples) and (num_samples = 0)>>;
     fill : complete state  --loading spo2
       <<SpO2_RD() and (num_samples < #PulseOx_Properties::Max_Window_Samples)>>;    
     check : state  --check if full

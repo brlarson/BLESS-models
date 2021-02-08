@@ -47,7 +47,7 @@ annex BLESS
 --  --    max_samples~quantity whole := (#PulseOx_Properties::Max_Window_Samples - 1); 
     window_size~quantity whole := SpO2MovingAvgWindowSamples 
       <<AXIOM_WS: :window_size=SPO2_MOVING_AVERAGE_WINDOW_SAMPLES>>;
-    spo2_hist ~ array [0 .. #PulseOx_Properties::Max_Window_Samples] of quantity whole  --holds SpO2 history
+    spo2_hist ~ array [0 .. #PulseOx_Properties::Max_Window_Samples] of quantity percent  --holds SpO2 history
       <<WINDOW: : all k~quantity whole in lb .. (ub - 1) 
     	  are (spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k - ub))>>;
     goodSamp ~  array [0 .. #PulseOx_Properties::Max_Window_Samples] of boolean --holds whether previous sample was valid
@@ -56,7 +56,7 @@ annex BLESS
     	   (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))>>;
     ub~quantity whole :=0;  --location of most recent SpO2 reading, upper bound of range of average and storage
     lb~quantity whole :=0;  --location of oldest sample in window
-    totalSpO2~quantity whole :=0  --running total
+    totalSpO2~quantity percent := 0 percent  --running total
       <<TOTAL_SPO2: :totalSpO2=(sum k~quantity whole in lb .. (ub - 1) of SSQ(k - ub))>>;
     goodCount~quantity whole :=0  --count of good SpO2 in the window
       <<GOOD: :goodCount=(numberof k~quantity whole in lb .. (ub - 1) 
@@ -66,7 +66,7 @@ annex BLESS
   states
     start : initial state
       <<(numSamplesInWindow=0) and (ub=0) and (oldestSample=0) 
-       and (totalSpO2=0) and (lb=0) and (goodCount=0)>>;
+       and (totalSpO2 = 0 percent) and (lb=0) and (goodCount=0)>>;
     fillingWindow : complete state 
       <<FW: :((ub-lb)<window_size) and INV_AV() >>;
     chooseToRun : state 
