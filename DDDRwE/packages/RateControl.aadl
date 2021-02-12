@@ -95,17 +95,17 @@ RC1_cci : wait -[on dispatch cci ]-> check_zero_division{};
 RC2_zero : check_zero_division -[
    ((2.0*(rt? -lrl? ))=0.0)
    or ((2.0*(ct? -lrl? ))=0.0)
-   or ((lrl? -url? )=0)
+   or ((lrl? -url? )=0.0)
    ]-> err{};
    
 RC3_nonzero : check_zero_division -[   
 	 ((2.0*(rt? -lrl? ))<>0.0)
    and ((2.0*(ct? -lrl? ))<>0.0)
-   and ((lrl? -url? )<>0)
+   and ((lrl? -url? )<>0.0)
  ]-> wait
 {
   <<((2.0*(REACTION_TIME - LRL)) <> 0.0 s) and ((2.0*(RECOVERY_TIME - LRL)) <> 0.0 s) 
-    and ((LRL - URL) <> 0.0 s) >>
+    and ((LRL - URL) <> 0 s) >>
   declare  --transient, local variables
     siri  ~ time := (if msr? >= (lrl? - (rf? *(xl? - at? ))) 
     	then msr? else lrl? - (rf? *(xl? - at?)))  --sensor indicated rate interval

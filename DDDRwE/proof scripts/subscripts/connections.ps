@@ -1,67 +1,49 @@
 #connections
-#[serial 1126] Composition of Subcomponents via Directional Connection flow_rate.basal_overinfusion -> alarm_thr.basal_overinfusion:
+#[serial 1081] Composition of Subcomponents via Directional Connection dc.asCount -> atr.asCount:
 axioms
-#[serial 1127] Composition of Subcomponents via Directional Connection flow_rate.bolus_overinfusion -> alarm_thr.bolus_overinfusion:
+#[serial 1082] Composition of Subcomponents via Directional Connection ac.atCount -> atr.atCount:
 axioms
-#[serial 1128] Composition of Subcomponents via Directional Connection flow_rate.square_bolus_overinfusion -> alarm_thr.square_bolus_overinfusion:
+#[serial 1083] Composition of Subcomponents via Directional Connection ddd.last_v_was_vs -> rc.last_v_was_vs:
 axioms
-#[serial 1129] Composition of Subcomponents via Directional Connection flow_rate.basal_underinfusion -> alarm_thr.basal_underinfusion:
+#[serial 1084] Composition of Subcomponents via Directional Connection ddd.cci -> rc.cci:
 axioms
-#[serial 1130] Composition of Subcomponents via Directional Connection flow_rate.bolus_underinfusion -> alarm_thr.bolus_underinfusion:
+#[serial 1085] Composition of Subcomponents via Directional Connection ddd.cci -> mkr.cci:
 axioms
-#[serial 1131] Composition of Subcomponents via Directional Connection flow_rate.square_bolus_underinfusion -> alarm_thr.square_bolus_underinfusion:
+#[serial 1086] Composition of Subcomponents via Directional Connection ddd.ap -> mkr.ap:
 axioms
-#[serial 1132] Composition of Subcomponents via Directional Connection boss.begin_infusion -> rate_controller.begin_infusion:
+#[serial 1087] Composition of Subcomponents via Directional Connection ddd.vp -> mkr.vp:
 axioms
-#[serial 1133] Composition of Subcomponents via Directional Connection rate_controller.infusion_flow_rate -> max_drug_watcher.infusion_flow_rate:
+#[serial 1088] Composition of Subcomponents via Directional Connection ddd.as -> mkr.as:
 axioms
-#[serial 1134] Composition of Subcomponents via Directional Connection prescription_checker.vtbi -> rate_controller.vtbi:
+#[serial 1089] Composition of Subcomponents via Directional Connection ddd.as -> atr.dc.as:
 axioms
-#[serial 1135] Composition of Subcomponents via Directional Connection prescription_checker.square_bolus_rate -> rate_controller.square_bolus_rate:
+#[serial 1090] Composition of Subcomponents via Directional Connection ddd.at -> mkr.at:
 axioms
-#[serial 1136] Composition of Subcomponents via Directional Connection prescription_checker.patient_bolus_rate -> rate_controller.patient_bolus_rate:
+#[serial 1091] Composition of Subcomponents via Directional Connection ddd.at -> atr.ac.at:
 axioms
-#[serial 1137] Composition of Subcomponents via Directional Connection prescription_checker.basal_rate -> rate_controller.basal_rate:
+#[serial 1092] Composition of Subcomponents via Directional Connection ddd.vs -> mkr.vs:
 axioms
-#[serial 1138] Composition of Subcomponents via Directional Connection prescription_checker.minimum_time_between_bolus -> patient_bolus_checker.minimum_time_between_bolus:
+#[serial 1093] Composition of Subcomponents via Directional Connection ddd.pvc -> mkr.pvc:
 axioms
-#[serial 1139] Composition of Subcomponents via Directional Connection prescription_checker.max_drug_per_hour -> max_drug_watcher.max_drug_per_hour:
+#[serial 1094] Composition of Subcomponents via Directional Connection ddd.ras -> mkr.ras:
 axioms
-#[serial 1140] Composition of Subcomponents via Directional Connection prescription_checker.prescription_okay -> boss.prescription_okay:
+#[serial 1095] Composition of Subcomponents via Directional Connection ddd.rvs -> mkr.rvs:
 axioms
-#[serial 1141] Composition of Subcomponents via Directional Connection max_drug_watcher.over_max_drug_per_hour -> rate_controller.over_max_drug_per_hour:
+#[serial 1096] Composition of Subcomponents via Directional Connection rc.min_cci -> ddd.min_cci:
 axioms
-#[serial 1142] Composition of Subcomponents via Directional Connection patient_bolus_checker.patient_request_not_too_soon -> rate_controller.patient_request_not_too_soon:
+#[serial 1097] Composition of Subcomponents via Directional Connection rc.max_cci -> ddd.max_cci:
 axioms
-#[serial 1143] Composition of Subcomponents via Directional Connection drug_library.the_drug_record -> operation_threads.prescription_checker.the_drug_record:
+#[serial 1098] Composition of Subcomponents via Directional Connection rc.dav -> ddd.dav:
 axioms
-#[serial 1144] Composition of Subcomponents via Directional Connection drug_library.no_drug_found -> operation_threads.prescription_checker.drug_not_in_library:
+#[serial 1099] Composition of Subcomponents via Directional Connection atr.atr.fb -> ddd.fb:
 axioms
-#[serial 1145] Composition of Subcomponents via Directional Connection operation_threads.prescription_checker.get_drug_record -> drug_library.get_drug_record:
+#[serial 1100] Composition of Subcomponents via Directional Connection atr.atr.atr_detect -> mkr.atr_dct:
 axioms
-#[serial 1146] Composition of Subcomponents via Directional Connection btty.Battery_Voltage -> pwr.Battery_Voltage:
+#[serial 1101] Composition of Subcomponents via Directional Connection atr.atr.atr_fallback -> mkr.atr_fb:
 axioms
-#[serial 1147] Composition of Subcomponents via Directional Connection btty.Battery_Current -> pwr.Battery_Current:
+#[serial 1102] Composition of Subcomponents via Directional Connection atr.atr.atr_end -> mkr.atr_end:
 axioms
-#[serial 1148] Composition of Subcomponents via Directional Connection vcc.power_voltage -> pwr.Power_Voltage:
+#[serial 1103] Composition of Subcomponents via Directional Connection DDD.ddd.ap -> front_end.ap:
 axioms
-#[serial 1149] Composition of Subcomponents via Directional Connection safety_subsystem.alarm_process.alarm_thr.stop_pumping_completely -> sensors_actuators.pump.halt:
-axioms
-#[serial 1150] Composition of Subcomponents via Directional Connection operation_subsystem.operation_process.operation_threads.rate_controller.infusion_flow_rate -> sensors_actuators.pump.rate:
-axioms
-#[serial 1151] Composition of Subcomponents via Directional Connection operation_subsystem.operation_process.operation_threads.patient_bolus_checker.patient_request_not_too_soon -> gui_subsystem.from_operation.patient_request_not_too_soon:
-axioms
-#[serial 1152] Composition of Subcomponents via Directional Connection operation_subsystem.operation_process.operation_threads.patient_bolus_checker.patient_request_too_soon -> gui_subsystem.from_operation.patient_request_too_soon:
-axioms
-#[serial 1153] Composition of Subcomponents via Directional Connection power_subsystem.pwr.low_battery_warning -> safety_subsystem.alarm_process.alarm_thr.low_battery_warning:
-substitute-post
-normalize
-axioms
-#[serial 1154] Composition of Subcomponents via Directional Connection power_subsystem.pwr.Defective_Battery -> safety_subsystem.alarm_process.alarm_thr.defective_btty:
-substitute-post
-normalize
-axioms
-#[serial 1155] Composition of Subcomponents via Directional Connection power_subsystem.pwr.voltage_oor -> safety_subsystem.alarm_process.alarm_thr.voltage_oor:
-substitute-post
-normalize
+#[serial 1104] Composition of Subcomponents via Directional Connection DDD.ddd.vp -> front_end.vp:
 axioms
