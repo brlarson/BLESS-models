@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<core:Specification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http:///www.open-people.fr/rdal/core" id="_ioU2ABLqEeO91e3o5BA9EA" name="KSU Isolette Requirements" specifies="../aadl/instances/Nursery_Room_Normal_Operation_Instance.aaxl2#_YaWEMBh-EeOVaeMNcMpw9g" constraintLanguagesSpecification="platform:/config/fr.openpeople.ide.settings/defaultConstraintsLanguages.constraints#20903345">
+  <actors xsi:type="core:StakeHolder" id="_34KQ0BLqEeO91e3o5BA9EA" name="Safety Engineering" contractualElements="#_X2sNgBLsEeO91e3o5BA9EA"/>
+  <actors xsi:type="core:StakeHolder" id="_AKyOUBLrEeO91e3o5BA9EA" name="Infant" contractualElements="#_X2sNgBLsEeO91e3o5BA9EA #_XR1iEBLuEeO91e3o5BA9EA"/>
+  <actors xsi:type="core:StakeHolder" id="_DHq2MBLrEeO91e3o5BA9EA" name="Marketing" contractualElements="#_XR1iEBLuEeO91e3o5BA9EA"/>
+  <actors xsi:type="core:StakeHolder" id="_NDaGkBLrEeO91e3o5BA9EA" name="Design Engineering" contractualElements="#_XR1iEBLuEeO91e3o5BA9EA #_sj800BLuEeO91e3o5BA9EA"/>
+  <actors xsi:type="core:StakeHolder" id="_QR40wBLrEeO91e3o5BA9EA" name="Nurse" contractualElements="#_mU0joBLvEeO91e3o5BA9EA #_sAyn8BLvEeO91e3o5BA9EA"/>
+  <requirementGroups id="_XANt8BLrEeO91e3o5BA9EA" name="Safety">
+    <requirements xsi:type="core:Requirement" id="_X2sNgBLsEeO91e3o5BA9EA" name="HR-1: Probability of Exporsure to Unsafe Temp is less than 10 E-9 failures per hour" stakeHolders="#_AKyOUBLrEeO91e3o5BA9EA #_34KQ0BLqEeO91e3o5BA9EA" containedRequirements="#_qwwDwBLsEeO91e3o5BA9EA #_GgMmUBLtEeO91e3o5BA9EA #_pXf8YBLtEeO91e3o5BA9EA"/>
+    <requirements xsi:type="core:Requirement" id="_qwwDwBLsEeO91e3o5BA9EA" name="HR-4:  Thermost Subsystem Failure Rate less than 2 E-9 failures per hour "/>
+    <requirements xsi:type="core:Requirement" id="_GgMmUBLtEeO91e3o5BA9EA" name="HR-3:  Heat source failure less than 3 E-10"/>
+    <requirements xsi:type="core:Requirement" id="_pXf8YBLtEeO91e3o5BA9EA" name="HR-2: Failure less than 2 E-10" derivations="#_3BdyABLtEeO91e3o5BA9EA #_6wsc0BLtEeO91e3o5BA9EA"/>
+  </requirementGroups>
+  <requirementGroups id="_a9cYgBLrEeO91e3o5BA9EA" name="Thermostat">
+    <requirements xsi:type="core:Requirement" id="_3BdyABLtEeO91e3o5BA9EA" name="SR-1:  Independent Regulator" derivedFrom="#_pXf8YBLtEeO91e3o5BA9EA"/>
+    <requirements xsi:type="core:Requirement" id="_6wsc0BLtEeO91e3o5BA9EA" name="SR-2: Independent Monitor" derivedFrom="#_pXf8YBLtEeO91e3o5BA9EA"/>
+  </requirementGroups>
+  <requirementGroups id="_gtmZQBLrEeO91e3o5BA9EA" name="Function">
+    <requirements xsi:type="core:Requirement" id="_XR1iEBLuEeO91e3o5BA9EA" name="REQ-ISF-1:  Maintain air temperature in isolette within desired range." stakeHolders="#_AKyOUBLrEeO91e3o5BA9EA #_NDaGkBLrEeO91e3o5BA9EA #_DHq2MBLrEeO91e3o5BA9EA" containedRequirements="#_sj800BLuEeO91e3o5BA9EA"/>
+  </requirementGroups>
+  <requirementGroups id="_5OswgBLrEeO91e3o5BA9EA" name="Tolerances and Constraints">
+    <requirements xsi:type="core:Requirement" id="_sj800BLuEeO91e3o5BA9EA" name="REQ-IS-1:  Current Temp in Desired Range; tolerance 0.2°F" stakeHolders="#_NDaGkBLrEeO91e3o5BA9EA" containedRequirements="#_H5vhQBLvEeO91e3o5BA9EA #_Tp1rMBLvEeO91e3o5BA9EA #_mU0joBLvEeO91e3o5BA9EA"/>
+    <requirements xsi:type="core:Requirement" id="_H5vhQBLvEeO91e3o5BA9EA" name="REQ-IS-2:  Air Temperature Decrease at most 1.0°F per minute, when heat source is off"/>
+    <requirements xsi:type="core:Requirement" id="_Tp1rMBLvEeO91e3o5BA9EA" name="REQ-IS-3:  Air Temperature Increases at most 1.0°F per minute, when the heat source is on."/>
+    <requirements xsi:type="core:Requirement" id="_mU0joBLvEeO91e3o5BA9EA" name="REQ-IS-4:  Heat Control Latency at most Allowed Latency" stakeHolders="#_QR40wBLrEeO91e3o5BA9EA"/>
+    <requirements xsi:type="core:Requirement" id="_sAyn8BLvEeO91e3o5BA9EA" name="REQ-IS-5:  Operator Interface Latency at most Maximum Operator Response Time" stakeHolders="#_QR40wBLrEeO91e3o5BA9EA"/>
+  </requirementGroups>
+  <requirementGroups id="_FAbSIBLsEeO91e3o5BA9EA" name="Heat Source"/>
+  <requirementGroups id="_Jax9kBLsEeO91e3o5BA9EA" name="Temperature Sensor">
+    <requirements xsi:type="core:Requirement" id="_CKpbABLwEeO91e3o5BA9EA" name="REQ-TS-2:  Current Termperature Accuracy 0.1°F"/>
+    <requirements xsi:type="core:Requirement" id="_MyGh4BLwEeO91e3o5BA9EA" name="REQ-TS-3:  Temperature within 68.0°F to 105.0°F"/>
+    <requirements xsi:type="core:Requirement" id="_WIVRcBLwEeO91e3o5BA9EA" name="REQ-TS-1:  temp units are °F"/>
+  </requirementGroups>
+  <requirementGroups id="_RV3k0BLsEeO91e3o5BA9EA" name="Operator Interface">
+    <requirements xsi:type="core:Requirement" id="__GgsoBh2EeONx9H6Fnca6g" name="REQ-OI-1:  Temp Displayed in °F"/>
+    <requirements xsi:type="core:Requirement" id="_smmmUBh3EeONx9H6Fnca6g" name="REQ-OI-2: Temp set and displayed in increments of 1°F"/>
+    <requirements xsi:type="core:Requirement" id="_zg3pwBh3EeONx9H6Fnca6g" name="REQ-OI-5: Lower Desired Temp ≥ 97°F"/>
+    <requirements xsi:type="core:Requirement" id="_22pSwBh3EeONx9H6Fnca6g" name="REQ-OI-9: Upper Alarm Temp ≤ 103°F"/>
+    <requirements xsi:type="core:Requirement" id="_-LgngBh3EeONx9H6Fnca6g" name="REQ-OI-6: Lower Desired Temp &lt;= Upper Desired Temp of -1°F."/>
+    <requirements xsi:type="core:Requirement" id="_A3fFkBh4EeONx9H6Fnca6g" name="REQ-OI-10: Display Temp covers at least 68.0° to 105.0°F"/>
+    <requirements xsi:type="core:Requirement" id="_F3Cv0Bh4EeONx9H6Fnca6g" name="REQ-OI-4: Lower Alarm Temp &lt;= Lower Desired Temp of -1°F"/>
+    <requirements xsi:type="core:Requirement" id="_LtbUYBh4EeONx9H6Fnca6g" name="REQ-OI-7: Upper Desired Temp ≤ 100°F"/>
+    <requirements xsi:type="core:Requirement" id="_OhEgsBh4EeONx9H6Fnca6g" name="REQ-OI-8: Upper Alarm Temp >= Upper Desired Temp of 1°F"/>
+  </requirementGroups>
+</core:Specification>

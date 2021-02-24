@@ -1,0 +1,477 @@
+--isolette.aadl
+--exemplifies using BLESS to define (and prove) behavior, and
+--using EMV2 for error modeling 
+
+-- infant incubator temperature control
+
+-- data types defined in Iso_Variables.aadl
+-- added BLESS annex subclauses and Assertions 11/4/2012 brl
+
+--strategy, heat-on below midpoint; heat-off midpoint and warmer
+--easily stay within desired temperature range with 10s period, +/- 0.1F of midpoint
+ 
+
+package KSU_Isolette
+  public
+  with 
+     -- BLESS properties and types
+     BLESS_Types, BLESS,
+     -- error modeling properties     
+     EMV2, ARP4761, --ISO14971,
+     -- predeclared error types in Error Modeling annex 
+     ErrorLibrary,  
+     -- subcomponent of the Isolette thermostat that monitors temperature for
+     -- violation of safety temperature range
+     Monitor, 
+     -- subcomponent of the Isolette thermostat that monitors turns heat source on/off
+     -- as necessary to maintain desired temperature
+     Regulate,  
+     -- physical entities in Isolette system including temperature sensor and heat source
+     Devices,  
+     -- entities used to monitor environment external to Isolette including infant, nurse, air 
+     Nursery,  
+     -- import packages and property sets declaring basic data types, etc. used in Isolette
+     Iso_Types, Iso_Properties;  
+
+
+--annex BLESS
+--{**  
+----before timeout, initializing
+--<<INI: :(now-start_time) < Iso_Properties::Initialization_Timeout>>
+----after timeout, running
+--<<RUN: :(now-start_time) >= Iso_Properties::Initialization_Timeout>>
+----given, initialization timeout parameter is positive
+--<<AXIOM_TOGT0: :0 < Iso_Properties::Initialization_Timeout>>
+--**};
+
+--EMV2 annex library, common reference for all the EMV2 annex subclauses attached to components
+--contains custom error type declarations and commonly used error state machines
+annex EMV2
+{**
+	error types
+	  HeatControlError: type;  --heater on or off inappropriately
+	  AlarmError : type;		--the class of alarm errors
+	    FalseAlarm : type extends AlarmError;  --alarm erroneously sounded
+	    MissedAlarm : type extends AlarmError;  --alarm missed  
+	  StatusError : type;  --mode and status errors
+	    RegulatorStatusError : type extends StatusError;  --indicated regulator status wrong
+	    RegulatorModeError : type extends StatusError;  --regulator mode wrong
+	    MonitorStatusError : type extends StatusError;  --indicated monitor status wrong
+	    MonitorModeError : type extends StatusError;  --monitor mode wrong
+	  ThreadFault renames type ErrorLibrary::EarlyServiceTermination;  --thread fault halts thread
+	  InternalError : type;  --an internal error was detected
+	  DetectedFault : type;  --fault was detected (and announced)
+	  UndetectedFault : type;  --fault occurred, but not detected
+	  OperatorError : type;  --operator makes mistake entering desired and/or alarm temperatures
+	end types;
+
+	-- error state machine for components that have out-of range values when failed
+	-- TBD: [From John] I don't see any explicit connection to "out of range values".
+	-- Where is that modeled?
+	error behavior FailStop
+	  use types KSU_Isolette;
+	  events fail: error event;
+	  states
+	    -- initial/default state of the component 
+	    working: initial state; 
+	    -- state representing a failed component
+	    failed : state;
+	  transitions
+	    -- models the situation where a component moves from a working to a failed state
+	    -- due to an unspecified component failure.  Note that there is no notion of recovery
+	    -- modeled by this state machine. 
+	    working -[fail]-> failed;
+	end behavior;
+	
+	-- Error state machine for components that may either fail completely (modeled by the
+    -- "failed state") or may have intermittent operation (modeled by the "flakey" state).
+    -- TBD: Original comment: for components that may put out undetectable value errors
+    -- [From John] I don't see any explicit connection to "out of range values".
+	-- Where is that modeled?
+	error behavior FailSubtle
+	  use types KSU_Isolette;
+	  events 
+	    hardfail: error event;
+	    subtlefail: error event;
+	  states 
+	    working: initial state; 
+	    flakey: state;
+	    failed : state;
+	  transitions
+	    working -[hardfail]-> failed;
+	    working -[subtlefail]-> flakey;
+	end behavior;
+
+    -- TBD: Add missing explanation
+	error behavior CompositeFailure
+	  use types KSU_Isolette;
+	  states
+	    Operational: initial state;
+	    ReportedFailure: state {DetectedFault};
+	    MissedFailure: state {MissedAlarm};
+	    FalseAlarm: state {FalseAlarm};
+  end behavior;
+  	
+**};
+
+--@description top-level system component type enclosing the isolette system including
+-- heat source, temperature sensor and thermostat
+system isolette
+  features
+    -- models (abstractly) warming of air inside of Isolette enclosure
+    heat_out: out data port Nursery::Heat;
+    -- models (abstractly) commands coming from the Isolette operator interface
+    -- and values & alarm information sent to the operator interface
+    -- TBD: [from John] is it not clear to me if this port models interactions between
+    -- the nurse and the physical operator interface or between the operator interface and
+    -- the thermostat.
+    control_monitor_alarm: in out data port Nursery::Interface_Interaction;
+    -- models (abstractly) the physical interaction between the air in the Isolette
+    -- enclosure and the temperature sensor
+    -- TBD: [From John] we may want the type on this port to be more abstract.
+    -- And consider changing the name (to distinguish physical air temperature from
+    -- sensed air temperature).
+    air_temperature: in data port Iso_Types::current_temperature
+      {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+	flows
+	        -- specify (in terms of AADL flows) dependences that exist between the 
+	        -- environmental entities
+	        --
+	        -- the heat flowing out of the Isolette (produced by the heat source) depends
+	        -- on the current air_temperature (sensed temperature is used to determine
+	        -- whether the heat source is off or on) 
+			air_temp_to_heat_out : flow path air_temperature -> heat_out;
+			-- the readings (current temperature) and alarm signals values sent to the 
+			-- operator interface depend on the current air temperature 
+			air_temp_to_alarm : flow path air_temperature -> control_monitor_alarm;
+annex EMV2 
+  {** 
+  use types ErrorLibrary, KSU_Isolette;
+  error propagations
+    -- captures the errors that may flow into the Isolette.  In this case, our only source
+    -- of errors from the external environment comes from the operator entering commands that
+    -- reflect a departure from the operator's intended use of the Isolette (i.e., the operator
+    -- mistakenly enters wrong target or alarm temperatures)
+    -- TBD: [from John] review with Kim to make sure that there are no other others that we want
+    -- to model coming in from the environment.
+    control_monitor_alarm: in propagation {OperatorError};
+  end propagations;
+  **};
+end isolette;
+
+--@description single-sensor top-level implementation
+-- this makes one of the top-level instance models you must select to use EMV2 analysis tools
+system implementation isolette.single_sensor
+subcomponents
+  thermostat : system thermostat_single_sensor.impl;
+  temperature_sensor : device Devices::temperature_sensor.impl;
+  heat_source : device Devices::heat_source.impl;
+  operator_interface : system operator_interface.impl;
+connections
+  -- the temperature sensor's (abstract) input is the physical air temperature
+  a2ts : port air_temperature -> temperature_sensor.air;  
+  -- sensor sends sensed current temperature to thermostat  
+  ct : port temperature_sensor.current_temperature -> thermostat.current_temperature;
+  -- theormostat controls turns the heat source off and on  
+  hc : port thermostat.heat_control -> heat_source.heat_control;
+  -- heat source's (abstract) output is increase in physical air temperature
+  hs : port heat_source.heat_out -> heat_out;
+  -- nurse uses (abstract) operator interface
+  oi : port control_monitor_alarm <-> operator_interface.control_monitor_alarm;
+  -- operator interface communicates lower desired temperature to thermostat
+  ldt : port operator_interface.lower_desired_temperature -> thermostat.lower_desired_temperature;
+  -- operator interface communicates upper desired temperature to thermostat
+  udt : port operator_interface.upper_desired_temperature -> thermostat.upper_desired_temperature;
+  -- operator interface communicates lower alarm temperature to thermostat
+  lat : port operator_interface.lower_alarm_temperature -> thermostat.lower_alarm_temperature;
+  -- operator interface communicates upper desired temperature to thermostat
+  uat : port operator_interface.upper_alarm_temperature -> thermostat.upper_alarm_temperature;
+  -- thermostat communicates regulator status to display on operator interface
+  rs : port thermostat.regulator_status -> operator_interface.regulator_status;
+  -- thermostat communicates monitor status to display on operator interface
+  ms : port thermostat.monitor_status -> operator_interface.monitor_status;
+  -- thermostat communicates current sensed temperature to display on operator interface
+  dt : port thermostat.display_temperature -> operator_interface.display_temperature;
+  -- thermostat communicates alarm information to display on operator interface
+  al : port thermostat.alarm -> operator_interface.alarm;
+flows -- specify information flows through the Isolette
+  -- air_temp_to_heat_out
+  --   specify the information flows/dependences associated with the main control loop of the
+  --   Isolette device.  Information flows from physical air temperature (captured by air_temperature)
+  --   port...
+  --
+  -- TBD: [From John] Need to add flow involving operator interface.  
+  -- This would be a good exercise for Kim.
+  air_temp_to_heat_out : flow path air_temperature
+    -- across the air to temperature sensor (abstract) connection 
+    -> a2ts
+    -- through the temperature sensor (physical air temperature transformed to sensed air temperature)
+    -> temperature_sensor.air_temp_flow 
+    -- across the temperature sensor to thermostat connection
+    -> ct
+    -- through the thermostat control algorithm for the heat source 
+    -> thermostat.temp_to_heat_flow 
+    -- across the thermostat to heat source connection
+    -> hc
+    -- through the heat source component
+    -> heat_source.temp_to_heat_flow 
+    -- across the heat source to air (abstract) connection
+    -> hs -> heat_out;
+	
+annex EMV2
+  {**
+  use types ErrorLibrary, KSU_Isolette;
+  use behavior KSU_Isolette::CompositeFailure;
+  error propagations
+    control_monitor_alarm: in propagation {OperatorError};
+    air_temperature: in propagation {ValueError};
+    heat_out: out propagation {HeatControlError};   
+  end propagations;
+  composite error behavior
+  states 
+  [temperature_sensor.failed or thermostat.ReportedFailure  
+  	or heat_source.failed]->ReportedFailure;
+  [temperature_sensor.flakey or thermostat.MissedFailure]->MissedFailure;
+  end composite;
+--properties
+--					ISO14971::Hazards => ([CrossReference => "reference to Open PCA requirements";
+--						Failure => "heat control error";
+--						Phases => ("all");
+--						Severity => ISO14971::Critical;
+--						QualitativeProbability => Remote;
+--						Description => "infant gets too hot or too cold";
+--						Comment => "critical hazard, may kill patient";
+--					]) applies to heat_out.HeatControlError;
+  **};
+end isolette.single_sensor; 
+
+-- dual-sensor top-level implementation
+--this make the other top-level instance model upon which EMV2 tools operate
+system implementation isolette.dual_sensor
+subcomponents
+  thermostat : system thermostat_dual_sensor.impl;  --has two temperature sensor inputs
+  control_sensor : device Devices::temperature_sensor.impl;  --used 
+  monitor_sensor : device Devices::temperature_sensor.impl;
+  heat_source : device Devices::heat_source.impl;
+  operator_interface : system operator_interface.impl;
+connections
+--air touches temperature sensors
+  a2cs : port air_temperature -> control_sensor.air;  
+  a2ms : port air_temperature -> monitor_sensor.air;  
+--heat source touches air
+  hs : port heat_source.heat_out -> heat_out;
+--nurse uses operator interface
+  oi : port control_monitor_alarm <-> operator_interface.control_monitor_alarm;
+  cont : port control_sensor.current_temperature -> thermostat.control_temp;
+  ct : port monitor_sensor.current_temperature -> thermostat.monitor_temp;
+  hc : port thermostat.heat_control -> heat_source.heat_control;
+  ldt : port operator_interface.lower_desired_temperature -> thermostat.lower_desired_temperature;
+  udt : port operator_interface.upper_desired_temperature -> thermostat.upper_desired_temperature;
+  lat : port operator_interface.lower_alarm_temperature -> thermostat.lower_alarm_temperature;
+  uat : port operator_interface.upper_alarm_temperature -> thermostat.upper_alarm_temperature;
+  rs : port thermostat.regulator_status -> operator_interface.regulator_status;
+  ms : port thermostat.monitor_status -> operator_interface.monitor_status;
+  dt : port thermostat.display_temperature -> operator_interface.display_temperature;
+  al : port thermostat.alarm -> operator_interface.alarm;
+annex EMV2
+  {**
+--to be written by student
+  **};
+end isolette.dual_sensor; 
+
+--A.5 THERMOSTAT SYSTEM FUNCTION
+--single-temperature sensor thermostat system component type
+system thermostat_single_sensor
+features
+  current_temperature : in data port Iso_Types::current_temperature
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  heat_control : out data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+    {BLESS::Assertion => "<<:=LOWER_DESIRED_TEMP>>";};
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+    {BLESS::Assertion => "<<:=UPPER_DESIRED_TEMP>>";};
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+    {BLESS::Assertion => "<<:=LOWER_ALARM_TEMP>>";};
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+    {BLESS::Assertion => "<<:=UPPER_ALARM_TEMP>>";};
+  regulator_status : out data port Iso_Types::status
+    {BLESS::Assertion => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+  monitor_status : out data port Iso_Types::status
+    {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
+  display_temperature : out data port Iso_Types::measured_temperature_range
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  alarm : out data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
+flows
+  temp_to_heat_flow : flow path current_temperature -> heat_control;
+annex EMV2 
+  {** 
+  use types ErrorLibrary, KSU_Isolette;
+  error propagations
+  current_temperature: in propagation
+    {OutOfRange,UndetectableValueError};
+  display_temperature: out propagation {UndetectableValueError,ItemOmission};
+  regulator_status: out propagation {RegulatorStatusError,ItemOmission};
+  monitor_status: out propagation {MonitorStatusError};
+  alarm: out propagation {AlarmError};
+  heat_control: out propagation {HeatControlError};
+  flows
+    ct_uve_dt: error path current_temperature{UndetectableValueError}
+      ->display_temperature{UndetectableValueError};
+    ct_uve_rs: error path current_temperature{UndetectableValueError}
+      ->regulator_status{RegulatorStatusError};
+  end propagations;
+  **};
+end thermostat_single_sensor;
+
+--single-temperature sensor thermostat system component implementation
+system implementation thermostat_single_sensor.impl
+subcomponents
+  regulate_temperature : process Regulate::regulate_temperature.impl;
+  monitor_temperature : process Monitor::monitor_temperature.impl;
+  detect_regulator_fail : device Devices::detect_regulator_failure.impl;
+  detect_monitor_fail : device Devices::detect_monitor_failure.impl;
+connections
+  tctm : port current_temperature -> monitor_temperature.current_temperature;
+  tctr : port current_temperature -> regulate_temperature.current_temperature;
+  thc : port regulate_temperature.heat_control -> heat_control;
+  tudt : port upper_desired_temperature -> regulate_temperature.upper_desired_temperature;
+  tldt : port lower_desired_temperature -> regulate_temperature.lower_desired_temperature;
+  tuat : port upper_alarm_temperature -> monitor_temperature.upper_alarm_temperature;
+  tlat : port lower_alarm_temperature -> monitor_temperature.lower_alarm_temperature;
+  trs : port regulate_temperature.regulator_status -> regulator_status;
+  tdt : port regulate_temperature.displayed_temp -> display_temperature;
+  tms : port monitor_temperature.monitor_status -> monitor_status;
+  ta : port monitor_temperature.alarm -> alarm;
+  tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
+annex EMV2
+  {**
+  use types ErrorLibrary, KSU_Isolette;
+  use behavior KSU_Isolette::CompositeFailure;
+  composite error behavior
+  states 
+  [regulate_temperature.ReportedFailure or monitor_temperature.ReportedFailure 
+--    or .ReportedFailure  	
+  ]->ReportedFailure;
+  [regulate_temperature.MissedFailure]->MissedFailure;
+  end composite;
+  **};
+end thermostat_single_sensor.impl;
+
+--dual-temperature sensor thermostat system component type
+system thermostat_dual_sensor
+features
+  --two temperature sensors for monitor and control
+  control_temp : in data port Iso_Types::current_temperature
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  --second channel for second sensor
+  monitor_temp : in data port Iso_Types::current_temperature
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  heat_control : out data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+    {BLESS::Assertion => "<<:=LOWER_DESIRED_TEMP>>";};
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+    {BLESS::Assertion => "<<:=UPPER_DESIRED_TEMP>>";};
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+    {BLESS::Assertion => "<<:=LOWER_ALARM_TEMP>>";};
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+    {BLESS::Assertion => "<<:=UPPER_ALARM_TEMP>>";};
+  regulator_status : out data port Iso_Types::status
+    {BLESS::Assertion => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+  monitor_status : out data port Iso_Types::status
+    {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
+  display_temperature : out data port Iso_Types::measured_temperature_range
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  alarm : out data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
+annex EMV2 
+  {** 
+  use types ErrorLibrary, KSU_Isolette;
+  error propagations
+  control_temp: in propagation
+    {OutOfRange,UndetectableValueError};
+  monitor_temp: in propagation
+    {OutOfRange,UndetectableValueError};
+  display_temperature: out propagation {UndetectableValueError,ItemOmission};
+  regulator_status: out propagation {RegulatorStatusError,ItemOmission};
+  monitor_status: out propagation {MonitorStatusError};
+  alarm: out propagation {AlarmError};
+  heat_control: out propagation {HeatControlError};
+  end propagations;
+  **};
+end thermostat_dual_sensor;
+
+--dual-temperature sensor thermostat system component implementation
+system implementation thermostat_dual_sensor.impl
+subcomponents
+  regulate_temperature : process Regulate::regulate_temperature.impl;
+  monitor_temperature : process Monitor::monitor_temperature.impl;
+  detect_regulator_fail : device Devices::detect_regulator_failure.impl;
+  detect_monitor_fail : device Devices::detect_monitor_failure.impl;
+connections
+  --separate connections for monitor and control temperature sensors
+  tctm : port monitor_temp -> monitor_temperature.current_temperature;
+  tctr : port control_temp -> regulate_temperature.current_temperature;
+  thc : port regulate_temperature.heat_control -> heat_control;
+  tudt : port upper_desired_temperature -> regulate_temperature.upper_desired_temperature;
+  tldt : port lower_desired_temperature -> regulate_temperature.lower_desired_temperature;
+  tuat : port upper_alarm_temperature -> monitor_temperature.upper_alarm_temperature;
+  tlat : port lower_alarm_temperature -> monitor_temperature.lower_alarm_temperature;
+  trs : port regulate_temperature.regulator_status -> regulator_status;
+  tdt : port regulate_temperature.displayed_temp -> display_temperature;
+  tms : port monitor_temperature.monitor_status -> monitor_status;
+  ta : port monitor_temperature.alarm -> alarm;
+  tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
+annex EMV2
+  {**
+  use types ErrorLibrary, KSU_Isolette;
+  --exercise for students
+  **};
+end thermostat_dual_sensor.impl;
+
+--@description operator interface system component type
+system operator_interface
+features
+--nurse interation with operator interface    
+  control_monitor_alarm: in out data port Nursery::Interface_Interaction;  
+--values supplied by nurse through operator interface
+  lower_desired_temperature : out data port Iso_Types::lower_desired_temperature
+    {BLESS::Assertion => "<<:=LOWER_DESIRED_TEMP>>";};
+  upper_desired_temperature : out data port Iso_Types::upper_desired_temperature
+    {BLESS::Assertion => "<<:=UPPER_DESIRED_TEMP>>";};
+  lower_alarm_temperature : out data port Iso_Types::lower_alarm_temperature
+    {BLESS::Assertion => "<<:=LOWER_ALARM_TEMP>>";};
+  upper_alarm_temperature : out data port Iso_Types::upper_alarm_temperature
+    {BLESS::Assertion => "<<:=UPPER_ALARM_TEMP>>";};
+--information to be displayed by operator interface
+  regulator_status : in data port Iso_Types::status
+    {BLESS::Assertion => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+  monitor_status : in data port Iso_Types::status
+    {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
+  display_temperature : in data port Iso_Types::measured_temperature_range
+    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+  alarm : in data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
+annex EMV2 
+  {** 
+  use types ErrorLibrary, KSU_Isolette;
+  error propagations
+  control_monitor_alarm: in propagation {OperatorError};
+  regulator_status: in propagation {RegulatorStatusError,ItemOmission};
+  monitor_status: in propagation {MonitorStatusError};
+--  display_temperature: in propagation {UndetectableValueError};  --uncomment for Unhandled Faults error
+--REPLACE LINE BELOW WITH LINE ABOVE TO CAUSE UNHANDLED FAULTS ERROR
+  display_temperature: in propagation {UndetectableValueError,ItemOmission};
+  alarm: in propagation {AlarmError};
+  end propagations;
+  **};
+end operator_interface;
+
+system implementation operator_interface.impl
+end operator_interface.impl;
+
+
+end KSU_Isolette;
+

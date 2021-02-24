@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:FaultTree="http://www.aadl.info/FaultTree" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/table/description/1.1.0" xmlns:table="http://www.eclipse.org/sirius/table/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/table/description/1.1.0 http://www.eclipse.org/sirius/table/1.1.0#//description">
+  <viewpoint:DAnalysis uid="_dy01cHXqEeqKdYyuVdd1_g" selectedViews="_fQRq4HXqEeqKdYyuVdd1_g" version="14.3.0.201909031200">
+    <semanticResources>aadl/packages/Assertions.aadl</semanticResources>
+    <semanticResources>aadl/propertysets/iso_properties.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.aadl2.errormodel.contrib/resources/properties/EMV2.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.workspace/resources/properties/Predeclared_Property_Sets/AADL_Project.aadl</semanticResources>
+    <semanticResources>aadl/packages/Devices.aadl</semanticResources>
+    <semanticResources>aadl/packages/Isolette.aadl</semanticResources>
+    <semanticResources>platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.workspace/resources/properties/Predeclared_Property_Sets/Memory_Properties.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.workspace/resources/properties/Predeclared_Property_Sets/Communication_Properties.aadl</semanticResources>
+    <semanticResources>platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS_Properties.aadl</semanticResources>
+    <semanticResources>platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.aadl2.errormodel.contrib/resources/properties/ARP4761.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.aadl2.errormodel.contrib/resources/properties/ISO14971.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.aadl2.errormodel.contrib/resources/packages/ErrorLibrary.aadl</semanticResources>
+    <semanticResources>aadl/packages/Monitor.aadl</semanticResources>
+    <semanticResources>aadl/packages/iso_variables.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.workspace/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl</semanticResources>
+    <semanticResources>platform:/plugin/org.osate.workspace/resources/properties/Predeclared_Property_Sets/Timing_Properties.aadl</semanticResources>
+    <semanticResources>aadl/packages/Regulate.aadl</semanticResources>
+    <semanticResources>aadl/packages/Nursery.aadl</semanticResources>
+    <semanticResources>aadl/packages/instances/Isolette_isolette_single_sensor_Instance.aaxl2</semanticResources>
+    <semanticResources>aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree</semanticResources>
+    <semanticResources>diagrams/KSU_Isolette_isolette_dual_sensor.aadl_diagram</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" uid="_fQRq4HXqEeqKdYyuVdd1_g">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_fSQA0HXqEeqKdYyuVdd1_g" name="ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree FaultTreeTable" repPath="#_fRo80HXqEeqKdYyuVdd1_g" changeId="271b2309-fc6a-4dcc-bf74-982ac6097d69">
+        <description xmi:type="description_1:EditionTableDescription" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']"/>
+        <target xmi:type="FaultTree:FaultTree" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#/"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <table:DTable uid="_fRo80HXqEeqKdYyuVdd1_g" headerColumnWidth="299">
+    <target xmi:type="FaultTree:FaultTree" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#/"/>
+    <lines xmi:type="table:DLine" uid="_fSAwQHXqEeqKdYyuVdd1_g" label=" 'isolette.single_sensor' outgoing 'heat_out'">
+      <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      <originMapping xmi:type="description_1:LineMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedLineMappings[name='EventLine']"/>
+      <cells xmi:type="table:DCell" uid="_fSIsEHXqEeqKdYyuVdd1_g" label="{HeatControlError}" column="_fSGP0HXqEeqKdYyuVdd1_g">
+        <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+        <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      </cells>
+      <cells xmi:type="table:DCell" uid="_fSJ6MXXqEeqKdYyuVdd1_g" label="" column="_fSGP0nXqEeqKdYyuVdd1_g">
+        <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+        <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      </cells>
+      <cells xmi:type="table:DCell" uid="_fSJ6M3XqEeqKdYyuVdd1_g" label="" column="_fSGP1HXqEeqKdYyuVdd1_g">
+        <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+        <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      </cells>
+      <cells xmi:type="table:DCell" uid="_fSJ6NXXqEeqKdYyuVdd1_g" label="Basic event" column="_fSGP1nXqEeqKdYyuVdd1_g">
+        <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+        <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      </cells>
+      <cells xmi:type="table:DCell" uid="_fSJ6N3XqEeqKdYyuVdd1_g" label="no" column="_fSGP2HXqEeqKdYyuVdd1_g">
+        <target xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+        <semanticElements xmi:type="FaultTree:Event" href="aadl/packages/instances/reports/fta/ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree.faulttree#//@events.0"/>
+      </cells>
+    </lines>
+    <columns xmi:type="table:DFeatureColumn" uid="_fSGP0HXqEeqKdYyuVdd1_g" label="Error Model Element/Type" cells="_fSIsEHXqEeqKdYyuVdd1_g" width="141" featureName="*">
+      <originMapping xmi:type="description_1:FeatureColumnMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedColumnMappings[name='ErrorColumn']"/>
+    </columns>
+    <columns xmi:type="table:DFeatureColumn" uid="_fSGP0nXqEeqKdYyuVdd1_g" label="Computed Probability" cells="_fSJ6MXXqEeqKdYyuVdd1_g" width="118" featureName="*">
+      <originMapping xmi:type="description_1:FeatureColumnMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedColumnMappings[name='ProbabilityColumn']"/>
+    </columns>
+    <columns xmi:type="table:DFeatureColumn" uid="_fSGP1HXqEeqKdYyuVdd1_g" label="Specified Probability" cells="_fSJ6M3XqEeqKdYyuVdd1_g" width="113" featureName="*">
+      <originMapping xmi:type="description_1:FeatureColumnMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedColumnMappings[name='ProbabilityColumn']"/>
+    </columns>
+    <columns xmi:type="table:DFeatureColumn" uid="_fSGP1nXqEeqKdYyuVdd1_g" label="Event/Gate Type" cells="_fSJ6NXXqEeqKdYyuVdd1_g" width="91" featureName="*">
+      <originMapping xmi:type="description_1:FeatureColumnMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedColumnMappings[name='EventTypeColumn']"/>
+    </columns>
+    <columns xmi:type="table:DFeatureColumn" uid="_fSGP2HXqEeqKdYyuVdd1_g" label="Dependent Event" cells="_fSJ6N3XqEeqKdYyuVdd1_g" width="95" featureName="*">
+      <originMapping xmi:type="description_1:FeatureColumnMapping" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']/@ownedColumnMappings[name='DependentEventColumn']"/>
+    </columns>
+    <description xmi:type="description_1:EditionTableDescription" href="platform:/plugin/org.osate.aadl2.errormodel.faulttree.design/description/faulttree.odesign#//@ownedViewpoints[name='FaultTree']/@ownedRepresentations[name='FaultTreeTable']"/>
+  </table:DTable>
+</xmi:XMI>

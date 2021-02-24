@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="3">
+  <element id="0" manual="true" autoContentsFilter="allow_all">
+    <element id="11" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>annex_subclause</seg>
+        <seg>emv2</seg>
+        <seg>0</seg>
+      </bo>
+      <position x="158.0" y="50.0"/>
+      <size width="91.0" height="50.0"/>
+    </element>
+    <element id="10" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>annex_subclause</seg>
+        <seg>emv2</seg>
+        <seg>1</seg>
+      </bo>
+      <position x="158.0" y="120.0"/>
+      <size width="91.0" height="50.0"/>
+    </element>
+    <element id="12" autoContentsFilter="allow_fundamental">
+      <element id="44" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>a2cs</seg>
+      </bo>
+    </element>
+    <element id="13" autoContentsFilter="allow_fundamental">
+      <element id="45" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>a2ms</seg>
+      </bo>
+    </element>
+    <element id="26" autoContentsFilter="allow_fundamental">
+      <element id="46" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>al</seg>
+      </bo>
+    </element>
+    <element id="16" autoContentsFilter="allow_fundamental">
+      <element id="47" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>cont</seg>
+      </bo>
+    </element>
+    <element id="17" autoContentsFilter="allow_fundamental">
+      <element id="48" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>ct</seg>
+      </bo>
+    </element>
+    <element id="25" autoContentsFilter="allow_fundamental">
+      <element id="49" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>dt</seg>
+      </bo>
+    </element>
+    <element id="18" autoContentsFilter="allow_fundamental">
+      <element id="50" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>hc</seg>
+      </bo>
+    </element>
+    <element id="14" autoContentsFilter="allow_fundamental">
+      <element id="51" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>hs</seg>
+      </bo>
+    </element>
+    <element id="21" autoContentsFilter="allow_fundamental">
+      <element id="52" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>lat</seg>
+      </bo>
+    </element>
+    <element id="19" autoContentsFilter="allow_fundamental">
+      <element id="53" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>ldt</seg>
+      </bo>
+    </element>
+    <element id="24" autoContentsFilter="allow_fundamental">
+      <element id="54" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>ms</seg>
+      </bo>
+    </element>
+    <element id="15" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>connection</seg>
+        <seg>oi</seg>
+      </bo>
+    </element>
+    <element id="23" autoContentsFilter="allow_fundamental">
+      <element id="55" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>rs</seg>
+      </bo>
+    </element>
+    <element id="22" autoContentsFilter="allow_fundamental">
+      <element id="56" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>uat</seg>
+      </bo>
+    </element>
+    <element id="20" autoContentsFilter="allow_fundamental">
+      <element id="57" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>udt</seg>
+      </bo>
+    </element>
+    <element id="4" autoContentsFilter="allow_fundamental" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>air_temperature</seg>
+      </bo>
+      <position y="50.0"/>
+    </element>
+    <element id="3" autoContentsFilter="allow_fundamental" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>control_monitor_alarm</seg>
+      </bo>
+      <position y="110.0"/>
+    </element>
+    <element id="2" autoContentsFilter="allow_fundamental" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>heat_out</seg>
+      </bo>
+      <position x="1403.0" y="50.0"/>
+    </element>
+    <element id="28" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>flow_specification</seg>
+        <seg>air_temp_to_alarm</seg>
+      </bo>
+    </element>
+    <element id="27" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>flow_specification</seg>
+        <seg>air_temp_to_heat_out</seg>
+      </bo>
+    </element>
+    <element id="1" autoContentsFilter="allow_fundamental">
+      <bo>
+        <seg>realization</seg>
+      </bo>
+    </element>
+    <element id="5" manual="true" autoContentsFilter="allow_type">
+      <element id="29" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>air</seg>
+        </bo>
+        <position x="209.0" y="50.0"/>
+      </element>
+      <element id="30" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>current_temperature</seg>
+        </bo>
+        <position y="50.0"/>
+      </element>
+      <element id="32" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>flow_specification</seg>
+          <seg>air_temp_flow</seg>
+        </bo>
+      </element>
+      <element id="33" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>control_sensor</seg>
+      </bo>
+      <position x="158.0" y="320.0"/>
+      <size width="243.0" height="110.0"/>
+    </element>
+    <element id="7" manual="true" autoContentsFilter="allow_type">
+      <element id="34" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>heat_control</seg>
+        </bo>
+        <position y="50.0"/>
+      </element>
+      <element id="35" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>heat_out</seg>
+        </bo>
+        <position x="119.0" y="50.0"/>
+      </element>
+      <element id="37" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>flow_specification</seg>
+          <seg>temp_to_heat_flow</seg>
+        </bo>
+      </element>
+      <element id="38" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>heat_source</seg>
+      </bo>
+      <position x="158.0" y="190.0"/>
+      <size width="190.0" height="110.0"/>
+    </element>
+    <element id="6" manual="true" autoContentsFilter="allow_type">
+      <element id="39" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>air</seg>
+        </bo>
+        <position x="209.0" y="50.0"/>
+      </element>
+      <element id="40" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>current_temperature</seg>
+        </bo>
+        <position y="50.0"/>
+      </element>
+      <element id="42" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>flow_specification</seg>
+          <seg>air_temp_flow</seg>
+        </bo>
+      </element>
+      <element id="43" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>monitor_sensor</seg>
+      </bo>
+      <position x="1231.0" y="50.0"/>
+      <size width="243.0" height="110.0"/>
+    </element>
+    <element id="9" manual="true" autoContentsFilter="allow_type">
+      <element id="66" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>alarm</seg>
+        </bo>
+        <position y="290.0"/>
+      </element>
+      <element id="58" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>control_monitor_alarm</seg>
+        </bo>
+        <position y="230.0"/>
+      </element>
+      <element id="65" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>display_temperature</seg>
+        </bo>
+        <position x="241.0" y="170.0"/>
+      </element>
+      <element id="61" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>lower_alarm_temperature</seg>
+        </bo>
+        <position x="207.0" y="50.0"/>
+      </element>
+      <element id="59" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>lower_desired_temperature</seg>
+        </bo>
+        <position y="170.0"/>
+      </element>
+      <element id="64" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>monitor_status</seg>
+        </bo>
+        <position y="110.0"/>
+      </element>
+      <element id="63" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>regulator_status</seg>
+        </bo>
+        <position x="268.0" y="230.0"/>
+      </element>
+      <element id="62" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>upper_alarm_temperature</seg>
+        </bo>
+        <position y="50.0"/>
+      </element>
+      <element id="60" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>upper_desired_temperature</seg>
+        </bo>
+        <position x="191.0" y="110.0"/>
+      </element>
+      <element id="68" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>operator_interface</seg>
+      </bo>
+      <position x="421.0" y="50.0"/>
+      <size width="385.0" height="350.0"/>
+    </element>
+    <element id="8" manual="true" autoContentsFilter="allow_type">
+      <element id="79" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>alarm</seg>
+        </bo>
+        <position y="290.0"/>
+      </element>
+      <element id="69" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>control_temp</seg>
+        </bo>
+        <position x="287.0" y="50.0"/>
+      </element>
+      <element id="78" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>display_temperature</seg>
+        </bo>
+        <position x="241.0" y="170.0"/>
+      </element>
+      <element id="71" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>heat_control</seg>
+        </bo>
+        <position x="292.0" y="230.0"/>
+      </element>
+      <element id="74" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>lower_alarm_temperature</seg>
+        </bo>
+        <position y="350.0"/>
+      </element>
+      <element id="72" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>lower_desired_temperature</seg>
+        </bo>
+        <position y="170.0"/>
+      </element>
+      <element id="77" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>monitor_status</seg>
+        </bo>
+        <position y="110.0"/>
+      </element>
+      <element id="70" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>monitor_temp</seg>
+        </bo>
+        <position y="230.0"/>
+      </element>
+      <element id="76" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>regulator_status</seg>
+        </bo>
+        <position x="268.0" y="290.0"/>
+      </element>
+      <element id="75" autoContentsFilter="allow_fundamental" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>upper_alarm_temperature</seg>
+        </bo>
+        <position y="50.0"/>
+      </element>
+      <element id="73" autoContentsFilter="allow_fundamental" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>upper_desired_temperature</seg>
+        </bo>
+        <position x="191.0" y="110.0"/>
+      </element>
+      <element id="98" autoContentsFilter="allow_fundamental">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>thermostat</seg>
+      </bo>
+      <position x="826.0" y="50.0"/>
+      <size width="385.0" height="410.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>isolette.dual_sensor</seg>
+    </bo>
+    <position x="20.0"/>
+    <size width="1474.0" height="460.0"/>
+  </element>
+  <config>
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>ksu_isolette::isolette.dual_sensor</seg>
+    </context>
+  </config>
+</diagram:Diagram>

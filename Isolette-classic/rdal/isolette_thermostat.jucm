@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<urn:URNspec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ucm.map="http:///ucm/map.ecore" xmlns:urn="http:///urn.ecore" name="URNspec" author="dblouin" created="December 26, 2012 6:08:08 PM CET" modified="January 2, 2013 10:58:51 PM CET" specVersion="539" urnVersion="0.925" nextGlobalID="25224">
+  <ucmspec>
+    <scenarioGroups id="5" name="Normal Operations" description="This group of scenarios define the sunny day behavior of the Isolette Thermostat.">
+      <scenarios id="6" name="Normal Operation" description="This scenario is the sunny day behavior of the Isolette; everything goes well." parentScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.1 //@ucmspec/@scenarioGroups.1/@scenarios.0 //@ucmspec/@scenarioGroups.2/@scenarios.0 //@ucmspec/@scenarioGroups.2/@scenarios.2 //@ucmspec/@scenarioGroups.2/@scenarios.4 //@ucmspec/@scenarioGroups.2/@scenarios.6">
+        <initializations value="false" variable="//@ucmspec/@variables.0"/>
+        <initializations value="false" variable="//@ucmspec/@variables.1"/>
+        <initializations value="false" variable="//@ucmspec/@variables.2"/>
+        <initializations value="false" variable="//@ucmspec/@variables.3"/>
+        <initializations value="false" variable="//@ucmspec/@variables.4"/>
+        <initializations value="680" variable="//@ucmspec/@variables.5"/>
+        <initializations value="670" variable="//@ucmspec/@variables.6"/>
+        <initializations value="1000" variable="//@ucmspec/@variables.7"/>
+        <initializations value="INIT" variable="//@ucmspec/@variables.8"/>
+        <initializations value="-1" variable="//@ucmspec/@variables.9"/>
+        <initializations value="-1" variable="//@ucmspec/@variables.10"/>
+        <initializations value="false" variable="//@ucmspec/@variables.11"/>
+        <initializations value="INIT" variable="//@ucmspec/@variables.12"/>
+        <initializations value="960" variable="//@ucmspec/@variables.13"/>
+        <initializations value="1020" variable="//@ucmspec/@variables.14"/>
+        <initializations value="960" variable="//@ucmspec/@variables.15"/>
+        <initializations value="1020" variable="//@ucmspec/@variables.16"/>
+        <initializations value="10" variable="//@ucmspec/@variables.17"/>
+        <initializations value="false" variable="//@ucmspec/@variables.18"/>
+        <initializations value="10" variable="//@ucmspec/@variables.19"/>
+        <initializations value="960" variable="//@ucmspec/@variables.21"/>
+        <initializations value="1010" variable="//@ucmspec/@variables.22"/>
+        <initializations value="1020" variable="//@ucmspec/@variables.24"/>
+        <initializations value="970" variable="//@ucmspec/@variables.23"/>
+        <initializations value="1020" variable="//@ucmspec/@variables.28"/>
+        <initializations value="970" variable="//@ucmspec/@variables.27"/>
+        <initializations value="1010" variable="//@ucmspec/@variables.26"/>
+        <initializations value="960" variable="//@ucmspec/@variables.25"/>
+        <initializations value="10" variable="//@ucmspec/@variables.29"/>
+        <initializations value="0" variable="//@ucmspec/@variables.30"/>
+        <startPoints enabled="true" startPoint="//@urndef/@specDiagrams.0/@nodes.0"/>
+      </scenarios>
+      <scenarios id="15675" name="Normal Operation Activate Alarm" description="This scenario is for when the Current Temperature is not within the Alarm Temperature Range before the Nurse configues the Isolette. In such case, the Thermostat turns on the alarm but the Nurse ignores it." includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="900" variable="//@ucmspec/@variables.6"/>
+      </scenarios>
+    </scenarioGroups>
+    <scenarioGroups id="15676" name="Thermostat Init Failed">
+      <scenarios id="15677" name="Thermostat Init Failed" description="This scenario shows a Thermostat that fails right after initializing and entering the NORMAL mode." includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="true" variable="//@ucmspec/@variables.4"/>
+      </scenarios>
+    </scenarioGroups>
+    <scenarioGroups id="15682" name="Fail Maintain Desired Temp">
+      <scenarios id="15683" name="Fail Reach Safe Temp Fixable" description="This scenario describes an Isolette that does not reach a safe temperature after being configured, but is fixable by the Nurse (e.g.: door left open). This is simulated with a Current Temperature that is initially lower than the Lower Alarm Temperature with a Current Temperature Increment of -100 to represent a Heat Source that refreshes the Isolette in use case A.2.3. The problem is fixed by the Nurse that closes the Isolette door simulated by resetting the Current Temperature Increment to the  Current Temperature Increment Fixed value." parentScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.1" includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="-100" variable="//@ucmspec/@variables.19"/>
+        <initializations value="10" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="16197" name="Fail Reach Safe Temp not Fixable" description="This scenario describes an Isolette that does not reach a safe temperature after being configured, and is not fixable by the Nurse for an unspecified reason. This is simulated with a Current Temperature that is initially lower than the Lower Alarm Temperature with a Current Temperature Increment of -100 to represent a Heat Source that refreshes the Isolette in use case A.2.3. The scenario ends with a Nurse that obtains another Isolette." includedScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.0">
+        <initializations value="-100" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="16202" name="Fail Reach Desired Temp Fixable" description="This scenario describes an Isolette that does not reach the Desired Temperature Range after being configured, but reaches a safe temperature. The problem is fixable by the Nurse (e.g.: door left open). This is simulated with a Current Temperature that is initially lower than the Lower Desired Temperature with a Current Temperature Increment of -50 to represent a Heat Source that refreshes the Isolette in use case A.2.3. The problem is fixed by the Nurse that closes the Isolette door simulated by resetting the Current Temperature Increment to the Current Temperature Increment Fixed value." parentScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.3" includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="1000" variable="//@ucmspec/@variables.15"/>
+        <initializations value="990" variable="//@ucmspec/@variables.5"/>
+        <initializations value="-50" variable="//@ucmspec/@variables.19"/>
+        <initializations value="10" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="16205" name="Fail Reach Desired Temp not Fixable" description="This scenario describes an Isolette that does not reach the Desired Temperature Range after being configured, but reaches a safe temperature. The problem is not fixable by the Nurse. This is simulated with a Current Temperature that is initially lower than the Lower Desired Temperature with a Current Temperature Increment of -50 to represent a Heat Source that refreshes the Isolette in use case A.2.3. The scenario ends with a Nurse that obtains another Isolette." includedScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.2">
+        <initializations value="-100" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="23777" name="Fail Maintain Safe Temp Fixable" description="This scenario describes an Isolette that does not maintain a safe temperature after the Infant has been placed in the Isolette. The problem is fixable by the Nurse (e.g.: door left open). The failure is simulated with a Current Temperature Increment that is updated in the Thermostat Failure step to reduce the Current Temperature below the Lower Alarm Temperature. The problem is fixed by the Nurse that closes the Isolette door, as simulated by resetting the Current Temperature Increment to the Current Temperature Increment Fixed value." parentScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.5" includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="-100" variable="//@ucmspec/@variables.29"/>
+        <initializations value="10" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="24572" name="Fail Maintain Safe Temp not Fixable" description="This scenario describes an Isolette that does not maintain a safe temperature after the Infant has been placed in the Isolette. The problem is not fixable. The failure is simulated with a Current Temperature Increment that is updated in the Thermostat Failure step to reduce the Current Temperature below the Lower Alarm Temperature. The scenario ends with a Nurse that obtains another Isolette." includedScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.4">
+        <initializations value="-100" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="24573" name="Fail Maintain Desired Temp Fixable" description="This scenario describes an Isolette that does not maintain the Desired Temperature after the Infant has been placed in the Isolette. The problem is fixable by the Nurse (e.g.: door left open). The failure is simulated with a Current Temperature Increment that is updated in the Thermostat Failure step to reduce the Current Temperature below the Lower Desired Temperature. The problem is fixed by the Nurse that closes the Isolette door, as simulated by resetting the Current Temperature Increment to the Current Temperature Increment Fixed value." parentScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.7" includedScenarios="//@ucmspec/@scenarioGroups.0/@scenarios.0">
+        <initializations value="-55" variable="//@ucmspec/@variables.29"/>
+        <initializations value="960" variable="//@ucmspec/@variables.13"/>
+        <initializations value="980" variable="//@ucmspec/@variables.15"/>
+        <initializations value="50" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+      <scenarios id="24793" name="Fail Maintain Desired Temp not Fixable" description="This scenario describes an Isolette that does not maintain the Desired Temperature after the Infant has been placed in the Isolette. The problem is not fixable. The failure is simulated with a Current Temperature Increment that is updated in the Thermostat Failure step to reduce the Current Temperature below the Lower Desired Temperature. The scenario ends with a Nurse that obtains another Isolette." includedScenarios="//@ucmspec/@scenarioGroups.2/@scenarios.6">
+        <initializations value="-55" variable="//@ucmspec/@variables.20"/>
+      </scenarios>
+    </scenarioGroups>
+    <variables id="21" name="Isolette_On"/>
+    <variables id="22" name="Infant_In_Isolette"/>
+    <variables id="23" name="Thermostat_On"/>
+    <variables id="46" name="Thermostat_Init"/>
+    <variables id="47" name="Thermostat_Init_Failed"/>
+    <variables id="84" name="Current_Temperature" type="integer"/>
+    <variables id="85" name="Lower_Alarm_Temp" type="integer"/>
+    <variables id="86" name="Upper_Alarm_Temp" type="integer"/>
+    <variables id="192" name="Thermostat_Status" type="enumeration" enumerationType="//@ucmspec/@enumerationTypes.0"/>
+    <variables id="193" name="Lower_Desired_Temp" type="integer"/>
+    <variables id="194" name="Upper_Desired_Temp" type="integer"/>
+    <variables id="195" name="Alarm_On"/>
+    <variables id="208" name="Thermostat_Display_Status" type="enumeration" enumerationType="//@ucmspec/@enumerationTypes.0"/>
+    <variables id="356" name="Lower_Alarm_Temp_Init" type="integer"/>
+    <variables id="357" name="Upper_Alarm_Temp_Init" type="integer"/>
+    <variables id="358" name="Lower_Desired_Temp_Init" type="integer"/>
+    <variables id="359" name="Upper_Desired_Temp_Init" type="integer"/>
+    <variables id="431" name="Current_Temp_Decr" type="integer"/>
+    <variables id="436" name="Heat_Source_On"/>
+    <variables id="445" name="Current_Temp_Incr" type="integer"/>
+    <variables id="722" name="Current_Temp_Incr_Fixed" type="integer"/>
+    <variables id="15639" name="Lower_Desired_Temp_Min" type="integer"/>
+    <variables id="15640" name="Lower_Desired_Temp_Max" type="integer"/>
+    <variables id="15641" name="Upper_Desired_Temp_Min" type="integer"/>
+    <variables id="15642" name="Upper_Desired_Temp_Max" type="integer"/>
+    <variables id="15658" name="Lower_Alarm_Temp_Min" type="integer"/>
+    <variables id="15659" name="Lower_Alarm_Temp_Max" type="integer"/>
+    <variables id="15660" name="Upper_Alarm_Temp_Min" type="integer"/>
+    <variables id="15661" name="Upper_Alarm_Temp_Max" type="integer"/>
+    <variables id="23778" name="Current_Temp_Incr_Fail" type="integer"/>
+    <variables id="24900" name="Display_Temp" type="integer"/>
+    <enumerationTypes id="191" name="Thermostat_Mode" values="INIT,NORMAL,FAILED" instances="//@ucmspec/@variables.8 //@ucmspec/@variables.12"/>
+  </ucmspec>
+  <grlspec>
+    <groups id="3" name="StrategiesGroup3" strategies="//@grlspec/@strategies.0"/>
+    <strategies id="4" name="EvaluationStrategy4" author="dblouin" group="//@grlspec/@groups.0"/>
+    <indicatorGroup id="7" name="Temps" isRedesignCategory="true"/>
+    <indicatorGroup id="8" name="Coût" isRedesignCategory="true"/>
+    <indicatorGroup id="9" name="Qualité" isRedesignCategory="true"/>
+    <indicatorGroup id="10" name="Flexibilité" isRedesignCategory="true"/>
+  </grlspec>
+  <urndef>
+    <responsibilities id="24" name="Turn On Isolette" description="Nurse turns on the Isolette." expression="Isolette_On = true;" respRefs="//@urndef/@specDiagrams.0/@nodes.1"/>
+    <responsibilities id="32" name="Turn On Thermostat" description="Isolette turns on the Thermostat." expression="Thermostat_On = true;" respRefs="//@urndef/@specDiagrams.0/@nodes.2"/>
+    <responsibilities id="40" name="Initializes" description="Thermostat initializes and enters its normal mode of operation (exception case 1) (A.2.5, A.5.1.2 and A.5.2.2)." expression="Thermostat_Init = not Thermostat_Init_Failed;&#xD;&#xA;Thermostat_Status = NORMAL;" respRefs="//@urndef/@specDiagrams.0/@nodes.3"/>
+    <responsibilities id="196" name="Detect Internal Failure" description="Thermostat detects an internal failure (A.5.1.4 and A.5.2.4)." expression="" respRefs="//@urndef/@specDiagrams.4/@nodes.2"/>
+    <responsibilities id="200" name="Enter FAILED Mode" description="Thermostat enters the FAILED mode (A.5.1.2 and A.5.2.2)." expression="Thermostat_Status = FAILED;" respRefs="//@urndef/@specDiagrams.4/@nodes.3"/>
+    <responsibilities id="204" name="Set Display Status FAILED" description="Thermostat sets its Displayed Status to failed (A.5.1.1 and A.5.2.1)." expression="Thermostat_Display_Status = FAILED;" respRefs="//@urndef/@specDiagrams.4/@nodes.4"/>
+    <responsibilities id="254" name="Responds to Alarm" description="Nurse responds to the Alarm and sees that the Thermostat is failed." expression="" respRefs="//@urndef/@specDiagrams.4/@nodes.5"/>
+    <responsibilities id="258" name="Activate Alarm" description="Thermostat activates the Alarm (A.5.2.3)." expression="Alarm_On = true;" respRefs="//@urndef/@specDiagrams.4/@nodes.6 //@urndef/@specDiagrams.0/@nodes.14 //@urndef/@specDiagrams.1/@nodes.10 //@urndef/@specDiagrams.3/@nodes.2"/>
+    <responsibilities id="264" name="Remove Infant" description="Nurse removes Infant from the Isolette." expression="Infant_In_Isolette = false;" respRefs="//@urndef/@specDiagrams.4/@nodes.7 //@urndef/@specDiagrams.0/@nodes.24 //@urndef/@specDiagrams.0/@nodes.31 //@urndef/@specDiagrams.3/@nodes.4"/>
+    <responsibilities id="269" name="Obtain another Isolette" description="Nurse obtains another Isolette." expression="Alarm_On = false;&#xD;&#xA;Isolette_On = false;&#xD;&#xA;Thermostat_On = false;&#xD;&#xA;Thermostat_Init_Failed = false;&#xD;&#xA;Current_Temp_Incr = 10;&#xD;&#xA;Current_Temp_Incr_Fail = 10;" respRefs="//@urndef/@specDiagrams.0/@nodes.9"/>
+    <responsibilities id="306" name="Responsibility306" description="" expression=""/>
+    <responsibilities id="314" name="Ignore Alarm" description="Nurse ignores the Alarm." expression="" respRefs="//@urndef/@specDiagrams.0/@nodes.15"/>
+    <responsibilities id="350" name="Set Alarm Temp" description="Nurse sets the Alarm Temperature Range for the Infant (A.5.2.1)." expression="Lower_Alarm_Temp = Lower_Alarm_Temp_Init;&#xD;&#xA;Upper_Alarm_Temp = Upper_Alarm_Temp_Init;" respRefs="//@urndef/@specDiagrams.1/@nodes.2"/>
+    <responsibilities id="352" name="Set Desired Temp" description="Nurse sets the Desired Temperature Range for the Infant (A.5.1.1)." expression="Lower_Desired_Temp = Lower_Desired_Temp_Init;&#xD;&#xA;Upper_Desired_Temp = Upper_Desired_Temp_Init;" respRefs="//@urndef/@specDiagrams.1/@nodes.3"/>
+    <responsibilities id="425" name="Current Temp Falls below Desired Range" description="Current Temperature falls below the Desired Temperature Range." expression="Current_Temperature = Lower_Desired_Temp - Current_Temp_Decr;" respRefs="//@urndef/@specDiagrams.2/@nodes.2"/>
+    <responsibilities id="432" name="Turn Heat Source On" description="Thermostat turns the Heat Source on to warm up the Isolette (A.5.1.3)." expression="Heat_Source_On = true;" respRefs="//@urndef/@specDiagrams.2/@nodes.3"/>
+    <responsibilities id="441" name="Heat Isolette" description="Heat the Isolette by some amount." expression="Current_Temperature = Upper_Desired_Temp + Current_Temp_Incr;" respRefs="//@urndef/@specDiagrams.2/@nodes.4"/>
+    <responsibilities id="448" name="Turn Heat Source Off" description="Thermostat turns the Heat Source off to cool the Isolette (A.5.1.3)." expression="Heat_Source_On = false;" respRefs="//@urndef/@specDiagrams.2/@nodes.5"/>
+    <responsibilities id="452" name="Decrease Current Temp" description="This step is added to simulate the Isolette that cools down to the Upper Desired Temperature and remains above the Lower Desired Temperature." expression="Current_Temperature = Upper_Desired_Temp;" respRefs="//@urndef/@specDiagrams.2/@nodes.6"/>
+    <responsibilities id="716" name="Attempt Correct Problem" description="Nurse attempts to correct the problem, e.g., closing an open door." expression="Current_Temp_Incr = Current_Temp_Incr_Fixed;" respRefs="//@urndef/@specDiagrams.5/@nodes.1 //@urndef/@specDiagrams.3/@nodes.5"/>
+    <responsibilities id="6481" name="Place Infant" description="Nurse places the Infant in the Isolette." expression="Infant_In_Isolette = true;" respRefs="//@urndef/@specDiagrams.0/@nodes.21 //@urndef/@specDiagrams.3/@nodes.21"/>
+    <responsibilities id="6527" name="Confirm Display Temp" description="Nurse confirms that the Display Temperature is in the Desired Temperature Range during rounds (A.2.6 and A.5.1.1)." expression="" respRefs="//@urndef/@specDiagrams.0/@nodes.23"/>
+    <responsibilities id="6653" name="Turn Off Isolette" description="Nurse turns off the Isolette." expression="Isolette_On = false;" respRefs="//@urndef/@specDiagrams.0/@nodes.25"/>
+    <responsibilities id="6673" name="Turn Off Thermostat" description="Isolette turns off the Thermostat." expression="Thermostat_On = false;" respRefs="//@urndef/@specDiagrams.0/@nodes.26"/>
+    <responsibilities id="17779" name="Responds to Alarm an see Display Temp not in Alarm Range" description="Nurse responds to the Alarm and sees that the Display Temperature is in the Alarm Temperature Range (A.5.1.1)." expression="" respRefs="//@urndef/@specDiagrams.3/@nodes.3"/>
+    <responsibilities id="23791" name="Deactivate Alarm" description="Deactivate the Alarm.&#xD;&#xA;Note: This step is missing in the REMH." expression="Alarm_On = false;" respRefs="//@urndef/@specDiagrams.3/@nodes.19 //@urndef/@specDiagrams.0/@nodes.45"/>
+    <responsibilities id="23864" name="Thermostat Failure" description="This step is added to simulate a condition under which the thermostat will fail to either EC A.2.6 of EC A.2.4." expression="Current_Temp_Incr = Current_Temp_Incr_Fail;" respRefs="//@urndef/@specDiagrams.0/@nodes.43"/>
+    <responsibilities id="24892" name="Set Display Temp" description="Set the Display Tempe variable to be equals to the Current Temperature variable. Note that this step is added everytime UC A.2.3 is called, since the step in UC A.2.3 does not seem to be taken into account. Is this a bug with jUCMNav?" expression="Display_Temp = Current_Temperature;" respRefs="//@urndef/@specDiagrams.2/@nodes.12 //@urndef/@specDiagrams.1/@nodes.13 //@urndef/@specDiagrams.5/@nodes.16 //@urndef/@specDiagrams.3/@nodes.22"/>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="2" name="UC A.2.1 Normal Operation Isolette" description="This use case describes the normal operation of the Isolette by the Nurse.">
+      <nodes xsi:type="ucm.map:StartPoint" id="15" name="Start UC A.2.1" x="71" y="55" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.0" scenarioStartPoints="//@ucmspec/@scenarioGroups.0/@scenarios.0/@startPoints.0">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-14" deltaY="9"/>
+        <precondition deltaX="-124" deltaY="-15" label="Infant Ready Isolette and Thermostat Off" expression="not Infant_In_Isolette and&#xD;&#xA;not Isolette_On and&#xD;&#xA;not Thermostat_On" description="Infant is ready to be placed in the Isolette.&#xD;&#xA;Isolette and Thermostat are turned off."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="25" name="RespRef25" x="333" y="66" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.1" pred="//@urndef/@specDiagrams.0/@connections.12" respDef="//@urndef/@responsibilities.0">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="18" deltaY="-35"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="33" name="RespRef33" x="440" y="70" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.2" pred="//@urndef/@specDiagrams.0/@connections.1" respDef="//@urndef/@responsibilities.1">
+        <metadata name="_hits" value="1"/>
+        <label/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="41" name="RespRef41" x="538" y="69" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.3" pred="//@urndef/@specDiagrams.0/@connections.2" respDef="//@urndef/@responsibilities.2">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="3" deltaY="-3"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="44" name="DirectionArrow44" x="128" y="69" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.4" pred="//@urndef/@specDiagrams.0/@connections.0">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="61" name="OrFork61" x="579" y="115" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.5 //@urndef/@specDiagrams.0/@connections.6" pred="//@urndef/@specDiagrams.0/@connections.7">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="141" name="OrFork141" x="582" y="82" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.7 //@urndef/@specDiagrams.0/@connections.8" pred="//@urndef/@specDiagrams.0/@connections.3">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="157" name="DirectionArrow157" x="718" y="94" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.9" pred="//@urndef/@specDiagrams.0/@connections.8">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="158" name="EC A.2.5: Thermostat Init Failure" x="729" y="224" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.10" pred="//@urndef/@specDiagrams.0/@connections.9">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="106" deltaY="-26"/>
+        <bindings plugin="//@urndef/@specDiagrams.4">
+          <in startPoint="//@urndef/@specDiagrams.4/@nodes.0" stubEntry="//@urndef/@specDiagrams.0/@connections.9"/>
+          <out endPoint="//@urndef/@specDiagrams.4/@nodes.1" stubExit="//@urndef/@specDiagrams.0/@connections.10"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="270" name="RespRef270" x="38" y="120" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.11" pred="//@urndef/@specDiagrams.0/@connections.23" respDef="//@urndef/@responsibilities.9">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-70" deltaY="-21"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="292" name="OrJoin292" x="167" y="71" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.12" pred="//@urndef/@specDiagrams.0/@connections.4 //@urndef/@specDiagrams.0/@connections.11">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="293" name="DirectionArrow293" x="687" y="404" succ="//@urndef/@specDiagrams.0/@connections.13" pred="//@urndef/@specDiagrams.0/@connections.10">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="294" name="DirectionArrow294" x="380" y="426" succ="//@urndef/@specDiagrams.0/@connections.14" pred="//@urndef/@specDiagrams.0/@connections.13">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="296" name="DirectionArrow296" x="73" y="419" succ="//@urndef/@specDiagrams.0/@connections.15" pred="//@urndef/@specDiagrams.0/@connections.14">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="307" name="RespRef307" x="527" y="165" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.16" pred="//@urndef/@specDiagrams.0/@connections.5" respDef="//@urndef/@responsibilities.7">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-54" deltaY="-28"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="315" name="RespRef315" x="346" y="155" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.17" pred="//@urndef/@specDiagrams.0/@connections.16" respDef="//@urndef/@responsibilities.11">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="17" deltaY="-32"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="318" name="UC A.2.2: Configure Isolette" description="" x="274" y="134" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.56 //@urndef/@specDiagrams.0/@connections.58" pred="//@urndef/@specDiagrams.0/@connections.18 //@urndef/@specDiagrams.0/@connections.17">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="2" deltaY="1"/>
+        <bindings plugin="//@urndef/@specDiagrams.1">
+          <in startPoint="//@urndef/@specDiagrams.1/@nodes.0" stubEntry="//@urndef/@specDiagrams.0/@connections.18"/>
+          <in startPoint="//@urndef/@specDiagrams.1/@nodes.0" stubEntry="//@urndef/@specDiagrams.0/@connections.17"/>
+          <out endPoint="//@urndef/@specDiagrams.1/@nodes.1" stubExit="//@urndef/@specDiagrams.0/@connections.56"/>
+          <out endPoint="//@urndef/@specDiagrams.1/@nodes.4" stubExit="//@urndef/@specDiagrams.0/@connections.58"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="349" name="DirectionArrow349" x="444" y="116" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.18" pred="//@urndef/@specDiagrams.0/@connections.6">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="63" name="End UC A.2.1" x="419" y="387" pred="//@urndef/@specDiagrams.0/@connections.31">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-4" deltaY="-31"/>
+        <postcondition deltaX="-148" deltaY="-13" label="Infant not in Isolette and Isolette and Thermostat Off" expression="not Infant_In_Isolette and&#xD;&#xA;not Isolette_On and&#xD;&#xA;not Thermostat_On" description=""/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="6469" name="OrJoin6469" x="22" y="233" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.23" pred="//@urndef/@specDiagrams.0/@connections.37 //@urndef/@specDiagrams.0/@connections.24 //@urndef/@specDiagrams.0/@connections.49">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="6470" name="DirectionArrow6470" x="72" y="234" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.24" pred="//@urndef/@specDiagrams.0/@connections.22">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="6482" name="RespRef6482" x="340" y="267" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.25" pred="//@urndef/@specDiagrams.0/@connections.51" respDef="//@urndef/@responsibilities.20">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="44" deltaY="-14"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="6485" name="UC A.2.3: Maintain Desired Temp" x="429" y="310" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.26 //@urndef/@specDiagrams.0/@connections.27" pred="//@urndef/@specDiagrams.0/@connections.25">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-98" deltaY="-30"/>
+        <bindings plugin="//@urndef/@specDiagrams.2">
+          <in startPoint="//@urndef/@specDiagrams.2/@nodes.0" stubEntry="//@urndef/@specDiagrams.0/@connections.25"/>
+          <out endPoint="//@urndef/@specDiagrams.2/@nodes.1" stubExit="//@urndef/@specDiagrams.0/@connections.26"/>
+          <out endPoint="//@urndef/@specDiagrams.2/@nodes.8" stubExit="//@urndef/@specDiagrams.0/@connections.27"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="6528" name="RespRef6528" x="344" y="356" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.28" pred="//@urndef/@specDiagrams.0/@connections.54" respDef="//@urndef/@responsibilities.21">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="72" deltaY="-17"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="6650" name="RespRef6650" x="328" y="375" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.29" pred="//@urndef/@specDiagrams.0/@connections.28" respDef="//@urndef/@responsibilities.8">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="50" deltaY="-16"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="6654" name="RespRef6654" x="351" y="384" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.30" pred="//@urndef/@specDiagrams.0/@connections.29" respDef="//@urndef/@responsibilities.22">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="61" deltaY="-23"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="6674" name="RespRef6674" x="412" y="349" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.31" pred="//@urndef/@specDiagrams.0/@connections.30" respDef="//@urndef/@responsibilities.23">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-59" deltaY="-17"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="15596" name="OrJoin15596" x="20" y="339" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.32" pred="//@urndef/@specDiagrams.0/@connections.15 //@urndef/@specDiagrams.0/@connections.50">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="15597" name="EC A.2.6 Fail Maintain Desired Temp" x="105" y="357" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.33 //@urndef/@specDiagrams.0/@connections.35" pred="//@urndef/@specDiagrams.0/@connections.55">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-21" deltaY="-48"/>
+        <bindings plugin="//@urndef/@specDiagrams.5">
+          <in startPoint="//@urndef/@specDiagrams.5/@nodes.13" stubEntry="//@urndef/@specDiagrams.0/@connections.55"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.9" stubExit="//@urndef/@specDiagrams.0/@connections.33"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.0" stubExit="//@urndef/@specDiagrams.0/@connections.35"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="15602" name="DirectionArrow15602" x="403" y="327" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.34" pred="//@urndef/@specDiagrams.0/@connections.26">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="15633" name="DirectionArrow15633" x="207" y="348" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.36" pred="//@urndef/@specDiagrams.0/@connections.35">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="15924" name="RespRef15924" x="23" y="287" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.37" pred="//@urndef/@specDiagrams.0/@connections.32" respDef="//@urndef/@responsibilities.8">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-51" deltaY="-19"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="656" name="EC A.2.6: Fail Maintain Desired Temp" x="136" y="233" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.21 //@urndef/@specDiagrams.0/@connections.22" pred="//@urndef/@specDiagrams.0/@connections.42 //@urndef/@specDiagrams.0/@connections.41">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="20" deltaY="-2"/>
+        <bindings plugin="//@urndef/@specDiagrams.5">
+          <in startPoint="//@urndef/@specDiagrams.5/@nodes.12" stubEntry="//@urndef/@specDiagrams.0/@connections.42"/>
+          <in startPoint="//@urndef/@specDiagrams.5/@nodes.13" stubEntry="//@urndef/@specDiagrams.0/@connections.41"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.0" stubExit="//@urndef/@specDiagrams.0/@connections.21"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.9" stubExit="//@urndef/@specDiagrams.0/@connections.22"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="16151" name="OrFork16151" x="222" y="219" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.38 //@urndef/@specDiagrams.0/@connections.39" pred="//@urndef/@specDiagrams.0/@connections.20">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="15925" name="DirectionArrow15925" x="200" y="261" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.40" pred="//@urndef/@specDiagrams.0/@connections.21">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="16189" name="DirectionArrow16189" x="179" y="230" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.41" pred="//@urndef/@specDiagrams.0/@connections.39">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="16191" name="DirectionArrow16191" x="200" y="245" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.42" pred="//@urndef/@specDiagrams.0/@connections.38">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="16231" name="OrFork16231" x="244" y="311" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.43 //@urndef/@specDiagrams.0/@connections.44" pred="//@urndef/@specDiagrams.0/@connections.27">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="16244" name="EC A.2.4: Fail Maintain Safe Temp" x="139" y="285" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.45 //@urndef/@specDiagrams.0/@connections.46" pred="//@urndef/@specDiagrams.0/@connections.48">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="31" deltaY="-53"/>
+        <bindings plugin="//@urndef/@specDiagrams.3">
+          <in startPoint="//@urndef/@specDiagrams.3/@nodes.0" stubEntry="//@urndef/@specDiagrams.0/@connections.48"/>
+          <out endPoint="//@urndef/@specDiagrams.3/@nodes.9" stubExit="//@urndef/@specDiagrams.0/@connections.45"/>
+          <out endPoint="//@urndef/@specDiagrams.3/@nodes.1" stubExit="//@urndef/@specDiagrams.0/@connections.46"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="17283" name="DirectionArrow17283" x="222" y="286" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.47" pred="//@urndef/@specDiagrams.0/@connections.46">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="17605" name="DirectionArrow17605" x="205" y="302" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.48" pred="//@urndef/@specDiagrams.0/@connections.44">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="23773" name="DirectionArrow23773" x="101" y="265" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.49" pred="//@urndef/@specDiagrams.0/@connections.45">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="23775" name="DirectionArrow23775" x="60" y="348" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.50" pred="//@urndef/@specDiagrams.0/@connections.33">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="23865" name="RespRef23865" x="411" y="232" contRef="//@urndef/@specDiagrams.0/@contRefs.1" succ="//@urndef/@specDiagrams.0/@connections.51" pred="//@urndef/@specDiagrams.0/@connections.53" respDef="//@urndef/@responsibilities.26">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-31" deltaY="-35"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="23902" name="OrJoin23902" x="328" y="213" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.52" pred="//@urndef/@specDiagrams.0/@connections.19 //@urndef/@specDiagrams.0/@connections.40">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="24381" name="RespRef24381" x="522" y="214" contRef="//@urndef/@specDiagrams.0/@contRefs.2" succ="//@urndef/@specDiagrams.0/@connections.53" pred="//@urndef/@specDiagrams.0/@connections.52" respDef="//@urndef/@responsibilities.25">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-28" deltaY="-5"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="24571" name="OrJoin24571" x="376" y="337" succ="//@urndef/@specDiagrams.0/@connections.54" pred="//@urndef/@specDiagrams.0/@connections.34 //@urndef/@specDiagrams.0/@connections.47 //@urndef/@specDiagrams.0/@connections.36">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="17604" name="DirectionArrow17604" x="164" y="332" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.55" pred="//@urndef/@specDiagrams.0/@connections.43">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Timer" id="459" name="Wait Display Temp within Desired Range" description="Nurse waits until the Display Temperature is within the Desired Temperature Range (A.2.6 and A.5.1.1)." x="270" y="202" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.19 //@urndef/@specDiagrams.0/@connections.20" pred="//@urndef/@specDiagrams.0/@connections.57 //@urndef/@specDiagrams.0/@connections.61">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="114" deltaY="-13"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="24837" name="DirectionArrow24837" x="275" y="177" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.57" pred="//@urndef/@specDiagrams.0/@connections.56">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="24845" name="Desired Temp Reached" x="270" y="202" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.60" pred="//@urndef/@specDiagrams.0/@connections.59">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="99" deltaY="-4"/>
+        <postcondition deltaX="-40" deltaY="-20" label="" expression="true"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="24886" name="DirectionArrow24886" x="228" y="163" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.59" pred="//@urndef/@specDiagrams.0/@connections.58">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Connect" id="24887" name="Connect24887" x="270" y="202" contRef="//@urndef/@specDiagrams.0/@contRefs.0" succ="//@urndef/@specDiagrams.0/@connections.61" pred="//@urndef/@specDiagrams.0/@connections.60"/>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="12" name="ComponentRef12" x="11" y="10" width="358" height="395" contDef="//@urndef/@components.0" nodes="//@urndef/@specDiagrams.0/@nodes.0 //@urndef/@specDiagrams.0/@nodes.1 //@urndef/@specDiagrams.0/@nodes.4 //@urndef/@specDiagrams.0/@nodes.9 //@urndef/@specDiagrams.0/@nodes.10 //@urndef/@specDiagrams.0/@nodes.15 //@urndef/@specDiagrams.0/@nodes.16 //@urndef/@specDiagrams.0/@nodes.20 //@urndef/@specDiagrams.0/@nodes.19 //@urndef/@specDiagrams.0/@nodes.21 //@urndef/@specDiagrams.0/@nodes.23 //@urndef/@specDiagrams.0/@nodes.24 //@urndef/@specDiagrams.0/@nodes.25 //@urndef/@specDiagrams.0/@nodes.27 //@urndef/@specDiagrams.0/@nodes.28 //@urndef/@specDiagrams.0/@nodes.30 //@urndef/@specDiagrams.0/@nodes.32 //@urndef/@specDiagrams.0/@nodes.33 //@urndef/@specDiagrams.0/@nodes.34 //@urndef/@specDiagrams.0/@nodes.35 //@urndef/@specDiagrams.0/@nodes.36 //@urndef/@specDiagrams.0/@nodes.37 //@urndef/@specDiagrams.0/@nodes.38 //@urndef/@specDiagrams.0/@nodes.31 //@urndef/@specDiagrams.0/@nodes.39 //@urndef/@specDiagrams.0/@nodes.40 //@urndef/@specDiagrams.0/@nodes.41 //@urndef/@specDiagrams.0/@nodes.42 //@urndef/@specDiagrams.0/@nodes.44 //@urndef/@specDiagrams.0/@nodes.47 //@urndef/@specDiagrams.0/@nodes.48 //@urndef/@specDiagrams.0/@nodes.49 //@urndef/@specDiagrams.0/@nodes.50 //@urndef/@specDiagrams.0/@nodes.51 //@urndef/@specDiagrams.0/@nodes.52">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="29" name="ComponentRef29" x="383" y="10" width="397" height="362" contDef="//@urndef/@components.1" nodes="//@urndef/@specDiagrams.0/@nodes.2 //@urndef/@specDiagrams.0/@nodes.17 //@urndef/@specDiagrams.0/@nodes.22 //@urndef/@specDiagrams.0/@nodes.26 //@urndef/@specDiagrams.0/@nodes.29 //@urndef/@specDiagrams.0/@nodes.43" children="//@urndef/@specDiagrams.0/@contRefs.2">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="37" name="ComponentRef37" x="500" y="37" width="263" height="254" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.0/@nodes.3 //@urndef/@specDiagrams.0/@nodes.5 //@urndef/@specDiagrams.0/@nodes.6 //@urndef/@specDiagrams.0/@nodes.7 //@urndef/@specDiagrams.0/@nodes.8 //@urndef/@specDiagrams.0/@nodes.14 //@urndef/@specDiagrams.0/@nodes.45" parent="//@urndef/@specDiagrams.0/@contRefs.1">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.0" target="//@urndef/@specDiagrams.0/@nodes.4"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.1" target="//@urndef/@specDiagrams.0/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.2" target="//@urndef/@specDiagrams.0/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.3" target="//@urndef/@specDiagrams.0/@nodes.6"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.4" target="//@urndef/@specDiagrams.0/@nodes.10"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.5" target="//@urndef/@specDiagrams.0/@nodes.14">
+        <condition deltaX="45" deltaY="10" label="Current Temp not within Alarm Range" expression="Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp" description="The Current Temperature is not within the Alarm Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.5" target="//@urndef/@specDiagrams.0/@nodes.17">
+        <condition deltaX="104" deltaY="21" label="Current Temp within Alarm Range" expression="Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description="The Current Temperature is within the Alarm Temperature Range"/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.6" target="//@urndef/@specDiagrams.0/@nodes.5">
+        <condition deltaX="-3" deltaY="-3" label="Init OK" expression="Thermostat_Init" description="The Thermostat initialized successfully."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.6" target="//@urndef/@specDiagrams.0/@nodes.7">
+        <condition deltaX="70" deltaY="22" label="Init Failed" expression="not Thermostat_Init" description="The Thermostat failed to initialize."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.7" target="//@urndef/@specDiagrams.0/@nodes.8" inBindings="//@urndef/@specDiagrams.0/@nodes.8/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.8" target="//@urndef/@specDiagrams.0/@nodes.11" outBindings="//@urndef/@specDiagrams.0/@nodes.8/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.9" target="//@urndef/@specDiagrams.0/@nodes.10"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.10" target="//@urndef/@specDiagrams.0/@nodes.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.11" target="//@urndef/@specDiagrams.0/@nodes.12"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.12" target="//@urndef/@specDiagrams.0/@nodes.13"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.13" target="//@urndef/@specDiagrams.0/@nodes.27"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.14" target="//@urndef/@specDiagrams.0/@nodes.15"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.15" target="//@urndef/@specDiagrams.0/@nodes.16" inBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@in.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.17" target="//@urndef/@specDiagrams.0/@nodes.16" inBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.48" target="//@urndef/@specDiagrams.0/@nodes.44">
+        <condition label="" expression="Current_Temperature >= Lower_Desired_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Desired_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.48" target="//@urndef/@specDiagrams.0/@nodes.33">
+        <condition label="" expression="false" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.32" target="//@urndef/@specDiagrams.0/@nodes.34" outBindings="//@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.32" target="//@urndef/@specDiagrams.0/@nodes.20" outBindings="//@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.19" target="//@urndef/@specDiagrams.0/@nodes.9"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.20" target="//@urndef/@specDiagrams.0/@nodes.19"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.21" target="//@urndef/@specDiagrams.0/@nodes.22" inBindings="//@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.22" target="//@urndef/@specDiagrams.0/@nodes.29" outBindings="//@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.22" target="//@urndef/@specDiagrams.0/@nodes.37" outBindings="//@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.23" target="//@urndef/@specDiagrams.0/@nodes.24"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.24" target="//@urndef/@specDiagrams.0/@nodes.25"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.25" target="//@urndef/@specDiagrams.0/@nodes.26"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.26" target="//@urndef/@specDiagrams.0/@nodes.18"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.27" target="//@urndef/@specDiagrams.0/@nodes.31"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.28" target="//@urndef/@specDiagrams.0/@nodes.42" outBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.29" target="//@urndef/@specDiagrams.0/@nodes.46"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.28" target="//@urndef/@specDiagrams.0/@nodes.30" outBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.30" target="//@urndef/@specDiagrams.0/@nodes.46"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.31" target="//@urndef/@specDiagrams.0/@nodes.19"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.33" target="//@urndef/@specDiagrams.0/@nodes.36">
+        <condition label="" expression="Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp&#xD;&#xA;" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.33" target="//@urndef/@specDiagrams.0/@nodes.35">
+        <condition label="" expression="Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.34" target="//@urndef/@specDiagrams.0/@nodes.44"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.35" target="//@urndef/@specDiagrams.0/@nodes.32" inBindings="//@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@in.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.36" target="//@urndef/@specDiagrams.0/@nodes.32" inBindings="//@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.37" target="//@urndef/@specDiagrams.0/@nodes.47">
+        <condition label="" expression="Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;( Current_Temperature &lt; Lower_Desired_Temp or&#xD;&#xA;Current_Temperature > Upper_Desired_Temp ) and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.37" target="//@urndef/@specDiagrams.0/@nodes.40">
+        <condition label="" expression="Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.38" target="//@urndef/@specDiagrams.0/@nodes.41" outBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.38" target="//@urndef/@specDiagrams.0/@nodes.39" outBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.39" target="//@urndef/@specDiagrams.0/@nodes.46"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.40" target="//@urndef/@specDiagrams.0/@nodes.38" inBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.41" target="//@urndef/@specDiagrams.0/@nodes.19"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.42" target="//@urndef/@specDiagrams.0/@nodes.27"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.43" target="//@urndef/@specDiagrams.0/@nodes.21"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.44" target="//@urndef/@specDiagrams.0/@nodes.45"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.45" target="//@urndef/@specDiagrams.0/@nodes.43"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.46" target="//@urndef/@specDiagrams.0/@nodes.23"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.47" target="//@urndef/@specDiagrams.0/@nodes.28" inBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.16" target="//@urndef/@specDiagrams.0/@nodes.49" outBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.49" target="//@urndef/@specDiagrams.0/@nodes.48"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.16" target="//@urndef/@specDiagrams.0/@nodes.51" outBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.51" target="//@urndef/@specDiagrams.0/@nodes.50"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.50" target="//@urndef/@specDiagrams.0/@nodes.52"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.0/@nodes.52" target="//@urndef/@specDiagrams.0/@nodes.48"/>
+    </specDiagrams>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="320" name="UC A.2.2 Configure Isolette" description="This use case describes how the Nurse configures the Isolette and Thermostat for the Infant." parentStub="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0">
+      <nodes xsi:type="ucm.map:StartPoint" id="344" name="Start UC A.2.2" x="137" y="123" contRef="//@urndef/@specDiagrams.1/@contRefs.0" succ="//@urndef/@specDiagrams.1/@connections.0" inBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@in.0 //@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@in.1">
+        <metadata name="_hits" value="1"/>
+        <label/>
+        <precondition deltaX="-87" deltaY="-15" label="Isolette and Thermostat On" expression="Isolette_On and Thermostat_On" description="The Isolette and Thermostat are turned on."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="346" name="End UC A.2.2" x="61" y="432" pred="//@urndef/@specDiagrams.1/@connections.11" outBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@out.0">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="5" deltaY="-35"/>
+        <postcondition deltaX="-87" deltaY="-17" label="Desired and Alarm Temp Set" expression="Lower_Desired_Temp >= Lower_Desired_Temp_Min and&#xD;&#xA;Lower_Desired_Temp &lt;= Lower_Desired_Temp_Max and&#xD;&#xA;Upper_Desired_Temp >= Upper_Desired_Temp_Min and&#xD;&#xA;Upper_Desired_Temp &lt;= Upper_Desired_Temp_Max and&#xD;&#xA;Lower_Alarm_Temp >= Lower_Alarm_Temp_Min and&#xD;&#xA;Lower_Alarm_Temp &lt;= Lower_Alarm_Temp_Max and&#xD;&#xA;Upper_Alarm_Temp >= Upper_Alarm_Temp_Min and&#xD;&#xA;Upper_Alarm_Temp &lt;= Upper_Alarm_Temp_Max" description="The Desired Temperature Range is set for the needs of the Infant.&#xD;&#xA;The Alarm Temperature Range is set for the needs of the Infant.&#xD;&#xA;The Current Temperature in the Isolette is in the Desired Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="351" name="RespRef351" x="114" y="158" contRef="//@urndef/@specDiagrams.1/@contRefs.0" succ="//@urndef/@specDiagrams.1/@connections.1" pred="//@urndef/@specDiagrams.1/@connections.0" respDef="//@urndef/@responsibilities.12">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-51" deltaY="-17"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="353" name="RespRef353" x="113" y="192" contRef="//@urndef/@specDiagrams.1/@contRefs.0" succ="//@urndef/@specDiagrams.1/@connections.2" pred="//@urndef/@specDiagrams.1/@connections.1" respDef="//@urndef/@responsibilities.13">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-57" deltaY="-17"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="507" name="End UC A.2.2 (2)" x="331" y="316" pred="//@urndef/@specDiagrams.1/@connections.13" outBindings="//@urndef/@specDiagrams.0/@nodes.16/@bindings.0/@out.1">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-34" deltaY="5"/>
+        <postcondition deltaX="-156" deltaY="-44" label="Desired and Alarm Temp Set and Current Temp within Desired Range" expression="Lower_Desired_Temp >= Lower_Desired_Temp_Min and&#xD;&#xA;Lower_Desired_Temp &lt;= Lower_Desired_Temp_Max and&#xD;&#xA;Upper_Desired_Temp >= Upper_Desired_Temp_Min and&#xD;&#xA;Upper_Desired_Temp &lt;= Upper_Desired_Temp_Max and&#xD;&#xA;Lower_Alarm_Temp >= Lower_Alarm_Temp_Min and&#xD;&#xA;Lower_Alarm_Temp &lt;= Lower_Alarm_Temp_Max and&#xD;&#xA;Upper_Alarm_Temp >= Upper_Alarm_Temp_Min and&#xD;&#xA;Upper_Alarm_Temp &lt;= Upper_Alarm_Temp_Max" description="The Desired Temperature Range is set for the needs of the Infant.&#xD;&#xA;The Alarm Temperature Range is set for the needs of the Infant.&#xD;&#xA;The Current Temperature in the Isolette is in the Desired Temperature Range.&#xD;&#xA;&#xD;&#xA;Note: This end point has been added because the normal end contradicts the following step where the Nurse waits for the Current Temperature to be within the Desired Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="511" name="DirectionArrow511" x="141" y="308" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.3" pred="//@urndef/@specDiagrams.1/@connections.6">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="512" name="DirectionArrow512" x="36" y="379" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.4" pred="//@urndef/@specDiagrams.1/@connections.8">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:AndFork" id="569" name="AndFork569" x="113" y="287" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.5 //@urndef/@specDiagrams.1/@connections.6" pred="//@urndef/@specDiagrams.1/@connections.2">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="589" name="UC A.2.3: Maintain Desired Temp" x="186" y="316" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.7" pred="//@urndef/@specDiagrams.1/@connections.3">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-35" deltaY="10"/>
+        <bindings plugin="//@urndef/@specDiagrams.2">
+          <in startPoint="//@urndef/@specDiagrams.2/@nodes.0" stubEntry="//@urndef/@specDiagrams.1/@connections.3"/>
+          <out endPoint="//@urndef/@specDiagrams.2/@nodes.1" stubExit="//@urndef/@specDiagrams.1/@connections.7"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="15936" name="OrFork15936" x="64" y="333" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.8 //@urndef/@specDiagrams.1/@connections.9" pred="//@urndef/@specDiagrams.1/@connections.5">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="16073" name="RespRef16073" x="82" y="378" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.10" pred="//@urndef/@specDiagrams.1/@connections.12" respDef="//@urndef/@responsibilities.7">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-48" deltaY="-24"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="16085" name="OrJoin16085" x="60" y="396" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.11" pred="//@urndef/@specDiagrams.1/@connections.4 //@urndef/@specDiagrams.1/@connections.10">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="16086" name="DirectionArrow16086" x="85" y="359" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.12" pred="//@urndef/@specDiagrams.1/@connections.9">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="25020" name="RespRef25020" x="282" y="319" contRef="//@urndef/@specDiagrams.1/@contRefs.1" succ="//@urndef/@specDiagrams.1/@connections.13" pred="//@urndef/@specDiagrams.1/@connections.7" respDef="//@urndef/@responsibilities.27">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="21" deltaY="-1"/>
+      </nodes>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="343" name="ComponentRef343" x="73" y="84" width="238" height="144" contDef="//@urndef/@components.0" nodes="//@urndef/@specDiagrams.1/@nodes.0 //@urndef/@specDiagrams.1/@nodes.2 //@urndef/@specDiagrams.1/@nodes.3">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="559" name="ComponentRef559" x="17" y="259" width="293" height="153" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.1/@nodes.6 //@urndef/@specDiagrams.1/@nodes.5 //@urndef/@specDiagrams.1/@nodes.7 //@urndef/@specDiagrams.1/@nodes.8 //@urndef/@specDiagrams.1/@nodes.9 //@urndef/@specDiagrams.1/@nodes.10 //@urndef/@specDiagrams.1/@nodes.11 //@urndef/@specDiagrams.1/@nodes.12 //@urndef/@specDiagrams.1/@nodes.13">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.0" target="//@urndef/@specDiagrams.1/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.2" target="//@urndef/@specDiagrams.1/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.3" target="//@urndef/@specDiagrams.1/@nodes.7"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.5" target="//@urndef/@specDiagrams.1/@nodes.8" inBindings="//@urndef/@specDiagrams.1/@nodes.8/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.6" target="//@urndef/@specDiagrams.1/@nodes.11"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.7" target="//@urndef/@specDiagrams.1/@nodes.9"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.7" target="//@urndef/@specDiagrams.1/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.8" target="//@urndef/@specDiagrams.1/@nodes.13" outBindings="//@urndef/@specDiagrams.1/@nodes.8/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.9" target="//@urndef/@specDiagrams.1/@nodes.6">
+        <condition deltaX="171" deltaY="19" label="Current Temp within Alarm Range" expression="Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp" description="The Current Temperature is within the Alarm Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.9" target="//@urndef/@specDiagrams.1/@nodes.12">
+        <condition deltaX="-3" deltaY="15" label="Current Temp not within Alarm Range" expression="Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description="The Current Temperature is not within the Alarm Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.10" target="//@urndef/@specDiagrams.1/@nodes.11"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.11" target="//@urndef/@specDiagrams.1/@nodes.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.12" target="//@urndef/@specDiagrams.1/@nodes.10"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.1/@nodes.13" target="//@urndef/@specDiagrams.1/@nodes.4"/>
+    </specDiagrams>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="362" name="UC A.2.3 Maintain Desired Temp" description="This use case describes how the Thermostat turns the Heat Source on and off to maintain the Current Temperature in the Isolette within the Desired Temperature Range." parentStub="//@urndef/@specDiagrams.1/@nodes.8/@bindings.0 //@urndef/@specDiagrams.5/@nodes.6/@bindings.0 //@urndef/@specDiagrams.0/@nodes.22/@bindings.0 //@urndef/@specDiagrams.3/@nodes.12/@bindings.0">
+      <nodes xsi:type="ucm.map:StartPoint" id="392" name="Start UC A.2.3" x="327" y="35" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.0" inBindings="//@urndef/@specDiagrams.1/@nodes.8/@bindings.0/@in.0 //@urndef/@specDiagrams.5/@nodes.6/@bindings.0/@in.0 //@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@in.0 //@urndef/@specDiagrams.3/@nodes.12/@bindings.0/@in.0">
+        <metadata name="_hits" value="3"/>
+        <label deltaX="-4" deltaY="2"/>
+        <precondition deltaX="-86" deltaY="-16" label="Isolette and Thermostat On" expression="Isolette_On and Thermostat_On" description="Isolette and Thermostat are turned on."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="394" name="End UC A.2.3" x="105" y="221" pred="//@urndef/@specDiagrams.2/@connections.5" outBindings="//@urndef/@specDiagrams.1/@nodes.8/@bindings.0/@out.0 //@urndef/@specDiagrams.5/@nodes.6/@bindings.0/@out.0 //@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@out.0 //@urndef/@specDiagrams.3/@nodes.12/@bindings.0/@out.0">
+        <metadata name="_hits" value="2"/>
+        <label deltaX="-1" deltaY="-33"/>
+        <postcondition deltaX="-190" deltaY="-16" label="Isolette and Thermostat On and Current Temp within Desired Range" expression="Isolette_On and Thermostat_On and&#xD;&#xA;Current_Temperature >= Lower_Desired_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Desired_Temp" description="Isolette and Thermostat are turned on.&#xD;&#xA;Current Temperature is in the Desired Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="426" name="RespRef426" x="151" y="38" contRef="//@urndef/@specDiagrams.2/@contRefs.1" succ="//@urndef/@specDiagrams.2/@connections.1" pred="//@urndef/@specDiagrams.2/@connections.0" respDef="//@urndef/@responsibilities.14">
+        <metadata name="_hits" value="3"/>
+        <label deltaX="33" deltaY="5"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="433" name="RespRef433" x="311" y="75" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.2" pred="//@urndef/@specDiagrams.2/@connections.1" respDef="//@urndef/@responsibilities.15">
+        <metadata name="_hits" value="3"/>
+        <label deltaX="-67" deltaY="-14"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="442" name="RespRef442" x="161" y="93" contRef="//@urndef/@specDiagrams.2/@contRefs.2" succ="//@urndef/@specDiagrams.2/@connections.3" pred="//@urndef/@specDiagrams.2/@connections.2" respDef="//@urndef/@responsibilities.16">
+        <metadata name="_hits" value="3"/>
+        <label deltaX="45" deltaY="-14"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="449" name="RespRef449" x="331" y="158" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.4" pred="//@urndef/@specDiagrams.2/@connections.6" respDef="//@urndef/@responsibilities.17">
+        <metadata name="_hits" value="2"/>
+        <label deltaX="-13" deltaY="-35"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="453" name="RespRef453" x="106" y="157" contRef="//@urndef/@specDiagrams.2/@contRefs.1" succ="//@urndef/@specDiagrams.2/@connections.5" pred="//@urndef/@specDiagrams.2/@connections.4" respDef="//@urndef/@responsibilities.18">
+        <metadata name="_hits" value="2"/>
+        <label deltaX="6" deltaY="-2"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="498" name="DirectionArrow498" x="396" y="139" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.6" pred="//@urndef/@specDiagrams.2/@connections.10">
+        <metadata name="_hits" value="2"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="470" name="End Failed" x="660" y="224" pred="//@urndef/@specDiagrams.2/@connections.8" outBindings="//@urndef/@specDiagrams.0/@nodes.22/@bindings.0/@out.1">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-2" deltaY="-34"/>
+        <postcondition deltaX="204" deltaY="-37" label="Isolette_On and Thermostat_On and Current Temp below Desired Range" expression="Isolette_On and Thermostat_On and&#xD;&#xA;Current_Temperature &lt; Lower_Desired_Temp" description="The Thermostat failed to increase the Current Temperature above the Lower Desired Temperature."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:FailurePoint" id="500" name="Failure Point" x="640" y="120" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.8" pred="//@urndef/@specDiagrams.2/@connections.9">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="12" deltaY="4"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="497" name="DirectionArrow497" x="441" y="106" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.9" pred="//@urndef/@specDiagrams.2/@connections.7">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="468" name="OrFork468" x="397" y="109" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.10 //@urndef/@specDiagrams.2/@connections.7" pred="//@urndef/@specDiagrams.2/@connections.11">
+        <metadata name="_hits" value="3"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="24893" name="RespRef24893" x="341" y="109" contRef="//@urndef/@specDiagrams.2/@contRefs.0" succ="//@urndef/@specDiagrams.2/@connections.11" pred="//@urndef/@specDiagrams.2/@connections.3" respDef="//@urndef/@responsibilities.27">
+        <metadata name="_hits" value="3"/>
+        <label deltaX="3" deltaY="-34"/>
+      </nodes>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="391" name="ComponentRef391" x="279" y="-5" width="401" height="199" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.2/@nodes.0 //@urndef/@specDiagrams.2/@nodes.5 //@urndef/@specDiagrams.2/@nodes.7 //@urndef/@specDiagrams.2/@nodes.10 //@urndef/@specDiagrams.2/@nodes.11 //@urndef/@specDiagrams.2/@nodes.9 //@urndef/@specDiagrams.2/@nodes.3 //@urndef/@specDiagrams.2/@nodes.12" parent="//@urndef/@specDiagrams.2/@contRefs.1">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="424" name="ComponentRef424" x="12" y="-27" width="686" height="230" contDef="//@urndef/@components.1" nodes="//@urndef/@specDiagrams.2/@nodes.2 //@urndef/@specDiagrams.2/@nodes.6" children="//@urndef/@specDiagrams.2/@contRefs.0 //@urndef/@specDiagrams.2/@contRefs.2">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="438" name="ComponentRef438" x="57" y="68" width="171" height="48" contDef="//@urndef/@components.3" nodes="//@urndef/@specDiagrams.2/@nodes.4" parent="//@urndef/@specDiagrams.2/@contRefs.1">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.0" target="//@urndef/@specDiagrams.2/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.2" target="//@urndef/@specDiagrams.2/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.3" target="//@urndef/@specDiagrams.2/@nodes.4"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.4" target="//@urndef/@specDiagrams.2/@nodes.12"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.5" target="//@urndef/@specDiagrams.2/@nodes.6"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.6" target="//@urndef/@specDiagrams.2/@nodes.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.7" target="//@urndef/@specDiagrams.2/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.11" target="//@urndef/@specDiagrams.2/@nodes.10">
+        <condition deltaX="48" deltaY="24" label="Current Temp Fail Rise above Desired Range" expression="Current_Temperature &lt; Lower_Desired_Temp" description="The Current Temperature fails to rise above the Lower Desired Temperature."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.9" target="//@urndef/@specDiagrams.2/@nodes.8">
+        <condition label="" expression="true"/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.10" target="//@urndef/@specDiagrams.2/@nodes.9"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.11" target="//@urndef/@specDiagrams.2/@nodes.7">
+        <condition deltaX="-14" deltaY="-9" label="Current Temp Rises above Desired Range" expression="Current_Temperature >= Lower_Desired_Temp" description="Current Temperature rises above the Desired Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.2/@nodes.12" target="//@urndef/@specDiagrams.2/@nodes.11"/>
+    </specDiagrams>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="17609" name="EC A.2.4 Fail Maintain Safe Temp" description="This exception case describes how the Thermostat and Nurse respond when the Isolette is unable to maintain Current Temperature within the Alarm Temperature Range." parentStub="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0">
+      <nodes xsi:type="ucm.map:StartPoint" id="17610" name="Start EC A.2.4" x="100" y="129" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.0" inBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@in.0">
+        <metadata name="_hits" value="1"/>
+        <label/>
+        <precondition deltaX="-223" deltaY="-18" label="Isolette and Thermostat On and Current Temp not within Alarm Range and Alarm Off" expression="Isolette_On and &#xD;&#xA;Thermostat_On and&#xD;&#xA;not Alarm_On and&#xD;&#xA;( Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp )" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Current Temperature is not within the Alarm Temperature Range.&#xD;&#xA;The Alarm is off.&#xD;&#xA;&#xD;&#xA;Note: The second precondition has been inverted for integration with main use case."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="17612" name="End EC A.2.4" x="633" y="184" pred="//@urndef/@specDiagrams.3/@connections.23" outBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@out.1">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-42" deltaY="-21"/>
+        <postcondition deltaX="-191" deltaY="6" label="Isolette and Thermostat On and Current Temp within Desired Range and Alarm Off" expression="Isolette_On and&#xD;&#xA;Thermostat_On and&#xD;&#xA;Current_Temperature >= Lower_Desired_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Desired_Temp /*and&#xD;&#xA;not Alarm_On*/" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Current Temperature is within the Desired Temperature Range.&#xD;&#xA;The Alarm is off."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="17729" name="RespRef17729" x="98" y="163" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.1" pred="//@urndef/@specDiagrams.3/@connections.0" respDef="//@urndef/@responsibilities.7">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-55" deltaY="-18"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="17780" name="RespRef17780" x="93" y="276" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.2" pred="//@urndef/@specDiagrams.3/@connections.1" respDef="//@urndef/@responsibilities.24">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-102" deltaY="-37"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="17875" name="RespRef17875" x="126" y="259" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.3" pred="//@urndef/@specDiagrams.3/@connections.2" respDef="//@urndef/@responsibilities.8">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-21" deltaY="-36"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="17936" name="RespRef17936" x="256" y="253" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.4" pred="//@urndef/@specDiagrams.3/@connections.3" respDef="//@urndef/@responsibilities.19">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="11" deltaY="-38"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:AndFork" id="17953" name="AndFork17953" x="312" y="260" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.5 //@urndef/@specDiagrams.3/@connections.6" pred="//@urndef/@specDiagrams.3/@connections.4">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="17955" name="Desired Temp Reached" x="377" y="292" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.13" pred="//@urndef/@specDiagrams.3/@connections.24">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-11" deltaY="4"/>
+        <postcondition deltaX="-40" deltaY="-20" label="" expression="true"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Timer" id="17957" name="Wait Display Temp within Desired Range" description="Nurse waits until the Display Temperature is within the Desired Temperature Range (A.2.6 and A.5.1.1)." x="377" y="292" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.7 //@urndef/@specDiagrams.3/@connections.8" pred="//@urndef/@specDiagrams.3/@connections.5 //@urndef/@specDiagrams.3/@connections.14">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="73" deltaY="-38"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="17961" name="End EC A.2.4 Obtain Other Isolette" x="718" y="293" pred="//@urndef/@specDiagrams.3/@connections.16" outBindings="//@urndef/@specDiagrams.0/@nodes.38/@bindings.0/@out.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-78" deltaY="5"/>
+        <postcondition deltaX="-40" deltaY="-20" label="" expression="true"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrFork" id="17962" name="OrFork17962" x="436" y="296" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.9 //@urndef/@specDiagrams.3/@connections.10" pred="//@urndef/@specDiagrams.3/@connections.8">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="17990" name="EC A.2.6: Fail Maintain Desired Temp" x="461" y="260" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.11 //@urndef/@specDiagrams.3/@connections.15" pred="//@urndef/@specDiagrams.3/@connections.22">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="-106" deltaY="-21"/>
+        <bindings plugin="//@urndef/@specDiagrams.5">
+          <in startPoint="//@urndef/@specDiagrams.5/@nodes.13" stubEntry="//@urndef/@specDiagrams.3/@connections.22"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.9" stubExit="//@urndef/@specDiagrams.3/@connections.15"/>
+          <out endPoint="//@urndef/@specDiagrams.5/@nodes.3" stubExit="//@urndef/@specDiagrams.3/@connections.11"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="18001" name="UC A.2.3: Maintain Desired Temp" x="333" y="188" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.12" pred="//@urndef/@specDiagrams.3/@connections.6">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="18" deltaY="2"/>
+        <bindings plugin="//@urndef/@specDiagrams.2">
+          <in startPoint="//@urndef/@specDiagrams.2/@nodes.0" stubEntry="//@urndef/@specDiagrams.3/@connections.6"/>
+          <out endPoint="//@urndef/@specDiagrams.2/@nodes.1" stubExit="//@urndef/@specDiagrams.3/@connections.12"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:Connect" id="18007" name="Connect18007" x="377" y="292" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.14" pred="//@urndef/@specDiagrams.3/@connections.13"/>
+      <nodes xsi:type="ucm.map:OrJoin" id="18215" name="OrJoin18215" x="559" y="295" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.16" pred="//@urndef/@specDiagrams.3/@connections.18 //@urndef/@specDiagrams.3/@connections.17">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="18223" name="DirectionArrow18223" x="527" y="278" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.17" pred="//@urndef/@specDiagrams.3/@connections.15">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="18224" name="DirectionArrow18224" x="501" y="296" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.18" pred="//@urndef/@specDiagrams.3/@connections.9">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="23772" name="OrJoin23772" x="466" y="189" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.19" pred="//@urndef/@specDiagrams.3/@connections.20 //@urndef/@specDiagrams.3/@connections.11">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="24077" name="DirectionArrow24077" x="440" y="225" succ="//@urndef/@specDiagrams.3/@connections.20" pred="//@urndef/@specDiagrams.3/@connections.7">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="24233" name="RespRef24233" x="510" y="185" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.21" pred="//@urndef/@specDiagrams.3/@connections.19" respDef="//@urndef/@responsibilities.25">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="22" deltaY="-1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="24234" name="DirectionArrow24234" x="446" y="283" contRef="//@urndef/@specDiagrams.3/@contRefs.1" succ="//@urndef/@specDiagrams.3/@connections.22" pred="//@urndef/@specDiagrams.3/@connections.10">
+        <metadata name="_hits" value="1"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="24515" name="RespRef24515" x="567" y="185" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.23" pred="//@urndef/@specDiagrams.3/@connections.21" respDef="//@urndef/@responsibilities.20">
+        <metadata name="_hits" value="0"/>
+        <label/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="25223" name="RespRef25223" x="375" y="189" contRef="//@urndef/@specDiagrams.3/@contRefs.0" succ="//@urndef/@specDiagrams.3/@connections.24" pred="//@urndef/@specDiagrams.3/@connections.12" respDef="//@urndef/@responsibilities.27">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-47" deltaY="-8"/>
+      </nodes>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="17652" name="ComponentRef17652" x="47" y="95" width="566" height="117" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.3/@nodes.0 //@urndef/@specDiagrams.3/@nodes.2 //@urndef/@specDiagrams.3/@nodes.12 //@urndef/@specDiagrams.3/@nodes.17 //@urndef/@specDiagrams.3/@nodes.19 //@urndef/@specDiagrams.3/@nodes.21 //@urndef/@specDiagrams.3/@nodes.22">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="17778" name="ComponentRef17778" x="47" y="237" width="655" height="115" contDef="//@urndef/@components.0" nodes="//@urndef/@specDiagrams.3/@nodes.3 //@urndef/@specDiagrams.3/@nodes.4 //@urndef/@specDiagrams.3/@nodes.5 //@urndef/@specDiagrams.3/@nodes.6 //@urndef/@specDiagrams.3/@nodes.8 //@urndef/@specDiagrams.3/@nodes.10 //@urndef/@specDiagrams.3/@nodes.7 //@urndef/@specDiagrams.3/@nodes.13 //@urndef/@specDiagrams.3/@nodes.11 //@urndef/@specDiagrams.3/@nodes.14 //@urndef/@specDiagrams.3/@nodes.15 //@urndef/@specDiagrams.3/@nodes.16 //@urndef/@specDiagrams.3/@nodes.20">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.0" target="//@urndef/@specDiagrams.3/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.2" target="//@urndef/@specDiagrams.3/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.3" target="//@urndef/@specDiagrams.3/@nodes.4"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.4" target="//@urndef/@specDiagrams.3/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.5" target="//@urndef/@specDiagrams.3/@nodes.6"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.6" target="//@urndef/@specDiagrams.3/@nodes.8"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.6" target="//@urndef/@specDiagrams.3/@nodes.12" inBindings="//@urndef/@specDiagrams.3/@nodes.12/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.8" target="//@urndef/@specDiagrams.3/@nodes.18">
+        <condition label="" expression="Display_Temp >= Lower_Desired_Temp and&#xD;&#xA;Display_Temp &lt;= Upper_Desired_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.8" target="//@urndef/@specDiagrams.3/@nodes.10">
+        <condition label="" expression="false" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.10" target="//@urndef/@specDiagrams.3/@nodes.16">
+        <condition deltaX="47" deltaY="-6" label="Current Temp not within Alarm Range" expression="Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp" description="The Current Temperature is not within the Alarm Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.10" target="//@urndef/@specDiagrams.3/@nodes.20">
+        <condition deltaX="61" deltaY="31" label="" expression="Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description="The Current Temperature is within the Alarm Temperature Range."/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.11" target="//@urndef/@specDiagrams.3/@nodes.17" outBindings="//@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@out.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.12" target="//@urndef/@specDiagrams.3/@nodes.22" outBindings="//@urndef/@specDiagrams.3/@nodes.12/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.7" target="//@urndef/@specDiagrams.3/@nodes.13"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.13" target="//@urndef/@specDiagrams.3/@nodes.8"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.11" target="//@urndef/@specDiagrams.3/@nodes.15" outBindings="//@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.14" target="//@urndef/@specDiagrams.3/@nodes.9"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.15" target="//@urndef/@specDiagrams.3/@nodes.14"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.16" target="//@urndef/@specDiagrams.3/@nodes.14"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.17" target="//@urndef/@specDiagrams.3/@nodes.19"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.18" target="//@urndef/@specDiagrams.3/@nodes.17"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.19" target="//@urndef/@specDiagrams.3/@nodes.21"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.20" target="//@urndef/@specDiagrams.3/@nodes.11" inBindings="//@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.21" target="//@urndef/@specDiagrams.3/@nodes.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.3/@nodes.22" target="//@urndef/@specDiagrams.3/@nodes.7"/>
+    </specDiagrams>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="160" name="EC A.2.5 Respond Thermostat Failure" description="This exception case describes how the Thermostat and the Nurse respond when the Thermostat detects an internal failure." parentStub="//@urndef/@specDiagrams.0/@nodes.8/@bindings.0">
+      <nodes xsi:type="ucm.map:StartPoint" id="187" name="Start EC A.2.5" x="79" y="77" contRef="//@urndef/@specDiagrams.4/@contRefs.0" succ="//@urndef/@specDiagrams.4/@connections.0" inBindings="//@urndef/@specDiagrams.0/@nodes.8/@bindings.0/@in.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-15" deltaY="4"/>
+        <precondition deltaX="-189" deltaY="-21" label="Isolette and Thermostat On and Thermostat Status On and Alarm Off" expression="Isolette_On and &#xD;&#xA;Thermostat_On and&#xD;&#xA;Thermostat_Status = NORMAL and&#xD;&#xA;not Alarm_On&#xD;&#xA;" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Thermostat status is on.&#xD;&#xA;The Alarm is off."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="189" name="End EC A.2.5: Obtain other Isolette" description="This is modified to return to the obtain another Isolette step of UC A.2.1 to reuse this step. The post condition is also modified because the Current Temperature will not be within the desired range yet." x="76" y="354" pred="//@urndef/@specDiagrams.4/@connections.6" outBindings="//@urndef/@specDiagrams.0/@nodes.8/@bindings.0/@out.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-38" deltaY="-35"/>
+        <postcondition deltaX="-220" deltaY="-12" label="Isolette and Thermostat On and Current Temp within Desired Range and Alarm Off" expression="Isolette_On and&#xD;&#xA;Thermostat_On &#xD;&#xA;/*and&#xD;&#xA;Current_Temperature >= Lower_Desired_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp and&#xD;&#xA;not Alarm_On*/" description="The Isolette and Thermostat are turned on.&#xD;&#xA;Note: The following post conditions are removed.&#xD;&#xA;The Current Temperature is in the Desired Temperature Range.&#xD;&#xA;The Alarm is off."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="197" name="RespRef197" x="79" y="106" contRef="//@urndef/@specDiagrams.4/@contRefs.0" succ="//@urndef/@specDiagrams.4/@connections.1" pred="//@urndef/@specDiagrams.4/@connections.0" respDef="//@urndef/@responsibilities.3">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-67" deltaY="-20"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="201" name="RespRef201" x="80" y="133" contRef="//@urndef/@specDiagrams.4/@contRefs.0" succ="//@urndef/@specDiagrams.4/@connections.2" pred="//@urndef/@specDiagrams.4/@connections.1" respDef="//@urndef/@responsibilities.4">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-62" deltaY="-18"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="205" name="RespRef205" x="77" y="163" contRef="//@urndef/@specDiagrams.4/@contRefs.0" succ="//@urndef/@specDiagrams.4/@connections.3" pred="//@urndef/@specDiagrams.4/@connections.2" respDef="//@urndef/@responsibilities.5">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-73" deltaY="-16"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="255" name="RespRef255" x="75" y="259" contRef="//@urndef/@specDiagrams.4/@contRefs.1" succ="//@urndef/@specDiagrams.4/@connections.4" pred="//@urndef/@specDiagrams.4/@connections.5" respDef="//@urndef/@responsibilities.6">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-57" deltaY="-18"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="259" name="RespRef259" x="74" y="186" contRef="//@urndef/@specDiagrams.4/@contRefs.0" succ="//@urndef/@specDiagrams.4/@connections.5" pred="//@urndef/@specDiagrams.4/@connections.3" respDef="//@urndef/@responsibilities.7">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-51" deltaY="-20"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="265" name="RespRef265" x="75" y="291" contRef="//@urndef/@specDiagrams.4/@contRefs.1" succ="//@urndef/@specDiagrams.4/@connections.6" pred="//@urndef/@specDiagrams.4/@connections.4" respDef="//@urndef/@responsibilities.8">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-50" deltaY="-18"/>
+      </nodes>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="186" name="ComponentRef186" x="34" y="42" width="435" height="167" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.4/@nodes.0 //@urndef/@specDiagrams.4/@nodes.2 //@urndef/@specDiagrams.4/@nodes.3 //@urndef/@specDiagrams.4/@nodes.4 //@urndef/@specDiagrams.4/@nodes.6">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="253" name="ComponentRef253" x="34" y="234" width="388" height="100" contDef="//@urndef/@components.0" nodes="//@urndef/@specDiagrams.4/@nodes.5 //@urndef/@specDiagrams.4/@nodes.7">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.0" target="//@urndef/@specDiagrams.4/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.2" target="//@urndef/@specDiagrams.4/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.3" target="//@urndef/@specDiagrams.4/@nodes.4"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.4" target="//@urndef/@specDiagrams.4/@nodes.6"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.5" target="//@urndef/@specDiagrams.4/@nodes.7"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.6" target="//@urndef/@specDiagrams.4/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.4/@nodes.7" target="//@urndef/@specDiagrams.4/@nodes.1"/>
+    </specDiagrams>
+    <specDiagrams xsi:type="ucm.map:UCMmap" id="649" name="EC A.2.6 Fail Maintain Desired Temp" description="This exception case describes how the Nurse handles an Isolette that cannot keep the Current Temperature within the Desired Temperature Range, but can keep the Current Temperature within the Alarm Temperature Range." parentStub="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0 //@urndef/@specDiagrams.0/@nodes.32/@bindings.0 //@urndef/@specDiagrams.3/@nodes.11/@bindings.0">
+      <nodes xsi:type="ucm.map:EndPoint" id="652" name="End EC A.2.6" x="333" y="238" pred="//@urndef/@specDiagrams.5/@connections.12" outBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@out.1 //@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@out.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-4" deltaY="-36"/>
+        <postcondition deltaX="-186" deltaY="-13" label="Isolette and Thermostat On and Current Temp within Desired Range" expression="true" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Current Temperature is in the Desired Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="717" name="RespRef717" x="152" y="116" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.1" pred="//@urndef/@specDiagrams.5/@connections.14" respDef="//@urndef/@responsibilities.19">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-70" deltaY="-20"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:AndFork" id="729" name="AndFork729" x="153" y="148" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.2 //@urndef/@specDiagrams.5/@connections.3" pred="//@urndef/@specDiagrams.5/@connections.1">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="731" name="Desired Temp Reached" x="194" y="184" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.7" pred="//@urndef/@specDiagrams.5/@connections.9" outBindings="//@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@out.1">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-61" deltaY="-77"/>
+        <postcondition deltaX="-40" deltaY="-20" label="" expression="true"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="733" name="DirectionArrow733" x="118" y="233" succ="//@urndef/@specDiagrams.5/@connections.4" pred="//@urndef/@specDiagrams.5/@connections.3">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Timer" id="734" name="Wait Display Temp within Desired Range" description="Nurse waits until the Current Temperature of the Isolette is within the Desired Temperature Range (alternate course 1) (A.5.1.1)." x="194" y="184" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.5 //@urndef/@specDiagrams.5/@connections.10" pred="//@urndef/@specDiagrams.5/@connections.15 //@urndef/@specDiagrams.5/@connections.8">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-92" deltaY="3"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:Stub" id="736" name="UC A.2.3: Maintain Desired Temp" x="129" y="284" contRef="//@urndef/@specDiagrams.5/@contRefs.1" succ="//@urndef/@specDiagrams.5/@connections.6" pred="//@urndef/@specDiagrams.5/@connections.4">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-18" deltaY="-48"/>
+        <bindings plugin="//@urndef/@specDiagrams.2">
+          <in startPoint="//@urndef/@specDiagrams.2/@nodes.0" stubEntry="//@urndef/@specDiagrams.5/@connections.4"/>
+          <out endPoint="//@urndef/@specDiagrams.2/@nodes.1" stubExit="//@urndef/@specDiagrams.5/@connections.6"/>
+          <precondition label="" expression="true"/>
+        </bindings>
+      </nodes>
+      <nodes xsi:type="ucm.map:Connect" id="740" name="Connect740" x="194" y="184" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.8" pred="//@urndef/@specDiagrams.5/@connections.7"/>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="741" name="DirectionArrow741" x="192" y="243" succ="//@urndef/@specDiagrams.5/@connections.9" pred="//@urndef/@specDiagrams.5/@connections.16">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:EndPoint" id="745" name="End EC A.2.6 Obtain other Isolette" x="472" y="184" pred="//@urndef/@specDiagrams.5/@connections.11" outBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@out.0 //@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@out.1 //@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@out.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-73" deltaY="4"/>
+        <postcondition deltaX="-7" deltaY="-42" expression="true/*not Infant_In_Isolette*/" description="The Infant is removed from the Isolette"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="746" name="DirectionArrow746" x="333" y="186" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.11" pred="//@urndef/@specDiagrams.5/@connections.10">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="766" name="DirectionArrow766" x="316" y="207" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.12" pred="//@urndef/@specDiagrams.5/@connections.5">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:StartPoint" id="16092" name="Start EC A.2.6 not within Alarm Range" description="Added this start point to be used when the Current Temperature never reaches the Alarm Temperature Range when the Nurse waits after having configured the Isolette." x="125" y="63" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.13" inBindings="//@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@in.0">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="58" deltaY="7"/>
+        <precondition deltaX="183" deltaY="-19" label="Isolette and Thermostat On and Current Temp not within Alarm Range" expression="Isolette_On and&#xD;&#xA;Thermostat_On and&#xD;&#xA;Current_Temperature &lt; Lower_Alarm_Temp or&#xD;&#xA;Current_Temperature > Upper_Alarm_Temp" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Current Temperature is within the Alarm Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:StartPoint" id="651" name="Start EC A.2.6" x="204" y="62" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.0" inBindings="//@urndef/@specDiagrams.0/@nodes.28/@bindings.0/@in.0 //@urndef/@specDiagrams.0/@nodes.32/@bindings.0/@in.1 //@urndef/@specDiagrams.3/@nodes.11/@bindings.0/@in.0">
+        <metadata name="_hits" value="1"/>
+        <label deltaX="3" deltaY="7"/>
+        <precondition deltaX="-244" deltaY="-18" label="Isolette and Thermostat On and Current Temp not within Desired Range but within Alarm Range" expression="Isolette_On and Thermostat_On and&#xD;&#xA;( Current_Temperature &lt; Lower_Desired_Temp or&#xD;&#xA;Current_Temperature > Upper_Desired_Temp ) and&#xD;&#xA;Current_Temperature >= Lower_Alarm_Temp and&#xD;&#xA;Current_Temperature &lt;= Upper_Alarm_Temp" description="The Isolette and Thermostat are turned on.&#xD;&#xA;The Current Temperature is not within the Desired Temperature Range.&#xD;&#xA;The Current Temperature is within the Alarm Temperature Range."/>
+      </nodes>
+      <nodes xsi:type="ucm.map:OrJoin" id="16120" name="OrJoin16120" x="153" y="92" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.14" pred="//@urndef/@specDiagrams.5/@connections.0 //@urndef/@specDiagrams.5/@connections.13">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:DirectionArrow" id="16121" name="DirectionArrow16121" x="170" y="173" contRef="//@urndef/@specDiagrams.5/@contRefs.0" succ="//@urndef/@specDiagrams.5/@connections.15" pred="//@urndef/@specDiagrams.5/@connections.2">
+        <metadata name="_hits" value="0"/>
+      </nodes>
+      <nodes xsi:type="ucm.map:RespRef" id="25118" name="RespRef25118" x="175" y="286" contRef="//@urndef/@specDiagrams.5/@contRefs.1" succ="//@urndef/@specDiagrams.5/@connections.16" pred="//@urndef/@specDiagrams.5/@connections.6" respDef="//@urndef/@responsibilities.27">
+        <metadata name="_hits" value="0"/>
+        <label deltaX="-50" deltaY="-19"/>
+      </nodes>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="715" name="ComponentRef715" x="-145" y="15" width="599" height="205" contDef="//@urndef/@components.0" nodes="//@urndef/@specDiagrams.5/@nodes.1 //@urndef/@specDiagrams.5/@nodes.2 //@urndef/@specDiagrams.5/@nodes.3 //@urndef/@specDiagrams.5/@nodes.5 //@urndef/@specDiagrams.5/@nodes.7 //@urndef/@specDiagrams.5/@nodes.10 //@urndef/@specDiagrams.5/@nodes.12 //@urndef/@specDiagrams.5/@nodes.13 //@urndef/@specDiagrams.5/@nodes.14 //@urndef/@specDiagrams.5/@nodes.11 //@urndef/@specDiagrams.5/@nodes.15">
+        <label/>
+      </contRefs>
+      <contRefs xsi:type="ucm.map:ComponentRef" id="765" name="ComponentRef765" x="60" y="254" width="219" height="68" contDef="//@urndef/@components.2" nodes="//@urndef/@specDiagrams.5/@nodes.6 //@urndef/@specDiagrams.5/@nodes.16">
+        <label/>
+      </contRefs>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.13" target="//@urndef/@specDiagrams.5/@nodes.14"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.1" target="//@urndef/@specDiagrams.5/@nodes.2"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.2" target="//@urndef/@specDiagrams.5/@nodes.15"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.2" target="//@urndef/@specDiagrams.5/@nodes.4"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.4" target="//@urndef/@specDiagrams.5/@nodes.6" inBindings="//@urndef/@specDiagrams.5/@nodes.6/@bindings.0/@in.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.5" target="//@urndef/@specDiagrams.5/@nodes.11">
+        <condition label="" expression="Display_Temp >= Lower_Desired_Temp and&#xD;&#xA;Display_Temp &lt;= Upper_Desired_Temp" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.6" target="//@urndef/@specDiagrams.5/@nodes.16" outBindings="//@urndef/@specDiagrams.5/@nodes.6/@bindings.0/@out.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.3" target="//@urndef/@specDiagrams.5/@nodes.7"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.7" target="//@urndef/@specDiagrams.5/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.8" target="//@urndef/@specDiagrams.5/@nodes.3"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.5" target="//@urndef/@specDiagrams.5/@nodes.10">
+        <condition label="" expression="false" description=""/>
+      </connections>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.10" target="//@urndef/@specDiagrams.5/@nodes.9"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.11" target="//@urndef/@specDiagrams.5/@nodes.0"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.12" target="//@urndef/@specDiagrams.5/@nodes.14"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.14" target="//@urndef/@specDiagrams.5/@nodes.1"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.15" target="//@urndef/@specDiagrams.5/@nodes.5"/>
+      <connections xsi:type="ucm.map:NodeConnection" source="//@urndef/@specDiagrams.5/@nodes.16" target="//@urndef/@specDiagrams.5/@nodes.8"/>
+    </specDiagrams>
+    <components id="11" name="Nurse" description="" fillColor="255,219,183" filled="true" contRefs="//@urndef/@specDiagrams.0/@contRefs.0 //@urndef/@specDiagrams.4/@contRefs.1 //@urndef/@specDiagrams.1/@contRefs.0 //@urndef/@specDiagrams.5/@contRefs.0 //@urndef/@specDiagrams.3/@contRefs.1" kind="Actor"/>
+    <components id="28" name="Isolette" fillColor="223,223,223" filled="true" contRefs="//@urndef/@specDiagrams.0/@contRefs.1 //@urndef/@specDiagrams.2/@contRefs.1" kind="Agent"/>
+    <components id="36" name="Thermostat" fillColor="255,255,183" filled="true" contRefs="//@urndef/@specDiagrams.0/@contRefs.2 //@urndef/@specDiagrams.4/@contRefs.0 //@urndef/@specDiagrams.2/@contRefs.0 //@urndef/@specDiagrams.1/@contRefs.1 //@urndef/@specDiagrams.5/@contRefs.1 //@urndef/@specDiagrams.3/@contRefs.0" kind="Agent"/>
+    <components id="437" name="Heat_Source" fillColor="255,196,136" filled="true" contRefs="//@urndef/@specDiagrams.2/@contRefs.2" kind="Agent"/>
+  </urndef>
+  <metadata name="_Use0to100EvaluationRange" value="false"/>
+</urn:URNspec>

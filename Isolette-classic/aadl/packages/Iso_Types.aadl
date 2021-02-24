@@ -1,0 +1,183 @@
+--iso_variables.aadl
+
+--data components used to type data connections in isolette model
+
+--refactored with fixed-point instead of integer 11/4/2012 brl
+
+package Iso_Types
+  public
+  with Data_Model, BLESS, BLESS_Types;
+
+
+annex Unit
+	{**
+	base [ Fahrenheit ] F;
+	**};
+  
+annex Typedef
+	{**
+	type cntrl is enumeration (O_n Off)
+	type status is enumeration (O_n Init Failed)
+	type mmode is enumeration (Init Normal Failed)
+	type vflag is enumeration (Invalid Valid)
+	type time is quantity s
+	type measuredTemperatureRange is quantity F [68.0 .. 105.0]
+	type lowerDesiredRange is quantity F [97.0 .. 99.0]
+	type upperDesiredRange is quantity F [98.0 .. 100.0]
+	type desiredRange is record (l:lowerDesiredRange u:upperDesiredRange)
+	type lowerAlarmRange is quantity F [93.0 .. 98.0]
+	type upperAlarmRange is quantity F [99.0 .. 103.0]
+	type alarmRange is record (l:lowerAlarmRange u:upperAlarmRange)
+	type currentTemperature is record (t:measuredTemperatureRange status:status)
+	type lowerDesiredTemperature is record (t:lowerDesiredRange status:status)
+	type upperDesiredTemperature is record (t:upperDesiredRange status:status)
+	type lowerAlarmTemperature is record (t:lowerAlarmRange status:status)
+	type upperAlarmTemperature is record (t:upperAlarmRange status:status)
+	**};
+
+--Table A-3 Thermostat Monitored Variables for Temperature  Sensor
+
+--range of Monitored Temperature  
+data measured_temperature_range
+  properties
+  BLESS::Typed => "measuredTemperatureRange";
+end measured_temperature_range;  
+
+--Valid/Invalid enumerated type
+data valid_flag
+  properties
+  BLESS::Typed => "vflag";
+end valid_flag;
+
+--Current Temperature "t" is temp, "status" is valid/invalid flag 
+data current_temperature 
+  properties
+  BLESS::Typed => "currentTemperature";
+end current_temperature; 
+
+
+--Table A-4. Thermostat Controlled Variables for Heat Source
+
+--heat control and alarm value
+data on_off
+  properties
+  BLESS::Typed => "cntrl";
+end on_off;
+
+--Table A-5
+
+
+--range of Lower Desired Temperature  
+data lower_desired_range
+  properties  -- fixed-point representation of 1/10ths of a degree
+  BLESS::Typed => "lowerDesiredRange";
+end lower_desired_range;  
+
+--record for Lower Desired Temperature, "t" is temp range, "v" is valid flag  
+data lower_desired_temperature 
+  properties
+  BLESS::Typed => "lowerDesiredTemperature";
+end lower_desired_temperature; 
+
+--range of Upper Desired Temperature  
+data upper_desired_range
+  properties
+  BLESS::Typed => "upperDesiredRange";
+end upper_desired_range;  
+
+--record for Upper Desired Temperature, "t" is temp range, "v" is valid flag  
+data upper_desired_temperature 
+  properties
+  BLESS::Typed => "upperDesiredTemperature";
+end upper_desired_temperature; 
+
+--range of Lower alarm Temperature  
+data lower_alarm_range
+  properties
+--  Data_Model::Base_Type => (classifier(BLESS_Types::Fixed_Point));  
+--  Data_Model::Real_Range => 93.0 .. 98.0;
+--  Data_Model::Measurement_Unit => "Fahrenheit";
+  BLESS::Typed => "lowerAlarmRange";
+end lower_alarm_range;  
+
+--record for Lower alarm Temperature, "t" is temp range, "v" is valid flag  
+data lower_alarm_temperature 
+  properties
+  BLESS::Typed => "lowerAlarmTemperature";
+end lower_alarm_temperature; 
+
+--range of Upper alarm Temperature  
+data upper_alarm_range
+  properties
+  BLESS::Typed => "upperAlarmRange";
+end upper_alarm_range;  
+
+--record for Upper alarm Temperature, "t" is temp range, "v" is valid flag  
+data upper_alarm_temperature 
+  properties
+  BLESS::Typed => "upperAlarmTemperature";
+end upper_alarm_temperature; 
+
+--Table A-6
+
+--Regulator and Monitor Status
+data status
+  properties
+  BLESS::Typed => "status";
+end status;
+ 
+
+--Table A-7. The Regulate Temperature Internal Variables 
+
+--Lower Desired Temp 
+data lower_desired_temp
+  properties
+  BLESS::Typed => "lowerDesiredTemperature";
+end lower_desired_temp;  
+  
+--Upper Desired Temp 
+data upper_desired_temp
+  properties
+  BLESS::Typed => "upperDesiredTemperature";
+end upper_desired_temp;  
+  
+--Desired Range "l" is lower bound, "u" is upper bound
+data desired_range
+  properties
+  BLESS::Typed => "desiredRange";
+end desired_range;  
+
+--Regulator Mode
+data regulator_mode
+  properties
+  BLESS::Typed => "mmode";
+end regulator_mode;
+
+--Table A-12. Monitor Temperature Internal Variables
+
+--Lower alarm Temp 
+data lower_alarm_temp
+  properties
+  BLESS::Typed => "lowerAlarmRange";
+end lower_alarm_temp;  
+  
+--Upper alarm Temp 
+data upper_alarm_temp
+  properties
+  BLESS::Typed => "upperAlarmRange";
+end upper_alarm_temp;  
+  
+--alarm Range "l" is lower bound, "u" is upper bound
+data alarm_range
+  properties
+  BLESS::Typed => "alarmRange";
+end alarm_range;  
+
+--monitor Mode
+data monitor_mode
+  properties
+  BLESS::Typed => "mmode";
+end monitor_mode;
+
+  
+end Iso_Types;  

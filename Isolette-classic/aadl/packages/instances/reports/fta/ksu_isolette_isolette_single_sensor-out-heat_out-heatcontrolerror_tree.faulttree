@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<FaultTree:FaultTree xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:FaultTree="http://www.aadl.info/FaultTree" name="ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror_tree" root="//@events.0">
+  <instanceRoot href="../../Isolette_isolette_single_sensor_Instance.aaxl2#/"/>
+  <events name="ksu_isolette_isolette_single_sensor-out-heat_out-heatcontrolerror" assignedProbability="0" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../Isolette_isolette_single_sensor_Instance.aaxl2#/"/>
+    <relatedErrorType href="../../../Isolette.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.2/@typeSet/@typeTokens.0"/>
+    <relatedEMV2Object href="../../../Isolette.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.2"/>
+  </events>
+</FaultTree:FaultTree>
