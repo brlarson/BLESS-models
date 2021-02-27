@@ -332,15 +332,15 @@ end manage_heat_source;
 thread implementation manage_heat_source.impl
 annex BLESS {**
 	assert
-	  <<TEMP_IN_DESIRED_RANGE: :(CURRENT_TEMP.t > LOWER_DESIRED_TEMP)
-    	  and (CURRENT_TEMP.t < UPPER_DESIRED_TEMP)>>    
-	  <<AXIOM_HEAT: : (heat_previous_period = cntrl'O_n) or (heat_previous_period = cntrl'Off) >> 
+	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP
+    	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP>>    
+	  <<AXIOM_HEAT: : heat_previous_period = cntrl'O_n or heat_previous_period = cntrl'Off >> 
 	  <<AXIOM_HC: : HEAT_CONTROL^-1 = heat_control^-1 >>
 	invariant <<INVMHS: :heat_previous_period = heat_control^-1>>
 	variables
 	  heat_previous_period ~ cntrl := cntrl'Off;  --hysteresis in desired range
 	states
-	  poweron : initial state <<(heat_previous_period = cntrl'Off) and (INVMHS())^1>>;
+	  poweron : initial state << heat_previous_period = cntrl'Off and (INVMHS())^1>>;
 	  run : complete state <<INVMHS()>>;
 	  check_mode : state <<INVMHS()>>;  --check heat mode 
 	  check_temp : state <<INVMHS() and REGULATOR_MODE(x:mmode'Normal) and AXIOM_HEAT()>>;

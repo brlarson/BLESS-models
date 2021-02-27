@@ -1,7 +1,6 @@
 #manage_alarm_ma.impl
 push
 sort-by-component[Monitor::manage_alarm.impl]
-#[serial 1017] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
 substitute-both
 normalize
@@ -61,9 +60,6 @@ dist^
 normalize
 now
 axioms
-substitute-post
-normalize
-axioms
 #[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInit:check_mode-[x]->run{A};
 reduce
 atomic
@@ -75,7 +71,7 @@ substitute-post
 normalize
 alldist^
 axioms
-substitute-post
+substitute-pre
 normalize
 axioms
 #[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormal:check_mode-[x]->check_temp{};
@@ -104,7 +100,6 @@ axioms
 substitute-post
 normalize
 axioms
-substitute-post
 substitute-pre
 normalize
 replace<=
@@ -168,24 +163,56 @@ normalize
 dist^
 normalize
 axioms
-substitute-both
-normalize
-laws
-substitute-pre
-normalize
+push
+make-an
+#[serial 1466]   normalization of [serial 1462]
 laws
 normalize
-sub-equals
-substitute-post
+and-over-or-post
 normalize
 laws
-normalize
-replace<=
 normalize
 split-post
 normalize
 axioms
+push
+make-an
+#[serial 1517]   normalization of [serial 1502]
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1519]   normalization of [serial 1503]
+substitute-pre
+normalize
+laws
+normalize
 guided-sub-equals[O_n]
+guided-sub-equals[alarm_previous_period]
+guided-sub-equals[O_n]
+equivalent
+axioms
+#[serial 1533]   normalization of [serial 1510]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1535]   normalization of [serial 1511]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1470]   normalization of [serial 1464]
+substitute-pre
+normalize
+laws
+normalize
+split-post
+normalize
+axioms
+substitute-post
+normalize
 axioms
 #[serial 1031]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOff:check_hyst-[x]->run{A};
 reduce

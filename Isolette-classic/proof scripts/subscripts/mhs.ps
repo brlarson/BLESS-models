@@ -51,9 +51,6 @@ normalize
 dist^
 normalize
 axioms
-substitute-post
-normalize
-axioms
 #[serial 1056]  <<M(check_mode) and x>> A <<M(run)>> for mhsInit:check_mode-[x]->run{A};
 reduce
 atomic
@@ -68,7 +65,7 @@ normalize
 dist^
 normalize
 axioms
-substitute-post
+substitute-both
 normalize
 axioms
 #[serial 1057]  <<M(check_mode) and x>> -> <<M(check_temp)>> for mhsNormal:check_mode-[x]->check_temp{};
@@ -98,10 +95,11 @@ axioms
 split-post
 replace-port
 axioms
-substitute-both
-substitute-both
+substitute-pre
+substitute-pre
 normalize
 laws
+normalize
 replace<=
 normalize
 axioms
@@ -125,7 +123,6 @@ replace-port
 axioms
 substitute-both
 substitute-pre
-substitute-post
 normalize
 replace<=
 laws
