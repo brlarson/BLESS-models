@@ -57,7 +57,7 @@ ghost variables
   <<SPO2_AVERAGE: returns quantity percent :=
      --the sum of good SpO2 measurements
       (sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 of 
-      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0))
+      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0 u))
       /  --divided by the number of good SpO2 measurements
       (numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 
       	that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i)))>>
@@ -67,9 +67,9 @@ ghost variables
   <<MOTION_ARTIFACT_ALARM: :all j~quantity whole 
         in 0 .. #PulseOx_Properties::Motion_Artifact_Sample_Limit are (MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j))>>      
   <<SPO2_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 else SPO2^(-s))>>
+         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 u else SPO2^(-s))>>
   <<HR_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 else HEART_RATE^(-s))>>
+         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 Hz else HEART_RATE^(-s))>>
 **};
 
 system ICEpoSystem
@@ -150,7 +150,7 @@ system implementation ICEpoSystem.imp
       {--Communication_Properties::
         Timing=>immediate;};
     --====================
-    --== Indications of SpO2 measurement anamolies
+    --== Indications of SpO2 measurement anomalies
     --====================
     sensor_connected : port po.SensorConnected -> app.SensorConnected;
     motion_artifact : port po.MotionArtifact -> app.MotionArtifact;
@@ -164,6 +164,8 @@ system implementation ICEpoSystem.imp
     --== Data for SpO2 trending display
     --====================
     spO2_Trend : port app.SpO2Trend -> ui.SpO2Trend;
+    spO2_Average : port app.SpO2Avg -> ui.SpO2Avg;
+    spO2_MovingAverage : port ui.SpO2MovingAvgWindowSamples -> app.SpO2MovingAvgWindowSamples;
     --====================  
     --== display, touch screen, and alarm buzzer
     --====================  
@@ -411,31 +413,31 @@ end ICEpoUIprocess;
 process implementation ICEpoUIprocess.imp
   --process implementation holds thread that performs supervisor user interface actions
   subcomponents
-    ui : thread ICEpoUI.imp;   --only subcomponent is a thread that runs the user interface
+    uit : thread ICEpoUI.imp;   --only subcomponent is a thread that runs the user interface
   connections
-    ui_image : port ui.Image -> Image;
-    ui_touch : port Touch -> ui.Touch;
-    ui_sound : port ui.Sound -> Sound;
-    ui_spo2 : port SpO2 -> ui.SpO2;
-    ui_spo2_ll : port SpO2LowerLimit -> ui.SpO2LowerLimit;
-    ui_spo2_llv : port SpO2LowerLimitViolated -> ui.SpO2LowerLimitViolated;
-    ui_heartrate : port HeartRate -> ui.HeartRate;
-    ui_heartrate_ll : port HeartRateLowerLimit -> ui.HeartRateLowerLimit;
-    ui_heartrate_llv : port HeartRateLowerLimitViolated -> ui.HeartRateLowerLimitViolated;
-    ui_heartrate_ul : port HeartRateUpperLimit -> ui.HeartRateUpperLimit;
-    ui_heartrate_ulv : port HeartRateUpperLimitViolated -> ui.HeartRateUpperLimitViolated;
-    ui_heartrate_trend : port HeartRateTrend -> ui.HeartRateTrend;
-    ui_suploxyalarmenabled : port ui.SupplOxyAlarmEnabled -> SupplOxyAlarmEnabled;
-    ui_spo2leveladj : port ui.SpO2LevelAdj -> SpO2LevelAdj;
-    ui_spo2derived_lla : port SpO2DerivedLowerLimitAlarm -> ui.SpO2DerivedLowerLimitAlarm;
-    ui_spo2movingaverage : port ui.SpO2MovingAvgWindowSamples -> SpO2MovingAvgWindowSamples;
-    ui_spo2avg : port SpO2Avg -> ui.SpO2Avg;
-    ui_ardae : port ui.AdultRapidDeclineAlarmEnabled -> AdultRapidDeclineAlarmEnabled;
-    ui_maxspo2decline : port ui.MaxSpO2Decline -> MaxSpO2Decline;
-    ui_rapiddeclinealarm : port RapidSpO2DeclineAlarm -> ui.RapidSpO2DeclineAlarm;
-    ui_probeoff : port ProbeOff -> ui.ProbeOff;
-    ui_motionartifactalarm : port MotionArtifactAlarm -> ui.MotionArtifactAlarm;
-    ui_spo2trend : port SpO2Trend -> ui.SpO2Trend;
+    ui_image : port uit.Image -> Image;
+    ui_touch : port Touch -> uit.Touch;
+    ui_sound : port uit.Sound -> Sound;
+    ui_spo2 : port SpO2 -> uit.SpO2;
+    ui_spo2_ll : port SpO2LowerLimit -> uit.SpO2LowerLimit;
+    ui_spo2_llv : port SpO2LowerLimitViolated -> uit.SpO2LowerLimitViolated;
+    ui_heartrate : port HeartRate -> uit.HeartRate;
+    ui_heartrate_ll : port HeartRateLowerLimit -> uit.HeartRateLowerLimit;
+    ui_heartrate_llv : port HeartRateLowerLimitViolated -> uit.HeartRateLowerLimitViolated;
+    ui_heartrate_ul : port HeartRateUpperLimit -> uit.HeartRateUpperLimit;
+    ui_heartrate_ulv : port HeartRateUpperLimitViolated -> uit.HeartRateUpperLimitViolated;
+    ui_heartrate_trend : port HeartRateTrend -> uit.HeartRateTrend;
+    ui_suploxyalarmenabled : port uit.SupplOxyAlarmEnabled -> SupplOxyAlarmEnabled;
+    ui_spo2leveladj : port uit.SpO2LevelAdj -> SpO2LevelAdj;
+    ui_spo2derived_lla : port SpO2DerivedLowerLimitAlarm -> uit.SpO2DerivedLowerLimitAlarm;
+    ui_spo2movingaverage : port uit.SpO2MovingAvgWindowSamples -> SpO2MovingAvgWindowSamples;
+    ui_spo2avg : port SpO2Avg -> uit.SpO2Avg;
+    ui_ardae : port uit.AdultRapidDeclineAlarmEnabled -> AdultRapidDeclineAlarmEnabled;
+    ui_maxspo2decline : port uit.MaxSpO2Decline -> MaxSpO2Decline;
+    ui_rapiddeclinealarm : port RapidSpO2DeclineAlarm -> uit.RapidSpO2DeclineAlarm;
+    ui_probeoff : port ProbeOff -> uit.ProbeOff;
+    ui_motionartifactalarm : port MotionArtifactAlarm -> uit.MotionArtifactAlarm;
+    ui_spo2trend : port SpO2Trend -> uit.SpO2Trend;
 end ICEpoUIprocess.imp;
 
 
@@ -546,7 +548,7 @@ process ICEpoAppProcess
     --====================
     --== Average SpO2 reading
     --====================
-    SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count;
+    SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count; --how many samples in moving average?
     SpO2Avg : out data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
       {BLESS::Assertion=>"<<SPO2_AVERAGE()>>";}
       ;      	
@@ -577,22 +579,24 @@ end ICEpoAppProcess;
 process implementation ICEpoAppProcess.imp
   --the process holds the thread group which performs "App" functions
   subcomponents
-    app : thread group ICEpoApp.imp;
+    tg : thread group ICEpoApp.imp;
   connections
-    ap_spo2 : port SpO2 -> app.SpO2;
-    ap_spo2_ll : port SpO2LowerLimit -> app.SpO2LowerLimit;
-    ap_heartrate : port HeartRate -> app.HeartRate;
-    ap_heartrate_trend : port app.HeartRateTrend -> HeartRateTrend;
-    ap_sc : port SensorConnected -> app.SensorConnected;
-    ap_ma : port MotionArtifact -> app.MotionArtifact;
-    ap_maa : port app.MotionArtifactAlarm -> MotionArtifactAlarm;
-    ap_soae : port SupplOxyAlarmEnabled -> app.SupplOxyAlarmEnabled;
-    ap_spo2leveladj : port SpO2LevelAdj -> app.SpO2LevelAdj;
-    ap_spo2derived_lla : port app.SpO2DerivedLowerLimitAlarm -> SpO2DerivedLowerLimitAlarm;
-    ap_ardae : port AdultRapidDeclineAlarmEnabled -> app.AdultRapidDeclineAlarmEnabled;
-    ap_maxspo2decline : port MaxSpO2Decline -> app.MaxSpO2Decline;
-    ap_rda : port app.RapidSpO2DeclineAlarm -> RapidSpO2DeclineAlarm;
-    ap_spo2trend : port app.SpO2Trend -> SpO2Trend;
+    ap_spo2 : port SpO2 -> tg.SpO2;
+    ap_spo2_ll : port SpO2LowerLimit -> tg.SpO2LowerLimit;
+    ap_heartrate : port HeartRate -> tg.HeartRate;
+    ap_heartrate_trend : port tg.HeartRateTrend -> HeartRateTrend;
+    ap_sc : port SensorConnected -> tg.SensorConnected;
+    ap_ma : port MotionArtifact -> tg.MotionArtifact;
+    ap_maa : port tg.MotionArtifactAlarm -> MotionArtifactAlarm;
+    ap_soae : port SupplOxyAlarmEnabled -> tg.SupplOxyAlarmEnabled;
+    ap_spo2leveladj : port SpO2LevelAdj -> tg.SpO2LevelAdj;
+    ap_spo2derived_lla : port tg.SpO2DerivedLowerLimitAlarm -> SpO2DerivedLowerLimitAlarm;
+    ap_ardae : port AdultRapidDeclineAlarmEnabled -> tg.AdultRapidDeclineAlarmEnabled;
+    ap_maxspo2decline : port MaxSpO2Decline -> tg.MaxSpO2Decline;
+    ap_rda : port tg.RapidSpO2DeclineAlarm -> RapidSpO2DeclineAlarm;
+    ap_spo2trend : port tg.SpO2Trend -> SpO2Trend;
+    ap_spo2average : port tg.SpO2Avg -> SpO2Avg;
+    ap_numsamples : port SpO2MovingAvgWindowSamples -> tg.SpO2MovingAvgWindowSamples;
 end ICEpoAppProcess.imp;
 
 thread group ICEpoApp
@@ -632,7 +636,7 @@ thread group ICEpoApp
     --====================
     --== Average SpO2 reading
     --====================
-    SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count;
+    SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count;  --how many samples in average?
     SpO2Avg : out data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
       {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";}
       ;      	
@@ -695,9 +699,9 @@ thread group implementation ICEpoApp.imp
     sptrend : port tr.SpO2Trend -> SpO2Trend;
     hrpo : port HeartRate -> hrt.HeartRate;
     hrtr : port hrt.HeartRateTrend -> HeartRateTrend;
-new_connection: port SpO2MovingAvgWindowSamples -> av.SpO2MovingAvgWindowSamples;
-new_connection2: port av.SpO2Avg -> rd.AverageSpO2;
-new_connection3: port SensorConnected -> av.SensorConnected;
+    numsamp: port SpO2MovingAvgWindowSamples -> av.SpO2MovingAvgWindowSamples;
+    spo2av : port av.SpO2Avg -> rd.AverageSpO2;
+    sc : port SensorConnected -> av.SensorConnected;
 end ICEpoApp.imp;
 
 

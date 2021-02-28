@@ -34,12 +34,12 @@ annex BLESS
   assert
     --shorthand used for conditional expression of SpO2 sample quality used often
     <<SSQ:x~quantity whole returns quantity percent := (if SENSOR_CONNECTED^(x) and 
-    	not MOTION_ARTIFACT^(x) then SPO2^(x) else 0)>>
+    	not MOTION_ARTIFACT^(x) then SPO2^(x) else 0 u)>>
     <<AXIOM_LB: :lb<(lb+1)>>  --used to contract universal quantification
 ----    <<AXIOM_UB: :ub=(lb+SPO2_MOVING_AVERAGE_WINDOW_SAMPLES)>>	
-	<<AXIOM_K2I: :((sum k~quantity whole in lb .. (ub - 1) of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0))/
+	<<AXIOM_K2I: :((sum k~quantity whole in lb .. (ub - 1) of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0 u))/
 		(numberof k~quantity whole in lb .. (ub - 1) that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))))
-	  = ((sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0))/
+	  = ((sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0 u))/
 		(numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i))))>> 
    invariant
     <<INV_AV: :WINDOW() and TOTAL_SPO2() and GOOD() and GS()>>
