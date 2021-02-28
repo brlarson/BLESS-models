@@ -1,329 +1,132 @@
 #sat.ps
 push
 sort-by-component SPA::SpO2AverageThread.imp
-#SPA::SpO2AverageThread.imp
-#[serial 1003] <<I>> -> BLESS::Invariant of thread DDD.
+#[serial 1009] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definition
 make-an
-axioms
-#[serial 1004] <<M(pav)>> -> <<I>> from invariant I when complete state pav has Assertion <<M(pav)>> in its definition.
 substitute-pre
-axioms
-#[serial 1005] <<M(sav)>> -> <<I>> from invariant I when complete state sav has Assertion <<M(sav)>> in its definition.
-substitute-pre
-axioms
-#[serial 1006] <<M(va)>> -> <<I>> from invariant I when complete state va has Assertion <<M(va)>> in its definition.
-substitute-pre
+laws
 normalize
 axioms
-#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state pav_check_vrp, <<M(pav_check_vrp)>> -> <<e1 or e2 or . . . en>>
+#[serial 1010] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+substitute-pre
+laws
+normalize
+axioms
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 replace<=
 normalize
 laws
 axioms
-#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_vrp, <<M(sav_check_vrp)>> -> <<e1 or e2 or . . . en>>
-replace<=
-laws
-axioms
-#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atrial_refractories, <<M(check_atrial_refractories)>> -> <<e1 or e2 or . . . en>>
-replace<=
-normalize
-and-over-or-post
-laws
-normalize
-axioms
-#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state check_vrp, <<M(check_vrp)>> -> <<e1 or e2 or . . . en>>
-replace<=
-normalize
-laws
-axioms
-#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_url, <<M(sav_check_url)>> -> <<e1 or e2 or . . . en>>
-replace<=
-normalize
-laws
-axioms
-#[serial 1013]  <<M(start)>> A <<M(va)>> for T0_GO:start-[ ]->va{A};
-reduce
-atomic
-normalize
-laws
-axioms
-push
-#ddd_mode::DDD.i
-#[serial 1084]   normalization of [serial 1071
-make-an
-substitute-post
-substitute-post
-substitute-post
-normalize
-laws
-normalize
-split-post
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1111] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1109
-make-an
-guided-sub-equals[last_ap_or_as]
-laws
-normalize
-axioms
-#[serial 1112] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1109]
-guided-sub-equals[last_vp_or_vs]
-laws
-normalize
-axioms
-#[serial 1119]   normalization of [serial 1113]
-split@
-normalize
-split-quant
-quant
-normalize
-axioms
-#[serial 1121]   normalization of [serial 1114]
-equivalent
-axioms
-#[serial 1123]   normalization of [serial 1115]
-equivalent
-axioms
-#[serial 1098] Associativity: (b.c).a = a.b.c [serial 1087]
-replace-port
-axioms
-#[serial 1099] Associativity: (b.c).a = a.b.c [serial 1091]
-replace-port
-axioms
-#[serial 1014]  <<M(va) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:va-[x]->va{A};
-reduce
-atomic
-remove-axioms-post
-laws
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1151] Q1 -> Q in sequential composition for [serial 1014
-make-an
-substitute-pre
-substitute-post
-substitute-post
-substitute-post
-normalize
-laws
-normalize
-split-post
-normalize
-axioms
-guided-sub-equals[last_vp_or_vs]
-laws
-normalize
-axioms
-split@
-normalize
-split-quant
-quant
-normalize
-axioms
-#[serial 1162] Law of And-Simplification:  P and P is P [serial 1159]
-substitute-post
-split-post
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1220] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1219
-make-an
-substitute-pre
-normalize
-axioms
-#[serial 1224]   normalization of [serial 1221]
-substitute-pre
-normalize
-laws
-normalize
-split-post
-normalize
-axioms
-#[serial 1167]   normalization of [serial 1154]
-substitute-post
-normalize
-split-post
-substitute-post
-normalize
-axioms
-substitute-pre
-normalize
-laws
-normalize
-extend-eqr
-replace-qv
-axioms
-#[serial 1170]   normalization of [serial 1163]
-split-post
-axioms
-substitute-post
-substitute-pre
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
-axioms
-#[serial 1172]   normalization of [serial 1164]
-now
-split-post
-axioms
-replace-port
-normalize
-axioms
-#[serial 1015]  <<M(sav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:sav-[x]->va{A};
-reduce
-atomic
-normalize
-laws
-axioms
-remove-axioms-post
-laws
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1290] Q1 -> Q in sequential composition for [serial 1015
-make-an
-substitute-post
-substitute-post
-laws
-normalize
-split-post
-normalize
-axioms
-split@
-split-quant
-quant
-normalize
-axioms
-substitute-post
-normalize
-split-post
-normalize
-axioms
-guided-sub-equals[last_vp_or_vs]
-laws
-normalize
-axioms
-#[serial 1299]   normalization of [serial 1293]
-substitute-post
-normalize
-split-post
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1361] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1359
-make-an
-substitute-pre
-normalize
-extend-eqr
-replace-qv
-axioms
-#[serial 1365]   normalization of [serial 1362]
-substitute-post
-normalize
-axioms
-#[serial 1316]   normalization of [serial 1311]
-split-post
-axioms
-substitute-pre
-substitute-pre
-laws
-axioms
-#[serial 1318]   normalization of [serial 1312]
-split-post
-axioms
-replace-port
-normalize
-axioms
-#[serial 1016]  <<M(pav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:pav-[x]->va{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#ddd_mode::DDD.i
-#[serial 1393] Q1 -> Q in sequential composition for [serial 1016
-make-an
-substitute-post
-substitute-post
-normalize
-laws
-split-post
-normalize
-axioms
-split@
-normalize
-split-quant
-quant
-normalize
-axioms
-substitute-post
-normalize
-split-post
-normalize
-axioms
-guided-sub-equals[last_vp_or_vs]
-laws
-normalize
-axioms
-#[serial 1405]   normalization of [serial 1396]
-substitute-post
-normalize
-split-post
-normalize
-push
-#ddd_mode::DDD.i
-#[serial 1458] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1456
-make-an
-substitute-pre
-normalize
-laws
-normalize
-extend-eqr
-replace-qv
-axioms
-#[serial 1462]   normalization of [serial 1459]
-substitute-post
-normalize
-axioms
-#[serial 1407]   normalization of [serial 1399]
-remove-axioms-post
-laws
-split-post
-axioms
-substitute-both
-substitute-pre
-substitute-pre
-laws
-normalize
-axioms
-#[serial 1409]   normalization of [serial 1400]
-remove-axioms-post
-laws
-split-post
-axioms
-replace-port
-normalize
-axioms
-stop****
-#[serial 1017]  <<M(sav) and x>> -> <<M(sav_check_vrp)>> for T2_VS_AFTER_AS:sav-[x]->sav_check_vrp{};
-axioms
+#[serial 1013]  <<M(start) and x>> A <<M(fillingWindow)>> for SpAT0:start-[x]->fillingWindow{A};
 completesub
+laws
 alldist^
+atomic
+split-post
+axioms
+normalize
+guided-sub-equals[lb]
+guided-sub-equals[ub]
+normalize
+laws
+quant
+axioms
+normalize
+axioms
+#[serial 1014]  <<M(start) and x>> A <<M(fail)>> for SpAT0a:start-[x]->fail{A};
+atomic
+axioms
+#[serial 1015]  <<M(fillingWindow) and x>> A <<M(chooseToRun)>> for SpAT1:fillingWindow-[x]->chooseToRun{A};
+reduce
+reduce
+reduce
+atomic
+normalize
 laws
 normalize
+axioms
+laws
+normalize
+push
+#[serial 1228] P -> P1 in sequential composition for [serial 1015
+make-an
+substitute-both
+normalize
+split-post
+axioms
+substitute-post
+normalize
+laws
+axioms
+#[serial 1248]   normalization of [serial 1234]
+split-post
+normalize
+push
+#[serial 1303] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1248
+make-an
+qtiming
+axioms
+#[serial 1304] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1248]
+qtiming
+axioms
+#[serial 1310]   normalization of [serial 1305]
+substitute-pre
+normalize
+qtiming
+axioms
+#[serial 1312]   normalization of [serial 1306]
+substitute-pre
+normalize
+qtiming
+axioms
+#[serial 1250]   normalization of [serial 1239]
+substitute-both
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1252]   normalization of [serial 1240]
+qtiming
+axioms
+#[serial 1275]   normalization of [serial 1265]
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1290]   normalization of [serial 1283]
+substitute-post
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1016]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
+completesub
+laws
+alldist^
 atomic
 normalize
-#[serial 1018]  <<M(chooseToRun) and x>> A <<M(fail)>> for SpAT3a:chooseToRun-[x]->fail{A};
 axioms
+#[serial 1017]  <<M(chooseToRun) and x>> A <<M(run)>> for SpAT3:chooseToRun-[x]->run{A};
+completesub
+laws
+normalize
+alldist^
 atomic
-#[serial 1019]  <<M(run) and x>> A <<M(run)>> for SpAt4:run-[x]->run{A};
+normalize
 axioms
+#[serial 1018]  <<M(chooseToRun) and x>> A <<M(fail)>> for SpAT3a:chooseToRun-[x]->fail{A};
+atomic
+axioms
+#[serial 1019]  <<M(run) and x>> A <<M(run)>> for SpAt4:run-[x]->run{A};
 reduce
 reduce
 reduce
@@ -336,8 +139,7 @@ substitute-both
 laws
 normalize
 push
-#SPA::SpO2AverageThread.imp
-#[serial 1503]   normalization of [serial 1471
+#[serial 1472] <<P3>> S3 <<Q3>> in concurrent composition for [serial 1464
 make-an
 atomic
 normalize
@@ -347,57 +149,57 @@ qtiming
 sub-equals
 qtiming
 laws
-#[serial 1590]   normalization of [serial 1566]
 axioms
+#[serial 1571]   normalization of [serial 1549]
 atomic
-#[serial 1592]   normalization of [serial 1568]
 axioms
+#[serial 1573]   normalization of [serial 1554]
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1575]   normalization of [serial 1555]
+atomic
+normalize
+split-post
+axioms
+qtiming
+axioms
+#[serial 1577]   normalization of [serial 1556]
+substitute-both
 replace<=
 normalize
 laws
-#[serial 1594]   normalization of [serial 1574]
 axioms
+#[serial 1579]   normalization of [serial 1557]
 qtiming
-#[serial 1596]   normalization of [serial 1575]
 axioms
-atomic
-normalize
-laws
-normalize
-#[serial 1598]   normalization of [serial 1576]
-axioms
-atomic
-normalize
-guided-sub-equals[totalSpO2]
-normalize
-laws
-normalize
-qtiming
-#[serial 1600]   normalization of [serial 1578]
-axioms
+#[serial 1581]   normalization of [serial 1559]
 atomic
 normalize
 laws
 normalize
 laws
 normalize
-#[serial 1602]   normalization of [serial 1579]
 axioms
+#[serial 1583]   normalization of [serial 1560]
 atomic
 normalize
 laws
 normalize
-#[serial 1604]   normalization of [serial 1580]
 axioms
+#[serial 1585]   normalization of [serial 1561]
 atomic
 normalize
-#[serial 1606]   normalization of [serial 1581]
+axioms
+#[serial 1587]   normalization of [serial 1562]
+split-post
 axioms
 substitute-post
-laws
 normalize
-#[serial 1608]   normalization of [serial 1582]
 axioms
+#[serial 1589]   normalization of [serial 1563]
 atomic
 normalize
 laws
@@ -406,53 +208,54 @@ axioms
 replaceNEwithLTorGT
 normalize
 axioms
+now
+guided-sub-equals[SpO2Avg]
 substitute-pre
 substitute-pre
+normalize
 laws
 normalize
-substitute-pre
-now
-sub-equals
 guided-sub-equals[totalSpO2]
 guided-sub-equals[goodCount]
 normalize
-#[serial 1610]   normalization of [serial 1583]
+substitute-both
+normalize
 axioms
-completesub
-contract-uqr
-laws
-#[serial 1612]   normalization of [serial 1584]
-axioms
+#[serial 1591]   normalization of [serial 1564]
 substitute-pre
 substitute-pre
 normalize
+laws
+normalize
+contract-uqr
+substitute-pre
+normalize
+axioms
+#[serial 1593]   normalization of [serial 1565]
+completesub
 laws
 normalize
 qtiming
-#[serial 1614]   normalization of [serial 1585]
 axioms
-substitute-pre
-substitute-pre
-normalize
+#[serial 1595]   normalization of [serial 1566]
+qtiming
+completesub
 laws
 normalize
 split-post
+axioms
 normalize
 qtiming
-#[serial 1616]   normalization of [serial 1586]
 axioms
-substitute-pre
-substitute-pre
-normalize
+#[serial 1597]   normalization of [serial 1567]
+completesub
 laws
-normalize
-#[serial 1618]   normalization of [serial 1587]
 axioms
+#[serial 1599]   normalization of [serial 1568]
 completesub
 alldist^
+axioms
 #[serial 1020]  <<M(fillingWindow) and x>> -> <<M(halt)>> for SpATstop:fillingWindow-[x]->halt{};
 axioms
 #[serial 1021]  <<M(run) and x>> -> <<M(halt)>> for SpATstop:run-[x]->halt{};
-axioms
-#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 axioms

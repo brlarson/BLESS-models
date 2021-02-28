@@ -84,9 +84,9 @@ annex BLESS
     fail : final state;  --failure termination
   transitions
     SpAT0: start-[(ub-lb)<window_size]->fillingWindow
-      {|ub',lb',window_size':=ub,lb,window_size|};  --copy current values to next period
+      {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
     SpAT0a: start-[(ub-lb)>=window_size]->fail
-      {|ub',lb',window_size':=ub,lb,window_size|};  --copy current values to next period
+      {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
     SpAT1: fillingWindow-[on dispatch]->chooseToRun
       { <<FW()>> 
       {
