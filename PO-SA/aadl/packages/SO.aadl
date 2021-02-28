@@ -34,9 +34,9 @@ annex BLESS
   transitions
     so0: start-[ ]->run{};
     so1: run-[on dispatch]->check{};
-    so2: check-[SupplOxyAlarmEnabled? and (SpO2Avg? < (SpO2LowerLimit?+SpO2LevelAdj?))]->run
+    so2: check-[SupplOxyAlarmEnabled? and SpO2Avg? < SpO2LowerLimit?+SpO2LevelAdj?]->run
       {<<SUPPL_O2_ALARM()>> SpO2DerivedLowerLimitAlarm!};
-    so3: check-[not SupplOxyAlarmEnabled? or (SpO2Avg? >= (SpO2LowerLimit?+SpO2LevelAdj?))]->run{};
+    so3: check-[not SupplOxyAlarmEnabled? or SpO2Avg? >= SpO2LowerLimit?+SpO2LevelAdj?]->run{};
     so4: run-[on dispatch stop]->halt{};
 **};
 end SupplemetalOxygenThread.imp;
