@@ -4,17 +4,19 @@ sort-by-component SPT::SpO2TrendThread.imp
 #[serial 1023] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
 substitute-pre
-#[serial 1024] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
+normalize
 axioms
+#[serial 1024] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
 substitute-pre
+normalize
+axioms
 #[serial 1025] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
-axioms
 normalize
 laws
-#[serial 1027]  <<M(start)>> A <<M(loading)>> for sptt0:start-[ ]->loading{A};
 axioms
+#[serial 1027]  <<M(start)>> A <<M(loading)>> for sptt0:start-[ ]->loading{A};
 substitute-post
 normalize
 alldist^
@@ -25,8 +27,8 @@ normalize
 guided-sub-equals[num_samples]
 laws
 quant
-#[serial 1028]  <<M(loading) and x>> A <<M(check)>> for sptt1:loading-[x]->check{A};
 axioms
+#[serial 1028]  <<M(loading) and x>> A <<M(check)>> for sptt1:loading-[x]->check{A};
 reduce
 reduce
 remove-axioms-post
@@ -36,92 +38,109 @@ laws
 normalize
 axioms
 push
-#SPT::SpO2TrendThread.imp
-#[serial 1151]   normalization of [serial 1121
+#[serial 1158]   normalization of [serial 1128
 make-an
 substitute-post
 normalize
 replace-qv
-#[serial 1157]   normalization of [serial 1129]
 axioms
+#[serial 1164]   normalization of [serial 1136]
 substitute-pre
 normalize
 replace-qv
-#[serial 1163]   normalization of [serial 1131]
 axioms
-substitute-post
-normalize
-#[serial 1165]   normalization of [serial 1144]
-axioms
-split-post
-axioms
-??
-laws
-#[serial 1167]   normalization of [serial 1133]
-axioms
-split-post
-axioms
-substitute-pre
+#[serial 1170]   normalization of [serial 1138]
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
-#[serial 1169]   normalization of [serial 1134]
-axioms
 split-post
 axioms
-substitute-post
+zeroquantlb
+elim-subtract
 normalize
-#[serial 1171]   normalization of [serial 1145]
-axioms
-split-post
-axioms
-??
-laws
-#[serial 1173]   normalization of [serial 1136]
-axioms
-split-post
-axioms
-substitute-pre
+substitute-both
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
-#[serial 1175]   normalization of [serial 1146]
 axioms
+#[serial 1172]   normalization of [serial 1151]
+split-post
+axioms
+??
+laws
+axioms
+#[serial 1174]   normalization of [serial 1140]
+substitute-pre
+split-post
+normalize
+axioms
+zeroquantlb
+normalize
+elim-subtract
+normalize
+laws
+normalize
+axioms
+#[serial 1176]   normalization of [serial 1141]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1178]   normalization of [serial 1152]
+split-post
+axioms
+??
+laws
+axioms
+#[serial 1180]   normalization of [serial 1143]
+split-post
+axioms
+substitute-pre
+normalize
+zeroquantlb
+normalize
+laws
+elim-subtract
+normalize
+axioms
+#[serial 1182]   normalization of [serial 1153]
 qtiming
-#[serial 1183]   normalization of [serial 1148]
 axioms
+#[serial 1190]   normalization of [serial 1155]
 substitute-both
 normalize
 laws
 guided-sub-equals[NUM_SAMPLES]
 guided-sub-equals[SPO2_HISTORY]
-#[serial 1226]   normalization of [serial 1205]
 axioms
+#[serial 1233]   normalization of [serial 1212]
 substitute-pre
 normalize
 laws
 now
-guided-sub-equals[NumSamples]
+equivalent
+axioms
 #[serial 1029]  <<M(check) and x>> A <<M(loading)>> for sptt2a:check-[x]->loading{A};
-axioms
-substitute-both
+completesub
 alldist^
 atomic
 normalize
+axioms
 #[serial 1030]  <<M(check) and x>> A <<M(run)>> for sptt2b:check-[x]->run{A};
-axioms
-substitute-both
+completesub
 alldist^
 atomic
 normalize
+axioms
 #[serial 1031]  <<M(check) and x>> -> <<M(fail)>> for sptt2c:check-[x]->fail{};
 axioms
+sgtop****
 #[serial 1032]  <<M(run) and x>> A <<M(run)>> for sptt3:run-[x]->run{A};
-axioms
 reduce
 reduce
 remove-axioms-post

@@ -1,116 +1,67 @@
-# hrt.ps
+# hrt.ps for HR::HeartRateTrendThread.imp
 push
 sort-by-component HR::HeartRateTrendThread.imp
 #[serial 1036] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
 substitute-pre
-#[serial 1037] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+normalize
 axioms
+#[serial 1037] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
 substitute-pre
+normalize
+axioms
 #[serial 1038] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1039] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
-axioms
 normalize
 laws
-#[serial 1040]  <<M(start)>> A <<M(fill)>> for hrtt0:start-[ ]->fill{A};
 axioms
-substitute-post
-normalize
+#[serial 1040]  <<M(start)>> A <<M(fill)>> for hrtt0:start-[ ]->fill{A};
+completesub
 alldist^
 atomic
 guided-sub-equals[num_samples]
 laws
+normalize
+split-post
 quant
 normalize
-laws
-normalize
-guided-sub-equals[0]
-#[serial 1041]  <<M(fill) and x>> A <<M(check)>> for hrtt1:fill-[x]->check{A};
 axioms
-reduce
-reduce
+guided-sub-equals[0]
+axioms
+#[serial 1041]  <<M(fill) and x>> A <<M(check)>> for hrtt1:fill-[x]->check{A};
 normalize
+reduce
+reduce
+atomic
+normalize
+axioms
+laws
+axioms
+normalize
+remove-axioms-post
 laws
 axioms
 push
-#HR::HeartRateTrendThread.imp
-#[serial 1154]   normalization of [serial 1134
 make-an
-remove-axioms-post
-laws
-#[serial 1156]   normalization of [serial 1135]
-axioms
+#HR::HeartRateTrendThread.imp
+#[serial 1150] Q5 -> Q in sequential composition for [serial 1147]
+ 
 substitute-post
-normalize
 replace-qv
-#[serial 1158]   normalization of [serial 1136]
 axioms
-atomic
-normalize
-axioms
-substitute-pre
-substitute-post
-normalize
-laws
-guided-sub-equals[NUM_SAMPLES]
-guided-sub-equals[HEART_RATE_HISTORY]
-#[serial 1160]   normalization of [serial 1137]
-axioms
+#[serial 1162]   <<Q0>> -> <<Q>>  for [serial 1154]
 substitute-both
+split-post
+axioms
+zeroquantlb
 normalize
 laws
-atomic
 normalize
-laws
-axioms
-now
-guided-sub-equals[NumSamples]
-#[serial 1162]   normalization of [serial 1143]
-axioms
-substitute-pre
+elim-subtract
 normalize
-replace-qv
-#[serial 1164]   normalization of [serial 1142]
 axioms
-atomic
-normalize
-#[serial 1168]   normalization of [serial 1145]
-axioms
-split-post
-axioms
-substitute-post
-normalize
-#[serial 1170]   normalization of [serial 1146]
-axioms
-atomic
-split-post
-axioms
-??
-laws
-#[serial 1172]   normalization of [serial 1147]
-axioms
-split-post
-axioms
-substitute-pre
-normalize
-qtiming
-#[serial 1174]   normalization of [serial 1148]
-axioms
-split-post
-axioms
-substitute-post
-normalize
-#[serial 1176]   normalization of [serial 1149]
-axioms
-atomic
-normalize
-split-post
-axioms
-??
-laws
-#[serial 1178]   normalization of [serial 1150]
-axioms
+#[serial 1165]   <<Q1>> -> <<Q>>  for [serial 1154]
 split-post
 axioms
 substitute-pre
@@ -119,34 +70,66 @@ elim-subtract
 normalize
 laws
 normalize
-#[serial 1180]   normalization of [serial 1140]
 axioms
-atomic
-qtiming
-#[serial 1184]   normalization of [serial 1151]
+#[serial 1188]   normalization of [serial 1158]
+substitute-pre
+replace-qv
 axioms
-atomic
-normalize
-#[serial 1042]  <<M(check) and x>> A <<M(fill)>> for hrtt2a:check-[x]->fill{A};
-axioms
-substitute-post
-alldist^
-atomic
+#[serial 1194]   normalization of [serial 1160]
 split-post
 axioms
+substitute-post
+normalize
+axioms
+#[serial 1196]   normalization of [serial 1173]
+??
+laws
+normalize
+axioms
+#[serial 1199]   normalization of [serial 1163]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1201]   normalization of [serial 1174]
+??
+laws
+normalize
+axioms
+#[serial 1204]   normalization of [serial 1175]
+qtiming
+axioms
+#[serial 1238]   normalization of [serial 1223]
 substitute-pre
 normalize
-#[serial 1043]  <<M(check) and x>> A <<M(run)>> for hrtt2b:check-[x]->run{A};
-axioms
-substitute-both
+now
+equivalent
 normalize
+laws
+axioms
+#[serial 1240]   normalization of [serial 1225]
+now
+substitute-pre
+normalize
+laws
+equivalent
+axioms
+#[serial 1042]  <<M(check) and x>> A <<M(fill)>> for hrtt2a:check-[x]->fill{A};
+completesub
 alldist^
 atomic
 normalize
+axioms
+#[serial 1043]  <<M(check) and x>> A <<M(run)>> for hrtt2b:check-[x]->run{A};
+substitute-both
+alldist^
+atomic
+normalize
+axioms
 #[serial 1044]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c:check-[x]->fail{};
 axioms
 #[serial 1045]  <<M(run) and x>> A <<M(run)>> for hrtt3:run-[x]->run{A};
-axioms
 reduce
 reduce
 normalize
@@ -156,33 +139,34 @@ axioms
 remove-axioms-post
 laws
 push
-#[serial 1407]   normalization of [serial 1386
+#HR::HeartRateTrendThread.imp
+#[serial 1430]   normalization of [serial 1409
 make-an
 substitute-post
 alldist^
 split-post
 axioms
 replace-qv
-#[serial 1413]   normalization of [serial 1394]
 axioms
+#[serial 1436]   normalization of [serial 1417]
 substitute-pre
 zeroquantlb
 normalize
 contract-uqr
 replace-qv
 axioms
-#[serial 1415]   normalization of [serial 1393]
+#[serial 1438]   normalization of [serial 1416]
 atomic
 normalize
 axioms
-#[serial 1421]   normalization of [serial 1397]
+#[serial 1444]   normalization of [serial 1420]
 atomic
 split-post
 axioms
 ??
 laws
 axioms
-#[serial 1423]   normalization of [serial 1398]
+#[serial 1446]   normalization of [serial 1421]
 substitute-pre
 normalize
 laws
@@ -196,7 +180,7 @@ normalize
 laws
 normalize
 axioms
-#[serial 1427]   normalization of [serial 1400]
+#[serial 1450]   normalization of [serial 1423]
 atomic
 normalize
 split-post
@@ -204,7 +188,7 @@ axioms
 ??
 laws
 axioms
-#[serial 1429]   normalization of [serial 1401]
+#[serial 1452]   normalization of [serial 1424]
 substitute-pre
 normalize
 laws
@@ -217,31 +201,31 @@ normalize
 laws
 normalize
 axioms
-#[serial 1431]   normalization of [serial 1403]
+#[serial 1454]   normalization of [serial 1426]
 qtiming
 axioms
-#[serial 1433]   normalization of [serial 1402]
+#[serial 1456]   normalization of [serial 1425]
 atomic
 normalize
 axioms
-#[serial 1435]   normalization of [serial 1392]
+#[serial 1458]   normalization of [serial 1415]
 atomic
 normalize
 axioms
-#[serial 1453] Associativity: (b.c).a = a.b.c [serial 1419]
+#[serial 1476] Associativity: (b.c).a = a.b.c [serial 1442]
 substitute-post
 normalize
 laws
 axioms
-#[serial 1471]   normalization of [serial 1454]
+#[serial 1494]   normalization of [serial 1477]
 substitute-post
 normalize
 laws
 normalize
 axioms
-#[serial 1476] Law of And-Simplification:  P and true is P [serial 1473]
+#[serial 1499] Law of And-Simplification:  P and true is P [serial 1496]
 axioms
-#[serial 1477] Law of And-Simplification:  P and true is P [serial 1474]
+#[serial 1500] Law of And-Simplification:  P and true is P [serial 1497]
 atomic
 normalize
 laws
@@ -250,20 +234,17 @@ axioms
 substitute-both
 normalize
 laws
-guided-sub-equals[NUM_SAMPLES]
-guided-sub-equals[HEART_RATE_HISTORY]
 axioms
-#[serial 1478] Law of And-Simplification:  P and true is P [serial 1475]
+#[serial 1501] Law of And-Simplification:  P and true is P [serial 1498]
 atomic
+substitute-both
 normalize
 laws
+normalize
 axioms
-substitute-pre
-normalize
-laws
-normalize
 now
-guided-sub-equals[NumSamples]
+guided-sub-equals[NUM_SAMPLES]
+normalize
 axioms
 #[serial 1046]  <<M(fill) and x>> -> <<M(halt)>> for hrtt4:fill-[x]->halt{};
 axioms

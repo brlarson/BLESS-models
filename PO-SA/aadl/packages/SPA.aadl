@@ -37,12 +37,18 @@ annex BLESS
     	not MOTION_ARTIFACT^(x) then SPO2^(x) else 0 u)>>
     <<AXIOM_LB: :lb<(lb+1)>>  --used to contract universal quantification
 ----    <<AXIOM_UB: :ub=(lb+SPO2_MOVING_AVERAGE_WINDOW_SAMPLES)>>	
-	<<AXIOM_K2I: :((sum k~quantity whole in lb .. (ub - 1) of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0 u))/
-		(numberof k~quantity whole in lb .. (ub - 1) that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))))
-	  = ((sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0 u))/
-		(numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i))))>> 
+	<<AXIOM_K2I: :
+	  ((sum k~quantity whole in lb .. (ub - 1) 
+	  	  of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0 u))/
+		(numberof k~quantity whole in lb .. (ub - 1) 
+			  that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))))
+	  = 
+	  ((sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 
+	  	  of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0 u))/
+		(numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 
+			  that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i)))) >> 
    invariant
-    <<INV_AV: :WINDOW() and TOTAL_SPO2() and GOOD() and GS()>>
+    <<INV_AV: :WINDOW() and TOTAL_SPO2() and GOOD() and GS() >>
   variables
 --  --    max_samples~quantity whole := (#PulseOx_Properties::Max_Window_Samples - 1); 
     window_size~quantity whole := SpO2MovingAvgWindowSamples 

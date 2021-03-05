@@ -13,11 +13,12 @@ laws
 normalize
 axioms
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
+normalize
 laws
 axioms
 #[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-replace<=
 normalize
+replace<=
 laws
 axioms
 #[serial 1013]  <<M(start) and x>> A <<M(fillingWindow)>> for SpAT0:start-[x]->fillingWindow{A};
@@ -51,7 +52,8 @@ axioms
 laws
 normalize
 push
-#[serial 1228] P -> P1 in sequential composition for [serial 1015
+#SPA::SpO2AverageThread.imp
+#[serial 1248]   normalization of [serial 1231
 make-an
 substitute-both
 normalize
@@ -61,52 +63,58 @@ substitute-post
 normalize
 laws
 axioms
-#[serial 1248]   normalization of [serial 1234]
+#[serial 1255]   normalization of [serial 1242]
 split-post
-normalize
 push
-#[serial 1303] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1248
+#SPA::SpO2AverageThread.imp
+#[serial 1313] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255
 make-an
-qtiming
-axioms
-#[serial 1304] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1248]
-qtiming
-axioms
-#[serial 1310]   normalization of [serial 1305]
 substitute-pre
-normalize
-qtiming
-axioms
-#[serial 1312]   normalization of [serial 1306]
 substitute-pre
-normalize
-qtiming
-axioms
-#[serial 1250]   normalization of [serial 1239]
 substitute-both
-substitute-pre
-substitute-pre
-normalize
 laws
-normalize
-axioms
-#[serial 1252]   normalization of [serial 1240]
-qtiming
-axioms
-#[serial 1275]   normalization of [serial 1265]
-substitute-pre
-substitute-pre
-substitute-pre
 normalize
 laws
 axioms
-#[serial 1290]   normalization of [serial 1283]
+#[serial 1314] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255]
+substitute-pre
+substitute-pre
+laws
+normalize
+axioms
+#[serial 1257]   normalization of [serial 1243]
 substitute-post
 substitute-pre
 substitute-pre
 substitute-pre
 normalize
 laws
+normalize
+substitute-pre
+normalize
+axioms
+#[serial 1282]   normalization of [serial 1272]
+substitute-pre
+substitute-pre
+normalize
+substitute-post
+normalize
+split-post
+normalize
+qtiming
+axioms
+#[serial 1284]   normalization of [serial 1273]
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1300]   normalization of [serial 1293]
+substitute-pre
+substitute-pre
+laws
+normalize
 axioms
 #[serial 1016]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
 completesub
@@ -139,7 +147,8 @@ substitute-both
 laws
 normalize
 push
-#[serial 1472] <<P3>> S3 <<Q3>> in concurrent composition for [serial 1464
+#SPA::SpO2AverageThread.imp
+#[serial 1532]   normalization of [serial 1500
 make-an
 atomic
 normalize
@@ -150,61 +159,54 @@ sub-equals
 qtiming
 laws
 axioms
-#[serial 1571]   normalization of [serial 1549]
+#[serial 1626]   normalization of [serial 1602]
 atomic
 axioms
-#[serial 1573]   normalization of [serial 1554]
-atomic
-normalize
-laws
-normalize
-axioms
-#[serial 1575]   normalization of [serial 1555]
-atomic
-normalize
-split-post
-axioms
-qtiming
-axioms
-#[serial 1577]   normalization of [serial 1556]
-substitute-both
+#[serial 1628]   normalization of [serial 1604]
 replace<=
 normalize
 laws
 axioms
-#[serial 1579]   normalization of [serial 1557]
-qtiming
-axioms
-#[serial 1581]   normalization of [serial 1559]
-atomic
-normalize
-laws
-normalize
-laws
-normalize
-axioms
-#[serial 1583]   normalization of [serial 1560]
+#[serial 1630]   normalization of [serial 1610]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1585]   normalization of [serial 1561]
+#[serial 1632]   normalization of [serial 1611]
 atomic
 normalize
-axioms
-#[serial 1587]   normalization of [serial 1562]
 split-post
 axioms
-substitute-post
+qtiming
+axioms
+#[serial 1634]   normalization of [serial 1613]
+atomic
+normalize
+laws
+normalize
+laws
 normalize
 axioms
-#[serial 1589]   normalization of [serial 1563]
+#[serial 1636]   normalization of [serial 1614]
+qtiming
+axioms
+#[serial 1638]   normalization of [serial 1615]
 atomic
 normalize
 laws
 normalize
 axioms
+#[serial 1640]   normalization of [serial 1616]
+atomic
+normalize
+axioms
+#[serial 1642]   normalization of [serial 1617]
+substitute-post
+laws
+axioms
+#[serial 1644]   normalization of [serial 1618]
+atomic
 replaceNEwithLTorGT
 normalize
 axioms
@@ -221,38 +223,56 @@ normalize
 substitute-both
 normalize
 axioms
-#[serial 1591]   normalization of [serial 1564]
+laws
+split-post
+axioms
+substitute-post
+normalize
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1646]   normalization of [serial 1619]
+substitute-pre
 substitute-pre
 substitute-pre
 normalize
 laws
 normalize
 contract-uqr
+axioms
+#[serial 1648]   normalization of [serial 1620]
+substitute-both
+substitute-pre
 substitute-pre
 normalize
-axioms
-#[serial 1593]   normalization of [serial 1565]
-completesub
 laws
 normalize
 qtiming
 axioms
-#[serial 1595]   normalization of [serial 1566]
-qtiming
-completesub
-laws
-normalize
+#[serial 1650]   normalization of [serial 1621]
 split-post
-axioms
+normalize
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
 normalize
 qtiming
 axioms
-#[serial 1597]   normalization of [serial 1567]
-completesub
+#[serial 1652]   normalization of [serial 1622]
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
 laws
+normalize
 axioms
-#[serial 1599]   normalization of [serial 1568]
-completesub
+#[serial 1654]   normalization of [serial 1623]
+substitute-post
+substitute-post
+normalize
 alldist^
 axioms
 #[serial 1020]  <<M(fillingWindow) and x>> -> <<M(halt)>> for SpATstop:fillingWindow-[x]->halt{};
