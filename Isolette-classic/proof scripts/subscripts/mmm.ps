@@ -1,7 +1,6 @@
 #manage_monitor_mode_mmm.impl
 push
 sort-by-component[Monitor::manage_monitor_mode.impl]
-#Monitor::manage_monitor_mode.impl
 #[serial 1003] <<M(init)>> -> <<I>> from invariant I when complete state init has Assertion <<M(init)>> in its definition
 make-an
 axioms
@@ -132,7 +131,6 @@ reduce
 atomic
 remove-axioms-post
 laws
-axioms
 normalize
 axioms
 split-post
@@ -149,18 +147,19 @@ dist^
 normalize
 transitive
 axioms
+laws
+axioms
 #[serial 1015]  <<M(check_normal) and x>> A <<M(failed)>> for mmm3x:check_normal-[x]->failed{A};
 reduce
 atomic
-normalize
-axioms
 DeMorgan
 normalize
+axioms
 split-post
 axioms
 push
 #Monitor::manage_monitor_mode.impl
-#[serial 1402] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1396
+#[serial 1414] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1403
 make-an
 substitute-both
 now
@@ -176,7 +175,7 @@ split-post
 axioms
 guided-sub-equals[start_time]
 axioms
-#[serial 1403] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1398]
+#[serial 1415] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1405]
 substitute-both
 normalize
 replace<=
@@ -184,6 +183,6 @@ normalize
 guided-sub-equals[START_TIME]
 laws
 axioms
-#[serial 1404] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1398]
+#[serial 1416] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1405]
 laws
 axioms

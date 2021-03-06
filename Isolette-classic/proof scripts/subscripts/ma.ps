@@ -108,30 +108,39 @@ axioms
 #[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr:check_temp-[x]->run{A};
 reduce
 atomic
-laws
-dist^
-dist^
 normalize
 axioms
 remove-axioms-post
+now
+laws
+axioms
 substitute-post
 normalize
-laws
 dist^
 normalize
-dist^
-normalize
+now
 axioms
+substitute-pre
+normalize
+laws
+normalize
 split-post
-range-exp
 normalize
-replace-port
-axioms
-substitute-both
+push
+make-an
+#[serial 1381] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1379]
+substitute-post
 substitute-post
 normalize
-replace<=
 laws
+axioms
+#[serial 1382] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1379]
+replace<=
+normalize
+axioms
+#[serial 1387]   normalization of [serial 1383]
+replace-port
+range-exp
 normalize
 axioms
 #[serial 1029]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for maHys:check_temp-[x]->check_hyst{};
