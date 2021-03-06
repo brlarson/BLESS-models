@@ -1,11 +1,12 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Sat Jan 16 18:54:23 CST 2021 by brianlarson
+#atcounter.ps
 push
 sort-by-component[ATR::AtCounter.imp]
 #[serial 1021] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
 make-an
+normalize
 axioms
 #[serial 1022] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
+normalize
 axioms
 #[serial 1023] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
 normalize
@@ -26,6 +27,7 @@ axioms
 #[serial 1028]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
 reduce
 atomic
+normalize
 laws
 now
 ??
@@ -34,61 +36,61 @@ axioms
 reduce
 atomic
 laws
+normalize
+laws
 axioms
 normalize
 push
 #ATR::AtCounter.imp
-#[serial 1142]   normalization of [serial 1126
+#[serial 1153]   normalization of [serial 1139
 make-an
 split@
-now
+normalize
 axioms
-#[serial 1144]   normalization of [serial 1135]
-split@
+#[serial 1170] Law of And-Simplification:  P and true is P [serial 1160]
 now
 laws
+axioms
+#[serial 1171] Law of And-Simplification:  P and true is P [serial 1162]
+now
+laws
+axioms
+#[serial 1174]   normalization of [serial 1168]
 substitute-post
 substitute-post
+normalize
+laws
 normalize
 split-post
-normalize
-laws
 push
 #ATR::AtCounter.imp
-#[serial 1174] Law of And-Simplification:  P and P is P [serial 1166
+#[serial 1200] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198
 make-an
 guided-sub-equals[et]
-now
+split@
+laws
 axioms
-#[serial 1175] Law of And-Simplification:  P and P is P [serial 1167]
+#[serial 1201] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
+guided-sub-equals[last_at]
+axioms
+#[serial 1202] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
 guided-sub-equals[last_at]
 guided-sub-equals[et]
 guided-sub-equals[c]
 counting
-now
 axioms
-#[serial 1176] Law of And-Simplification:  P and P is P [serial 1172]
+#[serial 1203] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
 guided-sub-equals[last_at]
-laws
-now
 laws
 normalize
 axioms
-#[serial 1146]   normalization of [serial 1136]
-now
+#[serial 1176]   normalization of [serial 1169]
 ??
-guided-sub-equals[atCount]
 guided-sub-equals[et]
+now
+guided-sub-equals[atCount]
 counting
 now
-axioms
-#[serial 1148]   normalization of [serial 1139]
-now
-laws
-axioms
-#[serial 1150]   normalization of [serial 1140]
-now
-laws
 axioms
 #[serial 1030]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
 normalize
@@ -112,12 +114,13 @@ normalize
 laws
 normalize
 push
+#ATR::AtCounter.imp
+#[serial 1275]   normalization of [serial 1265
 make-an
-#[serial 1257]   normalization of [serial 1247]
 now
 laws
 axioms
-#[serial 1259]   normalization of [serial 1252]
+#[serial 1277]   normalization of [serial 1270]
 split-post
 axioms
 substitute-post
@@ -130,19 +133,19 @@ axioms
 counting
 normalize
 axioms
-#[serial 1278] Law of And-Simplification:  P and true is P [serial 1274]
+#[serial 1296] Law of And-Simplification:  P and true is P [serial 1292]
 split-post
 axioms
 now
 laws
 axioms
-#[serial 1279] Law of And-Simplification:  P and true is P [serial 1275]
+#[serial 1297] Law of And-Simplification:  P and true is P [serial 1293]
 split-post
 axioms
 now
 laws
 axioms
-#[serial 1283]   normalization of [serial 1276]
+#[serial 1301]   normalization of [serial 1294]
 substitute-post
 normalize
 split-post
@@ -157,7 +160,7 @@ laws
 normalize
 guided-sub-equals[now]
 axioms
-#[serial 1285]   normalization of [serial 1277]
+#[serial 1303]   normalization of [serial 1295]
 ??
 now
 guided-sub-equals[atCount]

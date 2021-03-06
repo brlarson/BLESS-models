@@ -1,6 +1,4 @@
 #ratecontrol-atr
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Sun Jan 24 19:52:12 CST 2021 by brianlarson
 push
 sort-by-component[rc::RateController.atr]
 #[serial 1004] <<M(atr_fallback)>> -> <<I>> from invariant I when complete state atr_fallback has Assertion <<M(atr_fallback)>> in its definition
@@ -25,6 +23,7 @@ axioms
 #[serial 1009]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC6_continure_atr:check_atr-[x]->atr_fallback{A};
 reduce
 atomic
+normalize
 now
 substitute-post
 normalize
@@ -45,6 +44,8 @@ axioms
 completesub
 now
 guided-sub-equals[atr_max_cci]
+laws
+normalize
 axioms
 replace<=
 normalize
