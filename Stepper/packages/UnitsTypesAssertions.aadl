@@ -1,0 +1,58 @@
+package UnitsTypesAssertions
+public
+with PCS, Data_Model, BLESS
+  ;	
+	
+annex TypeDef
+{**
+	type position is quantity whole [0 .. #PCS::MaxPosition]
+	type singleStep is quantity whole [-1 .. 1]
+	type multiStep is quantity whole [#PCS::MaxStepsDown .. #PCS::MaxStepsUp]
+**};
+
+
+annex Assertion
+{**
+ghost variables 
+  def ACTUAL_POSITION ~ position		
+  def DESIRED_POSITION ~ position		
+  
+--desired position in 0..250
+  <<DESIRED_IN_RANGE:  : 
+    DESIRED_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition>>	
+--actual position in 0..250
+  <<ACTUAL_IN_RANGE:  :
+    ACTUAL_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    
+  <<AXIOM_MPGT0: :0<=#PCS::MaxPosition>>
+
+  <<AXIOM_LT:z ~ quantity whole:z<(z+1)>>
+  <<AXIOM_GT:z ~ quantity whole:(z- 1)<z>>	
+  <<AXIOM_LTK:z ~ quantity whole, k ~ quantity whole:z<(z+k) and k>0>>  --adding positive numbers makes things bigger
+  <<AXIOM_GTK:z ~ quantity whole, k ~ quantity whole:z>(z-k) and k>0>>	 --subtracting positive numbers makes them smaller
+    
+    
+  
+**};
+
+-----------------data types------------------------------
+--@description data type for desired motor position
+data Position
+properties
+	Data_Model::Data_Representation => Integer;
+	Data_Model::Measurement_Unit => "step";
+	Data_Model::Integer_Range => 0 .. PCS::MaxPosition;
+	BLESS::Typed => "position";
+end Position;
+
+--@description data type for commanding position change to occur in one Period
+data PositionChange
+properties  
+	Data_Model::Data_Representation => Integer;
+	Data_Model::Measurement_Unit => "step";
+	Data_Model::Integer_Range => PCS::MaxStepsDown .. PCS::MaxStepsUp;
+	BLESS::Typed => "multistep";	
+end PositionChange;
+
+	
+end UnitsTypesAssertions;

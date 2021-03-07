@@ -1,0 +1,607 @@
+#FragileMultiStep.ps
+push
+sort-by-component[ControlSoftware::FragilePositionControlThread.MultiStep]
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 1023] <<M(StillClosing)>> -> <<I>> from invariant I when complete state StillClosing has Assertion <<M(StillClosing)>> in its definition
+make-an
+axioms
+#[serial 1024] <<M(Run)>> -> <<I>> from invariant I when complete state Run has Assertion <<M(Run)>> in its definition.
+normalize
+axioms
+#[serial 1025] Serban's Theorem:  disjunction of execute conditions leaving execution state ShutDown, <<M(ShutDown)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state Check, <<M(Check)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1027] Serban's Theorem:  disjunction of execute conditions leaving execution state PowerOn, <<M(PowerOn)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1028] Serban's Theorem:  disjunction of execute conditions leaving execution state Decide, <<M(Decide)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1029]  <<M(PowerOn)>> A <<M(Run)>> for ms0po:PowerOn-[ ]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+remove-axioms-post
+laws
+normalize
+axioms
+push
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 1107]   normalization of [serial 1100
+make-an
+substitute-post
+normalize
+dist^
+normalize
+alldist^
+laws
+axioms
+#[serial 1128]   normalization of [serial 1121]
+substitute-pre
+normalize
+split-post
+axioms
+guided-sub-equals[ACTUAL_POSITION']
+axioms
+guided-sub-equals[0]
+laws
+axioms
+equivalent
+axioms
+#[serial 1131] Associativity: (b.c).a = a.b.c [serial 1119]
+guided-sub-equals[ACTUAL_POSITION]
+laws
+normalize
+substitute-pre
+normalize
+axioms
+#[serial 1135] Law of And-Simplification:  P and true is P [serial 1133]
+split-post
+axioms
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1030]  <<M(Run) and x>> -> <<M(Check)>> for ms1run:Run-[x]->Check{};
+normalize
+axioms
+#[serial 1031]  <<M(Check) and x>> -> <<M(Decide)>> for ms1ok:Check-[x]->Decide{};
+normalize
+laws
+split-post
+axioms
+substitute-post
+normalize
+now
+axioms
+#[serial 1032]  <<M(Check) and x>> -> <<M(Error)>> for ms1er:Check-[x]->Error{};
+axioms
+#[serial 1033]  <<M(Decide) and x>> A <<M(Run)>> for ms2eq:Decide-[x]->Run{A};
+normalize
+reduce
+atomic
+normalize
+laws
+split-post
+axioms
+substitute-pre
+normalize
+laws
+axioms
+normalize
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+laws
+axioms
+now
+guided-sub-equals[DESIRED_POSITION]
+axioms
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 1034]  <<M(Decide) and x>> A <<M(Run)>> for ms3om:Decide-[x]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+normalize
+split-post
+axioms
+push
+make-an
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 1342]   normalization of [serial 1335]
+ 
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 1378] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1340]
+substitute-pre
+normalize
+laws
+normalize
+now
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1382] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1383] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1384] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1385] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+substitute-pre
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1386] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1387] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1389] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+substitute-pre
+normalize
+laws
+normalize
+transitive
+axioms
+#[serial 1390] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+remove-axioms-post
+axioms
+#[serial 1393] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[Delta]
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1394] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+guided-sub-equals[Delta]
+normalize
+substitute-pre
+normalize
+laws
+normalize
+transitive
+<=to<
+axioms
+#[serial 1395] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+guided-sub-equals[Delta]
+normalize
+axioms
+#[serial 1396] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+guided-sub-equals[Delta]
+normalize
+axioms
+#[serial 1035]  <<M(Decide) and x>> A <<M(Run)>> for ms4cm:Decide-[x]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+normalize
+split-post
+axioms
+push
+make-an
+#[serial 1512]   normalization of [serial 1505]
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 1546] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1510]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+now
+axioms
+#[serial 1550] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1551] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1552] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1553] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+substitute-pre
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1554] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1555] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1557] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+remove-axioms-post
+axioms
+#[serial 1559] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+guided-sub-equals[Delta]
+transitive
+normalize
+axioms
+#[serial 1560] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[Delta]
+normalize
+transitive
+axioms
+#[serial 1561] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[Delta]
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1562] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+guided-sub-equals[Delta]
+normalize
+transitive
+normalize
+<=to<
+substitute-pre
+normalize
+laws
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1036]  <<M(Decide) and x>> A <<M(Run)>> for ms5od:Decide-[x]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+normalize
+remove-axioms-post
+laws
+split-post
+axioms
+push
+make-an
+#[serial 1694]   normalization of [serial 1687]
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 1739] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1740] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1741] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1742] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
+substitute-pre
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1746] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1726]
+substitute-pre
+now
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1747] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1726]
+substitute-pre
+now
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1749] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1732]
+substitute-pre
+normalize
+laws
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1753] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1754] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1755] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1756] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+laws
+axioms
+#[serial 1757] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+laws
+axioms
+#[serial 1037]  <<M(Decide) and x>> A <<M(Run)>> for ms6cd:Decide-[x]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+normalize
+laws
+split-post
+axioms
+push
+make-an
+#[serial 1881]   normalization of [serial 1874]
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 1924] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1925] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 1926] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1927] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+laws
+axioms
+#[serial 1928] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[EstimatedActualPosition]
+laws
+axioms
+#[serial 1929] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+remove-axioms-post
+axioms
+#[serial 1932] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1933] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1934] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1935] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+guided-sub-equals[ACTUAL_POSITION']
+substitute-pre
+normalize
+laws
+normalize
+axioms
+#[serial 1939] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1913]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1940] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1913]
+now
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1942] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1918]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[(ACTUAL_POSITION + Delta)]
+axioms
+#[serial 1038]  <<M(Run) and x>> -> <<M(ShutDown)>> for ms7stop:Run-[x]->ShutDown{};
+normalize
+laws
+axioms
+#[serial 1039]  <<M(ShutDown) and x>> -> <<M(Done)>> for ms8done:ShutDown-[x]->Done{};
+normalize
+substitute-pre
+normalize
+laws
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1040]  <<M(ShutDown) and x>> A <<M(StillClosing)>> for ms9sc:ShutDown-[x]->StillClosing{A};
+normalize
+reduce
+atomic
+normalize
+laws
+normalize
+split-post
+axioms
+remove-axioms-post
+axioms
+push
+make-an
+#[serial 2081] Q2 -> Q in sequential composition for [serial 2078]
+substitute-post
+normalize
+alldist^
+laws
+axioms
+#[serial 2109] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2080]
+substitute-pre
+normalize
+laws
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 2110] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+guided-sub-equals[ACTUAL_POSITION']
+guided-sub-equals[Delta]
+normalize
+elim-subtract
+normalize
+axioms
+#[serial 2111] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+guided-sub-equals[Delta]
+elim-subtract
+normalize
+axioms
+#[serial 2112] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+substitute-pre
+normalize
+guided-sub-equals[ACTUAL_POSITION']
+guided-sub-equals[Delta]
+guided-sub-equals[EstimatedActualPosition]
+elim-subtract
+normalize
+laws
+axioms
+#[serial 2113] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2099]
+substitute-pre
+normalize
+laws
+<=to<
+axioms
+#[serial 2114] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2099]
+substitute-pre
+normalize
+laws
+axioms
+#[serial 2118] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+guided-sub-equals[Delta]
+elim-subtract
+axioms
+#[serial 2119] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+substitute-pre
+normalize
+transitive
+<=to<
+axioms
+#[serial 2120] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+substitute-pre
+normalize
+guided-sub-equals[Delta]
+transitive
+elim-subtract
+normalize
+<=to<
+axioms
+#[serial 1041]  <<M(ShutDown) and x>> -> <<M(Error)>> for ms10er:ShutDown-[x]->Error{};
+axioms
+#[serial 1042]  <<M(StillClosing) and x>> -> <<M(ShutDown)>> for ms11cl:StillClosing-[x]->ShutDown{};
+axioms

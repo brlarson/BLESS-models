@@ -1,0 +1,82 @@
+package Control
+--position controller
+public
+with BLESS, UnitsTypesAssertions, MI, ControlSoftware;
+
+-----------------------Controller--------------------------
+--@description software/processor control subsystem
+system Controller
+prototypes  --configurable for motor and control thread
+  MotorInterface: subprogram;
+  ControlThread: thread;
+features
+	PositionSetpoint: in event data port UnitsTypesAssertions::Position
+	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	ActuatorCommand: requires subprogram access MotorInterface;   
+end Controller;
+
+--@description base implementation of system, extended by other implementations
+system implementation Controller.base
+subcomponents
+	SGTF: process Fadec.original;  --process holding control and HMI threads
+	ECU: processor Ecu;  --processor executing threads
+	MEM: memory Ram;  --memory holding process containing threads
+connections
+  ps : port PositionSetpoint -> SGTF.PositionSetpoint;  --position set point
+--	cpcc: port SGTF.PCC -> SMC.PCC;  --position change to stepper motor control
+--	smcc: feature group smc.DoStepCmd <-> FlowValve.DoStepCmd;  --control to valve
+end Controller.base;
+
+--@description the physical processor that executes threads
+processor Ecu
+end Ecu;
+
+--@description the physical memory that holds the process containg threads
+memory Ram
+end Ram;
+
+--@description the process (protected address space) containing the threads
+process Fadec
+features
+	PositionSetpoint: in event data port UnitsTypesAssertions::Position
+	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	ActuatorCommand: requires subprogram access MI::Fragile;   
+--annex EMV2 {**  --error model for process fadec
+--	use types ErrorLibrary;
+--	error propagations
+--	  PositionSetpoint : in propagation {OutOfRange};
+--	  ActuatorCommand : out propagation {EarlyDelivery, LateDelivery, OutOfRange};
+--	end propagations;
+--	**};
+end fadec;
+
+--@description "original" implementation of process fadec, extended by other implementations
+--has PositionController and HMI threads as subcomponents
+process implementation Fadec.original
+subcomponents
+	PCT: thread --PositionControlThread;  --position control thread
+	--refined by RobustPositionControlThread.SingleStep
+	--  FragilePositionControlThread.SingleStep;  
+    ControlSoftware::FragilePositionControlThread.MultiStep;
+	HMI: thread HMI;  --the "other" thread with which scheduling conflicts (jitter) may occur
+connections
+  --desired position to thread
+  ps: port PositionSetpoint -> PCT.DesiredPosition;  
+  --control from thread to motor
+  ac: subprogram access PCT.ActuatorCommand -> ActuatorCommand;  
+--properties  --send output upon completion
+--	Output_Time => ([Time => Completion; Offset => 0 ns .. 0 ns;]) 
+--	  applies to PCT.PCC;
+end fadec.original;
+
+--@description interfering human-machine interface servicing thread, not further defined here
+thread HMI
+properties
+	Dispatch_Protocol => Periodic;
+	Period => PCS::HMIperiod;
+	Priority => 2;  --higher priority than PositionControlThread
+end HMI;
+
+
+
+end Control;

@@ -1,0 +1,66 @@
+package PositionControl
+public
+with Data_Model, --Base_Types, ErrorLibrary, 
+  BLESS, -- BLESS_Types, 
+  PCS, MI, Control,
+  UnitsTypesAssertions,
+  ControlSoftware, Act;
+
+
+-----------------Position Control System----------------------
+--@description highest-level system, contains all other components
+--gets position setpoint from "outside"
+system PositionControlSystem
+features   --the value arriving on PositionSetpoint is the desired position of the motor
+	PositionSetpoint: in event data port UnitsTypesAssertions::Position
+	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+properties
+  --at desired position, or will be closer to desired position next period
+  BLESS::Invariant=>"<<EQUAL_OR_CLOSER()>>";
+	--how long does a step take?
+	Timing_Properties::Clock_Period_Range=>PCS::StepDuration;
+end PositionControlSystem;
+
+
+--@description implementation using "robust" valve, single step
+system implementation PositionControlSystem.RobustSingleStep
+subcomponents
+  c: system Control::Controller  --processor, memory, process, threads
+    (MotorInterface=>subprogram MI::Robust, 
+    ControlThread=>thread ControlSoftware::RobustPositionControlThread.SingleStep);
+  a: system Act::Actuator  --motor, valve, hard-wired circuits
+    (MotorInterface=>subprogram MI::Robust);
+connections
+  ps: port PositionSetpoint->c.PositionSetpoint;  
+  ac: subprogram access c.ActuatorCommand -> a.ActuatorCommand;
+end PositionControlSystem.RobustSingleStep;
+
+--@description implementation using "fragile" valve, single step
+system implementation PositionControlSystem.FragileSingleStep
+subcomponents
+  c: system Control::Controller  --processor, memory, process, threads
+    (MotorInterface=>subprogram MI::Fragile, 
+    ControlThread=>thread ControlSoftware::FragilePositionControlThread.SingleStep);
+  a: system Act::Actuator  --motor, valve, hard-wired circuits
+    (MotorInterface=>subprogram MI::Fragile);
+connections
+  ps: port PositionSetpoint->c.PositionSetpoint;  
+  ac: subprogram access c.ActuatorCommand -> a.ActuatorCommand;
+end PositionControlSystem.FragileSingleStep;
+
+--@description implementation using "fragile" valve, up to 14 steps in 24 ms
+system implementation PositionControlSystem.FragileMultiStep
+subcomponents
+  c: system Control::Controller  --processor, memory, process, threads
+    (MotorInterface=>subprogram MI::Fragile, 
+    ControlThread=>thread ControlSoftware::FragilePositionControlThread.MultiStep);
+  a: system Act::Actuator  --motor, valve, hard-wired circuits
+    (MotorInterface=>subprogram MI::Fragile);
+connections
+  ps: port PositionSetpoint->c.PositionSetpoint;  
+  ac: subprogram access c.ActuatorCommand -> a.ActuatorCommand;
+end PositionControlSystem.FragileMultiStep;
+
+
+
+end PositionControl ;

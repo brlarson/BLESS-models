@@ -1,0 +1,166 @@
+#RobustSingleStep.ps
+push
+sort-by-component[ControlSoftware::RobustPositionControlThread.SingleStep]
+#ControlSoftware::RobustPositionControlThread.SingleStep
+#[serial 1044] <<M(StillClosing)>> -> <<I>> from invariant I when complete state StillClosing has Assertion <<M(StillClosing)>> in its definition
+make-an
+axioms
+#[serial 1045] <<M(Run)>> -> <<I>> from invariant I when complete state Run has Assertion <<M(Run)>> in its definition.
+axioms
+#[serial 1046] Serban's Theorem:  disjunction of execute conditions leaving execution state ShutDown, <<M(ShutDown)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1047] Serban's Theorem:  disjunction of execute conditions leaving execution state PowerOn, <<M(PowerOn)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1048] Serban's Theorem:  disjunction of execute conditions leaving execution state Decide, <<M(Decide)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1049]  <<M(PowerOn)>> A <<M(Run)>> for one0po:PowerOn-[ ]->Run{A};
+normalize
+reduce
+atomic
+normalize
+laws
+normalize
+axioms
+split-post
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+substitute-both
+dist^
+normalize
+dist^
+dist^
+normalize
+dist^
+axioms
+#[serial 1050]  <<M(Run) and x>> -> <<M(Decide)>> for one1run:Run-[x]->Decide{};
+axioms
+#[serial 1051]  <<M(Decide) and x>> A <<M(Run)>> for one2eq:Decide-[x]->Run{A};
+reduce
+atomic
+normalize
+atomic
+laws
+normalize
+axioms
+split-post
+axioms
+substitute-pre
+normalize
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+laws
+axioms
+substitute-both
+dist^
+normalize
+dist^
+normalize
+dist^
+normalize
+dist^
+axioms
+guided-sub-equals[ACTUAL_POSITION]
+normalize
+axioms
+#[serial 1052]  <<M(Decide) and x>> A <<M(Run)>> for one3gt:Decide-[x]->Run{A};
+reduce
+atomic
+normalize
+atomic
+laws
+normalize
+axioms
+substitute-pre
+normalize
+split-post
+substitute-both
+normalize
+axioms
+dist^
+normalize
+dist^
+normalize
+dist^
+normalize
+dist^
+axioms
+guided-sub-equals[ACTUAL_POSITION]
+guided-sub-equals[EstimatedActualPosition]
+guided-sub-equals[ACTUAL_POSITION^1]
+normalize
+laws
+axioms
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1053]  <<M(Decide) and x>> A <<M(Run)>> for one4lt:Decide-[x]->Run{A};
+reduce
+normalize
+atomic
+normalize
+laws
+axioms
+split-post
+axioms
+substitute-pre
+remove-axioms-post
+axioms
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+dist^
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+guided-sub-equals[MinusOne]
+elim-subtract
+normalize
+laws
+axioms
+substitute-post
+normalize
+alldist^
+axioms
+#[serial 1054]  <<M(Run) and x>> -> <<M(ShutDown)>> for one5stop:Run-[x]->ShutDown{};
+normalize
+laws
+axioms
+#[serial 1055]  <<M(ShutDown) and x>> -> <<M(Done)>> for one6done:ShutDown-[x]->Done{};
+substitute-pre
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1056]  <<M(ShutDown) and x>> A <<M(StillClosing)>> for one7sc:ShutDown-[x]->StillClosing{A};
+reduce
+normalize
+atomic
+remove-axioms-post
+laws
+axioms
+substitute-both
+normalize
+sub-all-eq
+sub-all-eq
+laws
+normalize
+elim-subtract
+normalize
+axioms
+dist^
+normalize
+laws
+dist^
+normalize
+dist^
+axioms
+sub-all-eq
+axioms
+#[serial 1057]  <<M(ShutDown) and x>> -> <<M(Error)>> for one8er:ShutDown-[x]->Error{};
+axioms
+#[serial 1058]  <<M(StillClosing) and x>> -> <<M(ShutDown)>> for one9cl:StillClosing-[x]->ShutDown{};
+axioms

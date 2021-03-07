@@ -1,0 +1,78 @@
+package Act
+public
+with MI;
+----------------------Actuator---------------------
+
+--@description Actuator subsystem consisting of motor, valve, and analog circuitry
+system Actuator
+prototypes  --configurable for motor
+  MotorInterface: subprogram;
+features
+  --invoked by subprogram call, making its postcondition true
+	ActuatorCommand: provides subprogram access MotorInterface;   
+end Actuator;
+
+--@description implementation of actuator using a flow valve and stepper motor
+system implementation Actuator.common
+subcomponents
+	FV: device FlowValve.impl;  --the stepper motor valve itself
+	SM: device StepperMotor.impl;  --analog motor drive circuits
+--	  (MotorInt=>MotorInterface);
+connections
+  --StepperMotor receives Move command
+  ac: subprogram access SM.ActuatorCommand->ActuatorCommand;
+  --StepperMotor tells FlowValve to step up or down
+--  u: subprogram access SM.Up -> FV.Up;
+--  d: subprogram access SM.Down -> FV.Down;
+end Actuator.common;	
+
+--@description the valve being controlled, not further specified
+device FlowValve
+features
+	--electrical interface to stepper motor
+  Up: provides subprogram access MI::StepUp;
+  Down: provides subprogram access MI::StepDown;
+properties
+	Dispatch_Protocol => Sporadic;  -- Aperiodic;
+annex EMV2 
+  {**
+	use types ErrorLibrary;
+	error propagations
+	  Up : not in propagation {ItemCommission};
+	  Down : not in propagation {ItemCommission};
+	end propagations;
+	**};
+end FlowValve;
+
+device implementation FlowValve.impl
+end FlowValve.impl;
+
+--@description electrical circuitry of the stepper motor
+device StepperMotor
+prototypes
+  MotorInt: subprogram;
+features
+  --position change command, invoked by software
+	ActuatorCommand: provides subprogram access MotorInt;     
+	--electrical interface to stepper motor
+--  Up: requires subprogram access MI::StepUp;
+--  Down: requires subprogram access MI::StepDown;
+properties
+	Dispatch_Protocol => Sporadic;  -- Aperiodic;
+annex EMV2 
+  {**
+	use types ErrorLibrary;
+	error propagations
+  	ActuatorCommand : in propagation { OutOfRange};
+--	  Up : not out propagation {ItemCommission};
+--	  Down : not out propagation {ItemCommission};
+	end propagations;
+	**};
+end StepperMotor;
+
+
+device implementation StepperMotor.impl
+end StepperMotor.impl;
+
+
+end Act;

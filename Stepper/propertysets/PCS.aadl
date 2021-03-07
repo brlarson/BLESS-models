@@ -1,0 +1,20 @@
+property set PCS is
+--properties for the position control system
+
+--valve position is 0..250
+	MaxPosition: aadlinteger => 250 applies to (all);
+--maximum steps	in MoveTime 
+	MaxStepsUp:  aadlinteger => 14 applies to (all);
+	MaxStepsDown:  aadlinteger => -14 applies to (all);
+--time for moving	
+	MoveTime:  Time_Range => 24 ms .. 24 ms applies to (all);
+--interfering human-machine interface servicing thread	
+	HMIperiod:  Time => 1 ms applies to (all);
+--period of	PositionControlThread
+  PCSperiod:  Time => 24 ms applies to (all);
+-- from OS Doc: Nom 583	Min 577	Max 617	Step Rate 14	per second steps
+	StepDuration :  Time_Range => 1620 us .. 1733 us applies to (all) ; 
+
+--Stepper Motor Steps
+	SMS : type units (step);
+end PCS ;

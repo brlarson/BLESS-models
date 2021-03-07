@@ -1,0 +1,64 @@
+package MI
+--subprograms for Motor Interface
+public
+with BLESS, --BLESS_Types,
+  UnitsTypesAssertions, 
+  PositionControl;
+-----------------subprograms-----------------------
+--@description command from the software Controller to the actuator to move
+--same for both robust and fragile valves
+subprogram Move
+features
+  --number of steps to move, may be negative
+  pc: in parameter UnitsTypesAssertions::PositionChange;  
+properties
+  BLESS::Precondition => "<<true>>";
+  BLESS::Postcondition => "<<true>>"; 
+end move;
+
+--@description robust valve, tolerates closing when closed, and opening when open
+subprogram Robust extends Move
+properties
+  BLESS::Precondition => "<<true>>";
+	--then the next position, is the current position plus the position change
+  BLESS::Postcondition => "<<ACTUAL_POSITION'=(ACTUAL_POSITION+pc)>>";  
+end Robust;
+
+
+--@description fragile valve, must not be commanded outside of range
+subprogram Fragile extends Move
+properties 
+  --if the position change won't put the actual position out-of-range
+  BLESS::Precondition => "<<(ACTUAL_POSITION+pc)>=0 and (ACTUAL_POSITION+pc)<=#PCS::MaxPosition>>";  
+	--then the next position, is the current position plus the position change
+  BLESS::Postcondition => "<<ACTUAL_POSITION'=(ACTUAL_POSITION+pc)>>";  
+end Fragile;
+
+--@description single step up
+--step-up and step-down don't have BLESS implementations,
+--they just express the effect of moving the motor one step
+subprogram StepUp
+properties
+	Compute_Execution_Time => PCS::StepDuration;
+	--not at maximum
+  BLESS::Precondition => 
+    "<<(ACTUAL_POSITION+1)<=#PCS::MaxPosition>>";  
+	--next position, is the current position plus one
+  BLESS::Postcondition => 
+    "<<ACTUAL_POSITION'=(ACTUAL_POSITION+1)>>";  
+end StepUp;
+
+--@description single step down
+subprogram StepDown
+properties
+	Compute_Execution_Time => PCS::StepDuration;
+	--not at minimum
+  BLESS::Precondition => 
+    "<<(ACTUAL_POSITION-1)>=0>>";  
+	--next position, is the current position minus one
+  BLESS::Postcondition => 
+    "<<ACTUAL_POSITION'=(ACTUAL_POSITION-1)>>";  
+end StepDown;
+
+
+end MI;

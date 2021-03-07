@@ -1,0 +1,456 @@
+package ControlSoftware
+public
+with BLESS, MI, PCS, UnitsTypesAssertions;
+
+--@description position control thread component type
+thread PositionControlThread
+features
+	ActuatorCommand: requires subprogram access;   
+	DesiredPosition: in data port UnitsTypesAssertions::Position  --polled every 24ms
+	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+properties
+	Dispatch_Protocol => Periodic;
+	Period => PCS::PCSperiod;
+	Deadline => Period;  --deadline is default for periodic threads
+	Priority => 1;  --lower than HMI
+end PositionControlThread;
+
+--@description thread for robust valve
+thread RobustPositionControlThread
+  extends PositionControlThread
+features
+	ActuatorCommand: refined to requires subprogram access MI::Robust;   
+annex EMV2 
+  {**  --error model for control thread
+	use types ErrorLibrary;
+	error propagations
+	  ActuatorCommand : out propagation {EarlyDelivery, LateDelivery, OutOfRange};
+	  -- out of position range for PCC has not been captured
+	  DesiredPosition : in propagation {OutOfRange};
+	end propagations;
+	**};  --end of EMV2 annex subclause
+end RobustPositionControlThread;
+
+--@description move "robust" actuator up or down one step at a time
+thread implementation RobustPositionControlThread.SingleStep
+properties
+	Period => 2ms;
+annex BLESS 
+{**
+invariant <<true>>
+variables
+  EstimatedActualPosition ~ position := 0   --estimate of actual valve position
+    <<E_SS: :EstimatedActualPosition=ACTUAL_POSITION>>
+  Delta ~ singleStep  --change previous period
+    <<D_SS: :Delta=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
+  MinusOne ~  quantity whole := -1  --needed as actual parameter for subprogram call
+--    integer:= -1  
+    <<AXIOM_MO: :MinusOne= -1>>;
+states    
+  PowerOn : initial state  --power-on initialization
+	  <<ACTUAL_POSITION=0>>;
+	Run : complete state  --waiting for next period
+	  <<E_SS() and D_SS()>>;
+	Decide : state  --choose what to do
+	  <<E_SS() and D_SS()>>;
+  ShutDown :  state  --closing before normal termination
+	  <<E_SS()>>;
+	StillClosing : complete state  --still closing
+	  <<E_SS() and (ACTUAL_POSITION^(-1)>0)>>;
+	Done : final state  --normal termination
+	  <<ACTUAL_POSITION=0>>;  --valve closed upon normal termination
+	Error : final state;  --fault-caused termination
+transitions
+  one0po: PowerOn -[ ]-> Run
+    {  <<ACTUAL_POSITION=0>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<(ACTUAL_POSITION'=(ACTUAL_POSITION+0)) and (ACTUAL_POSITION=0)>>	
+    ;
+    |EstimatedActualPosition',Delta':= 0,0|     --set own estimate of position   
+    <<(EstimatedActualPosition'=ACTUAL_POSITION')  --E()'
+      and (Delta'=(ACTUAL_POSITION'-ACTUAL_POSITION)) >>  --D()'
+    };  --end of one0po  	
+  one1run: Run -[on dispatch]-> Decide{};
+  one2eq: Decide -[DesiredPosition?=EstimatedActualPosition]->Run
+    {  --stay in same position
+    <<E_SS() and DESIRED_POSITION=ACTUAL_POSITION>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<(ACTUAL_POSITION'=(ACTUAL_POSITION+0)) and E_SS()>>	
+    ;
+    |EstimatedActualPosition',Delta' := EstimatedActualPosition,0|     --set own estimate of position     
+    <<(EstimatedActualPosition'=ACTUAL_POSITION')
+      and (Delta'=(ACTUAL_POSITION'-ACTUAL_POSITION))>>
+    };  --end of one2eq
+  one3gt: Decide -[DesiredPosition?>EstimatedActualPosition]->Run
+    {  --open
+      <<E_SS() and DESIRED_POSITION>ACTUAL_POSITION>>
+    ActuatorCommand(pc:1)              --open valve one step
+      <<ACTUAL_POSITION'=(ACTUAL_POSITION+1) and E_SS()>>	
+    ;
+    |EstimatedActualPosition',Delta' := (EstimatedActualPosition+1),1|     --set own estimate of position     
+    <<(EstimatedActualPosition'=ACTUAL_POSITION')
+      and (Delta'=(ACTUAL_POSITION'-ACTUAL_POSITION))>>    
+    };  --end of one3gt
+  one4lt: Decide -[DesiredPosition?<EstimatedActualPosition]->Run
+    {  --close
+    <<E_SS() and DESIRED_POSITION<ACTUAL_POSITION and AXIOM_MO() >>
+    ActuatorCommand(pc:MinusOne)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+MinusOne) and E_SS()
+      and AXIOM_MO() >>	
+    ;
+    |EstimatedActualPosition',Delta' := (EstimatedActualPosition- 1),-1|     --set own estimate of position     
+    <<(EstimatedActualPosition' =ACTUAL_POSITION')
+      and Delta' =(ACTUAL_POSITION'-ACTUAL_POSITION)>>    
+    };  --end of one4
+  --get normal stop event
+  one5stop: Run -[on dispatch stop]-> ShutDown{};
+  --already closed?
+  one6done: ShutDown -[EstimatedActualPosition=0]-> Done{};
+  --still closing?
+  one7sc: ShutDown -[EstimatedActualPosition>0]-> StillClosing
+    { <<E_SS() and ACTUAL_POSITION>0>>
+     ActuatorCommand(pc:MinusOne)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+MinusOne)
+       and ACTUAL_POSITION>0 and E_SS() and AXIOM_MO()>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition- 1)     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION' and ACTUAL_POSITION>0>>
+    };  --end of one7sc
+  --closed tighter than 0
+  one8er: ShutDown -[EstimatedActualPosition<0]-> Error{};
+  one9cl: StillClosing -[on dispatch]-> ShutDown{};  
+**};  
+end RobustPositionControlThread.SingleStep;
+
+--@description thread for fragile valve
+thread FragilePositionControlThread
+  extends PositionControlThread
+features
+	ActuatorCommand: refined to requires subprogram access MI::Fragile;   
+annex EMV2 
+  {**  --error model for control thread
+	use types ErrorLibrary;
+	error propagations
+	--out of range error not propagated
+	  ActuatorCommand : out propagation {EarlyDelivery, LateDelivery, OutOfRange};
+	  DesiredPosition : in propagation {OutOfRange};
+	end propagations;
+	**};  --end of EMV2 annex subclause
+end FragilePositionControlThread;
+
+--@description move "fragile" actuator up or down one step at a time
+--moves fast 12x, buffered
+thread implementation FragilePositionControlThread.SingleStep
+properties
+	Period => 2ms;
+annex BLESS 
+{**  
+--fragile valve must not be commanded out of range
+invariant <<ACTUAL_IN_RANGE()>>
+variables
+  EstimatedActualPosition ~ position :=0  --estimate of actual valve position
+    <<E: :EstimatedActualPosition=ACTUAL_POSITION>>
+  Delta ~ singleStep :=0  --change previous period
+    <<D: :Delta^(-1)=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
+states    
+  PowerOn : initial state  --power-on initialization
+	  <<ACTUAL_POSITION=0>>;
+	Run : complete state  --waiting for next period
+	  <<E() and D() and ACTUAL_IN_RANGE()>>;
+	Check : state   --check whether desired position is in range  
+	  <<E() and ACTUAL_IN_RANGE()>>;
+	Decide : state  --choose what to do
+	  <<E() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>;
+  ShutDown :  state  --close valve before normal termination
+	  <<E() and ACTUAL_IN_RANGE()>>;
+	StillClosing : complete state  --still closing?
+	  <<E() and ACTUAL_IN_RANGE()>>;
+	Done : final state  --normal termination
+	  <<ACTUAL_POSITION=0>>;  --valve closed upon normal termination
+	Error : final state;  --fault-caused termination
+transitions
+  fra0po: PowerOn -[ ]-> Run
+    {  <<AXIOM_MPGT0() and ACTUAL_POSITION=0>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+0) and ACTUAL_POSITION=0>>	
+    ;
+    Delta:=0                       --set the delta
+    <<ACTUAL_POSITION'=ACTUAL_POSITION and ACTUAL_POSITION=0 and AXIOM_MPGT0()
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)>>	
+    ;
+    EstimatedActualPosition':=0     --set own estimate of position   
+    <<EstimatedActualPosition'=ACTUAL_POSITION'  --E()'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)  --D()'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>> --ACTUAL_IN_RANGE()'
+    };  --end of fra0po  	
+  fra1run: Run -[on dispatch]-> Check{};
+  fra1ok: Check -[(DesiredPosition?>=0) and (DesiredPosition?<=#PCS::MaxPosition) ]->
+      Decide{};
+  fra1er: Check -[(DesiredPosition?<0) or (DesiredPosition?>#PCS::MaxPosition) ]->
+      Error{};  --put out renge error detected to EMV2
+  fra2eq: Decide -[DesiredPosition?=EstimatedActualPosition]->Run
+    {  --stay in same position
+    <<E() and DESIRED_POSITION=ACTUAL_POSITION and ACTUAL_IN_RANGE()>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<(ACTUAL_POSITION'=(ACTUAL_POSITION+0)) and E() and ACTUAL_IN_RANGE()>>	
+    ;
+    Delta := 0                       --set the delta
+    <<(ACTUAL_POSITION'=ACTUAL_POSITION) and E() and ACTUAL_IN_RANGE()
+      and (Delta=(ACTUAL_POSITION'-ACTUAL_POSITION))>>	
+    ;
+    EstimatedActualPosition':= EstimatedActualPosition     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'  --E()'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)  --D()'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>> --ACTUAL_IN_RANGE()'
+    };  --end of fra2eq
+  fra3gt: Decide -[(EstimatedActualPosition+1)<=DesiredPosition?]->Run  --opening won't be more than desired
+    {  --open
+      <<(ACTUAL_POSITION+1)<=DESIRED_POSITION
+         and E() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := 1                       --set the delta
+      << E() and DESIRED_POSITION>=(ACTUAL_POSITION+1) and Delta=1 
+        and ACTUAL_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition
+        and AXIOM_LT(ACTUAL_POSITION)
+        and (ACTUAL_POSITION+1)<=#PCS::MaxPosition>>	
+    ;     
+    ActuatorCommand(pc:Delta)              --open valve one step
+      <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and E()
+        and Delta=1 and ACTUAL_POSITION>=0 
+        and (ACTUAL_POSITION+Delta)>=0 and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+      <<EstimatedActualPosition'= ACTUAL_POSITION'
+        and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+        and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of fra3gt
+  fra4lt: Decide -[DesiredPosition?<=(EstimatedActualPosition- 1)]->Run
+    {  --close
+    <<DESIRED_POSITION<=(ACTUAL_POSITION- 1) 
+        and E() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := -1                       --set the delta
+    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=DESIRED_POSITION 
+        and AXIOM_GT(ACTUAL_POSITION)
+        and DESIRED_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    ;
+    ActuatorCommand(pc:Delta)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1 
+      and (ACTUAL_POSITION+Delta)>=0 and E()
+      and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of fra4lt
+  --for Serban's theorem
+  fraSerban:  Decide -[(DesiredPosition?>(EstimatedActualPosition- 1))
+  	    and ((EstimatedActualPosition+1)>DesiredPosition?)]->Error{};
+  --get normal stop event
+  fra5stop: Run -[on dispatch stop]-> ShutDown{};
+  --already closed?
+  fra6done: ShutDown -[EstimatedActualPosition=0]-> Done{};
+  --still closing?
+  fra7sc: ShutDown -[EstimatedActualPosition>0]-> StillClosing
+    { <<E() and ACTUAL_POSITION>0 and ACTUAL_IN_RANGE()>>
+    Delta := -1                       --set the delta
+    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(ACTUAL_POSITION)
+        and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    ;
+     ActuatorCommand(pc:Delta)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1
+        and (ACTUAL_POSITION- 1)>=0 and E() and (ACTUAL_POSITION- 1)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition- 1)     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>
+    };  --end of fra7sc
+  --closed tighter than 0
+  fra8er: ShutDown -[EstimatedActualPosition<0]-> Error{};
+  fra9cl: StillClosing -[on dispatch]-> ShutDown{};  
+**};  
+end FragilePositionControlThread.SingleStep;
+
+
+--@description position control thread component implementation, "fragile" valve, multi-step
+--receives desired position from host system
+--sends move commands of up to +/-14 steps
+--until the actual position is the desired position
+thread implementation FragilePositionControlThread.MultiStep
+properties
+	Period => 24ms;
+annex BLESS 
+{**  
+--fragile valve must not be commanded out of range
+invariant <<E_MS() and ACTUAL_IN_RANGE()>>
+variables
+  EstimatedActualPosition ~ position := 0  --estimate of actual valve position
+    <<E_MS: :EstimatedActualPosition=ACTUAL_POSITION>>
+  Delta ~ multiStep := 0 --change in valve position
+    <<D_MS: :Delta^(-1)=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
+states    
+  PowerOn : initial state  --power-on initialization
+	  <<ACTUAL_POSITION=0>>;
+	Run : complete state  --waiting for next period
+	  <<E_MS() and D_MS() and ACTUAL_IN_RANGE()>>;
+	Check : state   --check whether desired position is in range  
+	  <<E_MS() and ACTUAL_IN_RANGE()>>;
+	Decide : state  --choose what to do
+	  <<E_MS() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>;
+  ShutDown :  state  --close valve before normal termination
+	  <<E_MS() and ACTUAL_IN_RANGE()>>;
+	StillClosing : complete state  --still closing?
+	  <<E_MS() and ACTUAL_IN_RANGE()>>;
+	Done : final state  --normal termination
+	  <<ACTUAL_POSITION=0>>;  --valve closed upon normal termination
+	Error : final state;  --fault-caused termination
+transitions
+  ms0po: PowerOn -[ ]-> Run
+    {  <<AXIOM_MPGT0() and ACTUAL_POSITION=0>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+0) and ACTUAL_POSITION=0>>	
+    ;
+    Delta:=0                       --set the delta
+    <<ACTUAL_POSITION'=ACTUAL_POSITION and ACTUAL_POSITION=0 and AXIOM_MPGT0()
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)>>	
+    ;
+    EstimatedActualPosition':=0     --set own estimate of position   
+    <<EstimatedActualPosition'=ACTUAL_POSITION'  --E()'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)  --D()'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>> --ACTUAL_IN_RANGE()'
+    };  --end of ms0po  	
+  ms1run:  --initial transition
+    Run -[on dispatch]-> Check{};
+  ms1ok:   --desired position in range?
+    Check -[(DesiredPosition?>=0) and (DesiredPosition?<=#PCS::MaxPosition) ]->Decide{};
+  ms1er:  --put out range error detected to EMV2
+    Check -[(DesiredPosition?<0) or (DesiredPosition?>#PCS::MaxPosition) ]-> Error{};  
+  ms2eq:  --desired position is current position
+    Decide -[DesiredPosition?=EstimatedActualPosition]->Run
+    {  --stay in same position
+    <<E_MS() and DESIRED_POSITION=ACTUAL_POSITION and ACTUAL_IN_RANGE()>>
+    ActuatorCommand(pc:0)              --don't move the valve
+    <<(ACTUAL_POSITION'=(ACTUAL_POSITION+0)) and E_MS() and ACTUAL_IN_RANGE()>>	
+    ;
+    Delta := 0                       --set the delta
+    <<(ACTUAL_POSITION'=ACTUAL_POSITION) and E_MS() and ACTUAL_IN_RANGE()
+      and (Delta=(ACTUAL_POSITION'-ACTUAL_POSITION))>>	
+    ;
+    EstimatedActualPosition ':= EstimatedActualPosition     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'  --E()'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION)  --D()'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>> --ACTUAL_IN_RANGE()'
+    };  --end of ms2eq
+  ms3om: --open max steps
+    Decide -[(EstimatedActualPosition+#PCS::MaxStepsUp)<=DesiredPosition?]->Run  
+    {  --maximum opening won't be more than desired
+      <<(ACTUAL_POSITION+#PCS::MaxStepsUp)<=DESIRED_POSITION
+         and E_MS() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := #PCS::MaxStepsUp                      --set the delta
+      << E_MS() and DESIRED_POSITION>=(ACTUAL_POSITION+#PCS::MaxStepsUp) and Delta=#PCS::MaxStepsUp 
+        and ACTUAL_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition
+        and AXIOM_LTK(z:ACTUAL_POSITION, k:#PCS::MaxStepsUp)
+        and (ACTUAL_POSITION+#PCS::MaxStepsUp)<=#PCS::MaxPosition>>	
+    ;     
+    ActuatorCommand(pc:Delta)              --open valve one step
+      <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and E_MS()
+        and Delta=#PCS::MaxStepsUp and ACTUAL_POSITION>=0 
+        and (ACTUAL_POSITION+Delta)>=0 and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+      <<EstimatedActualPosition'= ACTUAL_POSITION'
+        and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+        and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of ms3om
+  ms4cm:  --close max steps
+    Decide -[DesiredPosition?<=(EstimatedActualPosition-#PCS::MaxStepsUp)]->Run
+    {  --close
+      <<DESIRED_POSITION<=(ACTUAL_POSITION-#PCS::MaxStepsUp) 
+        and E_MS() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := -#PCS::MaxStepsUp                       --set the delta
+      <<E_MS() and Delta= -#PCS::MaxStepsUp and (ACTUAL_POSITION-#PCS::MaxStepsUp)>=DESIRED_POSITION 
+        and AXIOM_GTK(z:ACTUAL_POSITION, k:#PCS::MaxStepsUp)
+        and DESIRED_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    ;
+    ActuatorCommand(pc:Delta)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -#PCS::MaxStepsUp 
+      and (ACTUAL_POSITION+Delta)>=0 and E_MS()
+      and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'
+      and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of ms4cm
+  ms5od:  --open delta<max steps
+    Decide -[(EstimatedActualPosition<DesiredPosition?) and
+    	((EstimatedActualPosition+#PCS::MaxStepsUp)>DesiredPosition?)]->Run  
+    { <<(ACTUAL_POSITION+#PCS::MaxStepsUp)>DESIRED_POSITION 
+    	   and ACTUAL_POSITION<DESIRED_POSITION
+         and E_MS() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := DesiredPosition?-EstimatedActualPosition    --set the delta
+      << E_MS() and DESIRED_POSITION=(ACTUAL_POSITION+Delta) 
+        and Delta=(DESIRED_POSITION-ACTUAL_POSITION) 
+        and ACTUAL_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition
+        and AXIOM_LTK(z:ACTUAL_POSITION, k:Delta)
+        and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;     
+    ActuatorCommand(pc:Delta)              --open valve one step
+      <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and E_MS()
+        and Delta=(DESIRED_POSITION-ACTUAL_POSITION) and ACTUAL_POSITION>=0 
+        and (ACTUAL_POSITION+Delta)>=0 and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+      <<EstimatedActualPosition'= ACTUAL_POSITION'
+        and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+        and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of ms5od
+  ms6cd:  --close delta<max steps
+    Decide -[(EstimatedActualPosition>DesiredPosition?) and
+    	((EstimatedActualPosition- #PCS::MaxStepsUp)<DesiredPosition?)]->Run  
+    { <<(ACTUAL_POSITION- #PCS::MaxStepsUp)<DESIRED_POSITION 
+    	   and ACTUAL_POSITION>DESIRED_POSITION
+         and E_MS() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
+    Delta := DesiredPosition?-EstimatedActualPosition    --set the delta
+      << E_MS() and DESIRED_POSITION=(ACTUAL_POSITION+Delta) 
+        and Delta=(DESIRED_POSITION-ACTUAL_POSITION) 
+        and ACTUAL_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition
+        and AXIOM_LTK(z:ACTUAL_POSITION, k:-Delta) and DESIRED_IN_RANGE()
+        and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;     
+    ActuatorCommand(pc:Delta)              --open valve one step
+      <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and E_MS() and DESIRED_IN_RANGE()
+        and Delta=(DESIRED_POSITION-ACTUAL_POSITION) and ACTUAL_POSITION>=0 
+        and (ACTUAL_POSITION+Delta)>=0 and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition+Delta)     --set own estimate of position     
+      <<EstimatedActualPosition'= ACTUAL_POSITION'
+        and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
+        and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
+    };  --end of ms6cd
+  ms7stop:   --get normal stop event
+    Run -[on dispatch stop]-> ShutDown{};
+  ms8done: --already closed?
+    ShutDown -[EstimatedActualPosition=0]-> Done{};
+  ms9sc:  --still closing?
+    ShutDown -[EstimatedActualPosition>0]-> StillClosing
+    { <<E_MS() and ACTUAL_POSITION>0 and ACTUAL_IN_RANGE()>>
+    Delta := -1                       --set the delta
+    <<E_MS() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(ACTUAL_POSITION)
+        and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    ;
+     ActuatorCommand(pc:Delta)              --close valve one step
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1
+        and (ACTUAL_POSITION- 1)>=0 and E_MS() and (ACTUAL_POSITION- 1)<=#PCS::MaxPosition>>	
+    ;
+    EstimatedActualPosition' := (EstimatedActualPosition- 1)     --set own estimate of position     
+    <<EstimatedActualPosition'=ACTUAL_POSITION'
+      and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>
+    };  --end of ms9sc
+  ms10er:  --closed tighter than 0?
+    ShutDown -[EstimatedActualPosition<0]-> Error{};
+  ms11cl: StillClosing -[on dispatch]-> ShutDown{};  
+**};    --end of BLESS annex subclause
+end FragilePositionControlThread.MultiStep;
+
+
+end ControlSoftware;
