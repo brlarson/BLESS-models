@@ -357,7 +357,7 @@ process ICEpoUIprocess
       };
       
     SpO2Avg : in data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Assertion=>"<<SPO2_AVERAGE()>>";}
+      {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";}
       ;
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
