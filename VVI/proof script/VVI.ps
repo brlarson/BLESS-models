@@ -2,7 +2,6 @@
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
 make-an
 substitute-both
-split-quant
 normalize
 axioms
 #[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
@@ -36,17 +35,17 @@ laws
 normalize
 axioms
 push
-#[serial 1057]   normalization of [serial 1049
+#[serial 1056]   normalization of [serial 1048
 make-an
 substitute-post
 normalize
 split-post
-equivalent
+guided-sub-equals[last_beat]
 axioms
 normalize
 quant
 axioms
-#[serial 1061]   normalization of [serial 1053]
+#[serial 1060]   normalization of [serial 1052]
 replace-port
 normalize
 axioms
@@ -67,24 +66,26 @@ normalize
 split-post
 normalize
 push
+#vvi_mode::VVI.i
+#[serial 1090] P -> P1 in concurrent composition for [serial 1088
 make-an
-#[serial 1092] P -> P1 in concurrent composition for [serial 1090]
 substitute-post
 normalize
 axioms
-#[serial 1104]   normalization of [serial 1097]
+#[serial 1102]   normalization of [serial 1095]
 replace-port
 axioms
-#[serial 1107] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1102]
-equivalent
+#[serial 1105] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1100]
+guided-sub-equals[last_beat]
 axioms
-#[serial 1113]   normalization of [serial 1108]
+#[serial 1111]   normalization of [serial 1106]
 quant
 axioms
 #[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
 normalize
 axioms
 #[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
+normalize
 axioms
 #[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
 reduce
@@ -94,30 +95,28 @@ normalize
 axioms
 push
 make-an
-#[serial 1134]   normalization of [serial 1125]
-substitute-post
-normalize
-split-post
-axioms
-substitute-post
-normalize
-split-post
-axioms
-substitute-pre
-split@
+#[serial 1135]   normalization of [serial 1126]
+substitute-both
 normalize
 laws
+substitute-post
+normalize
+laws
+split-post
 axioms
-#[serial 1136]   normalization of [serial 1126]
+split@
+normalize
+axioms
+#[serial 1137]   normalization of [serial 1127]
 substitute-post
 normalize
 split-post
-equivalent
+guided-sub-equals[last_beat]
 axioms
 normalize
 quant
 axioms
-#[serial 1140]   normalization of [serial 1130]
+#[serial 1141]   normalization of [serial 1131]
 replace-port
 normalize
 axioms
@@ -126,30 +125,31 @@ reduce
 atomic
 laws
 normalize
-laws
 axioms
 push
 make-an
-#[serial 1193]   normalization of [serial 1183]
+#[serial 1190]   normalization of [serial 1181]
 substitute-post
-normalize
-equivalent
-split-post
+laws
 normalize
 axioms
+#[serial 1192]   normalization of [serial 1182]
+substitute-post
+normalize
+split-post
+guided-sub-equals[last_beat]
+axioms
+normalize
 quant
 axioms
-#[serial 1196]   normalization of [serial 1187]
+#[serial 1195]   normalization of [serial 1186]
 replace-port
-axioms
-#[serial 1203] Associativity: (b.c).a = a.b.c [serial 1191]
-substitute-post
-normalize
 axioms
 #[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
 normalize
 axioms
 #[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
+normalize
 axioms
 #[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
 reduce
@@ -159,7 +159,7 @@ normalize
 axioms
 push
 make-an
-#[serial 1236]   normalization of [serial 1227]
+#[serial 1234]   normalization of [serial 1225]
 substitute-post
 normalize
 split-post
@@ -169,20 +169,20 @@ normalize
 split-post
 axioms
 substitute-pre
+laws
 split@
 normalize
-laws
 axioms
-#[serial 1238]   normalization of [serial 1228]
+#[serial 1236]   normalization of [serial 1226]
 substitute-post
-equivalent
 normalize
 split-post
+guided-sub-equals[last_beat]
 axioms
-quant
 normalize
+quant
 axioms
-#[serial 1242]   normalization of [serial 1232]
+#[serial 1240]   normalization of [serial 1230]
 replace-port
 normalize
 axioms
