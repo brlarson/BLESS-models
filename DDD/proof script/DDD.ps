@@ -52,7 +52,6 @@ normalize
 laws
 axioms
 push
-#ddd_mode::DDD.i
 #[serial 1100]   normalization of [serial 1086
 make-an
 substitute-post
@@ -64,7 +63,6 @@ normalize
 split-post
 normalize
 push
-#ddd_mode::DDD.i
 #[serial 1136] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1134
 make-an
 guided-sub-equals[last_ap_or_as]
@@ -84,10 +82,10 @@ quant
 normalize
 axioms
 #[serial 1146]   normalization of [serial 1139]
-equivalent
+guided-sub-equals[last_ap_or_as]
 axioms
 #[serial 1148]   normalization of [serial 1140]
-equivalent
+guided-sub-equals[last_vp_or_vs]
 axioms
 #[serial 1121] Associativity: (b.c).a = a.b.c [serial 1104]
 replace-port
@@ -130,7 +128,6 @@ substitute-post
 split-post
 normalize
 push
-#ddd_mode::DDD.i
 #[serial 1250]   normalization of [serial 1247
 make-an
 substitute-pre
@@ -178,7 +175,6 @@ remove-axioms-post
 laws
 normalize
 push
-#ddd_mode::DDD.i
 #[serial 1334]   normalization of [serial 1325
 make-an
 substitute-post
@@ -208,7 +204,6 @@ normalize
 split-post
 normalize
 push
-#ddd_mode::DDD.i
 #[serial 1402] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1400
 make-an
 substitute-pre
@@ -241,7 +236,6 @@ normalize
 laws
 axioms
 push
-#ddd_mode::DDD.i
 #[serial 1444]   normalization of [serial 1434
 make-an
 substitute-post
@@ -272,7 +266,6 @@ normalize
 split-post
 normalize
 push
-#ddd_mode::DDD.i
 #[serial 1505] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1503
 make-an
 substitute-pre
@@ -323,7 +316,6 @@ axioms
 laws
 axioms
 push
-#ddd_mode::DDD.i
 #[serial 1577] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1566
 make-an
 substitute-pre
@@ -459,7 +451,6 @@ laws
 split-post
 axioms
 push
-#ddd_mode::DDD.i
 #[serial 1776]   normalization of [serial 1762
 make-an
 substitute-post
@@ -740,4 +731,3 @@ axioms
 axioms
 #[serial 1035]  <<M(va) and x>> -> <<M(off)>> for T17_STOP:va-[x]->off{};
 axioms
-#Q.E.D.
