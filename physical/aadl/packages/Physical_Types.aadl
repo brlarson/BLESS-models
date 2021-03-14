@@ -1,0 +1,69 @@
+package Physical_Types
+public
+  with BLESS_Types,Data_Model,BLESS;
+
+annex Unit
+{**
+m m m / s [ fluid flow rate ] < cubic meter per second > cumps, < milliter per hour > mlph / 3.4e4;
+g / m m m [ drug concentration ] < grams per cubic meter > gpcum, < milligrams per liter > mgpl / 1.0e9;
+extension Hz, < pulses per minute > ppm * 60;
+extension A, < microamps > uA / 1.0e6; 
+**};	
+
+--electrical potential measurement 
+data Voltage extends BLESS_Types::Integer
+  properties
+    Data_Model::Measurement_Unit=>"Physical_Properties::Voltage_Units";
+    BLESS::Typed=>"quantity V";
+end Voltage;
+
+--electrical current measurement  
+data Current extends BLESS_Types::Integer
+  properties
+    Data_Model::Measurement_Unit=>"Physical_Properties::Current_Units";
+    BLESS::Typed=>"quantity mA";
+end Current;
+
+--physical liquid flow
+data Fluid_Flow
+  properties
+    Data_Model::Measurement_Unit=>"ml_per_hr";
+    BLESS::Typed=>"quantity mlph";
+end Fluid_Flow;
+  
+data Fluid_Volume
+  properties
+    Data_Model::Measurement_Unit=>"ml";
+    BLESS::Typed=>"quantity ml";
+end Fluid_Volume;
+  
+data Light_Wavelength  
+  properties
+    Data_Model::Measurement_Unit=>"nm";
+    BLESS::Typed=>"quantity nm";  
+end Light_Wavelength;
+  
+data Light_Intensity  
+  properties
+    Data_Model::Measurement_Unit=>"candela";
+    BLESS::Typed=>"quantity C";  
+end Light_Intensity;
+ 
+data Touch  --clinician pressing buttons or touch screen
+end Touch;
+
+data Image  --user interface visual
+end Image;
+
+data Sound  --user interface sound
+end Sound;
+
+data Minute extends BLESS_Types::Integer
+  properties
+    Data_Model::Measurement_Unit=>"Time_Units";
+    BLESS::Typed=>"time";
+end Minute;
+
+
+
+end Physical_Types;

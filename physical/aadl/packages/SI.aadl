@@ -1,0 +1,39 @@
+--SI.aadl
+
+-- International System of Units
+-- adapted for AADL unit relations
+-- derived units have a signature of base units for conversion
+
+package SI
+public
+ 
+annex Unit
+{**  
+base [ length ]	 < meter > m, < millimeter > mm * 1000, < centimeter > cm * 100, < kilometer > km / 1000,
+  < inch > inch * 39.370787;
+base [ mass ]    < gram > g,  --SI uses kilogram for base mass unit
+  < kilogram > kg / 1000, < milligram > mg * 1000 ;
+base [ time ]    < second > s,  < millisecond > ms * 1000, < microsecond > us * 1000000, < minute > min / 60,
+  < hour > hr / 360, < day > day / 8640, < picosecond > ps * 1.0e12, < nanosecond > ns * 1.0e9, < year > year / 31557600 ;
+base [ electric current ] < ampere > A, < milliampere > mA * 1000;
+base [ temperature ] < kelvin > K;
+base [ substance ] < mole > X; --base units must have single characters, wat for mol?
+base [ luminous intensity ] < candela > C;  --SI uses cd, but we will use C
+/ s [ frequency ] < hertz > Hz;
+g m/s s [ force weight ] < millinewton > mN;
+g/m s s [ pressure ] < millipascal > mPa;
+g m m/s s [ energy work heat ] < millijoule > mJ;
+g m m/s s s [ power ] < milliwatt > mW;
+s A [ electric charge ] < coulomb > Q;
+m m m/s s s A [ voltage ] < millivolt > mV, < volt > V / 1000;
+s s s s A A / g m m [ capacitance ] < kilofarad > kF;
+g m m / s s s A A [ electric resistance ] < milliohm > mOhm;  --can't type omega
+s s s A A / g m m [ electric conductance ] < kilosiemens > kMho;  --Mho is the inverse of Ohm
+m m [ area ] < square meter > sqm, < square kilometer > sqkm * 1.0e-6; 
+m m m [ volume ] < cubic meter > cum, < milliliter > ml * 1.0e9, < liter > l * 1.0e7; 
+m/s [ velocity ] < meters per second > mps, <kilometers per hour> kph * 3.6, <miles per hour> mph * 2.236;
+m/s s [ acceleration ] < meters per second per second > mpss;
+**};		
+
+	
+end SI;
