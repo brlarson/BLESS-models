@@ -1,15 +1,12 @@
 ---ATR.aadl
 --atrial tachycardia response
-
 package ATR
 public
-with BLESS, BLESS_Types, PACE_Data;
+	with BLESS, BLESS_Types, PACE_Data;
+	flag renames data BLESS_Types::flag;
+	time renames data BLESS_Types::Time;
 
-flag renames data BLESS_Types::flag;
-time renames data BLESS_Types::Time;
-
-annex Assertion 
-	{**
+	annex Assertion {**
 	ghost variables
 	def DUR~quantity whole  --When in ATR Duration, the PG shall delay a programmed number of cardiac 
 --   cycles before entering Fallback.
@@ -75,69 +72,65 @@ annex Assertion
   and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
 
 		
-	**}; 
- 
+	**};
 
-thread group AtrialTachyResponse
-  features
-  atr_enable : in data port flag;
-  dur : in data port PACE_Data::CCcount;  --number of cci in duration before fallback
-  fb: out data port flag  --fall-back to LRL, ignore A-channel
-    {BLESS::Assertion=>"<<FB>>";};
-  as: in event port --non-refractory atrial sense
-    ;  --{BLESS::Assertion=>"<<AS_A(now) or now=0>>";};
-  at: in event port --non-refractory atrial sense above URL
-    ; --{BLESS::Assertion=>"<<AT(now)>>";};
-  atr_detect: out event port  --ATR detection met
-    {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
-  atr_fallback: out event port   --start fall-back to VVI; marker ATR-FB
-    {BLESS::Assertion=>"<<FB>>";};
-  atr_end: out event port  --resume DDD; marker ATR-End
-    {BLESS::Assertion=>"<<ATR_END(now)>>";};
-	
-end AtrialTachyResponse;
+	thread group AtrialTachyResponse
+		features
+			atr_enable: in data port flag;
+			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
+			fb: out data port flag --fall-back to LRL, ignore A-channel
+			{BLESS::Assertion => "<<FB>>";};
+			as: in event port --non-refractory atrial sense
+			; --{BLESS::Assertion=>"<<AS_A(now) or now=0>>";};
+			at: in event port --non-refractory atrial sense above URL
+			; --{BLESS::Assertion=>"<<AT(now)>>";};
+			atr_detect: out event port --ATR detection met
+			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
+			{BLESS::Assertion => "<<FB>>";};
+			atr_end: out event port --resume DDD; marker ATR-End
+			{BLESS::Assertion => "<<ATR_END(now)>>";};
 
-thread group implementation AtrialTachyResponse.imp
-  subcomponents
-  	dc : thread AsCounter.imp;
-  	ac : thread AtCounter.imp;
-  	atr : thread ATRcontrol;
-  connections
-  	--from group to atr
-  	atren: port atr_enable -> atr.atr_enable;  --enamble ATR
-  	durc : port dur -> atr.dur;  --CCI after detection before fall-back (duration)
-  	--from atr to group
-  	fbo : port atr.fb -> fb;  --fall-back, stays on until end
-  	atrd : port atr.atr_detect -> atr_detect;  --A-tachy detected
-  	atrf : port atr.atr_fallback -> atr_fallback;  --fall-back start
-  	atre : port atr.atr_end -> atr_end;  --A-tachy ended
-  	--from group to dc
-  	asidc : port as -> dc.as;  --duration count
-  	--from group to ac
-  	atiac : port at -> ac.at;  --atrial pace
-  	--internal
-  	duren : port atr.denable -> dc.enable;  --do count duration
-  	dcnt : port dc.asCount -> atr.asCount;    --current duration count
-  	atcnt : port ac.atCount -> atr.atCount; --number of last seven as that were also at	
-end AtrialTachyResponse.imp; 	
+	end AtrialTachyResponse;
 
-thread AsCounter
-  features
-  	enable : in data port flag
-  	  {BLESS::Assertion=>"<<ATR_ENABLE>>";};
-  	as : in event port
-  	  {BLESS::Assertion=>"<<AS>>";};
-  	asCount : out data port BLESS_Types::Integer
-  	  {BLESS::Assertion=>"<<:=AS_COUNT()>>";};
-  	enable_time : out data port time  --enable time, zero if not enabled
-  	  {BLESS::Assertion=>"<<:=ATR_ET>>";};  --NOT OUTPUT AT THIS TIME
-  properties
-    Dispatch_Protocol => Aperiodic; 
-end AsCounter;	
+	thread group implementation AtrialTachyResponse.imp
+		subcomponents
+			dc: thread AsCounter.imp;
+			ac: thread AtCounter.imp;
+			atr: thread ATRcontrol;
+		connections
+			--from group to atr
+			atren: port atr_enable -> atr.atr_enable; --enamble ATR
+			durc: port dur -> atr.dur; --CCI after detection before fall-back (duration)
+			--from atr to group
+			fbo: port atr.fb -> fb; --fall-back, stays on until end
+			atrd: port atr.atr_detect -> atr_detect; --A-tachy detected
+			atrf: port atr.atr_fallback -> atr_fallback; --fall-back start
+			atre: port atr.atr_end -> atr_end; --A-tachy ended
+			--from group to dc
+			asidc: port as -> dc.as; --duration count
+			--from group to ac
+			atiac: port at -> ac.at; --atrial pace
+			--internal
+			duren: port atr.denable -> dc.enable; --do count duration
+			dcnt: port dc.asCount -> atr.asCount; --current duration count
+			atcnt: port ac.atCount -> atr.atCount; --number of last seven as that were also at	
+			AtrialTachyResponse_imp_new_connection: port atr.denable -> ac.enable;
+	end AtrialTachyResponse.imp;
 
-thread implementation AsCounter.imp
-annex BLESS
-{**  --needs counting rules for numberof
+	thread AsCounter
+		features
+			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
+			asCount: out data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AS_COUNT()>>";};
+			enable_time: out data port time --enable time, zero if not enabled
+			{BLESS::Assertion => "<<:=ATR_ET>>";}; --NOT OUTPUT AT THIS TIME
+			as: in event port {BLESS::Assertion => "<<AS>>";};
+		properties
+			Dispatch_Protocol => Aperiodic;
+	end AsCounter;
+
+	thread implementation AsCounter.imp
+		annex BLESS {**  --needs counting rules for numberof
   assert
     <<DC: :DUR_COUNT() and LAS() and E(last_as)>>
   <<AS_COUNT: returns quantity whole := 
@@ -197,26 +190,22 @@ annex BLESS
         <<DC()>>
       };  --end of dc_ggo
 **};
-end AsCounter.imp;	
-	
-thread AtCounter
-  features
-  	enable : in data port flag
-  	  {BLESS::Assertion=>"<<ATR_ENABLE>>";};
-  	at : in event port
-  	  {BLESS::Assertion=>"<<AT>>";};
-  	atCount : out data port BLESS_Types::Integer
-  	  {BLESS::Assertion=>"<<:=AT_COUNT()>>";};
-  	et : out data port time  --enable time, zero if not enabled
-  	  {BLESS::Assertion=>"<<:=ATR_ET>>";};
-  properties
-    Dispatch_Protocol => Aperiodic; 
---    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
-end AtCounter;	
+	end AsCounter.imp;
 
-thread implementation AtCounter.imp
-annex BLESS
-{**
+	thread AtCounter
+		features
+			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
+			atCount: out data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AT_COUNT()>>";};
+			et: out data port time --enable time, zero if not enabled
+			{BLESS::Assertion => "<<:=ATR_ET>>";};
+			at: in event port {BLESS::Assertion => "<<AT>>";};
+		properties
+			Dispatch_Protocol => Aperiodic;
+--    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
+	end AtCounter;
+
+	thread implementation AtCounter.imp
+		annex BLESS {**
   assert
     <<ATC: :T_COUNT() and LAT() and ET_A(last_at)>>
     <<AT_COUNT: returns quantity whole := 
@@ -276,36 +265,27 @@ annex BLESS
         <<ATC()>>
       };  --end of dc_ggo
 **};
-end AtCounter.imp; 	
-	
-	
-	
-thread ATRcontrol
-  features
-  atr_enable : in data port flag
-  	  {BLESS::Assertion=>"<<ATR_ENABLE>>";};
-  dur : in data port PACE_Data::CCcount;  --number of cci in duration before fallback
-  fb: out data port flag  --fall-back to LRL, ignore A-channel
-    {BLESS::Assertion=>"<<FB>>";};
-  asCount : in data port BLESS_Types::Integer
-  	  {BLESS::Assertion=>"<<:=AS_COUNT()>>;";};
-  denable : out data port flag;
-  atCount : in data port BLESS_Types::Integer
-  	  {BLESS::Assertion=>"<<:=AT_COUNT()>>";}; 
-  atr_detect: out event port  --ATR detection met
-    {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
-  atr_fallback: out event port   --start fall-back to VVI; marker ATR-FB
-    {BLESS::Assertion=>"<<FB_START>>";};
-  atr_end: out event port  --resume DDD; marker ATR-End
-    {BLESS::Assertion=>"<<ATR_END(now)>>";};
-end ATRcontrol;
+	end AtCounter.imp;
 
+	thread ATRcontrol
+		features
+			atr_enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
+			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
+			fb: out data port flag --fall-back to LRL, ignore A-channel
+			{BLESS::Assertion => "<<FB>>";};
+			asCount: in data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AS_COUNT()>>;";};
+			denable: out data port flag;
+			atCount: in data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AT_COUNT()>>";};
+			atr_detect: out event port --ATR detection met
+			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
+			{BLESS::Assertion => "<<FB_START>>";};
+			atr_end: out event port --resume DDD; marker ATR-End
+			{BLESS::Assertion => "<<ATR_END(now)>>";};
+	end ATRcontrol;
 
-
-
-thread implementation ATRcontrol.imp
-annex BLESSX
-{**
+	thread implementation ATRcontrol.imp
+		annex BLESSX {**
 --assert
 --
 --<<AXIOM_ATR_DETECT:x~time: 5<=(numberof j~quantity whole in 1 .. 7 that atr_detect^(-j)) iff ATR_DETECT(x)>>
@@ -589,6 +569,6 @@ transitions
       duration_count'=DC(now)>>     
    };     
 **};
-end ATRcontrol.imp;
+	end ATRcontrol.imp;
 
 end ATR;

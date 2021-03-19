@@ -304,7 +304,6 @@ ghost variables
 <<UP_SIRi_A: returns time := MAX(a:SIRi_A(), b:(CCI-Z_A() ))>>  --includes reaction time
 <<DN_SIRi_A: returns time := MIN2(a:(CCI+Y_A()), b:SIRi_A() )>>  --includes recovery
 <<MaxCCI: returns time := MIN3(a:HyLRL(now), b:DN_SIRi_A(), c:DOWN_A())>>  
--- <<MaxCCI: := MIN4(lrl, SIR_MaxCCI(), DOWN(), FB_MaxCCI())>>  
 <<MinCCI: returns time := MAX3(a:URL, b:UP_SIRi_A(), c:UP_A())>>  
  
 -- 5.9 Rate Smoothing
