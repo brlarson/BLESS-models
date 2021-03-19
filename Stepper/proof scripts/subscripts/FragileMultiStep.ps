@@ -1,7 +1,6 @@
 #FragileMultiStep.ps
 push
 sort-by-component[ControlSoftware::FragilePositionControlThread.MultiStep]
-#ControlSoftware::FragilePositionControlThread.MultiStep
 #[serial 1023] <<M(StillClosing)>> -> <<I>> from invariant I when complete state StillClosing has Assertion <<M(StillClosing)>> in its definition
 make-an
 axioms
@@ -41,7 +40,6 @@ laws
 normalize
 axioms
 push
-#ControlSoftware::FragilePositionControlThread.MultiStep
 #[serial 1107]   normalization of [serial 1100
 make-an
 substitute-post
@@ -51,7 +49,14 @@ normalize
 alldist^
 laws
 axioms
-#[serial 1128]   normalization of [serial 1121]
+#[serial 1120] Subprogram precondition implication to
+substitute-pre
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+laws
+normalize
+axioms
+#[serial 1130]   normalization of [serial 1122]
 substitute-pre
 normalize
 split-post
@@ -63,14 +68,14 @@ laws
 axioms
 equivalent
 axioms
-#[serial 1131] Associativity: (b.c).a = a.b.c [serial 1119]
+#[serial 1133] Associativity: (b.c).a = a.b.c [serial 1119]
 guided-sub-equals[ACTUAL_POSITION]
 laws
 normalize
 substitute-pre
 normalize
 axioms
-#[serial 1135] Law of And-Simplification:  P and true is P [serial 1133]
+#[serial 1137] Law of And-Simplification:  P and true is P [serial 1135]
 split-post
 axioms
 guided-sub-equals[ACTUAL_POSITION']
@@ -127,16 +132,14 @@ normalize
 split-post
 axioms
 push
+#[serial 1364]   normalization of [serial 1357
 make-an
-#ControlSoftware::FragilePositionControlThread.MultiStep
-#[serial 1342]   normalization of [serial 1335]
- 
 substitute-post
 normalize
 alldist^
 laws
 axioms
-#[serial 1378] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1340]
+#[serial 1403] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1362]
 substitute-pre
 normalize
 laws
@@ -144,71 +147,85 @@ normalize
 now
 guided-sub-equals[ACTUAL_POSITION]
 axioms
-#[serial 1382] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+#[serial 1407] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1378]
+substitute-pre
+normalize
+laws
+normalize
+guided-sub-equals[Delta]
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1408] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1378]
+guided-sub-equals[Delta]
+normalize
+axioms
+#[serial 1409] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1388]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1383] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+#[serial 1410] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1388]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1384] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+#[serial 1411] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1388]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 laws
 axioms
-#[serial 1385] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1364]
+#[serial 1412] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1388]
 substitute-pre
 normalize
 guided-sub-equals[EstimatedActualPosition]
 normalize
 axioms
-#[serial 1386] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+#[serial 1413] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1394]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1387] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+#[serial 1414] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1394]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1389] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+#[serial 1416] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1394]
 substitute-pre
 normalize
 laws
 normalize
 transitive
 axioms
-#[serial 1390] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1370]
+#[serial 1417] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1394]
 remove-axioms-post
 axioms
-#[serial 1393] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+#[serial 1420] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1400]
+substitute-pre
+normalize
+laws
+guided-sub-equals[Delta]
+normalize
+transitive
+<=to<
+axioms
+#[serial 1421] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1400]
 substitute-pre
 normalize
 laws
 normalize
 guided-sub-equals[Delta]
 normalize
-transitive
-normalize
 <=to<
-axioms
-#[serial 1394] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
-guided-sub-equals[Delta]
-normalize
-substitute-pre
-normalize
-laws
-normalize
 transitive
 <=to<
 axioms
-#[serial 1395] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+#[serial 1422] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1400]
 guided-sub-equals[Delta]
 normalize
 axioms
-#[serial 1396] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1375]
+#[serial 1423] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1400]
 guided-sub-equals[Delta]
 normalize
 axioms
@@ -222,14 +239,15 @@ normalize
 split-post
 axioms
 push
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 1560]   normalization of [serial 1553
 make-an
-#[serial 1512]   normalization of [serial 1505]
 substitute-post
 normalize
 alldist^
 laws
 axioms
-#[serial 1546] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1510]
+#[serial 1597] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1558]
 substitute-pre
 normalize
 laws
@@ -237,74 +255,87 @@ normalize
 guided-sub-equals[ACTUAL_POSITION]
 now
 axioms
-#[serial 1550] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+#[serial 1601] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1574]
+guided-sub-equals[Delta]
+transitive
+elim-subtract
+normalize
+axioms
+#[serial 1602] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1574]
+substitute-pre
+normalize
+guided-sub-equals[Delta]
+transitive
+normalize
+laws
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1603] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1583]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1551] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+#[serial 1604] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1583]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1552] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+#[serial 1605] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1583]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 laws
 axioms
-#[serial 1553] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1533]
+#[serial 1606] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1583]
 substitute-pre
 normalize
 guided-sub-equals[EstimatedActualPosition]
 normalize
 axioms
-#[serial 1554] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+#[serial 1607] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1588]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1555] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+#[serial 1608] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1588]
 substitute-pre
 normalize
 laws
 normalize
 axioms
-#[serial 1557] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1538]
+#[serial 1610] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1588]
 remove-axioms-post
 axioms
-#[serial 1559] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+#[serial 1612] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1594]
 guided-sub-equals[Delta]
 transitive
 normalize
 axioms
-#[serial 1560] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+#[serial 1613] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1594]
 substitute-pre
 normalize
 laws
 normalize
 guided-sub-equals[Delta]
-normalize
 transitive
+normalize
 axioms
-#[serial 1561] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
+#[serial 1614] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1594]
 substitute-pre
 normalize
 laws
 normalize
 guided-sub-equals[Delta]
-normalize
 transitive
 normalize
 <=to<
 axioms
-#[serial 1562] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1543]
-guided-sub-equals[Delta]
-normalize
-transitive
-normalize
-<=to<
+#[serial 1615] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1594]
 substitute-pre
 normalize
 laws
 normalize
+guided-sub-equals[Delta]
 transitive
 normalize
 <=to<
@@ -321,47 +352,15 @@ laws
 split-post
 axioms
 push
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 1760]   normalization of [serial 1753
 make-an
-#[serial 1694]   normalization of [serial 1687]
 substitute-post
 normalize
 alldist^
 laws
 axioms
-#[serial 1739] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
-guided-sub-equals[ACTUAL_POSITION']
-normalize
-axioms
-#[serial 1740] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
-guided-sub-equals[ACTUAL_POSITION']
-normalize
-axioms
-#[serial 1741] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
-guided-sub-equals[ACTUAL_POSITION']
-normalize
-laws
-axioms
-#[serial 1742] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1716]
-substitute-pre
-normalize
-guided-sub-equals[EstimatedActualPosition]
-normalize
-axioms
-#[serial 1746] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1726]
-substitute-pre
-now
-laws
-normalize
-guided-sub-equals[ACTUAL_POSITION]
-axioms
-#[serial 1747] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1726]
-substitute-pre
-now
-laws
-normalize
-guided-sub-equals[ACTUAL_POSITION]
-axioms
-#[serial 1749] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1732]
+#[serial 1803] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1774]
 substitute-pre
 normalize
 laws
@@ -370,18 +369,60 @@ transitive
 normalize
 <=to<
 axioms
-#[serial 1753] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+#[serial 1805] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1784]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1806] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1784]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+axioms
+#[serial 1807] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1784]
+guided-sub-equals[ACTUAL_POSITION']
+normalize
+laws
+axioms
+#[serial 1808] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1784]
+substitute-pre
+normalize
+guided-sub-equals[EstimatedActualPosition]
+normalize
+axioms
+#[serial 1812] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1795]
+substitute-pre
+now
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1813] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1795]
+substitute-pre
+now
+laws
+normalize
+guided-sub-equals[ACTUAL_POSITION]
+axioms
+#[serial 1815] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1801]
+substitute-pre
+normalize
+laws
+normalize
+transitive
+normalize
+<=to<
+axioms
+#[serial 1819] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1802]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1754] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+#[serial 1820] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1802]
 substitute-pre
 normalize
 laws
 normalize
 axioms
-#[serial 1755] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+#[serial 1821] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1802]
 now
 substitute-pre
 normalize
@@ -390,7 +431,7 @@ normalize
 guided-sub-equals[EstimatedActualPosition]
 normalize
 axioms
-#[serial 1756] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+#[serial 1822] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1802]
 now
 substitute-pre
 normalize
@@ -400,7 +441,7 @@ guided-sub-equals[EstimatedActualPosition]
 normalize
 laws
 axioms
-#[serial 1757] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1733]
+#[serial 1823] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1802]
 now
 substitute-pre
 normalize
@@ -420,24 +461,31 @@ laws
 split-post
 axioms
 push
+#[serial 3337]   normalization of [serial 3330
 make-an
-#[serial 1881]   normalization of [serial 1874]
 substitute-post
 normalize
 alldist^
 laws
 axioms
-#[serial 1924] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3378] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3351]
+substitute-pre
+normalize
+laws
+guided-sub-equals[Delta]
+normalize
+axioms
+#[serial 3380] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1925] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3381] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1926] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3382] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 now
 substitute-pre
 normalize
@@ -446,7 +494,7 @@ normalize
 guided-sub-equals[EstimatedActualPosition]
 normalize
 axioms
-#[serial 1927] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3383] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 now
 substitute-pre
 normalize
@@ -456,7 +504,7 @@ guided-sub-equals[EstimatedActualPosition]
 normalize
 laws
 axioms
-#[serial 1928] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3384] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 now
 substitute-pre
 normalize
@@ -465,30 +513,30 @@ normalize
 guided-sub-equals[EstimatedActualPosition]
 laws
 axioms
-#[serial 1929] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1899]
+#[serial 3385] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3356]
 remove-axioms-post
 axioms
-#[serial 1932] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+#[serial 3388] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3361]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1933] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+#[serial 3389] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3361]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 axioms
-#[serial 1934] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+#[serial 3390] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3361]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 laws
 axioms
-#[serial 1935] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1903]
+#[serial 3391] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3361]
 guided-sub-equals[ACTUAL_POSITION']
 substitute-pre
 normalize
 laws
 normalize
 axioms
-#[serial 1939] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1913]
+#[serial 3395] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3372]
 now
 substitute-pre
 normalize
@@ -496,7 +544,7 @@ laws
 normalize
 guided-sub-equals[ACTUAL_POSITION]
 axioms
-#[serial 1940] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1913]
+#[serial 3396] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3372]
 now
 substitute-pre
 normalize
@@ -504,7 +552,7 @@ laws
 normalize
 guided-sub-equals[ACTUAL_POSITION]
 axioms
-#[serial 1942] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1918]
+#[serial 3398] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3377]
 substitute-pre
 normalize
 laws
@@ -534,34 +582,48 @@ axioms
 remove-axioms-post
 axioms
 push
+#ControlSoftware::FragilePositionControlThread.MultiStep
+#[serial 3551] Q2 -> Q in sequential composition for [serial 3548
 make-an
-#[serial 2081] Q2 -> Q in sequential composition for [serial 2078]
 substitute-post
 normalize
 alldist^
 laws
 axioms
-#[serial 2109] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2080]
+#[serial 3582] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3550]
 substitute-pre
 normalize
 laws
 guided-sub-equals[ACTUAL_POSITION]
 axioms
-#[serial 2110] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+#[serial 3583] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3557]
+guided-sub-equals[Delta]
+elim-subtract
+axioms
+#[serial 3584] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3557]
+substitute-pre
+guided-sub-equals[Delta]
+normalize
+transitive
+elim-subtract
+normalize
+<=to<
+axioms
+#[serial 3585] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3566]
 guided-sub-equals[ACTUAL_POSITION']
 guided-sub-equals[Delta]
 normalize
 elim-subtract
 normalize
 axioms
-#[serial 2111] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+#[serial 3586] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3566]
 guided-sub-equals[ACTUAL_POSITION']
 normalize
 guided-sub-equals[Delta]
 elim-subtract
 normalize
 axioms
-#[serial 2112] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2094]
+#[serial 3587] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3566]
 substitute-pre
 normalize
 guided-sub-equals[ACTUAL_POSITION']
@@ -571,28 +633,28 @@ elim-subtract
 normalize
 laws
 axioms
-#[serial 2113] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2099]
+#[serial 3588] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3571]
 substitute-pre
 normalize
 laws
 <=to<
 axioms
-#[serial 2114] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2099]
+#[serial 3589] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3571]
 substitute-pre
 normalize
 laws
 axioms
-#[serial 2118] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+#[serial 3593] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3577]
 guided-sub-equals[Delta]
 elim-subtract
 axioms
-#[serial 2119] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+#[serial 3594] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3577]
 substitute-pre
 normalize
 transitive
 <=to<
 axioms
-#[serial 2120] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2104]
+#[serial 3595] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 3577]
 substitute-pre
 normalize
 guided-sub-equals[Delta]

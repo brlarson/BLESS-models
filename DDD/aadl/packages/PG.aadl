@@ -61,15 +61,15 @@ process DDDprocess
 end DDDprocess;		
 
 process implementation DDDprocess.imp
-  subcomponents
-  	ddd : thread ddd_mode::DDD.i;
-  connections
-  	ca : port a->ddd.a;
-  	cv : port v->ddd.v;
-  	cap: port ddd.ap->ap;
-  	cvp: port ddd.vp->vp;
---  	cas: port ddd.as->as;
---  	cvs: port ddd.vs->vs;
+	subcomponents
+		ddd: thread ddd_mode::DDD.i;
+	connections
+		ca: port a -> ddd.a;
+		cv: port v -> ddd.v;
+		cap: port ddd.ap -> ap;
+		cvp: port ddd.vp -> vp;
+		cvs: port ddd.vs -> vs;
+		cas: port ddd.as -> as;
 end DDDprocess.imp;	
 
 end PG;

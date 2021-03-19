@@ -204,14 +204,26 @@ normalize
 laws
 sub-all-eq
 axioms
-#[serial 1717] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1704]
-substitute-both
-laws
+#[serial 1832] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1812]
+guided-sub-equals[Delta]
+normalize
+elim-subtract
+normalize
+axioms
+#[serial 1833] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1812]
+substitute-pre
+guided-sub-equals[Delta]
+normalize
+transitive
+elim-subtract
 normalize
 <=to<
 axioms
-#[serial 1718] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1704]
-substitute-both
+#[serial 1834] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1818]
+<=to<
+axioms
+#[serial 1835] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1818]
+substitute-pre
 normalize
 laws
 axioms

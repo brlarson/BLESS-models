@@ -160,8 +160,8 @@ assert
 --    occurred in the previous upper rate limit interval
 <<VP:x~time:
 	PACE_ON_LRL(x)  -- (vp or vs) occurred LRL interval ago
-    or  --as occurred sensed AV delay ago, but not too fast
-    PACE_ON_SAV_DELAY(x) >>    
+  or  --as occurred sensed AV delay ago, but not too fast
+  PACE_ON_SAV_DELAY(x) >>    
     
 <<PACE_ON_LRL:x~time:    --no intrinsic activity, pace at LRL
   (vp or vs)@(x-#PP::Lower_Rate_Limit_Interval)
