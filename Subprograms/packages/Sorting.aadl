@@ -1,8 +1,317 @@
 package Sorting
 public
+	  with BLESS_Types, BLESS, SB
+	  ;
+
+--DANCE, BLESS's predecessor had a type system with parametric polymorphism.
+
+--Unfortunately, the type-unit checking introduced with BLESS 3.x is very
+--strict, and refuses to have allow a type signature, to be confirmed when used.
+
+--So, instead of a library procedure, malleable for array element type, we show 
+--an example with a fixed record type
+
+annex Typedef
+{**
+type int is quantity whole
+type rt is record (i:int buyer:string cost:int)
+type array_of_rt is array [SB::ArraySize] of rt
+**};	
+
+
+annex Assertion
+{**
+  <<LT: lhs~rt, rhs~rt : lhs.i < rhs.i >>  --less than
+  --transitive <
+	<<TRANS: c~rt, d~rt, e~rt : LT(l:c, r:d) and LT(l:d, r:e) implies LT(l:c, r:e) >>
+	--define sorted
+	<<SORTED:ar~array_of_rt, l~int, h~int:  --result array is sorted from l (low) to h (high)
+		(all m~int, n~int in l..h are 
+			((ar[m] < ar[n]) implies (m<n)) ) >>
+  --result is permutation of original array
+	<<PERM:original~array_of_rt, result~array_of_rt, l~int, h~int:	
+		all m~int in l..h are 
+			exists n~int in l..h that 
+				(original[m]=result[n]) >>
+	--the elements in low..high have been "cut" by a "pivot"
+	--elements in pl..ph are equal to the pivot
+	--elements in low.,pl are less than the pivot
+	--elements in ph,.high are greater than the pivot
+  <<CUT:low~int, high~int, b~array_of_rt, pl~int, ph~int :  
+		((pl- 1)<(ph+1)) and
+		(all sl~int in low..(pl- 1) are (b[sl] < b[pl])) and
+		(all sh~int in (ph+1)..high are (b[sh] > b[pl])) and
+		(all sp~int in pl..ph are (b[sp]=b[pl])) >>			
+**};
+
+data rt
+	properties
+		BLESS::Typed => "rt";
+end rt;
+
+data array_of_rt
+	properties
+		BLESS::Typed => "array_of_rt";	
+end array_of_rt;
+
+subprogram sort
+	features
+		low : in parameter BLESS_Types::Integer;
+		high : in parameter BLESS_Types::Integer;
+		original : in parameter array_of_rt;
+		result : out parameter array_of_rt;
+	properties
+		BLESS::Precondition => "<< low <= high >>";
+		BLESS::Postcondition => 
+		  "<< SORTED(result:result, l:low, h:high) and 
+        PERM(original:original, result:result, l:low, h:high) >>";
+	annex Action
+	{**
+	assert
+	  <<SSCUT:inter~array_of_rt, --intermedate array
+	          res~array_of_rt, --result array 
+	          pl~int,  --pivot low 
+	          ph~int : --pivot high
+	    CUT(low:low, high:high, b:inter, pl:pl, ph:ph) and --intermediate is cut at the pivots
+	    SORTED(ar:result, l:(ph+1), h:high) and  --sorted from ph+1 to high
+	    PERM(original:inter, result:res, l:(ph+1), h:high ) and  --same elements
+	    SORTED(ar:result, l:low, h:(pl- 1)) and  --sorted from low to pl-1
+	    PERM(original:inter, result:res, l:low, h:(pl- 1))  --same elements
+	  >>
+	  <<SPOST: o~array_of_rt, r~array_of_rt, l~int, h~int :  --parameterized postcondition
+	    SORTED(result:r, l:l, h:h) and 
+      PERM(original:o, result:r, l:l, h:h)
+	  >>
+  declare
+    intermediate ~ array_of_rt spread
+    pivot_low ~ int 
+    pivot_high ~ int 
+	{ 
+		<< low <= high >>  --precondition
+		if
+			(low=high)~> 
+				{
+					<< low=high >>
+--					<< rbound(low,high) = 0 >>
+					result[low] := original[low]		--just one? then done
+					<< SPOST(o:original, r:result, l:low, h:high) and (low=high) >>
+				}
+--				<< post >>
+		[]
+			(low<high)~>
+				{		--partition then sort again
+					<< low<high >>
+					Sorting::partition(i:low, j:high, a:original, b:inter, pl:pl, ph:ph)
+					 << cut|low,high,inter,pl,ph| and (low<high) and 
+					 		permutation|original,inter,low,high|  >>
+					;
+					if
+						((pl=low) and (ph<high))=> 	--nothing in lower partition
+							<< cut|low,high,inter,pl,ph| and (low<high) >>
+							{
+							<< cut|low,high,inter,pl,ph| and (pl=low) and 
+									(low<high) and (ph<high)  >>
+--							<< (rbound(low,high)>0) and 
+--								(rbound((ph+1),high)<rbound(low,high)) >>
+								--just sort upper half
+							sort((ph+1),high,inter[(ph+1)..low],result[(ph+1)..high])								
+							<< sorted|result,ph+1,high| and 
+								permutation|inter,result,ph+1,high| and 
+								cut|low,high,inter,pl,ph| and (pl=low) and (ph<high) >>
+							;skip
+							<< sscut and (pl=low) and (ph<high) >>
+							}
+							<< sscut >>
+					[]	
+						((ph=high) and (low<pl))=>	--nothing in upper partition
+							<< cut|low,high,inter,pl,ph| and (low<high) >>
+							{
+							<< cut|low,high,inter,pl,ph| and (ph=high) and 
+								(low<high) and (low<pl) >>
+--							<< (rbound(low,high)>0) and 
+--								(rbound(low,(pl-1))<rbound(low,high)) >>
+								--just sort lower half
+							sort(low,(pl-1),inter[low..(pl-1)],result[low..(pl-1)])	
+							<< sorted|result,low,pl-1| and 
+								permutation|inter,result,low,pl-1| and 
+								cut|low,high,inter,pl,ph| and (ph=high) and (low<pl) >>
+							;skip
+							<< sscut and (ph=high) and (low<pl) >>
+							}
+							<< sscut >> 
+					[]	
+						((ph<high) and (pl>low))=>
+							<< cut|low,high,inter,pl,ph| and (low<high) >>
+							{
+								<< (pl>low) and cut|low,high,inter,pl,ph|>>
+--								<< (rbound(low,high)>0) and 
+--									(rbound(low,(pl-1))<rbound(low,high)) >>
+									--sort lower half
+								sort(low,(pl-1),inter[low..(pl-1)],result[low..(pl-1)])	
+								<< sorted|result,low,pl-1| and 
+									permutation|inter,result,low,pl-1| and 
+									cut|low,high,inter,pl,ph| >> 
+								& 
+								<< (ph<high) and cut|low,high,inter,pl,ph|>>
+--								<< (rbound(low,high)>0) and 
+--									(rbound((ph+1),high)<rbound(low,high)) >>
+									--sort upper half		
+								sort((ph+1),high,inter[(ph+1)..high],result[(ph+1)..high])							
+								<< sorted|result,ph+1,high| and 
+									permutation|inter,result,ph+1,high| and 
+									cut|low,high,inter,pl,ph| >> 
+							}
+							<< sscut >> 
+					fi
+					<< sscut >> 
+					;
+					<< all sp~int in pl..ph are inter[sp]=inter[pl] >>
+					forall sp~int in pl..ph
+						{
+							<< inter[sp]=inter[pl] >>
+							result[sp] := inter[sp]
+							<< (result[sp] = inter[sp]) and (inter[sp]=inter[pl]) >>
+						}
+					<< sscut and 
+						(all sp~int in pl..ph are 
+							(result[sp] = inter[sp]) and (inter[sp]=inter[pl]))
+						 and rule1 >> 
+				}	--of partition then sort again
+--				<< post >>
+		fi		--done with low<high
+--		<< post >> 
+	}	
+	**};	
+end sort;
 	
-	
-	
-	
+subprogram partition
+	features
+		i : in parameter BLESS_Types::Integer;  --lower bound of slice
+		j : in parameter BLESS_Types::Integer;  --upper bound of slice
+		a : in parameter array_of_rt;           --input array
+		b : out parameter array_of_rt;          --output array
+		pl : out parameter BLESS_Types::Integer;  --pivot, lower
+		ph : out parameter BLESS_Types::Integer;  --pivot, higher
+	properties
+		BLESS::Precondition => "<< i<j >>";
+		BLESS::Postcondition =>  
+		  "<< CUT(low:i, high:j, b:b, pl:pl, ph:ph) and 
+        PERM(original:a, result:b, l:i, h:j) >>";
+  annex Action
+  {**
+  assert
+    <<partitioned:lowIndex~int, highIndex~int, pivot~int :
+			all t~int in i..j are
+			  --less than pivot, put low end 
+		  	(exists sl~int  in i..(lowIndex- 1) that 
+		  		a[t]=b[sl] and a[t] < pivot) or 
+		  	--greater than pivot, put high end
+		  	(exists sh~int in (1+highIndex)..j that 
+		  		a[t]=b[sh] and pivot < a[t]) or
+		  --equal to pivot, in between 
+		  	(exists sp~int in lowIndex..highIndex that 
+		  		a[t]=b[sp] and a[t]=pivot) >>
+		  <<upper: :(all sh~int in (highIndex+1)..j are p<b[sh])>> --everything in the upper partition is greater than pivot		   
+		  <<lower: :(all sl~int in i..(lowIndex- 1) are b[sl]<p) >>  --everything in lower partition is less than pivot		  	 
+		  <<middle: :(all sp~int in 1 ..(pivotIndex- 1) are pivotStore[sp]=p) >> --everything in pivot store is equal to pivot
+	declare
+	  lowIndex ~ int shared := i
+	  highIndex ~ int shared := j
+	    <<nolap: : lowIndex- 1 < highIndex+1 >>	--no overlap of slices
+	  h ~ int := i+j div 2  --pick pivot from middle
+	  p ~ rt := a[h]  --value of pivot
+	  pivotStore ~ array_of_rt spread  --hold records equal to pivot
+	  pivotIndex ~ int shared := 0  --location of 
+	  b_temp ~  array_of_rt spread  --temporary hold of result b 
+  { 
+		<< lowIndex>=i and highIndex<=j and pivotIndex>=1 and 
+			i<j and nolap() >>
+		forall t in i..j
+			{
+				<< (lowIndex>=i) and (highIndex<=j) and (pivotIndex>=1) >>
+				if
+					(a[t] < p)~>	--is this element smaller than pivot?
+						<< lowIndex>=i >>
+						declare 
+							sl~int	--results from fetchadd (low)
+						{	--then put it in the lower half of b
+							<< (a[t] < p) and (lowIndex>=i)>>
+--							fetchadd(lowIndex,1,sl)
+			        {	sl := lowIndex & lowIndex := lowIndex+1 }
+							<< sl in i..(lowIndex- 1) and a[t] < p >>
+							;
+							b[sl] := a[t]
+							<< sl in i..(lowIndex- 1) and a[t]=b[sl] and a[t] < p >>
+						}
+						<<ltp: : exists sl~int in i..(lowIndex- 1) that 
+							(a[t]=b[sl]) and (a[t] < p) >>
+				[]
+					(a[t] > p)~>	--is this element bigger than pivot?
+						<< highIndex<=j >>
+						declare 
+							sh~int	--results from fetchadd (high)
+						{	--then put it in the upper half of b
+							<< (p < a[t]) and (highIndex<=j)>>
+							fetchadd(highIndex,-1,sh)
+							<< (sh in (highIndex+1)..j) and (p < a[t]) >>
+						;
+							b[sh] := a[t]
+							<< (sh in (highIndex+1)..j) and (a[t]=b[sh]) and (p < a[t]) 
+							>>
+						}
+						<<gtp: : exists sh~int in (highIndex+1)..j that 
+							(a[t]=b[sh]) and (p < a[t]) >>
+				[]
+					(a[t] = p)~> 	--is this element equal to pivot?
+						<< pivotIndex>=1 >>
+						declare 
+							sp~int	--results from fetchadd (pivot)
+						{	--then save in pivotStore
+							<< (a[t]=p) and (pivotIndex>=1) >>
+							fetchadd(pivotIndex,1,sp)
+							<< sp in 1 ..(pivotIndex- 1)  and a[t]=p >>
+							;
+							pivotStore[sp] := a[t]
+							<< sp in 1 ..(pivotIndex- 1) and a[t]=p and
+								pivotStore[sp] =a[t] >>
+						}
+						<<eqp: : exists sp~int in 1 ..(pivotIndex- 1) that 
+							a[t]=p and a[t]=pivotStore[sp] >>
+				fi
+				<< ltp() or gtp() or eqp() >>
+			}	--of forall t
+		<< nolap() and
+		  (all t~int in i..j are --for each of the records from i to j
+		  	ltp() or --it's less than pivot, copied to lower partition
+		  	gtp() or --it's greater than pivot, copied to upper partition
+		  	eqp()) --it's equal to pivot, copied to pivot store
+--		  and (j-i)+1 = ((j-(highIndex+1))+1) + (((lowIndex- 1)- i)+1) + (((pivotIndex- 1)- 1)+1)
+		   >>		  			  	  
+		  	--sum of elements in upper and lower partitions and 
+		  	--pivot store equals the total number of elements
+		;	--sequential composition
+		{
+			<< (lowIndex- 1)<(highIndex+1) >>
+			pl := lowIndex
+			<< ((lowIndex- 1)<(highIndex+1)) and (pl=lowIndex) >>
+			&
+			<< (lowIndex- 1)<(highIndex+1) >>
+			ph := highIndex
+			<< ((lowIndex- 1)<(highIndex+1)) and (ph=highIndex) >>
+			&
+			<< (all t~int in i..j are ltp() or gtp() or eqp() ) and
+			   upper() and middle() and lower() and
+			  (lowIndex- 1) = highIndex-(pivotIndex- 1) >>
+			 b[lowIndex..highIndex] := pivotStore[1 ..(pivotIndex- 1)]
+			<< (all sp~int in lowIndex..highIndex are b[sp]=p )  and
+			  upper and lower and  
+			   partitioned(lowIndex:lowIndex, highIndex:highIndex, pivot:p) -- and rule2 
+			   >> 
+		}
+	<< CUT(low:i, high:j, b:b, pl:pl, ph:ph) and 
+        PERM(original:a, result:b, l:i, h:j) and (p=b[pl])	>>  --it's partitioned and b[pl] holds the pivot
+  }	
+  **};	
+end partition;
 	
 end Sorting;

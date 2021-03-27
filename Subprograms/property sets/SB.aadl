@@ -1,0 +1,5 @@
+property set SB is
+	
+	ArraySize : constant aadlinteger => 200;
+	
+end SB;
