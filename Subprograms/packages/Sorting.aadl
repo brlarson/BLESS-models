@@ -84,6 +84,9 @@ subprogram sort
 	    SORTED(result:r, l:l, h:h) and 
       PERM(original:o, result:r, l:l, h:h)
 	  >>
+	pre << low <= high >>
+	post << SORTED(result:result, l:low, h:high) and 
+        PERM(original:original, result:result, l:low, h:high) >>
   declare
     intermediate ~ array_of_rt spread
     pivot_low ~ int 
@@ -230,6 +233,9 @@ subprogram partition
 		  <<upper: :(all sh~int in (highIndex+1)..j are p<b[sh])>> --everything in the upper partition is greater than pivot		   
 		  <<lower: :(all sl~int in i..(lowIndex- 1) are b[sl]<p) >>  --everything in lower partition is less than pivot		  	 
 		  <<middle: :(all sp~int in 1 ..(pivotIndex- 1) are pivotStore[sp]=p) >> --everything in pivot store is equal to pivot
+  pre << i<j >>
+  post << CUT(low:i, high:j, b:b, pl:pl, ph:ph) and 
+        PERM(original:a, result:b, l:i, h:j) >>
 	declare
 	  lowIndex ~ int shared := i
 	  highIndex ~ int shared := j
