@@ -60,6 +60,8 @@ subprogram sort
 		high : in parameter BLESS_Types::Integer;
 		original : in parameter array_of_rt;
 		result : out parameter array_of_rt;
+		partition : requires subprogram access partition;
+		sort : requires subprogram access sort;
 	properties
 		BLESS::Precondition => "<< low <= high >>";
 		BLESS::Postcondition => 
@@ -101,85 +103,99 @@ subprogram sort
 			(low<high)~>
 				{		--partition then sort again
 					<< low<high >>
-					Sorting::partition(i:low, j:high, a:original, b:inter, pl:pl, ph:ph)
-					 << cut|low,high,inter,pl,ph| and (low<high) and 
-					 		permutation|original,inter,low,high|  >>
+					partition(i:low, j:high, a:original, b:intermediate, pl:pivot_low, ph:pivot_high)
+					 << CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+					    and (low<high) and 
+					 		PERM(original:original, result:intermediate, l:low, h:high)  >>
 					;
 					if
-						((pl=low) and (ph<high))=> 	--nothing in lower partition
-							<< cut|low,high,inter,pl,ph| and (low<high) >>
+						(pivot_low=low and pivot_high<high )~> 	--nothing in lower partition
+							  << CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+					      and low<high >>
 							{
-							<< cut|low,high,inter,pl,ph| and (pl=low) and 
-									(low<high) and (ph<high)  >>
+							<< CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+					       and low<high and pivot_low=low and pivot_high<high >>
 --							<< (rbound(low,high)>0) and 
 --								(rbound((ph+1),high)<rbound(low,high)) >>
 								--just sort upper half
-							sort((ph+1),high,inter[(ph+1)..low],result[(ph+1)..high])								
-							<< sorted|result,ph+1,high| and 
-								permutation|inter,result,ph+1,high| and 
-								cut|low,high,inter,pl,ph| and (pl=low) and (ph<high) >>
+							sort(low:(pivot_high+1), high:high, intermediate[(pivot_high+1)..low],result[(pivot_high+1)..high])								
+							<< SORTED(ar:result, low:pivot_high+1, high:high) and 
+								PERM(original:intermediate, result:result, l:(pivot_high+1), h:high) and 
+								CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) 
+								and pivot_low=low and pivot_high<high >>
 							;skip
-							<< sscut and (pl=low) and (ph<high) >>
+							<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) 
+							    and pivot_low=low and pivot_high<high >>
 							}
-							<< sscut >>
+							<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) >>
 					[]	
-						((ph=high) and (low<pl))=>	--nothing in upper partition
-							<< cut|low,high,inter,pl,ph| and (low<high) >>
+						(pivot_high=high and low<pivot_low )~>	--nothing in upper partition
+							<< CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) 
+							   and low<high >>
 							{
-							<< cut|low,high,inter,pl,ph| and (ph=high) and 
-								(low<high) and (low<pl) >>
+							<< CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) 
+							  and pivot_high=high and low<pivot_low and low<high >>
 --							<< (rbound(low,high)>0) and 
 --								(rbound(low,(pl-1))<rbound(low,high)) >>
 								--just sort lower half
-							sort(low,(pl-1),inter[low..(pl-1)],result[low..(pl-1)])	
-							<< sorted|result,low,pl-1| and 
-								permutation|inter,result,low,pl-1| and 
-								cut|low,high,inter,pl,ph| and (ph=high) and (low<pl) >>
+							sort(low:low, high:(pivot_low- 1), original:intermediate[low..(pivot_low- 1)],
+								   result:result[low..(pivot_low- 1)] )	
+							<< SORTED(ar:result, low:low, high:(pivot_low- 1)) and 
+							   PERM(original:intermediate, result:result, l:low, h:(pivot_low- 1)) and
+                 CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+                 and pivot_high=high and low<pivot_low >>
 							;skip
-							<< sscut and (ph=high) and (low<pl) >>
+							<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high)
+                 and pivot_high=high and low<pivot_low >>
 							}
-							<< sscut >> 
+							<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) >> 
 					[]	
-						((ph<high) and (pl>low))=>
-							<< cut|low,high,inter,pl,ph| and (low<high) >>
+						(pivot_high<high and pivot_low>low )~>
+							<< CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) and low<high >>
 							{
-								<< (pl>low) and cut|low,high,inter,pl,ph|>>
+								<< pivot_low>low and CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) >>
 --								<< (rbound(low,high)>0) and 
 --									(rbound(low,(pl-1))<rbound(low,high)) >>
 									--sort lower half
-								sort(low,(pl-1),inter[low..(pl-1)],result[low..(pl-1)])	
-								<< sorted|result,low,pl-1| and 
-									permutation|inter,result,low,pl-1| and 
-									cut|low,high,inter,pl,ph| >> 
+							sort(low:low, high:(pivot_low- 1), original:intermediate[low..(pivot_low- 1)],
+								   result:result[low..(pivot_low- 1)] )	
+								<< SORTED(ar:result, low:low, high:(pivot_low- 1)) and 
+									PERM(original:intermediate, result:result, l:low, h:(pivot_low- 1)) and
+                  CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+                  and pivot_high<high and low<pivot_low >>
 								& 
-								<< (ph<high) and cut|low,high,inter,pl,ph|>>
+								<< CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
+                  and pivot_high<high >>
 --								<< (rbound(low,high)>0) and 
 --									(rbound((ph+1),high)<rbound(low,high)) >>
 									--sort upper half		
-								sort((ph+1),high,inter[(ph+1)..high],result[(ph+1)..high])							
-								<< sorted|result,ph+1,high| and 
-									permutation|inter,result,ph+1,high| and 
-									cut|low,high,inter,pl,ph| >> 
+								sort(low:(pivot_high+1), high:high, original:intermediate[(pivot_high+1)..high],
+									   result:result[(pivot_high+1)..high])							
+								<< SORTED(ar:result, low:(pivot_high+1), high:high) and 
+									PERM(original:intermediate, result:result, l:(pivot_high+1), h:high) and
+                  CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high) >> 
 							}
-							<< sscut >> 
+							<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) >> 
 					fi
-					<< sscut >> 
+					<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) >> 
 					;
-					<< all sp~int in pl..ph are inter[sp]=inter[pl] >>
-					forall sp~int in pl..ph
+					<< all sp~int in pivot_low..pivot_high are intermediate[sp]=intermediate[pivot_low] >>
+					forall sp in pivot_low..pivot_high
 						{
-							<< inter[sp]=inter[pl] >>
-							result[sp] := inter[sp]
-							<< (result[sp] = inter[sp]) and (inter[sp]=inter[pl]) >>
+							<< intermediate[sp]=intermediate[pivot_low] >>
+							result[sp] := intermediate[sp]
+							<< result[sp] = intermediate[sp] and intermediate[sp]=intermediate[pivot_low] >>
 						}
-					<< sscut and 
-						(all sp~int in pl..ph are 
-							(result[sp] = inter[sp]) and (inter[sp]=inter[pl]))
-						 and rule1 >> 
+					<< SSCUT(inter:intermediate, res:result, pl:pivot_low, ph:pivot_high) and 
+						(all sp~int in pivot_low..pivot_high are 
+							result[sp] = intermediate[sp] and intermediate[sp]=intermediate[pivot_low]) >>
+--						 and rule1 >> 
 				}	--of partition then sort again
---				<< post >>
+				<< SORTED(result:result, l:low, h:high) and 
+           PERM(original:original, result:result, l:low, h:high)  >>
 		fi		--done with low<high
---		<< post >> 
+		<< SORTED(result:result, l:low, h:high) and 
+       PERM(original:original, result:result, l:low, h:high)  >> 
 	}	
 	**};	
 end sort;
@@ -314,4 +330,12 @@ subprogram partition
   **};	
 end partition;
 	
+System inst
+end inst;
+
+--just for instantiation to generate vc
+system implementation inst.me
+end inst.me;
+
+
 end Sorting;
