@@ -108,7 +108,7 @@ subprogram sort
 					<< low<high >>
 					partition(i:low, j:high, a:original, b:intermediate, pl:pivot_low, ph:pivot_high)
 					 << CUT(low:low, high:high, b:intermediate, pl:pivot_low, ph:pivot_high)
-					    and (low<high) and 
+					    and low<high and 
 					 		PERM(original:original, result:intermediate, l:low, h:high)  >>
 					;
 					if
@@ -258,8 +258,7 @@ subprogram partition
 							sl~int	--results from fetchadd (low)
 						{	--then put it in the lower half of b
 							<< (a[t] < p) and (lowIndex>=i)>>
---							fetchadd(lowIndex,1,sl)
-			        {	sl := lowIndex & lowIndex := lowIndex+1 }
+							fetchadd(lowIndex,1,sl)
 							<< sl in i..(lowIndex- 1) and a[t] < p >>
 							;
 							b[sl] := a[t]
