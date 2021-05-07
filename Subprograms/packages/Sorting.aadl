@@ -230,9 +230,10 @@ subprogram partition
 		  --equal to pivot, in between 
 		  	(exists sp~int in lowIndex..highIndex that 
 		  		a[t]=b[sp] and a[t]=pivot) >>
-		  <<upper: :(all sh~int in (highIndex+1)..j are p<b[sh])>> --everything in the upper partition is greater than pivot		   
-		  <<lower: :(all sl~int in i..(lowIndex- 1) are b[sl]<p) >>  --everything in lower partition is less than pivot		  	 
-		  <<middle: :(all sp~int in 1 ..(pivotIndex- 1) are pivotStore[sp]=p) >> --everything in pivot store is equal to pivot
+		<<upper: :(all sh~int in (highIndex+1)..j are p<b[sh])>> --everything in the upper partition is greater than pivot		   
+		<<lower: :(all sl~int in i..(lowIndex- 1) are b[sl]<p) >>  --everything in lower partition is less than pivot		  	 
+		<<middle: :(all sp~int in 1 ..(pivotIndex- 1) are pivotStore[sp]=p) >> --everything in pivot store is equal to pivot
+		<<AXIOM_IJ: : (i- 1) < i and j < (j+1) >>
   pre << i<j >>
   post << CUT(low:i, high:j, b:b, pl:pl, ph:ph) and 
         PERM(original:a, result:b, l:i, h:j) >>
@@ -246,18 +247,18 @@ subprogram partition
 	  pivotIndex ~ int shared := 0  --location of 
 	  b_temp ~  array_of_rt spread  --temporary hold of result b 
   { 
-		<< lowIndex>=i and highIndex<=j and pivotIndex>=1 and 
-			i<j and nolap() >>
+		<< lowIndex>=i and highIndex<=j and pivotIndex>=0 and
+			i<j and nolap() and AXIOM_IJ() >>
 		forall t in i..j
 			{
-				<< (lowIndex>=i) and (highIndex<=j) and (pivotIndex>=1) >>
+				<< lowIndex>=i and highIndex<=j and pivotIndex>=0 >>
 				if
 					(a[t] < p)~>	--is this element smaller than pivot?
-						<< lowIndex>=i >>
+						<< lowIndex>=i and a[t] < p >>
 						declare 
 							sl~int	--results from fetchadd (low)
 						{	--then put it in the lower half of b
-							<< (a[t] < p) and (lowIndex>=i)>>
+							<< a[t] < p and lowIndex>=i >>
 							fetchadd(lowIndex,1,sl)
 							<< sl in i..(lowIndex- 1) and a[t] < p >>
 							;
@@ -284,7 +285,7 @@ subprogram partition
 							(a[t]=b[sh]) and (p < a[t]) >>
 				[]
 					(a[t] = p)~> 	--is this element equal to pivot?
-						<< pivotIndex>=1 >>
+						<< pivotIndex>=0 >>
 						declare 
 							sp~int	--results from fetchadd (pivot)
 						{	--then save in pivotStore
