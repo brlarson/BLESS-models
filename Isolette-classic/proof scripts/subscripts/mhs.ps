@@ -80,7 +80,6 @@ axioms
 #[serial 1058]  <<M(check_temp) and x>> A <<M(run)>> for mhsBelow:check_temp-[x]->run{A};
 reduce
 atomic
-laws
 dist^
 normalize
 dist^
@@ -106,7 +105,6 @@ axioms
 #[serial 1059]  <<M(check_temp) and x>> A <<M(run)>> for mhsAbove:check_temp-[x]->run{A};
 reduce
 atomic
-laws
 dist^
 dist^
 normalize
@@ -139,7 +137,6 @@ axioms
 #[serial 1061]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOn:check_hyst-[x]->run{A};
 reduce
 atomic
-laws
 normalize
 remove-axioms-post
 axioms
@@ -200,6 +197,13 @@ normalize
 range-exp
 equivalent
 equivalent
+normalize
+laws
+normalize
+axioms
+split-post
+axioms
+substitute-pre
 normalize
 laws
 normalize

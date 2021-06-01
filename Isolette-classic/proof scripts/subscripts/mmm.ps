@@ -22,6 +22,7 @@ axioms
 #[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
+normalize
 DeMorgan
 normalize
 cnf
@@ -134,6 +135,7 @@ laws
 normalize
 axioms
 split-post
+laws
 axioms
 substitute-post
 substitute-pre
@@ -147,15 +149,17 @@ dist^
 normalize
 transitive
 axioms
-laws
-axioms
 #[serial 1015]  <<M(check_normal) and x>> A <<M(failed)>> for mmm3x:check_normal-[x]->failed{A};
 reduce
 atomic
+normalize
 DeMorgan
 normalize
 axioms
 split-post
+normalize
+laws
+normalize
 axioms
 push
 #Monitor::manage_monitor_mode.impl
@@ -181,8 +185,4 @@ normalize
 replace<=
 normalize
 guided-sub-equals[START_TIME]
-laws
-axioms
-#[serial 1416] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1405]
-laws
 axioms

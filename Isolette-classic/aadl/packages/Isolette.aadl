@@ -384,8 +384,8 @@ features
     {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
   display_temperature : out data port Iso_Types::measured_temperature_range
     {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
-  alarm : out data port Iso_Types::on_off
-    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
+  alarm_control : out data port Iso_Types::on_off
+    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
 annex EMV2 
   {** 
   use types ErrorLibrary, KSU_Isolette;
@@ -397,7 +397,7 @@ annex EMV2
   display_temperature: out propagation {UndetectableValueError,ItemOmission};
   regulator_status: out propagation {RegulatorStatusError,ItemOmission};
   monitor_status: out propagation {MonitorStatusError};
-  alarm: out propagation {AlarmError};
+  alarm_control: out propagation {AlarmError};
   heat_control: out propagation {HeatControlError};
   end propagations;
   **};
@@ -422,7 +422,7 @@ connections
   trs : port regulate_temperature.regulator_status -> regulator_status;
   tdt : port regulate_temperature.displayed_temp -> display_temperature;
   tms : port monitor_temperature.monitor_status -> monitor_status;
-  ta : port monitor_temperature.alarm -> alarm;
+  ta : port monitor_temperature.alarm -> alarm_control;
   tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
 annex EMV2
   {**
