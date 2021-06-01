@@ -272,7 +272,7 @@ connections
   rs : port thermostat.regulator_status -> operator_interface.regulator_status;
   ms : port thermostat.monitor_status -> operator_interface.monitor_status;
   dt : port thermostat.display_temperature -> operator_interface.display_temperature;
-  al : port thermostat.alarm -> operator_interface.alarm;
+  al : port thermostat.alarm_control -> operator_interface.alarm;
 annex EMV2
   {**
 --to be written by student
