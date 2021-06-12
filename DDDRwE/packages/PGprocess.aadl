@@ -55,6 +55,8 @@ process implementation pg_process.imp
 		--sensors
 		xlrc: port xl -> rc.xl;
 		magrc: port magnet -> rc.mag;
+		xlatr: port xl -> atr_rc.xl;
+		magatr: port magnet -> atr_rc.mag;
 		--settings to DDD
 		lsd: port stg.lrl -> ddd.lrl; --LRLi
 		usd: port stg.url -> ddd.url; --URLi
@@ -71,6 +73,8 @@ process implementation pg_process.imp
 		inhsd: port stg.inhibit -> ddd.inhibit; --
 		trksd: port stg.track -> ddd.track; --
 		expsrc: port stg.ex_pvarp -> ddd.ex_pvarp; --
+		mavddd: port stg.min_av -> ddd.min_av;
+		hyddd: port stg.hy -> ddd.hy;
 		--settings to Rate Controller
 		hsdrc: port stg.hy -> rc.hy in modes (normal); --
 		lsrc: port stg.lrl -> rc.lrl in modes (normal);
@@ -105,13 +109,17 @@ process implementation pg_process.imp
 		---DDD to ATR mode Rate Controller
 		ccidatr_rc: port ddd.cci -> atr_rc.cci;
 		lvwvsatr_rc: port ddd.last_v_was_vs -> atr_rc.last_v_was_vs;
+
+		--ATR rate controller to DDD
+		mxatr: port atr_rc.max_cci -> ddd.max_cci in modes (atr_mode);
 		--Rate Controller to DDD
 		mnrcd: port rc.min_cci -> ddd.min_cci in modes (normal);
 		mxrcd: port rc.max_cci -> ddd.max_cci in modes (normal);
 		davrcd: port rc.dav -> ddd.dav in modes (normal);
-		atr_mnrcd: port atr_rc.min_cci -> ddd.min_cci in modes (normal);
-		atr_mxrcd: port atr_rc.atr_max_cci -> ddd.atr_max_cci in modes (normal);
-		atr_davrcd: port atr_rc.dav -> ddd.dav in modes (normal);
+		--ATR rate controller to DDD
+		atr_mnrcd: port atr_rc.min_cci -> ddd.min_cci in modes (atr_mode);
+		atr_mxrcd: port atr_rc.atr_max_cci -> ddd.atr_max_cci;
+		atr_davrcd: port atr_rc.dav -> ddd.dav in modes (atr_mode);
 		--DDD to Markers
 		apdm: port ddd.ap -> mkr.ap;
 		vpdm: port ddd.vp -> mkr.vp;
@@ -140,14 +148,8 @@ process implementation pg_process.imp
 		--rate smoothing
 		drssd: port stg.drs -> rc.drs; --down-rate smoothing
 		urssd: port stg.urs -> rc.urs; --up-rate smoothing
-		pg_process_imp_new_connection: port stg.drs -> atr_rc.drs;
-		pg_process_imp_new_connection2: port xl -> atr_rc.xl;
-		pg_process_imp_new_connection3: port magnet -> atr_rc.mag;
-		pg_process_imp_new_connection4: port ddd.cci -> atr_rc.cci;
-		pg_process_imp_new_connection5: port atr_rc.max_cci -> ddd.max_cci;
-		pg_process_imp_new_connection6: port stg.urs -> atr_rc.urs;
-		pg_process_imp_new_connection7: port stg.min_av -> ddd.min_av;
-		pg_process_imp_new_connection8: port stg.hy -> ddd.hy;
+		drsatr: port stg.drs -> atr_rc.drs;
+		ursatr: port stg.urs -> atr_rc.urs;
 	modes
 		normal: initial mode;
 		atr_mode: mode;
