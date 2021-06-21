@@ -1,6 +1,7 @@
 #ascounter.ps
 push
 sort-by-component[ATR::AsCounter.imp]
+#ATR::AsCounter.imp
 #[serial 1034] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
 make-an
 normalize
@@ -44,25 +45,28 @@ laws
 axioms
 normalize
 push
-#[serial 1156]   normalization of [serial 1142
+#ATR::AsCounter.imp
+#[serial 1182] Law of And-Simplification:  P and true is P [serial 1171
 make-an
 split@
 normalize
-axioms
-#[serial 1173] Law of And-Simplification:  P and true is P [serial 1163]
 now
 laws
 axioms
-#[serial 1174] Law of And-Simplification:  P and true is P [serial 1165]
+#[serial 1183] Law of And-Simplification:  P and true is P [serial 1173]
 now
 laws
 axioms
-#[serial 1177]   normalization of [serial 1171]
+#[serial 1185]   normalization of [serial 1179]
+now
+axioms
+#[serial 1187]   normalization of [serial 1180]
 substitute-post
 normalize
 split-post
 push
-#[serial 1198] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1196
+#ATR::AsCounter.imp
+#[serial 1210] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1208
 make-an
 substitute-post
 normalize
@@ -71,13 +75,13 @@ guided-sub-equals[et]
 guided-sub-equals[last_as]
 counting
 axioms
-#[serial 1199] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1196]
+#[serial 1211] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1208]
 substitute-post
 guided-sub-equals[et]
 split@
 laws
 axioms
-#[serial 1200] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1196]
+#[serial 1212] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1208]
 substitute-post
 normalize
 guided-sub-equals[last_as]
@@ -86,7 +90,7 @@ normalize
 laws
 normalize
 axioms
-#[serial 1179]   normalization of [serial 1172]
+#[serial 1189]   normalization of [serial 1181]
 ??
 guided-sub-equals[et]
 now
@@ -114,12 +118,13 @@ reduce
 normalize
 axioms
 push
-#[serial 1275]   normalization of [serial 1269
+#ATR::AsCounter.imp
+#[serial 1286]   normalization of [serial 1280
 make-an
 split@
 laws
 axioms
-#[serial 1278]   normalization of [serial 1271]
+#[serial 1289]   normalization of [serial 1282]
 atomic
 substitute-both
 substitute-both
@@ -129,7 +134,7 @@ normalize
 counting
 normalize
 axioms
-#[serial 1280]   normalization of [serial 1272]
+#[serial 1291]   normalization of [serial 1283]
 substitute-both
 normalize
 atomic
@@ -142,7 +147,7 @@ split@
 laws
 now
 axioms
-#[serial 1282]   normalization of [serial 1273]
+#[serial 1293]   normalization of [serial 1284]
 atomic
 normalize
 laws
