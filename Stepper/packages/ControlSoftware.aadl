@@ -210,7 +210,7 @@ transitions
     Delta := 1                       --set the delta
       << E() and DESIRED_POSITION>=(ACTUAL_POSITION+1) and Delta=1 
         and ACTUAL_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition
-        and AXIOM_LT(ACTUAL_POSITION)
+        and AXIOM_LT(z:ACTUAL_POSITION)
         and (ACTUAL_POSITION+1)<=#PCS::MaxPosition>>	
     ;     
     ActuatorCommand(pc:Delta)              --open valve one step
@@ -229,7 +229,7 @@ transitions
         and E() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
     Delta := -1                       --set the delta
     <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=DESIRED_POSITION 
-        and AXIOM_GT(ACTUAL_POSITION)
+        and AXIOM_GT(z:ACTUAL_POSITION)
         and DESIRED_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
     ;
     ActuatorCommand(pc:Delta)              --close valve one step
@@ -253,7 +253,7 @@ transitions
   fra7sc: ShutDown -[EstimatedActualPosition>0]-> StillClosing
     { <<E() and ACTUAL_POSITION>0 and ACTUAL_IN_RANGE()>>
     Delta := -1                       --set the delta
-    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(ACTUAL_POSITION)
+    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(z:ACTUAL_POSITION)
         and ACTUAL_POSITION<=#PCS::MaxPosition>>	
     ;
      ActuatorCommand(pc:Delta)              --close valve one step

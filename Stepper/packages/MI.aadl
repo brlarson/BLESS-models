@@ -2,8 +2,7 @@ package MI
 --subprograms for Motor Interface
 public
 with BLESS, --BLESS_Types,
-  UnitsTypesAssertions, 
-  PositionControl;
+  UnitsTypesAssertions;
 -----------------subprograms-----------------------
 --@description command from the software Controller to the actuator to move
 --same for both robust and fragile valves
