@@ -1,30 +1,30 @@
 #atcounter.ps
 push
 sort-by-component[ATR::AtCounter.imp]
-#[serial 1021] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+#[serial 1020] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
 make-an
 normalize
 axioms
-#[serial 1022] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
+#[serial 1021] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
 normalize
 axioms
-#[serial 1023] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
-normalize
-laws
-axioms
-#[serial 1024] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
+#[serial 1022] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
 axioms
-#[serial 1025] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1026]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
-axioms
-#[serial 1027]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+#[serial 1023] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
 axioms
-#[serial 1028]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
+#[serial 1024] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1025]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
+axioms
+#[serial 1026]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+normalize
+laws
+axioms
+#[serial 1027]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
 reduce
 atomic
 normalize
@@ -32,7 +32,7 @@ laws
 now
 ??
 axioms
-#[serial 1029]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
+#[serial 1028]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
 reduce
 atomic
 laws
@@ -42,23 +42,22 @@ axioms
 normalize
 push
 #ATR::AtCounter.imp
-#[serial 1153]   normalization of [serial 1139
+#[serial 1179] Law of And-Simplification:  P and true is P [serial 1168
 make-an
 split@
 normalize
-axioms
-#[serial 1170] Law of And-Simplification:  P and true is P [serial 1160]
 now
 laws
 axioms
-#[serial 1171] Law of And-Simplification:  P and true is P [serial 1162]
+#[serial 1180] Law of And-Simplification:  P and true is P [serial 1170]
 now
 laws
 axioms
+#[serial 1182]   normalization of [serial 1176]
 split@
 normalize
 axioms
-#[serial 1174]   normalization of [serial 1168]
+#[serial 1184]   normalization of [serial 1177]
 substitute-post
 substitute-post
 normalize
@@ -67,27 +66,27 @@ normalize
 split-post
 push
 #ATR::AtCounter.imp
-#[serial 1200] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198
+#[serial 1215] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213
 make-an
 guided-sub-equals[et]
 split@
 laws
 axioms
-#[serial 1201] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
+#[serial 1216] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
 guided-sub-equals[last_at]
 axioms
-#[serial 1202] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
+#[serial 1217] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
 guided-sub-equals[last_at]
 guided-sub-equals[et]
 guided-sub-equals[c]
 counting
 axioms
-#[serial 1203] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1198]
+#[serial 1218] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
 guided-sub-equals[last_at]
 laws
 normalize
 axioms
-#[serial 1176]   normalization of [serial 1169]
+#[serial 1186]   normalization of [serial 1178]
 ??
 guided-sub-equals[et]
 now
@@ -95,10 +94,10 @@ guided-sub-equals[atCount]
 counting
 now
 axioms
-#[serial 1030]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
+#[serial 1029]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
 normalize
 axioms
-#[serial 1031]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
+#[serial 1030]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
 reduce
 atomic
 normalize
@@ -109,8 +108,7 @@ now
 axioms
 ??
 axioms
-stop*****
-#[serial 1032]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
+#[serial 1031]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
 reduce
 axioms
 atomic
@@ -119,53 +117,53 @@ laws
 normalize
 push
 #ATR::AtCounter.imp
-#[serial 1275]   normalization of [serial 1265
+#[serial 1294]   normalization of [serial 1287
 make-an
-now
+substitute-both
+substitute-pre
+normalize
 laws
-axioms
-#[serial 1277]   normalization of [serial 1270]
+normalize
 split-post
-axioms
-substitute-post
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
 axioms
 counting
 normalize
 axioms
-#[serial 1296] Law of And-Simplification:  P and true is P [serial 1292]
-split-post
-axioms
-now
+#[serial 1314] Law of And-Simplification:  P and true is P [serial 1310]
+dist^
 laws
-axioms
-#[serial 1297] Law of And-Simplification:  P and true is P [serial 1293]
-split-post
-axioms
-now
-laws
-axioms
-#[serial 1301]   normalization of [serial 1294]
-substitute-post
 normalize
 split-post
 axioms
+now
+axioms
+#[serial 1315] Law of And-Simplification:  P and true is P [serial 1311]
+split-post
+axioms
+now
+laws
+axioms
+#[serial 1318]   normalization of [serial 1309]
+dist^
+laws
+normalize
+axioms
+#[serial 1320]   normalization of [serial 1312]
 substitute-post
+substitute-both
+normalize
+laws
 normalize
 guided-sub-equals[last_at]
+laws
+normalize
+laws
+split-post
 axioms
-laws
-normalize
-laws
-normalize
 guided-sub-equals[now]
 axioms
-#[serial 1303]   normalization of [serial 1295]
-??
+#[serial 1322]   normalization of [serial 1313]
 now
+??
 guided-sub-equals[atCount]
 axioms
