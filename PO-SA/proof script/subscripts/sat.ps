@@ -1,15 +1,14 @@
 #sat.ps
 push
 sort-by-component SPA::SpO2AverageThread.imp
+#SPA::SpO2AverageThread.imp
 #[serial 1009] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definition
 make-an
 substitute-pre
-laws
 normalize
 axioms
 #[serial 1010] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 substitute-pre
-laws
 normalize
 axioms
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
@@ -53,7 +52,7 @@ laws
 normalize
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1248]   normalization of [serial 1231
+#[serial 1440]   normalization of [serial 1423
 make-an
 substitute-both
 normalize
@@ -63,26 +62,23 @@ substitute-post
 normalize
 laws
 axioms
-#[serial 1255]   normalization of [serial 1242]
+#[serial 1447]   normalization of [serial 1434]
 split-post
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1313] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255
+#[serial 1505] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1447
 make-an
-substitute-pre
-substitute-pre
-substitute-both
-laws
+substitute-post
 normalize
 laws
 axioms
-#[serial 1314] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255]
+#[serial 1506] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1447]
 substitute-pre
 substitute-pre
-laws
 normalize
+laws
 axioms
-#[serial 1257]   normalization of [serial 1243]
+#[serial 1449]   normalization of [serial 1435]
 substitute-post
 substitute-pre
 substitute-pre
@@ -93,7 +89,7 @@ normalize
 substitute-pre
 normalize
 axioms
-#[serial 1282]   normalization of [serial 1272]
+#[serial 1474]   normalization of [serial 1464]
 substitute-pre
 substitute-pre
 normalize
@@ -103,18 +99,18 @@ split-post
 normalize
 qtiming
 axioms
-#[serial 1284]   normalization of [serial 1273]
+#[serial 1476]   normalization of [serial 1465]
 substitute-pre
 substitute-pre
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1300]   normalization of [serial 1293]
+#[serial 1492]   normalization of [serial 1485]
 substitute-pre
 substitute-pre
-laws
 normalize
+laws
 axioms
 #[serial 1016]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
 completesub
@@ -144,11 +140,12 @@ laws
 normalize
 axioms
 substitute-both
+normalize
 laws
 normalize
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1532]   normalization of [serial 1500
+#[serial 1721]   normalization of [serial 1689
 make-an
 atomic
 normalize
@@ -159,28 +156,28 @@ sub-equals
 qtiming
 laws
 axioms
-#[serial 1626]   normalization of [serial 1602]
+#[serial 1810]   normalization of [serial 1793]
 atomic
 axioms
-#[serial 1628]   normalization of [serial 1604]
+#[serial 1814]   normalization of [serial 1795]
 replace<=
 normalize
 laws
 axioms
-#[serial 1630]   normalization of [serial 1610]
+#[serial 1826]   normalization of [serial 1801]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1632]   normalization of [serial 1611]
+#[serial 1828]   normalization of [serial 1802]
 atomic
 normalize
 split-post
 axioms
 qtiming
 axioms
-#[serial 1634]   normalization of [serial 1613]
+#[serial 1830]   normalization of [serial 1803]
 atomic
 normalize
 laws
@@ -188,24 +185,61 @@ normalize
 laws
 normalize
 axioms
-#[serial 1636]   normalization of [serial 1614]
+#[serial 1834]   normalization of [serial 1805]
 qtiming
 axioms
-#[serial 1638]   normalization of [serial 1615]
+#[serial 1836]   normalization of [serial 1806]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1640]   normalization of [serial 1616]
+#[serial 1838]   normalization of [serial 1807]
 atomic
 normalize
 axioms
-#[serial 1642]   normalization of [serial 1617]
+#[serial 1856] Associativity: (b.c).a = a.b.c [serial 1818]
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+contract-uqr
+axioms
+#[serial 1857] Associativity: (b.c).a = a.b.c [serial 1820]
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+substitute-pre
+normalize
+qtiming
+axioms
+#[serial 1858] Associativity: (b.c).a = a.b.c [serial 1822]
+substitute-pre
+substitute-pre
+substitute-pre
+normalize
+laws
+normalize
+qtiming
+split-post
+axioms
+normalize
+qtiming
+axioms
+#[serial 1859] Associativity: (b.c).a = a.b.c [serial 1824]
+completesub
+laws
+axioms
+#[serial 1871]   normalization of [serial 1854]
 substitute-post
+normalize
 laws
 axioms
-#[serial 1644]   normalization of [serial 1618]
+#[serial 1873]   normalization of [serial 1855]
 atomic
 replaceNEwithLTorGT
 normalize
@@ -232,47 +266,8 @@ axioms
 substitute-post
 normalize
 axioms
-#[serial 1646]   normalization of [serial 1619]
-substitute-pre
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
-contract-uqr
-axioms
-#[serial 1648]   normalization of [serial 1620]
-substitute-both
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
-qtiming
-axioms
-#[serial 1650]   normalization of [serial 1621]
-split-post
-normalize
-substitute-pre
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
-qtiming
-axioms
-#[serial 1652]   normalization of [serial 1622]
-substitute-pre
-substitute-pre
-substitute-pre
-normalize
-laws
-normalize
-axioms
-#[serial 1654]   normalization of [serial 1623]
-substitute-post
-substitute-post
-normalize
+#[serial 1879]   normalization of [serial 1860]
+completesub
 alldist^
 axioms
 #[serial 1020]  <<M(fillingWindow) and x>> -> <<M(halt)>> for SpATstop:fillingWindow-[x]->halt{};

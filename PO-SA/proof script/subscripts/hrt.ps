@@ -1,6 +1,7 @@
 # hrt.ps for HR::HeartRateTrendThread.imp
 push
 sort-by-component HR::HeartRateTrendThread.imp
+#HR::HeartRateTrendThread.imp
 #[serial 1036] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
 substitute-pre
@@ -43,14 +44,13 @@ remove-axioms-post
 laws
 axioms
 push
-make-an
 #HR::HeartRateTrendThread.imp
-#[serial 1150] Q5 -> Q in sequential composition for [serial 1147]
- 
+#[serial 2785] Q5 -> Q in sequential composition for [serial 2782
+make-an
 substitute-post
 replace-qv
 axioms
-#[serial 1162]   <<Q0>> -> <<Q>>  for [serial 1154]
+#[serial 2797]   <<Q0>> -> <<Q>>  for [serial 2789]
 substitute-both
 split-post
 axioms
@@ -61,7 +61,7 @@ normalize
 elim-subtract
 normalize
 axioms
-#[serial 1165]   <<Q1>> -> <<Q>>  for [serial 1154]
+#[serial 2800]   <<Q1>> -> <<Q>>  for [serial 2789]
 split-post
 axioms
 substitute-pre
@@ -71,44 +71,43 @@ normalize
 laws
 normalize
 axioms
-#[serial 1188]   normalization of [serial 1158]
+#[serial 2823]   normalization of [serial 2793]
 substitute-pre
 replace-qv
 axioms
-#[serial 1194]   normalization of [serial 1160]
+#[serial 2829]   normalization of [serial 2795]
 split-post
 axioms
 substitute-post
 normalize
 axioms
-#[serial 1196]   normalization of [serial 1173]
+#[serial 2831]   normalization of [serial 2808]
 ??
 laws
 normalize
 axioms
-#[serial 1199]   normalization of [serial 1163]
+#[serial 2834]   normalization of [serial 2798]
 split-post
 axioms
 substitute-post
 normalize
 axioms
-#[serial 1201]   normalization of [serial 1174]
+#[serial 2836]   normalization of [serial 2809]
 ??
 laws
 normalize
 axioms
-#[serial 1204]   normalization of [serial 1175]
+#[serial 2839]   normalization of [serial 2810]
 qtiming
 axioms
-#[serial 1238]   normalization of [serial 1223]
+#[serial 2873]   normalization of [serial 2858]
 substitute-pre
 normalize
 now
 equivalent
-normalize
 laws
 axioms
-#[serial 1240]   normalization of [serial 1225]
+#[serial 2875]   normalization of [serial 2860]
 now
 substitute-pre
 normalize
@@ -140,7 +139,7 @@ remove-axioms-post
 laws
 push
 #HR::HeartRateTrendThread.imp
-#[serial 1430]   normalization of [serial 1409
+#[serial 3046]   normalization of [serial 3025
 make-an
 substitute-post
 alldist^
@@ -148,25 +147,25 @@ split-post
 axioms
 replace-qv
 axioms
-#[serial 1436]   normalization of [serial 1417]
+#[serial 3052]   normalization of [serial 3033]
 substitute-pre
 zeroquantlb
 normalize
 contract-uqr
 replace-qv
 axioms
-#[serial 1438]   normalization of [serial 1416]
+#[serial 3054]   normalization of [serial 3032]
 atomic
 normalize
 axioms
-#[serial 1444]   normalization of [serial 1420]
+#[serial 3060]   normalization of [serial 3036]
 atomic
 split-post
 axioms
 ??
 laws
 axioms
-#[serial 1446]   normalization of [serial 1421]
+#[serial 3062]   normalization of [serial 3037]
 substitute-pre
 normalize
 laws
@@ -180,7 +179,7 @@ normalize
 laws
 normalize
 axioms
-#[serial 1450]   normalization of [serial 1423]
+#[serial 3066]   normalization of [serial 3039]
 atomic
 normalize
 split-post
@@ -188,7 +187,7 @@ axioms
 ??
 laws
 axioms
-#[serial 1452]   normalization of [serial 1424]
+#[serial 3068]   normalization of [serial 3040]
 substitute-pre
 normalize
 laws
@@ -201,31 +200,31 @@ normalize
 laws
 normalize
 axioms
-#[serial 1454]   normalization of [serial 1426]
+#[serial 3070]   normalization of [serial 3042]
 qtiming
 axioms
-#[serial 1456]   normalization of [serial 1425]
+#[serial 3072]   normalization of [serial 3041]
 atomic
 normalize
 axioms
-#[serial 1458]   normalization of [serial 1415]
+#[serial 3074]   normalization of [serial 3031]
 atomic
 normalize
 axioms
-#[serial 1476] Associativity: (b.c).a = a.b.c [serial 1442]
+#[serial 3092] Associativity: (b.c).a = a.b.c [serial 3058]
 substitute-post
 normalize
 laws
 axioms
-#[serial 1494]   normalization of [serial 1477]
+#[serial 3110]   normalization of [serial 3093]
 substitute-post
 normalize
 laws
 normalize
 axioms
-#[serial 1499] Law of And-Simplification:  P and true is P [serial 1496]
+#[serial 3115] Law of And-Simplification:  P and true is P [serial 3112]
 axioms
-#[serial 1500] Law of And-Simplification:  P and true is P [serial 1497]
+#[serial 3116] Law of And-Simplification:  P and true is P [serial 3113]
 atomic
 normalize
 laws
@@ -235,7 +234,7 @@ substitute-both
 normalize
 laws
 axioms
-#[serial 1501] Law of And-Simplification:  P and true is P [serial 1498]
+#[serial 3117] Law of And-Simplification:  P and true is P [serial 3114]
 atomic
 substitute-both
 normalize

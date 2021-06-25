@@ -1,8 +1,9 @@
 # rd.ps
 push
 sort-by-component[RD::RapidDeclineThread]
+#RD::RapidDeclineThread.imp
+#[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
-#[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 substitute-pre
 axioms
 #[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
@@ -38,21 +39,22 @@ normalize
 substitute-both
 normalize
 push
+#RD::RapidDeclineThread.imp
+#[serial 3398]   normalization of [serial 3389
 make-an
-#[serial 1152]   normalization of [serial 1143]
 qtiming
 axioms
-#[serial 1166]   normalization of [serial 1161]
+#[serial 3412]   normalization of [serial 3407]
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
 axioms
-#[serial 1173]   normalization of [serial 1168]
+#[serial 3419]   normalization of [serial 3414]
 replace-qv
 axioms
-#[serial 1175]   normalization of [serial 1169]
+#[serial 3421]   normalization of [serial 3415]
 replace-qv
 axioms
 #[serial 1064]  <<M(check) and x>> A <<M(fill)>> for chk:check-[x]->fill{A};

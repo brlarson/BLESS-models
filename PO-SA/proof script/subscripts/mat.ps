@@ -6,18 +6,18 @@ sort-by-component MA::MotionArtifactThread.imp
 make-an
 substitute-pre
 normalize
+axioms
 #[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1005]  <<M(start)>> -> <<M(run)>> for mat0:start-[ ]->run{};
-axioms
 substitute-post
 normalize
 sub-equals
 laws
 alldist^
 quant
-#[serial 1006]  <<M(run) and x>> A <<M(run)>> for mat1:run-[x]->run{A};
 axioms
+#[serial 1006]  <<M(run) and x>> A <<M(run)>> for mat1:run-[x]->run{A};
 reduce
 reduce
 normalize
@@ -35,37 +35,27 @@ substitute-both
 normalize
 axioms
 push
+#MA::MotionArtifactThread.imp
+#[serial 1224]   normalization of [serial 1216
 make-an
-#[serial 1213] substituted Assertions' predicates for  labels  [serial 1127]
 qtiming
 axioms
-#[serial 1222]   normalization of [serial 1214]
+#[serial 1226]   normalization of [serial 1217]
 replace<=
 laws
 axioms
-#[serial 1224]   normalization of [serial 1215]
+#[serial 1228]   normalization of [serial 1218]
 and-over-or-post
 laws
 normalize
 axioms
-#[serial 1226]   normalization of [serial 1216]
+#[serial 1230]   normalization of [serial 1219]
 contract-uqr
 axioms
-#[serial 1228]   normalization of [serial 1217]
+#[serial 1232]   normalization of [serial 1220]
 alldist^
 zeroquantlb
 normalize
 axioms
 #[serial 1007]  <<M(run) and x>> -> <<M(halt)>> for mat2:run-[x]->halt{};
-axioms
-#[serial 1009] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definition.
-substitute-both
-substitute-pre
-normalize
-laws
-axioms
-#[serial 1010] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
-substitute-pre
-normalize
-laws
 axioms
