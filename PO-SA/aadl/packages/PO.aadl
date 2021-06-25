@@ -419,12 +419,12 @@ process implementation ICEpoUIprocess.imp
     ui_touch : port Touch -> uit.Touch;
     ui_sound : port uit.Sound -> Sound;
     ui_spo2 : port SpO2 -> uit.SpO2;
-    ui_spo2_ll : port SpO2LowerLimit -> uit.SpO2LowerLimit;
+--    ui_spo2_ll : port SpO2LowerLimit -> uit.SpO2LowerLimit;
     ui_spo2_llv : port SpO2LowerLimitViolated -> uit.SpO2LowerLimitViolated;
     ui_heartrate : port HeartRate -> uit.HeartRate;
-    ui_heartrate_ll : port HeartRateLowerLimit -> uit.HeartRateLowerLimit;
+--    ui_heartrate_ll : port HeartRateLowerLimit -> uit.HeartRateLowerLimit;
     ui_heartrate_llv : port HeartRateLowerLimitViolated -> uit.HeartRateLowerLimitViolated;
-    ui_heartrate_ul : port HeartRateUpperLimit -> uit.HeartRateUpperLimit;
+--    ui_heartrate_ul : port HeartRateUpperLimit -> uit.HeartRateUpperLimit;
     ui_heartrate_ulv : port HeartRateUpperLimitViolated -> uit.HeartRateUpperLimitViolated;
     ui_heartrate_trend : port HeartRateTrend -> uit.HeartRateTrend;
     ui_suploxyalarmenabled : port uit.SupplOxyAlarmEnabled -> SupplOxyAlarmEnabled;
@@ -454,7 +454,7 @@ thread ICEpoUI
     --== SpO2 Sensor inputs and alarm configuration
     --====================
     SpO2 : in event data port PulseOx_Types::Percent;	--oxygen saturation from pulse oximater
-    SpO2LowerLimit : in out event data port PulseOx_Types::Percent;  --minimum allowed SpO2
+    SpO2LowerLimit : out event data port PulseOx_Types::Percent;  --minimum allowed SpO2
     SpO2LowerLimitViolated : in event port  --patient SpO2 below lower limit
       {BLESS::Assertion=>"<<SPO2_LOWER_LIMIT_ALARM()>>";}
       ;
@@ -462,11 +462,11 @@ thread ICEpoUI
     --== Heart Rate Sensor inputs and alarm configuration
     --====================
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
-    HeartRateLowerLimit : in out event data port PulseOx_Types::Heart_Rate;  -- minimum heart rate
+    HeartRateLowerLimit : out event data port PulseOx_Types::Heart_Rate;  -- minimum heart rate
     HeartRateLowerLimitViolated : in event port  -- heart too slow
       {BLESS::Assertion=>"<<HEART_RATE_LOWER_LIMIT_ALARM()>>";}
       ;
-    HeartRateUpperLimit : in out event data port PulseOx_Types::Heart_Rate;  -- maximum heart rate
+    HeartRateUpperLimit : out event data port PulseOx_Types::Heart_Rate;  -- maximum heart rate
     HeartRateUpperLimitViolated : in event port  -- heart too fast
       {BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";}
       ;
