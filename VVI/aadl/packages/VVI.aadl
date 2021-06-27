@@ -25,7 +25,7 @@ thread VVI
     lrl: in data port CardiacDuration;  --lower rate limit interval
     vrp: in data port CardiacDuration;  --ventricular refractory period 
   properties
-    Thread_Properties::Dispatch_Protocol => Aperiodic;
+    Thread_Properties::Dispatch_Protocol => Sporadic;
     BLESS::Invariant => "<<LRL()>>";  
 end VVI;
 
