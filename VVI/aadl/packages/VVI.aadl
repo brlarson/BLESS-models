@@ -62,7 +62,7 @@ invariant
       that (n@t or p@t) >>  --with a pace or non-refractory sense	
 
 variables
-  last_beat ~ time
+  last_beat ~ time := 0 s  --useless initialization needed so Slang won't complain
     --the last pace or non-refractory sense occurred at last_beat
   << LAST: :(n or p)@last_beat>>  
  
