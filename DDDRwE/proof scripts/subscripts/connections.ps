@@ -5,45 +5,59 @@ axioms
 axioms
 #[serial 1083] Composition of Subcomponents via Directional Connection ddd.last_v_was_vs -> rc.last_v_was_vs:
 axioms
-#[serial 1084] Composition of Subcomponents via Directional Connection ddd.cci -> rc.cci:
+#[serial 1084] Composition of Subcomponents via Directional Connection ddd.last_v_was_vs -> atr_rc.last_v_was_vs:
 axioms
-#[serial 1085] Composition of Subcomponents via Directional Connection ddd.cci -> mkr.cci:
+#[serial 1085] Composition of Subcomponents via Directional Connection ddd.cci -> rc.cci:
 axioms
-#[serial 1086] Composition of Subcomponents via Directional Connection ddd.ap -> mkr.ap:
+#[serial 1086] Composition of Subcomponents via Directional Connection ddd.cci -> atr_rc.cci:
 axioms
-#[serial 1087] Composition of Subcomponents via Directional Connection ddd.vp -> mkr.vp:
+#[serial 1087] Composition of Subcomponents via Directional Connection ddd.cci -> mkr.cci:
 axioms
-#[serial 1088] Composition of Subcomponents via Directional Connection ddd.as -> mkr.as:
+#[serial 1088] Composition of Subcomponents via Directional Connection ddd.ap -> mkr.ap:
 axioms
-#[serial 1089] Composition of Subcomponents via Directional Connection ddd.as -> atr.dc.as:
+#[serial 1089] Composition of Subcomponents via Directional Connection ddd.vp -> mkr.vp:
 axioms
-#[serial 1090] Composition of Subcomponents via Directional Connection ddd.at -> mkr.at:
+#[serial 1090] Composition of Subcomponents via Directional Connection ddd.as -> mkr.as:
 axioms
-#[serial 1091] Composition of Subcomponents via Directional Connection ddd.at -> atr.ac.at:
+#[serial 1091] Composition of Subcomponents via Directional Connection ddd.as -> atr.dc.as:
 axioms
-#[serial 1092] Composition of Subcomponents via Directional Connection ddd.vs -> mkr.vs:
+#[serial 1092] Composition of Subcomponents via Directional Connection ddd.at -> mkr.at:
 axioms
-#[serial 1093] Composition of Subcomponents via Directional Connection ddd.pvc -> mkr.pvc:
+#[serial 1093] Composition of Subcomponents via Directional Connection ddd.at -> atr.ac.at:
 axioms
-#[serial 1094] Composition of Subcomponents via Directional Connection ddd.ras -> mkr.ras:
+#[serial 1094] Composition of Subcomponents via Directional Connection ddd.vs -> mkr.vs:
 axioms
-#[serial 1095] Composition of Subcomponents via Directional Connection ddd.rvs -> mkr.rvs:
+#[serial 1095] Composition of Subcomponents via Directional Connection ddd.pvc -> mkr.pvc:
 axioms
-#[serial 1096] Composition of Subcomponents via Directional Connection rc.min_cci -> ddd.min_cci:
+#[serial 1096] Composition of Subcomponents via Directional Connection ddd.ras -> mkr.ras:
 axioms
-#[serial 1097] Composition of Subcomponents via Directional Connection rc.max_cci -> ddd.max_cci:
+#[serial 1097] Composition of Subcomponents via Directional Connection ddd.rvs -> mkr.rvs:
 axioms
-#[serial 1098] Composition of Subcomponents via Directional Connection rc.dav -> ddd.dav:
+#[serial 1098] Composition of Subcomponents via Directional Connection rc.min_cci -> ddd.min_cci:
 axioms
-#[serial 1099] Composition of Subcomponents via Directional Connection atr.atr.fb -> ddd.fb:
+#[serial 1099] Composition of Subcomponents via Directional Connection rc.max_cci -> ddd.max_cci:
 axioms
-#[serial 1100] Composition of Subcomponents via Directional Connection atr.atr.atr_detect -> mkr.atr_dct:
+#[serial 1100] Composition of Subcomponents via Directional Connection rc.dav -> ddd.dav:
 axioms
-#[serial 1101] Composition of Subcomponents via Directional Connection atr.atr.atr_fallback -> mkr.atr_fb:
+#[serial 1101] Composition of Subcomponents via Directional Connection atr_rc.min_cci -> ddd.min_cci:
 axioms
-#[serial 1102] Composition of Subcomponents via Directional Connection atr.atr.atr_end -> mkr.atr_end:
+#[serial 1102] Composition of Subcomponents via Directional Connection atr_rc.max_cci -> ddd.max_cci:
 axioms
-#[serial 1103] Composition of Subcomponents via Directional Connection DDD.ddd.ap -> front_end.ap:
+#[serial 1103] Composition of Subcomponents via Directional Connection atr_rc.atr_max_cci -> ddd.atr_max_cci:
+normalize
+substitute-both
 axioms
-#[serial 1104] Composition of Subcomponents via Directional Connection DDD.ddd.vp -> front_end.vp:
+#[serial 1104] Composition of Subcomponents via Directional Connection atr_rc.dav -> ddd.dav:
+axioms
+#[serial 1105] Composition of Subcomponents via Directional Connection atr.atr.fb -> ddd.fb:
+axioms
+#[serial 1106] Composition of Subcomponents via Directional Connection atr.atr.atr_detect -> mkr.atr_dct:
+axioms
+#[serial 1107] Composition of Subcomponents via Directional Connection atr.atr.atr_fallback -> mkr.atr_fb:
+axioms
+#[serial 1108] Composition of Subcomponents via Directional Connection atr.atr.atr_end -> mkr.atr_end:
+axioms
+#[serial 1109] Composition of Subcomponents via Directional Connection DDD.ddd.ap -> front_end.ap:
+axioms
+#[serial 1110] Composition of Subcomponents via Directional Connection DDD.ddd.vp -> front_end.vp:
 axioms
