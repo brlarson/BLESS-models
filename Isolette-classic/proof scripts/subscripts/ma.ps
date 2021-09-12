@@ -72,6 +72,7 @@ normalize
 alldist^
 axioms
 substitute-pre
+now
 normalize
 axioms
 #[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormal:check_mode-[x]->check_temp{};
@@ -104,6 +105,7 @@ substitute-pre
 normalize
 replace<=
 normalize
+now
 axioms
 #[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr:check_temp-[x]->run{A};
 reduce
@@ -153,6 +155,7 @@ laws
 dist^
 replace-port
 normalize
+now
 axioms
 #[serial 1030]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOn:check_hyst-[x]->run{A};
 reduce
@@ -170,6 +173,7 @@ normalize
 dist^
 normalize
 dist^
+now
 normalize
 axioms
 push
@@ -238,6 +242,7 @@ push
 make-an
 substitute-post
 alldist^
+now
 axioms
 #[serial 1569]   normalization of [serial 1561]
 substitute-post
