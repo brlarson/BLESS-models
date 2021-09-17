@@ -97,6 +97,8 @@ thread DDD  --main PACEMAKER behavior thread
     {BLESS::Assertion=>"<<:=INHIBIT>>";};
   track: in data port flag  --paces track senses
     {BLESS::Assertion=>"<<:=TRACK>>";};
+  va_duration: out data port ms  -- V-A interval duration
+    {BLESS::Assertion=>"<<:=VA_INTERVAL_A()>>";};
   properties
   	BLESS::Invariant => "<<LRL_A(now)>>";  -- and (SAV(now) or PAV(now) or VAI(now))>>";
 end DDD;
@@ -144,6 +146,7 @@ assert
 <<AXIOM_AS: :AS iff (AS_A(now) or now=0) >>
 <<AXIOM_VS: :VS iff (VS_A(now) or now=0)  >>
 <<AXIOM_AT: :AT iff AT_A(now) >>
+<<AXIOM_LRL_GT_URL: : lrl > url >>  --lower rate limit interval must be larger than upper rate limit interval
 
 
 
@@ -179,7 +182,7 @@ variables
   lastVwasVS ~ boolean  --most recent V-event was vs
     <<LVVS : : lastVwasVS iff LAST_V_WAS_VS(now)>>;
   va_interval ~ time  --ventrucular-atrial interval
-     <<AXIOM_VA_INTERVAL : : va_interval = VA_INTERVAL_A() >>;
+     <<VA_INT : : va_interval = VA_INTERVAL_A() >>;
   dur ~ time;
 
 states
@@ -197,12 +200,12 @@ states
   pav_check_vrp : state  --ventricular sense during paced AV delay
   	<<V@now and PAV(now) and LRL_A(now) and LAST(now) >>;  --was it in VRP_A? 
   va : complete state   --a V pace or sense occured in the previous VA interval
-    <<LRL_A(now) and LAST(now) and VAI(now)>>;   
+    <<LRL_A(now) and LAST(now) and VA_INT(now) and VAI()>>;   
   check_atrial_refractories : state   --check if atrial sense is in PVARP_A or ARP_A
     <<A@now and LRL_A(now) and LAST(now) -- and AXIOM_LAST_AS_LT_LAST_AP()
-       and VAI(now)>>;
+       and VAI(now) and VA_INT(now)>>;
   check_vrp : state     --check if ventricular sense is premature ventricular contraction
-    <<V@now and LRL_A(now) and LAST(now) and VAI(now) >>;
+    <<V@now and LRL_A(now) and LAST(now) and VAI(now) and VA_INT(now) >>;
 
 transitions
   T0_GO :	--start pacing immediately
@@ -254,6 +257,14 @@ transitions
          last_vp_or_vs := now
            <<VP@last_vp_or_vs and VP@now and AXIOM_LAST_AS_LE_TOPS()  
            and (last_vp_or_vs=now) and LAST_AP_OR_AS_A(now)>>
+       ;
+      va_interval := max_cci - (((now-last_vp_or_vs)*((av-min_av)/(lrl-url))) + min_av)
+        <<(last_vp_or_vs=now) and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>
+      ;
+      va_duration!(va_interval)
+        <<(last_vp_or_vs=now) and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>      
        };
 
   T2_VS_AFTER_AS :    --ventricular sense during SAV delay
@@ -276,7 +287,16 @@ transitions
       <<VS@now and LAST_AP_OR_AS_A(now)>>
     ; 
     last_vp_or_vs := now 
-      <<VS@now and LAST_AP_OR_AS_A(now) and last_vp_or_vs=now and AXIOM_LAST_AS_LE_TOPS()>>
+      <<VS@now and LAST_AP_OR_AS_A(now) and last_vp_or_vs=now and AXIOM_LAST_AS_LE_TOPS()
+        and AXIOM_LRL_GT_URL() >>
+    ;
+    va_interval := max_cci - (((now-last_vp_or_vs)*((av-min_av)/(lrl-url))) + min_av)
+        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>
+    ;
+    va_duration!(va_interval)
+        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>      
     };   
 
   T6_EXPIRED_SENSED_AV_DELAY :  --v pace after sensed av delay if no vs
@@ -297,7 +317,16 @@ transitions
        <<VP@now and LAST(now)>>
      ;
      last_vp_or_vs := now 
-       <<last_vp_or_vs=now and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+       <<last_vp_or_vs=now and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+           and AXIOM_LRL_GT_URL() >>
+      ;
+      va_interval := max_cci - (((now-last_vp_or_vs)*((av-min_av)/(lrl-url))) + min_av)
+        <<(last_vp_or_vs=now) and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>
+      ;
+      va_duration!(va_interval)
+        <<(last_vp_or_vs=now) and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>      
      };
    
    
@@ -320,9 +349,18 @@ transitions
         <<VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       ; 
       last_vp_or_vs := now 
-        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) 
+          and AXIOM_LRLi_gt_URLi_LIMIT(now) and AXIOM_LRL_GT_URL() >>
+      ;
+      va_interval := max_cci - (((now-last_vp_or_vs)*((av-min_av)/(lrl-url))) + min_av)
+        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>
+      ;
+      va_duration!(va_interval)
+        <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)
+          and VA_INT()>>      
       }
-      <<VS@now and (last_vp_or_vs=now) and 
+      <<VS@now and (last_vp_or_vs=now) and VA_INT() and 
         LAST_AP_OR_AS_A(now) and LAST_VP_OR_VS_A(now)>> };  
 
     
@@ -410,15 +448,15 @@ transitions
     };  
     
   T19_AP_AFTER_TIMEOUT_VS_OR_VP :  --atrial pace if no atrial sense during V-A interval
-  va -[on dispatch timeout (vp vs) va_interval]-> pav
-  { << LAST(now) and LRL_A(now) and AXIOM_VA_INTERVAL() and
+  va -[on dispatch timeout (vp vs) va_duration]-> pav
+  { << LAST(now) and LRL_A(now) and VA_INT() and
   	   (VP or VS)@(now-va_interval) and 
   	   not (exists tv~time
             in (now-va_interval) ,, now 
             that (VP or VS)@tv ) and
        not (exists ta~time in tops,,now that A@ta) >>
     {<<AP_A(now) and LAST(now) and 
-       AXIOM_AP() and AXIOM_VA_INTERVAL() and
+       AXIOM_AP() and VA_INT() and
   	   (VP or VS)@(now-va_interval) and 
        not (exists tv~time
             in (now-va_interval) ,, now 

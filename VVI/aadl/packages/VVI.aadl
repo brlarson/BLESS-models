@@ -138,6 +138,13 @@ transitions
     & last_beat:=now <<last_beat=now>>
     }  
 **};	--end of annex subclause 
+
+annex Dispatch
+{**
+pace T3_PACE_LRL_AFTER_VP [on dispatch timeout (n or p) lrl]
+sense T8_VS_AFTER_VS [on dispatch s]
+**};
+
 end VVI.i;  --end thread 
 
 system PG
