@@ -1,5 +1,4 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Sun Jun 06 15:32:53 CDT 2021 by brianlarson
+# RobustSingleStep.ps
 push
 sort-by-component[ControlSoftware::RobustPositionControlThread.SingleStep]
 #ControlSoftware::RobustPositionControlThread.SingleStep
@@ -37,7 +36,7 @@ normalize
 dist^
 dist^
 normalize
-dist^
+now
 axioms
 #[serial 1050]  <<M(Run) and x>> -> <<M(Decide)>> for one1run:Run-[x]->Decide{};
 axioms
@@ -65,7 +64,7 @@ dist^
 normalize
 dist^
 normalize
-dist^
+now
 axioms
 guided-sub-equals[ACTUAL_POSITION]
 normalize
@@ -90,7 +89,7 @@ dist^
 normalize
 dist^
 normalize
-dist^
+now
 axioms
 guided-sub-equals[ACTUAL_POSITION]
 guided-sub-equals[EstimatedActualPosition]
@@ -117,7 +116,6 @@ normalize
 axioms
 dist^
 guided-sub-equals[ACTUAL_POSITION]
-axioms
 guided-sub-equals[MinusOne]
 elim-subtract
 normalize
@@ -126,6 +124,7 @@ axioms
 substitute-post
 normalize
 alldist^
+now
 axioms
 #[serial 1054]  <<M(Run) and x>> -> <<M(ShutDown)>> for one5stop:Run-[x]->ShutDown{};
 normalize
@@ -157,7 +156,7 @@ normalize
 laws
 dist^
 normalize
-dist^
+now
 axioms
 sub-all-eq
 axioms
