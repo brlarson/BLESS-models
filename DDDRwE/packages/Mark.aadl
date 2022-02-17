@@ -1,5 +1,5 @@
 --Mark.aadl
-
+--determine markers for events
 
 package mark
 public

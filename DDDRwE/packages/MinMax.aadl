@@ -1,3 +1,5 @@
+--MinMax.aadl
+
 package MinMax
 --minimum and maximum functions
 public
