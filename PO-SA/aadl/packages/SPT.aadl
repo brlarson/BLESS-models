@@ -82,7 +82,7 @@ annex BLESS
       []
         (not (MotionArtifact? or not SensorConnected?))~>
              <<SHFT() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1]:=SpO2?  --add current sample
+          spo2_nxt[1] := SpO2  --add current sample
             <<SHFT() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
                and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 u else SPO2^0))>>
       fi    
@@ -137,7 +137,7 @@ annex BLESS
       []
         (not (MotionArtifact? or not SensorConnected?))~>
              <<SHFTR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1]:=SpO2?  --add current sample
+          spo2_nxt[1] := SpO2  --add current sample
             <<SHFTR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
                and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 u else SPO2^0))>>
       fi    

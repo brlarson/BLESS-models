@@ -66,7 +66,7 @@ annex BLESS
       <<SHFT_RD: :all i~quantity whole in 1 ..num_samples 
          are spo2_nxt[i+1]=SPO2^(-i)>>
       ;  
-          spo2_nxt[1]:=SpO2?
+          spo2_nxt[1] := SpO2
         <<(spo2_nxt[1]=SPO2^0) and
           (all i~quantity whole in 2 ..(num_samples+1) are spo2_nxt[i]=SPO2^(1-i))>>
       ;    

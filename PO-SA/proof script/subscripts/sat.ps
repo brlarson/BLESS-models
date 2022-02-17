@@ -48,11 +48,9 @@ normalize
 laws
 normalize
 axioms
-laws
-normalize
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1440]   normalization of [serial 1423
+#[serial 1442]   normalization of [serial 1425
 make-an
 substitute-both
 normalize
@@ -62,55 +60,63 @@ substitute-post
 normalize
 laws
 axioms
-#[serial 1447]   normalization of [serial 1434]
+#[serial 1449]   normalization of [serial 1436]
 split-post
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1505] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1447
+#[serial 1492] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1449
 make-an
 substitute-post
+replace-port
 normalize
+now
 laws
 axioms
-#[serial 1506] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1447]
+#[serial 1493] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1449]
 substitute-pre
 substitute-pre
 normalize
 laws
 axioms
-#[serial 1449]   normalization of [serial 1435]
+#[serial 1451]   normalization of [serial 1437]
 substitute-post
 substitute-pre
 substitute-pre
 substitute-pre
 normalize
 laws
-normalize
 substitute-pre
+normalize
+replace-port
+now
+laws
 normalize
 axioms
-#[serial 1474]   normalization of [serial 1464]
+#[serial 1453]   normalization of [serial 1438]
 substitute-pre
 substitute-pre
 normalize
-substitute-post
+laws
+substitute-pre
+replace-port
+normalize
+guided-sub-equals[goodCount]
+now
+laws
+axioms
+#[serial 1455]   normalization of [serial 1439]
+substitute-pre
+substitute-pre
 normalize
 split-post
-normalize
+laws
+axioms
+replace-port
+now
+laws
+axioms
+#[serial 1476]   normalization of [serial 1466]
 qtiming
-axioms
-#[serial 1476]   normalization of [serial 1465]
-substitute-pre
-substitute-pre
-substitute-pre
-normalize
-laws
-axioms
-#[serial 1492]   normalization of [serial 1485]
-substitute-pre
-substitute-pre
-normalize
-laws
 axioms
 #[serial 1016]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2:chooseToRun-[x]->fillingWindow{A};
 completesub
@@ -145,7 +151,7 @@ laws
 normalize
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1721]   normalization of [serial 1689
+#[serial 1701]   normalization of [serial 1669
 make-an
 atomic
 normalize
@@ -156,28 +162,28 @@ sub-equals
 qtiming
 laws
 axioms
-#[serial 1810]   normalization of [serial 1793]
+#[serial 1790]   normalization of [serial 1773]
 atomic
 axioms
-#[serial 1814]   normalization of [serial 1795]
+#[serial 1794]   normalization of [serial 1775]
 replace<=
 normalize
 laws
 axioms
-#[serial 1826]   normalization of [serial 1801]
+#[serial 1806]   normalization of [serial 1781]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1828]   normalization of [serial 1802]
+#[serial 1808]   normalization of [serial 1782]
 atomic
 normalize
 split-post
 axioms
 qtiming
 axioms
-#[serial 1830]   normalization of [serial 1803]
+#[serial 1810]   normalization of [serial 1783]
 atomic
 normalize
 laws
@@ -185,20 +191,20 @@ normalize
 laws
 normalize
 axioms
-#[serial 1834]   normalization of [serial 1805]
+#[serial 1814]   normalization of [serial 1785]
 qtiming
 axioms
-#[serial 1836]   normalization of [serial 1806]
+#[serial 1816]   normalization of [serial 1786]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1838]   normalization of [serial 1807]
+#[serial 1818]   normalization of [serial 1787]
 atomic
 normalize
 axioms
-#[serial 1856] Associativity: (b.c).a = a.b.c [serial 1818]
+#[serial 1836] Associativity: (b.c).a = a.b.c [serial 1798]
 substitute-pre
 substitute-pre
 substitute-pre
@@ -207,7 +213,7 @@ laws
 normalize
 contract-uqr
 axioms
-#[serial 1857] Associativity: (b.c).a = a.b.c [serial 1820]
+#[serial 1837] Associativity: (b.c).a = a.b.c [serial 1800]
 substitute-pre
 substitute-pre
 normalize
@@ -217,7 +223,7 @@ substitute-pre
 normalize
 qtiming
 axioms
-#[serial 1858] Associativity: (b.c).a = a.b.c [serial 1822]
+#[serial 1838] Associativity: (b.c).a = a.b.c [serial 1802]
 substitute-pre
 substitute-pre
 substitute-pre
@@ -230,16 +236,16 @@ axioms
 normalize
 qtiming
 axioms
-#[serial 1859] Associativity: (b.c).a = a.b.c [serial 1824]
+#[serial 1839] Associativity: (b.c).a = a.b.c [serial 1804]
 completesub
 laws
 axioms
-#[serial 1871]   normalization of [serial 1854]
+#[serial 1851]   normalization of [serial 1834]
 substitute-post
 normalize
 laws
 axioms
-#[serial 1873]   normalization of [serial 1855]
+#[serial 1853]   normalization of [serial 1835]
 atomic
 replaceNEwithLTorGT
 normalize
@@ -266,7 +272,7 @@ axioms
 substitute-post
 normalize
 axioms
-#[serial 1879]   normalization of [serial 1860]
+#[serial 1859]   normalization of [serial 1840]
 completesub
 alldist^
 axioms

@@ -5,8 +5,10 @@ sort-by-component[RD::RapidDeclineThread]
 #[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
 make-an
 substitute-pre
+normalize
 axioms
-#[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+#[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition
+make-an
 substitute-pre
 axioms
 #[serial 1060] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
@@ -34,40 +36,53 @@ normalize
 atomic
 normalize
 axioms
-laws
-normalize
 substitute-both
 normalize
 push
 #RD::RapidDeclineThread.imp
-#[serial 3398]   normalization of [serial 3389
+#[serial 3364] applied wp for assignment [serial 3349
 make-an
-qtiming
-axioms
-#[serial 3412]   normalization of [serial 3407]
+replace-port
+now
+laws
+normalize
 zeroquantlb
+normalize
 elim-subtract
 normalize
 laws
 normalize
 axioms
-#[serial 3419]   normalization of [serial 3414]
+#[serial 3373]   normalization of [serial 3365]
+qtiming
+axioms
+#[serial 3385]   normalization of [serial 3380]
 replace-qv
 axioms
-#[serial 3421]   normalization of [serial 3415]
+#[serial 3387]   normalization of [serial 3381]
 replace-qv
 axioms
 #[serial 1064]  <<M(check) and x>> A <<M(fill)>> for chk:check-[x]->fill{A};
-substitute-both
+substitute-post
 normalize
 alldist^
 atomic
+split-post
+axioms
+substitute-pre
+normalize
+elim-subtract
 axioms
 #[serial 1065]  <<M(check) and x>> A <<M(run)>> for chk2:check-[x]->run{A};
-substitute-both
+substitute-post
 normalize
 alldist^
 atomic
+split-post
+axioms
+substitute-pre
+elim-subtract
+normalize
 axioms
 #[serial 1066]  <<M(check) and x>> -> <<M(halt)>> for chk3:check-[x]->halt{};
 axioms

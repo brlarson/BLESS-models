@@ -85,7 +85,7 @@ annex BLESS
       []
         (not (MotionArtifact? or not SensorConnected?))~>
              <<SHFT_HR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          hr_nxt[1]:=HeartRate?  --add current sample
+          hr_nxt[1] := HeartRate  --add current sample
             <<SHFT_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
       fi    
         <<(hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0)) and
@@ -140,7 +140,7 @@ annex BLESS
       []
         (not (MotionArtifact? or not SensorConnected?))~>
              <<SHFTR_HR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          hr_nxt[1]:=HeartRate?  --add current sample
+          hr_nxt[1] := HeartRate  --add current sample
             <<SHFTR_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
       fi    
         <<(hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0)) and 

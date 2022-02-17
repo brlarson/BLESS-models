@@ -15,7 +15,7 @@ thread SpO2AverageThread
       {BLESS::Assertion=>"<<:=SPO2_MOVING_AVERAGE_WINDOW_SAMPLES>>";};
     SpO2Avg : out data port PulseOx_Types::Percent  
       {BLESS::Assertion=>"<<:=SPO2_AVERAGE()>>";};
-    Error : out event port;		--an error occurred  
+    Error : out event data port;		--an error occurred  
   properties
     --Thread_Properties::
         Dispatch_Protocol => Periodic;
@@ -99,19 +99,19 @@ annex BLESS
     	<<FW()>>
     	--store current sample
     	spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-    	  (if SensorConnected? and not MotionArtifact? then SpO2? else 0)
+    	  (if SensorConnected and not MotionArtifact then SpO2 else 0)
     	  <<WINDOW() and (spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] = SSQ(x:0))>>  --add parameter to SSQ because for some reason it won't substitute with 0
     	&  --update total
-    	totalSpO2:=totalSpO2+(if SensorConnected? and not MotionArtifact? then SpO2? else 0)
+    	totalSpO2 := totalSpO2+(if SensorConnected and not MotionArtifact then SpO2 else 0)
     	  <<totalSpO2=(SSQ(x:0)+(sum k~quantity whole in lb..(ub - 1) of SSQ(k-ub) ))>>
     	&  --update count of valid SpO2 readings
-    	goodCount:=(goodCount+(if SensorConnected? and not MotionArtifact? then 1 else 0))
+    	goodCount := (goodCount+(if SensorConnected and not MotionArtifact then 1 else 0))
     	  <<goodCount=((if SENSOR_CONNECTED^0 and not MOTION_ARTIFACT^0 then 1 else 0)+
     	  	(numberof k~quantity whole in lb..(ub - 1) 
       	      that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))))>>
       	&  --store whether current SpO2 reading is valid
       	goodSamp[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-      	   (SensorConnected? and not MotionArtifact?)
+      	   (SensorConnected and not MotionArtifact)
       	  <<(goodSamp[ub mod #PulseOx_Properties::Max_Window_Samples] iff (SENSOR_CONNECTED^0 and not MOTION_ARTIFACT^0))
       	    and GS()>>  
       } 
