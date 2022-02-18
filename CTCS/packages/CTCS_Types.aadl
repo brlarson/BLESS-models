@@ -7,10 +7,10 @@ annex Typedef
 	{**
 	type trainModes is enumeration (FS CO)	
 	type segment is record (
- 	  v1 :  quantity kph
- 	  v2 :  quantity kph
-    e :   quantity m
-    m:    trainModes )
+ 	  v1 :  quantity kph -- velocity for service brake limit (SBL)
+ 	  v2 :  quantity kph -- velocity for emergency brake limit (EBL)
+    e :   quantity m -- end of the segment
+    m:    trainModes ) -- train mode
   type movementAuthority is array[#CTCS_Properties::MAsize] of segment
 	**};
 

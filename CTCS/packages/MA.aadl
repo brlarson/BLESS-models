@@ -76,12 +76,12 @@ end pController.impl;
 ------Controller Thread-------------
 thread Controller
 features
-  r: out event port  {BLESS::Assertion=> "<<(s= 0 m ) or (s>=(e-SR))>>";};  
-  m: in event data port CTCS_Types::MovementAuthority {BLESS::Assertion=> "<<:=IMA>>";} ;
-  ea: in data port CTCS_Types::EOA;
-  cs: in data port CTCS_Types::Position {BLESS::Assertion=> "<<:=POSITION>>";}; 
-  cv: in data port CTCS_Types::Velocity {BLESS::Assertion=> "<<:=VELOCITY>>";};  
-  ca : out data port  CTCS_Types::Acceleration {BLESS::Assertion=> "<<:=Acceleration()>>";};   
+  r: out event port  {BLESS::Assertion=> "<<(s= 0 m ) or (s>=(e-SR))>>";};  -- requestion for new MA
+  m: in event data port CTCS_Types::MovementAuthority {BLESS::Assertion=> "<<:=IMA>>";} ; -- current MA
+  ea: in data port CTCS_Types::EOA; -- EoA
+  cs: in data port CTCS_Types::Position {BLESS::Assertion=> "<<:=POSITION>>";}; -- current position
+  cv: in data port CTCS_Types::Velocity {BLESS::Assertion=> "<<:=VELOCITY>>";};  -- current velocity
+  ca : out data port  CTCS_Types::Acceleration {BLESS::Assertion=> "<<:=Acceleration()>>";}; --current acceleration   
 --msg: out event data port CTCS_Types::DMI_Message {BLESS::Assertion=>"<<iMA=null>>";}; --message to DMI
 properties
 Dispatch_Protocol => Periodic;  
@@ -113,9 +113,10 @@ variables
 	s ~ quantity m
 	e ~ trainModes
 	xl ~ quantity mpss
-	iMA ~ movementAuthority := null
-	iSeg ~ segment := null
-	nSeg ~ segment := null
+	iMA ~ movementAuthority := null -- initial MA
+	iSeg ~ segment := null --current segment
+	nSeg ~ segment := null -- next segement
+	SR ~ quantity km := 3  -- Specific distance to the EoA to  apply for new MA, assumption 3 km
 	
 states 
 	READY : initial state <<(track=0) and (s= 0 m )>>  
@@ -162,12 +163,12 @@ states
 		  }
 		;  <<SBL() and DSPV2()>>
 		if 
-		  ( s>=(e-SR) )~>
-    		<<SBL() and DSPV2() and (s>=(e-SR))>>
+		  ( s>=(iSeg.e-SR) )~>
+    		<<SBL() and DSPV2() and (s>=(iSeg.e-SR))>>
     	r!   --- how to check the MA is extended or not
     		<<SBL() and DSPV2()>>	
     []
-    	(not (s>=(e-SR)) )~>
+    	(not (s>=(iSeg.e-SR)) )~>
     		<<SBL() and DSPV2()>>
     	skip
     		<<SBL() and DSPV2()>>	
