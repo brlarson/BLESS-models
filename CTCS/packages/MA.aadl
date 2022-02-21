@@ -4,8 +4,10 @@
 package MA
 public
 with CTCS_Types, CTCS_Properties, BLESS;
+
 system sysMA
 end sysMA; 
+
 system implementation sysMA.impl
   subcomponents
     Train: abstract Train.impl;
@@ -61,6 +63,7 @@ pea: in data port CTCS_Types::EOA;
 pm: in event data port CTCS_Types::MovementAuthority; --check - {BLESS::Assertion=> "<<CHECKV1()>>";} ;
 --pmsg : out event data port  CTCS_Types::DMI_Message;
 end pController;
+
 process implementation pController.impl
 subcomponents
 Controller: thread Controller.impl;
@@ -73,15 +76,16 @@ conn_ma: port pm->Controller.m;
 conn_ea: port  pea ->Controller.ea;
 --connn_msg: port Controller.msg ->pmsg;
 end pController.impl;
+
 ------Controller Thread-------------
 thread Controller
 features
-  r: out event port  {BLESS::Assertion=> "<<(s= 0 m ) or (s>=(e-SR))>>";};  -- requestion for new MA
+  r: out event port  {BLESS::Assertion=> "<<(s = 0 ) or (s >= (iSeg.e - SR))>>";};  -- requesition for new MA
   m: in event data port CTCS_Types::MovementAuthority {BLESS::Assertion=> "<<:=IMA>>";} ; -- current MA
   ea: in data port CTCS_Types::EOA; -- EoA
   cs: in data port CTCS_Types::Position {BLESS::Assertion=> "<<:=POSITION>>";}; -- current position
   cv: in data port CTCS_Types::Velocity {BLESS::Assertion=> "<<:=VELOCITY>>";};  -- current velocity
-  ca : out data port  CTCS_Types::Acceleration {BLESS::Assertion=> "<<:=Acceleration()>>";}; --current acceleration   
+  ca : out data port  CTCS_Types::Acceleration {BLESS::Assertion=> "<<:=TRAIN_XL()>>";}; --current acceleration   
 --msg: out event data port CTCS_Types::DMI_Message {BLESS::Assertion=>"<<iMA=null>>";}; --message to DMI
 properties
 Dispatch_Protocol => Periodic;  
@@ -188,7 +192,9 @@ states
 	
 	T5_Move_Ok: CMF -[s= 0 m or v < iSeg.v2 or  v*v + 2*b*s < iMA[track].v2 + 2*b*iSeg.e]-> MFR
 		{
-		  <<SBL() and DSPV2()>>  ca!(xl); <<SBL() and DSPV2()>> 
+		  <<SBL() and DSPV2()>>  
+		ca!(xl)
+		; <<SBL() and DSPV2()>> 
 		|track,iSeg,nSeg:=track+1,nSeg,iMA[track+2]|
 		; <<SBL() and DSPV2()>>   -- What if the MA is extended and what if not, have to update values accordingly
 	  |iSeg',nSeg',track',v',s',b', iMA':=iSeg, nSeg,track,v,s,b, iMA|
