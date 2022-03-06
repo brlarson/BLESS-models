@@ -1,0 +1,7 @@
+property set ma_properties is
+--with  AADL_Project;
+MASize : aadlinteger =>3 applies to (all) ;  -- number of segments is an MA
+start : aadlreal => 0.0 applies to (all) ;  -- 
+SB_Rate : aadlreal =>-0.8 applies to (all);-- service brake deceleration rate
+EB_Rate: aadlinteger =>-1 applies to (all); -- emergency brake deceleration rate
+end ma_properties;

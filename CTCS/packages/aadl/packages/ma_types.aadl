@@ -1,17 +1,17 @@
-package CTCS_Types
+package ma_types
 public
 with -- Data_Model, Base_Types, BLESS_Types, 
-  BLESS, CTCS_Properties;
+  BLESS, ma_properties;
 
 annex Typedef
 	{**
-	type trainModes is enumeration (FS CO)	
+	type trainModes is enumeration (FS CO)
 	type segment is record (
  	  v1 :  quantity kph -- velocity for service brake limit (SBL)
  	  v2 :  quantity kph -- velocity for emergency brake limit (EBL)
-    e :   quantity m -- end of the segment
-    m:    trainModes ) -- train mode
-  type movementAuthority is array[#CTCS_Properties::MAsize] of segment
+  	  e :   quantity m -- end of the segment
+   	  m:    trainModes ) -- train mode
+  type movementAuthority is array[#ma_properties::MASize] of segment
 	**};
 
 annex Assertion
@@ -20,6 +20,7 @@ annex Assertion
 	  def IMA ~ movementAuthority
 	  def POSITION ~ quantity m
 	  def VELOCITY ~ quantity kph
+	  def EOA ~ quantity m
 	**};
 
 Data Position
@@ -96,7 +97,6 @@ properties
 BLESS::Typed => "movementAuthority";
 --Data_Model::Data_Representation => Array;
 --Data_Model::Base_Type => (classifier (CTCS_Types::Segment));
---Data_Model::Dimension => (CTCS_Properties::MAsize); --number of segments, 3 in our example
+--Data_Model::Dimension => (ma_properties::MAsize); --number of segments, 3 in our example
 end MovementAuthority;
-
-end CTCS_Types;
+end ma_types;

@@ -1,8 +1,0 @@
-property set CTCS_Properties is
-
---with  AADL_Project;
-MAsize : aadlinteger =>3 applies to (all) ;  -- number of segments is an MA
-start : aadlreal => 0.0 applies to (all) ;  -- 
-SB_Rate : aadlreal =>-0.8 applies to (all);-- service brake deceleration rate
-EB_Rate: aadlinteger =>1 applies to (all); -- emergency brake deceleration rate
-end CTCS_Properties;
