@@ -215,6 +215,7 @@ thread implementation Controller.impl
 		T9_MA_NotOk: CMA -[iMA=null]-> RETRY 
 --		
 		T10_MA_Retry: RETRY -[]-> GMA 
+		  { |i',s' := 0,0| }
 --		
 --		T11_EBI_Point: CMF -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e)]-> EBI
 --		

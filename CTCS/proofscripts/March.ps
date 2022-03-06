@@ -1,0 +1,104 @@
+#[serial 1003] <<M(CSB)>> -> <<I>> from invariant I when complete state CSB has Assertion <<M(CSB)>> in its definition
+make-an
+axioms
+#[serial 1004] <<M(MFR)>> -> <<I>> from invariant I when complete state MFR has Assertion <<M(MFR)>> in its definition.
+axioms
+#[serial 1005] <<M(GMA)>> -> <<I>> from invariant I when complete state GMA has Assertion <<M(GMA)>> in its definition.
+axioms
+#[serial 1006] <<M(SBI)>> -> <<I>> from invariant I when complete state SBI has Assertion <<M(SBI)>> in its definition.
+axioms
+#[serial 1007] <<M(EBI)>> -> <<I>> from invariant I when complete state EBI has Assertion <<M(EBI)>> in its definition.
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state READY, <<M(READY)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state CMA, <<M(CMA)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state RETRY, <<M(RETRY)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1011]  <<M(READY)>> A <<M(GMA)>> for T0_Go:READY-[ ]->GMA{A};
+reduce
+atomic
+axioms
+normalize
+axioms
+alldist^
+axioms
+#[serial 1012]  <<M(GMA) and x>> A <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{A};
+reduce
+normalize
+axioms
+atomic
+laws
+axioms
+normalize
+axioms
+#[serial 1013]  <<M(CMA) and x>> A <<M(MFR)>> for T2_MA_Ok:CMA-[x]->MFR{A};
+reduce
+reduce
+normalize
+laws
+normalize
+axioms
+substitute-both
+reduce
+reduce
+normalize
+push
+make-an
+#MovAuth::Controller.impl
+#[serial 1116] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1113]
+ 
+atomic
+normalize
+laws
+axioms
+#[serial 1117] <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1113]
+atomic
+normalize
+laws
+axioms
+#[serial 1119]   normalization of [serial 1107]
+replace<=
+normalize
+laws
+axioms
+#[serial 1121]   normalization of [serial 1108]
+atomic
+axioms
+#[serial 1123]   normalization of [serial 1109]
+split-post
+axioms
+normalize
+axioms
+#[serial 1125]   normalization of [serial 1110]
+alldist^
+atomic
+axioms
+#[serial 1127]   normalization of [serial 1111]
+split-post
+normalize
+axioms
+#[serial 1129]   normalization of [serial 1114]
+split-post
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1131]   normalization of [serial 1115]
+split-post
+normalize
+axioms
+substitute-pre
+normalize
+axioms
+#[serial 1014]  <<M(CMA) and x>> -> <<M(RETRY)>> for T9_MA_NotOk:CMA-[x]->RETRY{};
+normalize
+laws
+axioms
+#[serial 1015]  <<M(RETRY)>> -> <<M(GMA)>> for T10_MA_Retry:RETRY-[ ]->GMA{};
+alldist^
+atomic
+laws
+axioms
