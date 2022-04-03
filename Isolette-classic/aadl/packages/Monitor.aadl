@@ -6,15 +6,15 @@ with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2;
 process monitor_temperature
 features
   current_temperature : in data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
-    {BLESS::Assertion => "<<:=LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
-    {BLESS::Assertion => "<<:=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
   alarm : out data port Iso_Types::on_off
-    {BLESS::Assertion => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
+    {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
   monitor_status : out data port Iso_Types::status
-    {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
+    {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
   regulator_failure : in data port BLESS_Types::flag
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 --  monitor_failure : in data port BLESS_Types::flag
@@ -74,13 +74,13 @@ thread manage_monitor_interface
 features
 --  alarm_range : out data port Iso_Variables::alarm_range;
   current_temperature : in data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   monitor_mode : in data port Iso_Types::monitor_mode
-    {BLESS::Assertion => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
+    {BLESS::Value => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature;
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature;
   monitor_status : out data port Iso_Types::status
-    {BLESS::Assertion => "<<:=MONITOR_STATUS()>>";};
+    {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
   interface_failure : out data port BLESS_Types::flag
     {BLESS::Assertion => "<<MONITOR_INTERFACE_FAILURE>>";};
 properties
@@ -115,13 +115,13 @@ end manage_monitor_interface.impl;
 thread manage_monitor_mode
 features
   monitor_mode : out data port Iso_Types::monitor_mode
-    {BLESS::Assertion => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
+    {BLESS::Value => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
   interface_failure : in data port BLESS_Types::flag
     {BLESS::Assertion => "<<MONITOR_INTERFACE_FAILURE>>";};
   internal_failure : in data port BLESS_Types::flag
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
   current_temperature : in data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
 	Period => Iso_Properties::ThreadPeriod;
@@ -246,15 +246,15 @@ end manage_monitor_mode.impl;
 thread manage_alarm
 features
   alarm_control : out data port Iso_Types::on_off
-    {BLESS::Assertion=>"<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
+    {BLESS::Value=>"<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
   monitor_mode : in data port Iso_Types::monitor_mode  --enumeration type
-    {BLESS::Assertion=>"<<+=>MONITOR_MODE(x:monitor_mode)>>";};  --Assertion-enumeration +=>
+    {BLESS::Value=>"<<+=>MONITOR_MODE(x:monitor_mode)>>";};  --Assertion-enumeration +=>
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
-    {BLESS::Assertion => "<<:=LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
-    {BLESS::Assertion => "<<:=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
   current_temperature : in data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
 	Period => Iso_Properties::ThreadPeriod;

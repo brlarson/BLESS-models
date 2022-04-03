@@ -90,9 +90,9 @@ end detect_monitor_failure.impl;
 device temperature_sensor
 features
   air : in data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   current_temperature : out data port Iso_Types::current_temperature
-    {BLESS::Assertion => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 flows
     air_temp_flow : flow path air -> current_temperature;
 annex EMV2 
@@ -153,7 +153,7 @@ end temperature_sensor.impl;
 device heat_source
 features
   heat_control : in data port Iso_Types::on_off
-    {BLESS::Assertion => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
   heat_out : out data port Nursery::Heat;
 flows
   temp_to_heat_flow: flow path heat_control -> heat_out;
