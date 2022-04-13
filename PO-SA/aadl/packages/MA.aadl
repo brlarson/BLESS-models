@@ -9,7 +9,7 @@ thread MotionArtifactThread
       {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";};
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
       {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};
-    MotionArtifactAlarm : out event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+    MotionArtifactAlarm : out event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;
   properties

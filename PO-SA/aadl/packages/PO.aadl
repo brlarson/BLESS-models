@@ -393,7 +393,7 @@ process ICEpoUIprocess
     --== Indications of SpO2 measurement anamolies
     --====================
     ProbeOff : in event port;  -- alarm indicating sensor is not connected to patient
-    MotionArtifactAlarm : in event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+    MotionArtifactAlarm : in event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;
     --====================
@@ -500,7 +500,7 @@ thread ICEpoUI
     --== Indications of SpO2 measurement anamolies
     --====================
     ProbeOff : in event port;  -- alarm indicating sensor is not connected to patient
-    MotionArtifactAlarm : in event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+    MotionArtifactAlarm : in event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;
     --====================
@@ -542,7 +542,7 @@ process ICEpoAppProcess
     --====================
     SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
     MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
-    MotionArtifactAlarm : out event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+    MotionArtifactAlarm : out event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;
     --====================
@@ -630,7 +630,7 @@ thread group ICEpoApp
     --====================
     SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
     MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
-    MotionArtifactAlarm : out event data port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
+    MotionArtifactAlarm : out event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
       {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
       ;
     --====================
