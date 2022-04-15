@@ -1,3 +1,7 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1
+#  at Sat Apr 16 01:23:20 AST 2022 by ehsanahmad
+#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/CTCS/proofscripts/March.ps
+#MovAuth::Controller.impl
 #[serial 1003] <<M(CSB)>> -> <<I>> from invariant I when complete state CSB has Assertion <<M(CSB)>> in its definition
 make-an
 axioms
@@ -17,88 +21,96 @@ laws
 axioms
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state RETRY, <<M(RETRY)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1011]  <<M(READY)>> A <<M(GMA)>> for T0_Go:READY-[ ]->GMA{A};
-reduce
-atomic
-axioms
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CMF, <<M(CMF)>> -> <<e1 or e2 or . . . en>>
+normalize
+DeMorgan
+normalize
+laws
+cnf
+normalize
+laws
 normalize
 axioms
+#[serial 1012]  <<M(READY)>> A <<M(GMA)>> for T0_Go:READY-[ ]->GMA{A};
+reduce
+normalize
 alldist^
 axioms
-#[serial 1012]  <<M(GMA) and x>> A <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{A};
-reduce
+atomic
+axioms
 normalize
 axioms
+#[serial 1013]  <<M(GMA) and x>> A <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{A};
+reduce
+normalize
 atomic
 laws
-axioms
 normalize
 axioms
-#[serial 1013]  <<M(CMA) and x>> A <<M(MFR)>> for T2_MA_Ok:CMA-[x]->MFR{A};
-reduce
+#[serial 1014]  <<M(CMA) and x>> A <<M(MFR)>> for T2_MA_Ok:CMA-[x]->MFR{A};
 reduce
 normalize
 laws
-normalize
+reduce
+push
+make-an
+#MovAuth::Controller.impl
+#[serial 1120]   normalization of [serial 1114]
+ 
 axioms
-substitute-both
+#[serial 1134]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1122]
+replace<=
+normalize
+laws
+axioms
+#[serial 1135]   <<P and B0>> S0 <<Q>> in alternative for [serial 1122]
 reduce
 reduce
 normalize
 push
 make-an
 #MovAuth::Controller.impl
-#[serial 1116] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1113]
+#[serial 1146] <<Q1>> -> <<Q>> in sequential composition for [serial 1144]
  
-atomic
-normalize
-laws
-axioms
-#[serial 1117] <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1113]
-atomic
-normalize
-laws
-axioms
-#[serial 1119]   normalization of [serial 1107]
-replace<=
-normalize
-laws
-axioms
-#[serial 1121]   normalization of [serial 1108]
-atomic
-axioms
-#[serial 1123]   normalization of [serial 1109]
 split-post
 axioms
 normalize
 axioms
-#[serial 1125]   normalization of [serial 1110]
+#[serial 1147] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1144]
+atomic
+normalize
+laws
+axioms
+#[serial 1148] <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1144]
+atomic
+normalize
+laws
+axioms
+#[serial 1150]   normalization of [serial 1145]
+laws
+axioms
+#[serial 1136]   <<P and B1>> -> <<P1>> in alternative for [serial 1122]
+normalize
+laws
+axioms
+#[serial 1137]   <<P1>> S1 <<Q1>> in alternative for [serial 1122]
+atomic
+axioms
+#[serial 1138]   <<Q1>> -> <<Q>> in alternative  for [serial 1122]
+split-post
+axioms
+normalize
+axioms
+#[serial 1124]   normalization of [serial 1116]
+substitute-both
+normalize
 alldist^
 atomic
 axioms
-#[serial 1127]   normalization of [serial 1111]
-split-post
-normalize
-axioms
-#[serial 1129]   normalization of [serial 1114]
-split-post
-axioms
+#[serial 1129] Associativity: (b.c).a = a.b.c [serial 1118]
 substitute-post
 normalize
-axioms
-#[serial 1131]   normalization of [serial 1115]
 split-post
 normalize
 axioms
-substitute-pre
-normalize
-axioms
-#[serial 1014]  <<M(CMA) and x>> -> <<M(RETRY)>> for T9_MA_NotOk:CMA-[x]->RETRY{};
-normalize
-laws
-axioms
-#[serial 1015]  <<M(RETRY)>> -> <<M(GMA)>> for T10_MA_Retry:RETRY-[ ]->GMA{};
-alldist^
-atomic
-laws
-axioms
+#[serial 1015]  <<M(MFR) and x>> A <<M(CMF)>> for T3_Move_Check:MFR-[x]->CMF{A};
