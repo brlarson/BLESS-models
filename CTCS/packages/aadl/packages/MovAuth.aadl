@@ -66,11 +66,11 @@ end pController.impl;
 thread Controller
 	features
 		r: out event port {BLESS::Assertion=> "<<(s = 0) or (s >= (eoa - SR))>>";};  -- requesition for new MA
-		m: in event data port ma_types::MovementAuthority {BLESS::Assertion=> "<<:=IMA>>";};  -- current MA... why ghost variables
-		ea: in data port ma_types:: EOA  {BLESS::Assertion=> "<<:=EOA>>";}; -- EoA end of the las segment
-		cs: in data port ma_types::Position {BLESS::Assertion=> "<<:=POSITION>>";}; --current position
-		cv: in data port ma_types::Velocity {BLESS::Assertion=> "<<:=VELOCITY>>";}; --current velocity
-		ca: out data port ma_types:: Acceleration {BLESS::Assertion=> "<<:=TRAIN_XL()>>";}; --current acceleration
+		m: in event data port ma_types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current MA... why ghost variables
+		ea: in data port ma_types:: EOA  {BLESS::Value=> "<<:=EOA>>";}; -- EoA end of the las segment
+		cs: in data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position
+		cv: in data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity
+		ca: out data port ma_types:: Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration
 	
 	properties
 		Dispatch_Protocol => Periodic;
@@ -116,7 +116,7 @@ thread implementation Controller.impl
 		CMA: state << i=0 and s=0 m>> -- CheckMA
 		RETRY: state << i =0 and s=0 m and iMA=null>> --Retry MA request
 		MFR: complete state <<SBL() and DSPV2()>> --Move Forward
-	--	CMF: state <<SBL() and DSPV2()>>--Check Move Forward
+		CMF: state <<SBL() and DSPV2()>>--Check Move Forward
 		SBI: complete state <<not SBL() or not DSPV2()>> --Service Brake Intervention
 		CSB: complete state <<not SBL() or not DSPV2()>>--Check Service Brake
 		EBI: complete state << not EBL() or not DSPV1()  >> --Emergency Brake Intevention
@@ -163,40 +163,40 @@ thread implementation Controller.impl
 				|iSeg',s',nSeg', v', b' := iSeg, s, nSeg, v, b|
 				<< (SBL() and DSPV2())^1 >>
 			}
---		
---		T3_Move_Check: MFR -[on dispatch]-> CMF
---			{
---			{cs?(s) & cv?(v)};
---			if(s>=(eoa-SR))~>
---				r!
---			
---			[] (not (s>= (eoa-SR)) )~>
---				skip
---			 fi
---			}
---		
---		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
---			not (s = 0 m or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) ]-> SBI 
---			-- nSeg.v2 instead of iMA[i+1], check dynamic speed profile formula. it is square of v2
---			{
---				 ca!(b)
---			}
---		
---		T5_Move_Ok: CMF -[s=0 m or v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
---			{
---				if (s>=iSeg.e and i<#ma_properties::MASize - 1)~>
---					{
---					i:=i+1; 
---					iSeg:=iMA[i]; 
---					nSeg:=iMA[i+1];
---					ca!(xl)
---					}
---				[] (not (s>=iSeg.e))~>
---					skip	
---				fi	
---					   
---			}
---		
+		
+		T3_Move_Check: MFR -[on dispatch]-> CMF
+			{
+			{cs?(s) & cv?(v)};
+			if(s>=(eoa-SR))~>
+				r!
+			
+			[] (not (s>= (eoa-SR)) )~>
+				skip
+			 fi
+			}
+		
+		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
+			not (s = 0 m or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) ]-> SBI 
+			-- nSeg.v2 instead of iMA[i+1], check dynamic speed profile formula. it is square of v2
+			{
+				 ca!(b)
+			}
+		
+		T5_Move_Ok: CMF -[s=0 m or v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
+			{
+				if (s>=iSeg.e and i<#ma_properties::MASize - 1)~>
+					{
+					i:=i+1; 
+					iSeg:=iMA[i]; 
+					nSeg:=iMA[i+1];
+					ca!(xl)
+					}
+				[] (not (s>=iSeg.e))~>
+					skip	
+				fi	
+					   
+			}
+		
 --		T6_BI_Check: SBI -[on dispatch]-> CSB
 --			{
 --				cs?(s) & cv?(v)
