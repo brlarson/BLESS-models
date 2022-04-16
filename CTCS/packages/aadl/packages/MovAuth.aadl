@@ -181,7 +181,7 @@ thread implementation Controller.impl
 			{
 				 ca!(b)
 			}
-		
+		-- this is where we are working now
 		T5_Move_Ok: CMF -[s=0 m or v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
 			{
 				if (s>=iSeg.e and i<#ma_properties::MASize - 1)~>
