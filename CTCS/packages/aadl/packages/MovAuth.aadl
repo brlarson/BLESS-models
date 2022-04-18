@@ -112,13 +112,13 @@ thread implementation Controller.impl
 		
 	states
 		READY: initial state << i=0 and s=0 m >> --an initial state
-		GMA: complete state << i=0 and s=0 m >>--Get MA
+		GMA: complete state << i=0 and s=0 m >> --Get MA
 		CMA: state << i=0 and s=0 m>> -- CheckMA
 		RETRY: state << i =0 and s=0 m and iMA=null>> --Retry MA request
 		MFR: complete state <<SBL() and DSPV2()>> --Move Forward
-		CMF: state <<SBL() and DSPV2()>>--Check Move Forward
+		CMF: state <<SBL() and DSPV2()>> --Check Move Forward
 		SBI: complete state <<not SBL() or not DSPV2()>> --Service Brake Intervention
-		CSB: complete state <<not SBL() or not DSPV2()>>--Check Service Brake
+		CSB: complete state <<not SBL() or not DSPV2()>> --Check Service Brake
 		EBI: complete state << not EBL() or not DSPV1()  >> --Emergency Brake Intevention
 		STOP: final state <<(not EBL() or not DSPV1()) and v=0 kph>> --a final state
 		
@@ -166,13 +166,27 @@ thread implementation Controller.impl
 		
 		T3_Move_Check: MFR -[on dispatch]-> CMF
 			{
-			{cs?(s) & cv?(v)};
+			<< SBL() and DSPV2()>>
+			{cs?(s) & cv?(v)}; 
+			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY >>
+		
 			if(s>=(eoa-SR))~>
+				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s>=(eoa-SR))>>
 				r!
-			
+				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s = 0) or (s >= (eoa - SR))>>
+				
 			[] (not (s>= (eoa-SR)) )~>
+			
+			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
 				skip
+			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
+			
 			 fi
+			 << SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (eoa-SR)) or 
+			 (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))) >>
+			 ;
+			 |s',v' := s, v|
+				<< (SBL() and DSPV2())^1 >>
 			}
 		
 		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
