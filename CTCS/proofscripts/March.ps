@@ -114,3 +114,51 @@ split-post
 normalize
 axioms
 #[serial 1015]  <<M(MFR) and x>> A <<M(CMF)>> for T3_Move_Check:MFR-[x]->CMF{A};
+reduce
+push
+#MovAuth::Controller.impl
+#[serial 1213] <<P>> -> <<P1>> in sequential composition for [serial 1015
+make-an
+axioms
+#[serial 1214] <<Q1>> -> <<Q>> in sequential composition for [serial 1015]
+normalize
+and-over-or-pre
+laws
+normalize
+axioms
+#[serial 1215] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1015]
+reduce
+reduce
+normalize
+laws
+axioms
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1216] <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1015]
+reduce
+normalize
+laws
+axioms
+atomic
+laws
+axioms
+normalize
+axioms
+#[serial 1016]  <<M(CMF) and x>> A <<M(SBI)>> for T4_SBI_Point:CMF-[x]->SBI{A};
+substitute-both
+normalize
+laws
+alldist^
+reduce
+laws
+normalize
+atomic
+axioms
+substitute-post
+normalize
+axioms
+laws
+axioms

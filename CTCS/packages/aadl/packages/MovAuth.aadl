@@ -104,7 +104,7 @@ thread implementation Controller.impl
 		v ~ quantity kph :=0 kph -- velocity
 		s ~ quantity m -- position
 		eoa ~ quantity m -- end of authority
-		xl ~ quantity mpss -- newly computed accelerations
+		xl ~ quantity mpss := #ma_properties::Accel_Rate mpss -- newly computed accelerations
 		iMA ~ movementAuthority := null --initial MA
 		iSeg ~ segment := null --current segement
 		nSeg ~ segment := null --next segment
@@ -167,13 +167,16 @@ thread implementation Controller.impl
 		T3_Move_Check: MFR -[on dispatch]-> CMF
 			{
 			<< SBL() and DSPV2()>>
-			{cs?(s) & cv?(v)}; 
-			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY >>
+			{cs?(s) << SBL() and DSPV2() and s=POSITION >>
+				& 
+				cv?(v) << SBL() and DSPV2() and v=VELOCITY >>
+			}
+			;  << SBL() and DSPV2() and v=VELOCITY and s=POSITION >>
 		
 			if(s>=(eoa-SR))~>
-				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s>=(eoa-SR))>>
+				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s >= (eoa-SR))>>
 				r!
-				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s = 0) or (s >= (eoa - SR))>>
+				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and  (s >= (eoa - SR)) >>
 				
 			[] (not (s>= (eoa-SR)) )~>
 			
@@ -182,11 +185,9 @@ thread implementation Controller.impl
 			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
 			
 			 fi
-			 << SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (eoa-SR)) or 
+			 << (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (eoa-SR))) or 
 			 (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))) >>
-			 ;
-			 |s',v' := s, v|
-				<< (SBL() and DSPV2())^1 >>
+			
 			}
 		
 		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
@@ -194,20 +195,39 @@ thread implementation Controller.impl
 			-- nSeg.v2 instead of iMA[i+1], check dynamic speed profile formula. it is square of v2
 			{
 				 ca!(b)
+				 ; << ((0 = s or v < iSeg.v2) and (0 = s or ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2))) 
+				 	and (not (0 = s or v < iSeg.v2) or not (0 = s or ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2))))) and 
+				 	(ca = b)^0 >>
+				|iSeg',s',nSeg', v', b' := iSeg, s, nSeg, v, b|
 			}
 		-- this is where we are working now
 		T5_Move_Ok: CMF -[s=0 m or v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
 			{
+				<<SBL() and DSPV2()>>
 				if (s>=iSeg.e and i<#ma_properties::MASize - 1)~>
 					{
-					i:=i+1; 
-					iSeg:=iMA[i]; 
-					nSeg:=iMA[i+1];
+					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1>>
+					i:=i+1
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1>>
+					 
+					iSeg:=iMA[i]
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1]>>
+					nSeg:=iMA[i+1]
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1] and nSeg=iMA[i+1] and xl=TRAIN_XL()>>
+				
 					ca!(xl)
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1] and nSeg=iMA[i+1] 
+					and xl=TRAIN_XL() and (ca=xl)^0>>
+					|s',i',iSeg',nSeg',xl',ca' := s, i, iSeg, nSeg, xl, ca  |
 					}
-				[] (not (s>=iSeg.e))~>
+				[] (not (s>=iSeg.e and i<#ma_properties::MASize - 1))~>
+					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1)>>
 					skip	
+					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1)>>
 				fi	
+				
+				<<(((SBL() and DSPV2())^1) and s>=iSeg.e and i<#ma_properties::MASize - 1) or 
+				(((SBL() and DSPV2())^1) and not (s>=iSeg.e and i<#ma_properties::MASize - 1))>>
 					   
 			}
 		
