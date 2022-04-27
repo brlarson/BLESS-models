@@ -162,3 +162,24 @@ normalize
 axioms
 laws
 axioms
+#[serial 1017]  <<M(CMF) and x>> A <<M(MFR)>> for T5_Move_Ok:CMF-[x]->MFR{A};
+reduce
+reduce
+push
+make-an
+#MovAuth::Controller.impl
+#[serial 1341] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1017]
+ 
+normalize
+axioms
+#[serial 1342] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1017]
+normalize
+and-over-or-pre
+normalize
+laws
+axioms
+#[serial 1344]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1343]
+substitute-pre
+normalize
+laws
+axioms

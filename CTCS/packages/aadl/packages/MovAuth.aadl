@@ -204,30 +204,30 @@ thread implementation Controller.impl
 		T5_Move_Ok: CMF -[s=0 m or v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
 			{
 				<<SBL() and DSPV2()>>
-				if (s>=iSeg.e and i<#ma_properties::MASize - 1)~>
+				if (s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) < #ma_properties::MASize - 1)~>
 					{
-					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1>>
+					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) <#ma_properties::MASize - 1>>
 					i:=i+1
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1>>
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1>>
 					 
 					iSeg:=iMA[i]
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1]>>
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1 and iSeg=iMA[i]>>
 					nSeg:=iMA[i+1]
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1] and nSeg=iMA[i+1] and xl=TRAIN_XL()>>
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1 and iSeg=iMA[i] and nSeg=iMA[i+1] and xl=TRAIN_XL()>>
 				
 					ca!(xl)
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and i=i+1 and iSeg=iMA[1] and nSeg=iMA[i+1] 
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1 and iSeg=iMA[i] and nSeg=iMA[i+1] 
 					and xl=TRAIN_XL() and (ca=xl)^0>>
 					|s',i',iSeg',nSeg',xl',ca' := s, i, iSeg, nSeg, xl, ca  |
 					}
-				[] (not (s>=iSeg.e and i<#ma_properties::MASize - 1))~>
-					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1)>>
+				[] (not (s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) <#ma_properties::MASize - 1))~>
+					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) <#ma_properties::MASize - 1)>>
 					skip	
 					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1)>>
 				fi	
 				
-				<<(((SBL() and DSPV2())^1) and s>=iSeg.e and i<#ma_properties::MASize - 1) or 
-				(((SBL() and DSPV2())^1) and not (s>=iSeg.e and i<#ma_properties::MASize - 1))>>
+				<<(((SBL() and DSPV2())^1) and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) <#ma_properties::MASize - 1) or 
+				(((SBL() and DSPV2())^1) and not (s>=iSeg.e and i<#ma_properties::MASize - 1 and (i+1) <#ma_properties::MASize - 1))>>
 					   
 			}
 		
