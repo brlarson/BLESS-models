@@ -166,10 +166,9 @@ axioms
 reduce
 reduce
 push
-make-an
 #MovAuth::Controller.impl
-#[serial 1341] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1017]
- 
+#[serial 1341] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1017
+make-an
 normalize
 axioms
 #[serial 1342] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1017]
@@ -183,3 +182,18 @@ substitute-pre
 normalize
 laws
 axioms
+#[serial 1345]   <<P and B0>> S0 <<Q>> in alternative for [serial 1343]
+reduce
+reduce
+normalize
+laws
+normalize
+axioms
+push
+make-an
+#[serial 1375]   normalization of [serial 1367]
+atomic
+normalize
+axioms
+#[serial 1377]   normalization of [serial 1368]
+atomic

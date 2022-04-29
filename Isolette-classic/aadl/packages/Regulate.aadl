@@ -165,7 +165,7 @@ features
   current_temperature : in data port Iso_Types::current_temperature
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   interface_failure : in data port BLESS_Types::FLAG
-    {BLESS::Value => "<<REGULATOR_INTERFACE_FAILURE>>";};
+    {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
   internal_failure : in data port BLESS_Types::FLAG
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 properties
