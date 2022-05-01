@@ -166,28 +166,25 @@ thread implementation Controller.impl
 		
 		T3_Move_Check: MFR -[on dispatch]-> CMF
 			{
-			<< SBL() and DSPV2()>>
-			{cs?(s) << SBL() and DSPV2() and s=POSITION >>
+			  << SBL() and DSPV2()>>
+			  {cs?(s) << SBL() and DSPV2() and s=POSITION >>
 				& 
-				cv?(v) << SBL() and DSPV2() and v=VELOCITY >>
-			}
-			;  << SBL() and DSPV2() and v=VELOCITY and s=POSITION >>
-		
-			if(s>=(eoa-SR))~>
+			  cv?(v) << SBL() and DSPV2() and v=VELOCITY >>
+			  }
+			;  << SBL() and DSPV2() and v=VELOCITY and s=POSITION >>	
+			if
+			(s>=(eoa-SR))~>
 				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s >= (eoa-SR))>>
 				r!
-				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and  (s >= (eoa - SR)) >>
-				
-			[] (not (s>= (eoa-SR)) )~>
-			
-			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
+				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and  (s >= (eoa - SR)) >>	
+			[] 
+			(not (s>= (eoa-SR)) )~>
+				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
 				skip
-			<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
-			
+				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
 			 fi
 			 << (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (eoa-SR))) or 
 			 (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))) >>
-			
 			}
 		
 		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
