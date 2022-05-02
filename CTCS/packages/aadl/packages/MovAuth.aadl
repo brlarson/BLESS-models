@@ -19,7 +19,7 @@ device RBC  --Radio Block Center
 	features
 		r : in event port;	--train requests movement authority
 		m : out event data port ma_types::MovementAuthority  {BLESS::Value=> "<<:=IMA>>";};	  
-    ea: out data port ma_types::EOA;
+    ea: out data port ma_types::EOA {BLESS::Value=> "<<:=EOA>>";};
 end RBC;
 
 -----Train abstract component---------
@@ -33,30 +33,38 @@ end Train;
 --Motor moves the train
 device Motor
 	features
-		acc : in data port ma_types::Acceleration;  --commanded acceleration 
+		ca : in data port ma_types::Acceleration;  --commanded acceleration 
 end Motor;
 
 --Sensor detects position, velocity, and acceleration
 device Sensor
 	features
-    ts : out data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";};
-    tv : out data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
+    s : out data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";};
+    v : out data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
 -- 	  ta : out data port ma_types::Acceleration ; 	
 end Sensor;
 
+--Human operator (engineer) of the train
+--Chooses acceleration, except for automatic braking
+abstract Operator
+	features
+		xl : out data port ma_types::Acceleration;
+end Operator;
 
 system implementation Train.impl
 	subcomponents
 		motor : device Motor;
 		sensor : device Sensor;
 		controller : process pController.impl;
+		driver: abstract Operator;
 	connections
-		ma_request : port controller.pr -> r;
-		auth : port ma -> controller.pm;
-		pos: port sensor.ts -> controller.ps;
-		vel : port sensor.tv -> controller.pv;
-		xl : port controller.pa -> motor.acc;
-		auth_end: port ea -> controller.pea;
+		ma_request : port controller.r -> r;
+		auth : port ma -> controller.m;
+		pos: port sensor.s -> controller.s;
+		vel : port sensor.v -> controller.v;
+		mxl : port controller.ca -> motor.ca;
+		auth_end: port ea -> controller.ea;
+		dxl : port driver.xl -> controller.xl;
 annex hybrid{**
   variables
    ts : CTCS_Types::Position -- train position
@@ -76,12 +84,13 @@ end Train.impl;
 -----Controller process and thread----
 process pController
 	features
-		ps: in data port ma_types::Position; 
-		pv: in data port ma_types::Velocity; 
-		pa : out data port  ma_types::Acceleration;     --check - {BLESS::Assertion=> "<<TDELAY()>>";};
-		pr: out event port ; --check - {BLESS::Assertion=> "<<s=0 or s>=iSeg.e>>";};  --make sure iSeg must be the second last segment here, req has EOA
-		pea: in data port ma_types::EOA {BLESS::Value=> "<<:=EOA>>";};
-		pm: in event data port ma_types::MovementAuthority; --check - {BLESS::Assertion=> "<<CHECKV1()>>";} ;
+		ca : out data port  ma_types::Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration     
+		s: in data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position 
+		v: in data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity 
+		r: out event port {BLESS::Assertion=> "<<(s = 0) or (s >= (eoa - SR))>>";};  -- request for new MA
+		ea: in data port ma_types::EOA {BLESS::Value=> "<<:=EOA>>";};
+		m: in event data port ma_types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current movement authority 
+		xl : in data port ma_types::Acceleration;  --operator chosen acceleration
 		--pmsg : out event data port  CTCS_Types::DMI_Message;
 end pController;
 
@@ -89,24 +98,25 @@ process implementation pController.impl
 	subcomponents
 		Controller: thread Controller.impl;
 	connections
-		conn_s: port ps -> Controller.cs;
-		conn_v: port pv -> Controller.cv;
-		conn_a: port Controller.ca -> pa;
-		conn_req: port Controller.r -> pr;
-		conn_ma: port pm -> Controller.m;
-		conn_ea: port pea -> Controller.ea;
+		conn_s: port s -> Controller.s;
+		conn_v: port v -> Controller.v;
+		conn_a: port Controller.ca -> ca;
+		conn_req: port Controller.r -> r;
+		conn_ma: port m -> Controller.m;
+		conn_ea: port ea -> Controller.ea;
+		conn_xl: port xl -> Controller.xl;
 end pController.impl;
 
 --------------Controller Thread----------
 thread Controller
 	features
-		r: out event port {BLESS::Assertion=> "<<(s = 0) or (s >= (eoa - SR))>>";};  -- request for new MA
-		m: in event data port ma_types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current MA... why ghost variables
-		ea: in data port ma_types:: EOA  {BLESS::Value=> "<<:=EOA>>";}; -- EoA end of the las segment
-		cs: in data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position
-		cv: in data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity
 		ca: out data port ma_types:: Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration
-	
+		r: out event port {BLESS::Assertion=> "<<(s = 0) or (s >= (eoa - SR))>>";};  -- request for new MA
+		m: in event data port ma_types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current movement authority
+		ea: in data port ma_types::EOA  {BLESS::Value=> "<<:=EOA>>";}; -- EoA end of the las segment
+		s: in data port ma_types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position
+		v: in data port ma_types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity
+		xl : in data port ma_types::Acceleration;  --operator chosen acceleration
 	properties
 		Dispatch_Protocol => Periodic;
 		Period => 200 ms;
@@ -117,128 +127,114 @@ thread implementation Controller.impl
 	
 	assert
 		--B0 is missing
-		<< SBL: : s=0 m or v <iSeg.v2 >> -- No Service Brake Intervetion, B1
-		<< DSPV2: : (s=0 m) or ((v*v+2*b*s) < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)>> -- Dynamic speed profile for v2, B2
-		<<EBL: : v < iSeg.v1>> -- Emergency Brake Intervention, B3
-		<<DSPV1: : (s=0 m) or ((v*v+2*e*s) < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e) >> -- Dynamic speed profile for v2, B4
+		<<SBL: : v <iSeg.v2 >> -- No Service Brake Intervetion, B1
+		<<DSPV2: : (v*v+2*b*s) < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e >> -- Dynamic speed profile for v2, B2
+		<<EBL: : v < iSeg.v1 >> -- Emergency Brake Intervention, B3
+		<<DSPV1: : s=0 m or (v*v+2*e*s) < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e >> -- Dynamic speed profile for v2, B4
 	
 		<<TRAIN_XL: returns quantity mpss := [
   		(EBL() or DSPV1() )-> 0,                                 			
-  		(not SBL() or not DSPV2() )-> b, 
-  		(not EBL() or not DSPV1() )-> e,    --CTCS_Properties::EB_Rate = b   			
+  		(not SBL() or not DSPV2() )-> #ma_properties::SB_Rate mpss, -- deceleration rate when service brake is applied 
+  		(not EBL() or not DSPV1() )-> #ma_properties::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
   		(SBL() and DSPV2() )-> xl ] >> 
 	
 	invariant
-		<<true>>
+		<< true >>
 	
 	variables
 			
 		i ~ quantity whole := 0  -- segment indexing
-		b ~ quantity mpss := #ma_properties::SB_Rate mpss -- deceleration rate when service brake is applied
-		e ~ quantity mpss := #ma_properties::EB_Rate mpss -- deceleration rate when emergency brake is applied
-		v ~ quantity kph := 0 kph -- velocity
-		s ~ quantity m := 0 m -- position
-		eoa ~ quantity m -- end of authority
-		xl ~ quantity mpss := #ma_properties::Accel_Rate mpss -- newly computed accelerations
-		iMA ~ movementAuthority --initial MA
+		b ~ quantity mpss constant :=  #ma_properties::SB_Rate mpss -- deceleration rate when service brake is applied
+		e ~ quantity mpss constant := #ma_properties::EB_Rate mpss -- deceleration rate when emergency brake is applied
+		ma ~ movementAuthority --initial MA
 		iSeg ~ segment --current segement
 		nSeg ~ segment --next segment
 		SR ~ quantity m -- specific distance from the EoA, to request for new MA
 		
 	states
-		READY: initial state << i=0 and s=0 m and v = 0 kph>> --an initial state
-		GMA: complete state << i=0 and s=0 m and v = 0 kph >> --Get MA
-		CMA: state << i=0 and s=0 m and v = 0 kph >> -- CheckMA
-		RETRY: state << i =0 and s=0 m and iMA=null>> --Retry MA request
-		MFR: complete state <<SBL() and DSPV2()>> --Move Forward
-		CMF: state <<SBL() and DSPV2()>> --Check Move Forward
-		SBI: complete state <<not SBL() or not DSPV2()>> --Service Brake Intervention
-		CSB: complete state <<not SBL() or not DSPV2()>> --Check Service Brake
-		EBI: complete state << not EBL() or not DSPV1()  >> --Emergency Brake Intevention
-		STOP: final state <<(not EBL() or not DSPV1()) and v=0 kph>> --a final state
+		READY: initial state << i=0 >> --train stopped
+		GMA: complete state << i=0 >> --Get MA
+		CMA: state << i=0 >>            -- CheckMA
+		RETRY: state  << i=0 >>         --Retry MA request
+		MFR: complete state  --Move Forward
+		CMF: state           --Check Move Forward
+		SBI: complete state  --Service Brake Intervention
+		CSB: complete state  --Check Service Brake
+		EBI: complete state  --Emergency Brake Intevention
+		STOP: final state    --a final state
+		FAIL: final state    --failure occurred
 		
 	transitions
-		T0_Go: READY -[]-> GMA
-			{
-				<<i=0 and s= 0 m and v = 0 kph >> 
+		T0_Go: READY -[s=0 m]-> GMA
+			{ << s=0 m and i=0 >>
 				r!  --request movement authority
-				; <<i=0 and s= 0 m and v = 0 kph >> 
-				|i',s',v':=i,s,v| --set variable values seen at next dispatch
-				<<i'=0 and s'= 0 m and v = 0 kph>>
+				; << s=0 m and i=0 >>
+				i' := i
 			}
+	
+		T0_Fail: READY -[s<>0 m]-> FAIL  --did not start at beginning
 		
 		T1_MA_Check: GMA -[on dispatch]-> CMA 
---			{
---			m?(iMA) 
---			; <<(i=0) and (s= 0 m ) and (iMA=IMA) >>  
---			ea?(eoa)
---			<<(i=0) and (s= 0 m ) and (iMA=IMA) >> 
---			}
 
 		T9_MA_NotOk: --did not get requested movement authority
 		  CMA -[not m'fresh]-> RETRY 
---		
+		
 		T10_MA_Retry:  --request movement authority again
-		  RETRY -[]-> GMA 
-			{
-				<<i=0 and s= 0 m >> 
-				r!  --request movement authority
-				; <<i=0 and s= 0 m >> 
-				|i',s':=i,s| --set variable values seen at next dispatch
-				<<i'=0 and s'= 0 m >>
+		  RETRY -[s=0 m]-> GMA 
+			{ << s=0 m and i=0 >>
+			  r!  --request movement authority
+			  ; << s=0 m and i=0 >>
+				i' := i
 			}
 		
+		T10_Retry_Fail:
+		  RETRY -[s<>0 m]-> FAIL
+		
 		T2_MA_Ok:  --received movement authority
-		  CMA -[m'fresh]-> MFR
-			{  << i=0 and s=0 m>> 
-			m?(iMA)  --save received movement authority in local variable
-			; << i=0 and s= 0 m and iMA=IMA >>  
-			ea?(eoa)  --save position of movement authority end
-			;  << i=0 and s= 0 m and iMA=IMA and eoa=EOA >> 
-      iSeg := iMA[0] --set current segment of movement authority to first segment
-			; << i=0 and s= 0 m and iMA=IMA and eoa=EOA and iSeg=IMA[i] >> 
-			nSeg := iMA[1]  --set next segment of movement authority to second segment
-			; << i=0 and s= 0 m and iMA=IMA and eoa=EOA and iSeg=IMA[i] and nSeg=IMA[i+1] >> 
-				
-				|iSeg',s',nSeg', v', b' := iSeg, s, nSeg, v, b|
+		  CMA -[m'fresh and s=0 m]-> MFR
+			{  << i=0 and s=0 m and SBL() and DSPV2() >> 
+			m?(ma)  --save received movement authority in local variable
+			; << i=0 and s= 0 m and ma=IMA and SBL() and DSPV2() >>  
+      iSeg := ma[0] --set current segment of movement authority to first segment
+			; << i=0 and s= 0 m and ma=IMA and iSeg=IMA[i] and SBL() and DSPV2() >> 
+			nSeg := ma[1]  --set next segment of movement authority to second segment
+			; << i=0 and s= 0 m and ma=IMA and iSeg=IMA[i] and nSeg=IMA[i+1] and SBL() and DSPV2() >> 		
+			|iSeg',s',nSeg', b' := iSeg, s, nSeg, b|
 				<< (SBL() and DSPV2())^1 >>
 			}
 		
-		T3_Move_Check: MFR -[on dispatch]-> CMF
-			{
-			  << SBL() and DSPV2()>>
-			  {cs?(s) << SBL() and DSPV2() and s=POSITION >>
-				& 
-			  cv?(v) << SBL() and DSPV2() and v=VELOCITY >>
-			  }
-			;  << SBL() and DSPV2() and v=VELOCITY and s=POSITION >>	
-			if
-			(s>=(eoa-SR))~>
-				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY and (s >= (eoa-SR))>>
-				r!
-				<<SBL() and DSPV2() and s=POSITION and v=VELOCITY and  (s >= (eoa - SR)) >>	
-			[] 
-			(not (s>= (eoa-SR)) )~>
-				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
-				skip
-				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))>>
-			 fi
-			 << (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (eoa-SR))) or 
-			 (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (eoa-SR)))) >>
-			}
+		T2_MA_Fail:
+		  CMA -[s<>0 m]-> FAIL
 		
-		T4_SBI_Point: CMF -[not (s=0 m or v < iSeg.v2) or
-			not (s = 0 m or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) ]-> SBI 
-			-- nSeg.v2 instead of iMA[i+1], check dynamic speed profile formula. it is square of v2
-			{
+		T3_Move_Check: MFR -[on dispatch]-> CMF
+--			{
+--			if
+--			(s>=(ea-SR))~>
+--				<< SBL() and DSPV2() and (s >= (ea-SR))>>
+--				r!
+--				<<SBL() and DSPV2() and (s >= (ea - SR)) >>	
+--			[] 
+--			( s < (ea-SR) )~>
+--				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (ea-SR)))>>
+--				skip
+--				<< SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (ea-SR)))>>
+--			 fi
+--			 << (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and (s>= (ea-SR))) or 
+--			 (SBL() and DSPV2() and s=POSITION and v=VELOCITY  and ( not (s>= (ea-SR)))) >>
+--			}
+--		
+
+		T4_SBI_Point: CMF -[not (v < iSeg.v2) or
+			not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) ]-> SBI 
+			-- nSeg.v2 instead of ma[i+1], check dynamic speed profile formula. it is square of v2
+			{  << not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) >>
 				 ca!(b)
-				 ; << ((0 = s or v < iSeg.v2) and (0 = s or ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2))) 
-				 	and (not (0 = s or v < iSeg.v2) or not (0 = s or ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2))))) and 
-				 	(ca = b)^0 >>
-				|iSeg',s',nSeg', v', b' := iSeg, s, nSeg, v, b|
+				 ; << not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) >>
+				|iSeg',s',nSeg', b' := iSeg, s, nSeg, b|
+				<< (not SBL() or not DSPV2())^1 >>
 			}
 		-- this is where we are working now
-		T5_Move_Ok: CMF -[v < iSeg.v2 or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
+		T5_Move_Ok: CMF -[v < iSeg.v2 and v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
 			{  --velocity is below limit, and we can still stop in time
 				<<SBL() and DSPV2()>>
 				if (s>=iSeg.e and (i+1) < #ma_properties::MASize - 1)~>
@@ -246,14 +242,16 @@ thread implementation Controller.impl
 					<<SBL() and DSPV2() and s>=iSeg.e and (i+1) <#ma_properties::MASize - 1>>
 					i:=i+1
 					; <<SBL() and DSPV2() and s>=iSeg.e and i < #ma_properties::MASize - 1>>
-					iSeg:=iMA[i]
+					iSeg:=ma[i]
 					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 >>
-					nSeg:=iMA[i+1]
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1 and iSeg=iMA[i] and nSeg=iMA[i+1] and xl=TRAIN_XL()>>
+					nSeg:=ma[i+1]
+					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and 
+					  (i - 1) < #ma_properties::MASize - 1 and iSeg=ma[i] and nSeg=ma[i+1] and xl=TRAIN_XL()>>
 				
 					ca!(xl)
-					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and (i - 1) < #ma_properties::MASize - 1 and iSeg=iMA[i] and nSeg=iMA[i+1] 
-					and xl=TRAIN_XL() and (ca=xl)^0>>
+					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and 
+					  (i - 1) < #ma_properties::MASize - 1 and iSeg=ma[i] and nSeg=ma[i+1] 
+					  and (ca=xl)^0>>
 					}
 				[] (s<iSeg.e)~>
 					<<SBL() and DSPV2()>>

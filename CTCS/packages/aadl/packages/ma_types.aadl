@@ -24,6 +24,8 @@ annex Assertion
 	**};
 
 Data Position
+  Properties  
+    BLESS::Typed => "quantity m";
 end Position;
 
 Data DMI_Message
@@ -78,10 +80,12 @@ properties
 --  Data_Model::Enumerators => ("FS","CO");    
 end ModeTypes;
 
-Data MA_Request
-end MA_Request;
+--Data MA_Request
+--end MA_Request;
 
 Data EOA
+  Properties  
+    BLESS::Typed => "quantity m";
 end EOA;
 ------------------------------------------MA with Segments-------------------
 Data Segment
