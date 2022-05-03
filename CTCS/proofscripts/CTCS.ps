@@ -173,3 +173,30 @@ laws
 normalize
 axioms
 #[serial 1023]  <<M(CSB) and x>> A <<M(MFR)>> for T7_SBI_Out:CSB-[x]->MFR{A};
+reduce
+normalize
+laws
+axioms
+alldist^
+atomic
+axioms
+laws
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1024]  <<M(CSB) and x>> -> <<M(SBI)>> for T8_SBI_Ok:CSB-[x]->SBI{};
+normalize
+axioms
+#[serial 1025]  <<M(CSB) and x>> -> <<M(EBI)>> for T13_EBI_Point:CSB-[x]->EBI{};
+normalize
+axioms
+#[serial 1026] Composition of Subcomponents via Directional Connection sensor.s -> controller.Controller.s:
+axioms
+#[serial 1027] Composition of Subcomponents via Directional Connection sensor.v -> controller.Controller.v:
+axioms
+#[serial 1028] Composition of Subcomponents via Directional Connection rbc.ea -> train.controller.Controller.ea:
+axioms
+#[serial 1029] Composition of Subcomponents via Directional Connection rbc.m -> train.controller.Controller.m:
+axioms
+#Q.E.D.
