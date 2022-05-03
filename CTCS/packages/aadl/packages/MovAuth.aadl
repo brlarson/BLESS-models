@@ -145,31 +145,34 @@ thread implementation Controller.impl
 			
 		i ~ quantity whole := 0  -- segment indexing
 		b ~ quantity mpss constant :=  #ma_properties::SB_Rate mpss -- deceleration rate when service brake is applied
+		  <<AXIOM_B: : b = #ma_properties::SB_Rate mpss>>
 		e ~ quantity mpss constant := #ma_properties::EB_Rate mpss -- deceleration rate when emergency brake is applied
+			<<AXIOM_E: : e = #ma_properties::EB_Rate mpss >> 
 		ma ~ movementAuthority --initial MA
 		iSeg ~ segment --current segement
 		nSeg ~ segment --next segment
 		SR ~ quantity m -- specific distance from the EoA, to request for new MA
 		
 	states
-		READY: initial state << i=0 >> --train stopped
-		GMA: complete state << i=0 >> --Get MA
-		CMA: state << i=0 >>            -- CheckMA
-		RETRY: state  << i=0 >>         --Retry MA request
+		READY: initial state --train stopped
+		GMA: complete state  --Get MA
+		CMA: state           -- CheckMA
+		RETRY: state         --Retry MA request
 		MFR: complete state  --Move Forward
+		  << iSeg=ma[i] and nSeg=ma[i+1] >>
 		CMF: state           --Check Move Forward
-		SBI: complete state  --Service Brake Intervention
-		CSB: complete state  --Check Service Brake
+		  << iSeg=ma[i] and nSeg=ma[i+1] >>
+		SBI: complete state  --Service Brake Intervention 
+--		  << (not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and AXIOM_B() >> 
+		CSB: state <<  iSeg=ma[i] and nSeg=ma[i+1] >> --Check Service Brake
 		EBI: complete state  --Emergency Brake Intevention
 		STOP: final state    --a final state
 		FAIL: final state    --failure occurred
 		
 	transitions
 		T0_Go: READY -[s=0 m]-> GMA
-			{ << s=0 m and i=0 >>
+			{ << s=0 m >>
 				r!  --request movement authority
-				; << s=0 m and i=0 >>
-				i' := i
 			}
 	
 		T0_Fail: READY -[s<>0 m]-> FAIL  --did not start at beginning
@@ -181,10 +184,8 @@ thread implementation Controller.impl
 		
 		T10_MA_Retry:  --request movement authority again
 		  RETRY -[s=0 m]-> GMA 
-			{ << s=0 m and i=0 >>
+			{ << s=0 m >>
 			  r!  --request movement authority
-			  ; << s=0 m and i=0 >>
-				i' := i
 			}
 		
 		T10_Retry_Fail:
@@ -192,15 +193,17 @@ thread implementation Controller.impl
 		
 		T2_MA_Ok:  --received movement authority
 		  CMA -[m'fresh and s=0 m]-> MFR
-			{  << i=0 and s=0 m and SBL() and DSPV2() >> 
+			{  << s=0 m >> 
 			m?(ma)  --save received movement authority in local variable
-			; << i=0 and s= 0 m and ma=IMA and SBL() and DSPV2() >>  
+			;  << s= 0 m and ma=IMA >>
+			i := 0  --first segment of new movement authority
+			; << i=0 and s= 0 m and ma=IMA >>  
       iSeg := ma[0] --set current segment of movement authority to first segment
-			; << i=0 and s= 0 m and ma=IMA and iSeg=IMA[i] and SBL() and DSPV2() >> 
+			; << i=0 and s= 0 m and ma=IMA and iSeg=ma[i] >> 
 			nSeg := ma[1]  --set next segment of movement authority to second segment
-			; << i=0 and s= 0 m and ma=IMA and iSeg=IMA[i] and nSeg=IMA[i+1] and SBL() and DSPV2() >> 		
-			|iSeg',s',nSeg', b' := iSeg, s, nSeg, b|
-				<< (SBL() and DSPV2())^1 >>
+			; << i=0 and s= 0 m and ma=IMA and iSeg=ma[i] and nSeg=ma[i+1] >> 		
+			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
+				<< (i=0  and iSeg=ma[i] and nSeg=ma[i+1])^1  >>
 			}
 		
 		T2_MA_Fail:
@@ -227,41 +230,38 @@ thread implementation Controller.impl
 		T4_SBI_Point: CMF -[not (v < iSeg.v2) or
 			not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) ]-> SBI 
 			-- nSeg.v2 instead of ma[i+1], check dynamic speed profile formula. it is square of v2
-			{  << not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) >>
-				 ca!(b)
-				 ; << not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e) >>
-				|iSeg',s',nSeg', b' := iSeg, s, nSeg, b|
-				<< (not SBL() or not DSPV2())^1 >>
+			{  << (not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e))
+				and iSeg=ma[i] and nSeg=ma[i+1] >>
+			ca!(#ma_properties::SB_Rate mpss)
+			; << iSeg=ma[i] and nSeg=ma[i+1] >>
+			|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+				<< (iSeg=ma[i] and nSeg=ma[i+1])^1 >>
 			}
 		-- this is where we are working now
 		T5_Move_Ok: CMF -[v < iSeg.v2 and v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e]->	MFR	
 			{  --velocity is below limit, and we can still stop in time
-				<<SBL() and DSPV2()>>
+				<< SBL() and DSPV2() and iSeg=ma[i] and nSeg=ma[i+1]>> 
 				if (s>=iSeg.e and (i+1) < #ma_properties::MASize - 1)~>
 					{  --near end of current segment, there is a next segment, then transition to next segment
-					<<SBL() and DSPV2() and s>=iSeg.e and (i+1) <#ma_properties::MASize - 1>>
+					<<SBL() and DSPV2() and s>=iSeg.e and (i+1) <#ma_properties::MASize - 1 >>
 					i:=i+1
-					; <<SBL() and DSPV2() and s>=iSeg.e and i < #ma_properties::MASize - 1>>
+					; <<SBL() and DSPV2() and s>=iSeg.e and i < #ma_properties::MASize - 1  >>
 					iSeg:=ma[i]
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 >>
+					; <<SBL() and DSPV2() and i<#ma_properties::MASize - 1 and iSeg=ma[i] >>
 					nSeg:=ma[i+1]
-					; <<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and 
-					  (i - 1) < #ma_properties::MASize - 1 and iSeg=ma[i] and nSeg=ma[i+1] and xl=TRAIN_XL()>>
+					; <<SBL() and DSPV2() and i<#ma_properties::MASize - 1 and iSeg=ma[i] and nSeg=ma[i+1] >>
 				
 					ca!(xl)
-					<<SBL() and DSPV2() and s>=iSeg.e and i<#ma_properties::MASize - 1 and 
-					  (i - 1) < #ma_properties::MASize - 1 and iSeg=ma[i] and nSeg=ma[i+1] 
-					  and (ca=xl)^0>>
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
 					}
-				[] (s<iSeg.e)~>
-					<<SBL() and DSPV2()>>
+				[] (s<iSeg.e or (i+1) >= #ma_properties::MASize - 1)~>
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
 					skip	
-					<<SBL() and DSPV2() and not (s>=iSeg.e and i<#ma_properties::MASize - 1)>>
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
 				fi	
-				
-			;		   
-			|s',i',iSeg',nSeg',xl',ca' := s, i, iSeg, nSeg, xl, ca  |
-				<<(SBL() and DSPV2())^1>>
+			;		<<iSeg=ma[i] and nSeg=ma[i+1]>>   
+			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+				<<(iSeg=ma[i] and nSeg=ma[i+1])^1>>
 			}
 		
 --		T6_BI_Check: SBI -[on dispatch]-> CSB
@@ -269,22 +269,26 @@ thread implementation Controller.impl
 --				cs?(s) & cv?(v)
 --			}
 --			
---		T7_SBI_Out: CSB -[(s=0 m or v < iSeg.v2) and 
---			(s=0 m  or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*s+iSeg.e) ]-> MFR
---			{
---				-- should we check the CBI and EBI states
---				ca!(xl)
---			}
---		
---		T8_SBI_Ok: CSB -[not((s=0 m or v < iSeg.v2) and 
---			(s=0 m or v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) ]-> SBI 
---		
---		
+		T7_SBI_Out: CSB -[v < iSeg.v2 and v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e ]-> MFR
+			{
+				<< v < iSeg.v2 and ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2)) 
+				  and iSeg = ma[i] and ma[1 + i] = nSeg>>
+			ca!(xl)
+			;  << iSeg = ma[i] and ma[1 + i] = nSeg >>
+			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+				 << (iSeg = ma[i] and ma[1 + i] = nSeg)^1 >>
+			}
+		
+		T8_SBI_Ok: CSB -[ (not(v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and --apply service brake
+										not(not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) +2*e*iSeg.e ))  --but not emergency brake
+										]-> SBI 
+		
+		
 --		T11_EBI_Point: CMF -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e)]-> EBI
 --		
 --		T12_Stop: EBI -[v = 0 kph]-> STOP
 --		
---		T13_EBI_Point: SBI -[not (v < iSeg.v1) or not (v*v + 2*b*s < (nSeg.v1*nSeg.v1) +2*e*iSeg.e )]-> EBI
+		T13_EBI_Point: CSB -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) +2*e*iSeg.e )]-> EBI
 
 	**};
 end Controller.impl;

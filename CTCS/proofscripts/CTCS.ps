@@ -1,50 +1,175 @@
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS/proofscripts/CTCS.ps
+#MovAuth::Controller.impl
+#[serial 1003] <<M(MFR)>> -> <<I>> from invariant I when complete state MFR has Assertion <<M(MFR)>> in its definition
 make-an
-#[serial 1003] <<M(CSB)>> -> <<I>> from invariant I when complete state CSB has Assertion <<M(CSB)>> in its definition.
 axioms
-#[serial 1004] <<M(MFR)>> -> <<I>> from invariant I when complete state MFR has Assertion <<M(MFR)>> in its definition.
+#[serial 1004] <<M(GMA)>> -> <<I>> from invariant I when complete state GMA has Assertion <<M(GMA)>> in its definition.
 axioms
-#[serial 1005] <<M(GMA)>> -> <<I>> from invariant I when complete state GMA has Assertion <<M(GMA)>> in its definition.
+#[serial 1005] <<M(SBI)>> -> <<I>> from invariant I when complete state SBI has Assertion <<M(SBI)>> in its definition.
 axioms
-#[serial 1006] <<M(SBI)>> -> <<I>> from invariant I when complete state SBI has Assertion <<M(SBI)>> in its definition.
+#[serial 1006] <<M(EBI)>> -> <<I>> from invariant I when complete state EBI has Assertion <<M(EBI)>> in its definition.
 axioms
-#[serial 1007] <<M(EBI)>> -> <<I>> from invariant I when complete state EBI has Assertion <<M(EBI)>> in its definition.
-axioms
-#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state READY, <<M(READY)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state CMA, <<M(CMA)>> -> <<e1 or e2 or . . . en>>
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state READY, <<M(READY)>> -> <<e1 or e2 or . . . en>>
+replace<>
 normalize
 laws
 axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CSB, <<M(CSB)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+DeMorgan
+normalize
+laws
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state CMA, <<M(CMA)>> -> <<e1 or e2 or . . . en>>
+replace<>
+normalize
+cnf
+laws
+normalize
+axioms
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state RETRY, <<M(RETRY)>> -> <<e1 or e2 or . . . en>>
+replace<>
+normalize
+laws
 axioms
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CMF, <<M(CMF)>> -> <<e1 or e2 or . . . en>>
 normalize
-laws
-axioms
-#[serial 1012]  <<M(READY)>> A <<M(GMA)>> for T0_Go:READY-[ ]->GMA{A};
-reduce
-normalize
-axioms
-alldist^
-atomic
-laws
-axioms
-guided-sub-equals[s]
-normalize
+cnf
 laws
 normalize
 axioms
-#[serial 1013]  <<M(GMA) and x>> -> <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{};
-axioms
-#[serial 1014]  <<M(CMA) and x>> -> <<M(RETRY)>> for T9_MA_NotOk:CMA-[x]->RETRY{};
-normalize
-laws
-axioms
-#[serial 1015]  <<M(RETRY)>> A <<M(GMA)>> for T10_MA_Retry:RETRY-[ ]->GMA{A};
-normalize
+#[serial 1012]  <<M(READY) and x>> A <<M(GMA)>> for T0_Go:READY-[x]->GMA{A};
 reduce
 axioms
-alldist^
 atomic
 normalize
 axioms
+#[serial 1013]  <<M(READY) and x>> -> <<M(FAIL)>> for T0_Fail:READY-[x]->FAIL{};
+axioms
+#[serial 1014]  <<M(GMA) and x>> -> <<M(CMA)>> for T1_MA_Check:GMA-[x]->CMA{};
+axioms
+#[serial 1015]  <<M(CMA) and x>> -> <<M(RETRY)>> for T9_MA_NotOk:CMA-[x]->RETRY{};
+axioms
+#[serial 1016]  <<M(RETRY) and x>> A <<M(GMA)>> for T10_MA_Retry:RETRY-[x]->GMA{A};
+reduce
+atomic
+normalize
+axioms
+#[serial 1017]  <<M(RETRY) and x>> -> <<M(FAIL)>> for T10_Retry_Fail:RETRY-[x]->FAIL{};
+axioms
+#[serial 1018]  <<M(CMA) and x>> A <<M(MFR)>> for T2_MA_Ok:CMA-[x]->MFR{A};
+reduce
+normalize
+push
+#MovAuth::Controller.impl
+#[serial 1116]   normalization of [serial 1108
+make-an
+axioms
+#[serial 1118]   normalization of [serial 1109]
+alldist^
+axioms
+#[serial 1120]   normalization of [serial 1110]
+atomic
+normalize
+axioms
+#[serial 1122]   normalization of [serial 1111]
+atomic
+laws
+axioms
+#[serial 1124]   normalization of [serial 1112]
+atomic
+guided-sub-equals[i]
+laws
+axioms
+#[serial 1126]   normalization of [serial 1113]
+atomic
+split-post
+axioms
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1128]   normalization of [serial 1114]
+alldist^
+atomic
+axioms
+#[serial 1019]  <<M(CMA) and x>> -> <<M(FAIL)>> for T2_MA_Fail:CMA-[x]->FAIL{};
+axioms
+#[serial 1020]  <<M(MFR) and x>> -> <<M(CMF)>> for T3_Move_Check:MFR-[x]->CMF{};
+axioms
+#[serial 1021]  <<M(CMF) and x>> A <<M(SBI)>> for T4_SBI_Point:CMF-[x]->SBI{A};
+normalize
+reduce
+axioms
+push
+#MovAuth::Controller.impl
+#[serial 1180] <<P>> -> <<P1>> in sequential composition for [serial 1178
+make-an
+laws
+axioms
+#[serial 1182] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1178]
+atomic
+normalize
+laws
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1183] <<Q0 and P1>> S1 <<Q1>> in sequential composition for [serial 1178]
+alldist^
+atomic
+axioms
+#[serial 1022]  <<M(CMF) and x>> A <<M(MFR)>> for T5_Move_Ok:CMF-[x]->MFR{A};
+reduce
+reduce
+reduce
+reduce
+normalize
+laws
+normalize
+axioms
+push
+#MovAuth::Controller.impl
+#[serial 1235]   normalization of [serial 1220
+make-an
+atomic
+normalize
+axioms
+#[serial 1237]   normalization of [serial 1221]
+atomic
+laws
+axioms
+#[serial 1239]   normalization of [serial 1222]
+atomic
+laws
+axioms
+#[serial 1241]   normalization of [serial 1223]
+atomic
+normalize
+axioms
+laws
+axioms
+#[serial 1245]   normalization of [serial 1215]
+atomic
+axioms
+#[serial 1249]   normalization of [serial 1211]
+alldist^
+atomic
+axioms
+#[serial 1263] Associativity: (b.c).a = a.b.c [serial 1225]
+substitute-post
+normalize
+axioms
+#[serial 1278]   normalization of [serial 1264]
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1023]  <<M(CSB) and x>> A <<M(MFR)>> for T7_SBI_Out:CSB-[x]->MFR{A};
