@@ -159,13 +159,16 @@ thread implementation Controller.impl
 		CMA: state           -- CheckMA
 		RETRY: state         --Retry MA request
 		MFR: complete state  --Move Forward
-		  << iSeg=ma[i] and nSeg=ma[i+1] >>
+			<< iSeg=ma[i] and nSeg=ma[i+1] >>
 		CMF: state           --Check Move Forward
-		  << iSeg=ma[i] and nSeg=ma[i+1] >>
+			<< iSeg=ma[i] and nSeg=ma[i+1] >>
 		SBI: complete state  --Service Brake Intervention 
+		<<  iSeg=ma[i] and nSeg=ma[i+1] >>
 --		  << (not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and AXIOM_B() >> 
-		CSB: state <<  iSeg=ma[i] and nSeg=ma[i+1] >> --Check Service Brake
+		CSB: state --Check Service Brake
+			<<  iSeg=ma[i] and nSeg=ma[i+1] >> 
 		EBI: complete state  --Emergency Brake Intevention
+		CEB: state -- check Emergency Brake
 		STOP: final state    --a final state
 		FAIL: final state    --failure occurred
 		
@@ -264,11 +267,11 @@ thread implementation Controller.impl
 				<<(iSeg=ma[i] and nSeg=ma[i+1])^1>>
 			}
 		
---		T6_BI_Check: SBI -[on dispatch]-> CSB
---			{
---				cs?(s) & cv?(v)
---			}
---			
+		T6_BI_Check: SBI -[on dispatch]-> CSB   --just check SBI after each period like T3_Move_Check
+--			--{
+--				--s?(s) & v?(v)
+--			--}
+			
 		T7_SBI_Out: CSB -[v < iSeg.v2 and v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e ]-> MFR
 			{
 				<< v < iSeg.v2 and ((2 * b * s) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v2 * nSeg.v2)) 
@@ -281,14 +284,27 @@ thread implementation Controller.impl
 		
 		T8_SBI_Ok: CSB -[ (not(v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and --apply service brake
 										not(not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) +2*e*iSeg.e ))  --but not emergency brake
-										]-> SBI 
+										]-> SBI
+					
+			{
+				|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+					<< (iSeg=ma[i] and nSeg=ma[i+1])^1 >>
+			} 
 		
 		
---		T11_EBI_Point: CMF -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e)]-> EBI
+--		T11_EBI_Point: CMF -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) + 2*e*iSeg.e)]-> EBI  -- we donot need this transition as train can not move from CMF to EBI
 --		
---		T12_Stop: EBI -[v = 0 kph]-> STOP
---		
+		T11_Check_EBI: EBI -[on dispatch]-> CEB 
+		
+		T14_EBI_Still: CEB -[v <> 0 kph]-> EBI
+		
+		T12_Stop: CEB -[v = 0 kph]-> STOP
+		
+		
+	
 		T13_EBI_Point: CSB -[not (v < iSeg.v1) or not (v*v + 2*e*s < (nSeg.v1*nSeg.v1) +2*e*iSeg.e )]-> EBI
+		
+	--	T14_EBI_Fail: EBI -[on dispatch]-> FAIL
 
 	**};
 end Controller.impl;
