@@ -141,20 +141,61 @@ transitions
 end VVI.i;  --end thread 
 
 system PG
+	features
+		lead : requires bus access IS1;
 end PG;
 
 system implementation PG.i
 	subcomponents
-		pp : process P.i;
+		pp : process PGprocess.i;
+		fe : device FrontEnd;
+	connections
+		header : bus access fe.lead -> lead;
+		sense : port fe.sense -> pp.sense;
+		pace : port pp.pace -> fe.pace;
 end PG.i;
 
-process P
-end P;
+process PGprocess
+	features
+		sense : in event port;
+		pace : out event port;
+end PGprocess;
 
-process implementation P.i
+process implementation PGprocess.i
 	subcomponents
 		t : thread VVI.i;
-end P.i;
+	connections
+		s : port sense -> t.s;
+		p : port t.p -> pace;
+end PGprocess.i;
+
+device FrontEnd
+	features
+		sense : out event port;
+		pace : in event port;
+		lead : requires bus access IS1;
+end FrontEnd;
+
+bus IS1
+end IS1;
+
+abstract Patient
+	features
+		lead : requires bus access IS1;
+end Patient;
+
+system Implant
+end Implant;
+
+system implementation Implant.i
+	subcomponents
+		patient : abstract Patient;
+		pacemaker : system PG.i;
+		lead : bus IS1;
+	connections
+		toPatient : bus access lead -> patient.lead;
+		toPG : bus access lead -> pacemaker.lead;
+end Implant.i;
 
 end vvi_mode;  --end package
 --end of VVI.aadl
