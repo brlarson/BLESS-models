@@ -197,5 +197,32 @@ system implementation Implant.i
 		toPG : bus access lead -> pacemaker.lead;
 end Implant.i;
 
+thread implementation VVI.ba
+	annex Behavior_Specification {**
+	states
+		power_on : initial state;
+		pace : complete state;
+		sense : complete state;
+		check_pace_vrp : state;
+		check_sense_vrp : state;
+		off : final state;
+	transitions
+    T1_POWER_ON: power_on -[ ]-> sense; 
+    T2_STOP: pace,sense -[on dispatch stop]-> off;
+    T3_PACE_LRL_AFTER_VP:	pace -[on dispatch  ]-> pace;		
+    T4_VS_AFTER_VP: pace -[on dispatch s]-> check_pace_vrp; 
+    T5_VS_AFTER_VP_IN_VRP: check_pace_vrp -[ --(now-last_beat)<vrp
+    	]-> pace;
+    T6_VS_AFTER_VP_IS_NR:	check_pace_vrp -[ --(now-last_beat)>=vrp
+  	  ]-> sense; 
+  	T7_PACE_LRL_AFTER_VS:	sense -[on dispatch ]-> pace;
+  	T8_VS_AFTER_VS:	sense -[on dispatch s]-> check_sense_vrp; 
+  	T9_VS_AFTER_VS_IN_VRP:  check_sense_vrp -[ --(now-last_beat)<vrp
+      ]-> sense; 
+    T10_VS_AFTER_VS_IS_NR: check_sense_vrp -[  --(now-last_beat)>=vrp
+    	]-> sense;	    
+		**};
+end VVI.ba;
+
 end vvi_mode;  --end package
 --end of VVI.aadl

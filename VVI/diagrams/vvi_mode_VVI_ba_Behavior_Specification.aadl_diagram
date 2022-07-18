@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="4067de15-f29d-439a-8077-9def61d889d4" manual="true">
+    <element uuid="df7a8954-3b14-4ddb-a3c2-3acdacdb9d90" manual="true" background="#ffffcc">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>check_pace_vrp</seg>
+      </bo>
+      <position x="410.0" y="260.0"/>
+      <size width="149.09635162353516" height="35.0"/>
+    </element>
+    <element uuid="3548db12-f3da-4e53-84e8-b353cfe86068" manual="true" background="#ffffcc">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>check_sense_vrp</seg>
+      </bo>
+      <position x="70.0" y="330.0"/>
+      <size width="155.7630157470703" height="35.0"/>
+    </element>
+    <element uuid="64330fbb-f5f7-44af-ada7-81be444f5fe2" manual="true" background="#000000" fontColor="#ffffff">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>off</seg>
+      </bo>
+      <position x="450.0" y="340.0"/>
+      <size width="66.82421779632568" height="35.0"/>
+    </element>
+    <element uuid="275f5074-24b8-4764-8e89-90d468de5105" manual="true" background="#ccccff">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>pace</seg>
+      </bo>
+      <position x="440.0" y="90.0"/>
+      <size width="80.91275787353516" height="45.0"/>
+    </element>
+    <element uuid="c403b80e-38a5-4882-a0b6-65f1a0c9aae2" manual="true" background="#ccffcc">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>power_on</seg>
+      </bo>
+      <position x="20.0" y="20.0"/>
+      <size width="110.56119537353516" height="35.0"/>
+    </element>
+    <element uuid="18d5f3af-e1c6-4f75-ba71-7cfe1a4160de" manual="true" background="#ccccff">
+      <bo>
+        <seg>ba.behavior_state</seg>
+        <seg>sense</seg>
+      </bo>
+      <position x="120.0" y="90.0"/>
+      <size width="87.57942581176758" height="35.0"/>
+    </element>
+    <element uuid="f3c99b88-48bc-4f36-a4d5-8f5cb4c0ae27" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T10_VS_AFTER_VS_IS_NR</seg>
+      </bo>
+      <bendpoints>
+        <point x="51.0" y="236.0"/>
+      </bendpoints>
+      <primaryLabelPosition x="-64.93249167326141" y="22.03739620696126"/>
+    </element>
+    <element uuid="22452bed-4948-441f-a5ac-1a53fc961c57" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T1_POWER_ON</seg>
+      </bo>
+      <primaryLabelPosition x="-117.93195343017578" y="-4.813823699951172"/>
+    </element>
+    <element uuid="2b68d6ba-e2ba-418e-863c-8c335181969f" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T2_STOP</seg>
+      </bo>
+      <bendpoints>
+        <point x="377.0" y="263.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="11ba904e-8631-45ea-9469-565d02dd8250" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T3_PACE_LRL_AFTER_VP</seg>
+      </bo>
+    </element>
+    <element uuid="38864b68-6e8e-45cb-b58b-ca7c88624a18" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T4_VS_AFTER_VP</seg>
+      </bo>
+      <bendpoints>
+        <point x="464.0" y="236.0"/>
+      </bendpoints>
+      <primaryLabelPosition x="-92.95595338738735" y="-22.807056159934973"/>
+    </element>
+    <element uuid="935cb24e-e2e0-4346-97ca-1529ce2e16e1" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T5_VS_AFTER_VP_IN_VRP</seg>
+      </bo>
+      <bendpoints>
+        <point x="546.0" y="225.0"/>
+      </bendpoints>
+      <primaryLabelPosition x="-52.26821038952596" y="2.853029105283838"/>
+    </element>
+    <element uuid="bef6a71a-29ba-4596-bbdf-6d9a98aff5b0" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T6_VS_AFTER_VP_IS_NR</seg>
+      </bo>
+      <primaryLabelPosition x="-83.2558364868164" y="-46.48607635498047"/>
+    </element>
+    <element uuid="e749eefe-fbee-4ff3-9816-07ddf0574c6a" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T7_PACE_LRL_AFTER_VS</seg>
+      </bo>
+    </element>
+    <element uuid="03dbf14a-7cac-4d39-908b-38dedb01a277" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T8_VS_AFTER_VS</seg>
+      </bo>
+    </element>
+    <element uuid="6f19e1a5-5696-4490-85eb-606a165f88b8" manual="true">
+      <bo>
+        <seg>ba.behavior_transition</seg>
+        <seg>T9_VS_AFTER_VS_IN_VRP</seg>
+      </bo>
+      <bendpoints>
+        <point x="227.0" y="263.0"/>
+        <point x="226.0" y="189.0"/>
+      </bendpoints>
+      <primaryLabelPosition x="-56.284221886470334" y="40.36126713221739"/>
+    </element>
+    <bo>
+      <seg>annex_subclause</seg>
+      <seg>Behavior_Specification</seg>
+      <seg>0</seg>
+    </bo>
+    <position/>
+    <size width="670.0" height="440.0"/>
+  </element>
+  <config type="ba.behavior_specification">
+    <enabledAadlProperties/>
+    <context>
+      <seg>annex_subclause</seg>
+      <seg>classifier vvi_mode::VVI.ba</seg>
+      <seg>Behavior_Specification</seg>
+      <seg>0</seg>
+    </context>
+  </config>
+</diagram:Diagram>
