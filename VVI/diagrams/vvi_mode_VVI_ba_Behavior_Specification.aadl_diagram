@@ -7,7 +7,7 @@
         <seg>check_pace_vrp</seg>
       </bo>
       <position x="410.0" y="260.0"/>
-      <size width="149.09635162353516" height="35.0"/>
+      <size width="149.0" height="35.0"/>
     </element>
     <element uuid="3548db12-f3da-4e53-84e8-b353cfe86068" manual="true" background="#ffffcc">
       <bo>
@@ -15,7 +15,7 @@
         <seg>check_sense_vrp</seg>
       </bo>
       <position x="70.0" y="330.0"/>
-      <size width="155.7630157470703" height="35.0"/>
+      <size width="156.0" height="35.0"/>
     </element>
     <element uuid="64330fbb-f5f7-44af-ada7-81be444f5fe2" manual="true" background="#000000" fontColor="#ffffff">
       <bo>
@@ -23,7 +23,7 @@
         <seg>off</seg>
       </bo>
       <position x="450.0" y="340.0"/>
-      <size width="66.82421779632568" height="35.0"/>
+      <size width="67.0" height="35.0"/>
     </element>
     <element uuid="275f5074-24b8-4764-8e89-90d468de5105" manual="true" background="#ccccff">
       <bo>
@@ -31,7 +31,7 @@
         <seg>pace</seg>
       </bo>
       <position x="440.0" y="90.0"/>
-      <size width="80.91275787353516" height="45.0"/>
+      <size width="81.0" height="45.0"/>
     </element>
     <element uuid="c403b80e-38a5-4882-a0b6-65f1a0c9aae2" manual="true" background="#ccffcc">
       <bo>
@@ -39,7 +39,7 @@
         <seg>power_on</seg>
       </bo>
       <position x="20.0" y="20.0"/>
-      <size width="110.56119537353516" height="35.0"/>
+      <size width="111.0" height="35.0"/>
     </element>
     <element uuid="18d5f3af-e1c6-4f75-ba71-7cfe1a4160de" manual="true" background="#ccccff">
       <bo>
@@ -47,7 +47,7 @@
         <seg>sense</seg>
       </bo>
       <position x="120.0" y="90.0"/>
-      <size width="87.57942581176758" height="35.0"/>
+      <size width="88.0" height="35.0"/>
     </element>
     <element uuid="f3c99b88-48bc-4f36-a4d5-8f5cb4c0ae27" manual="true">
       <bo>
@@ -57,14 +57,14 @@
       <bendpoints>
         <point x="51.0" y="236.0"/>
       </bendpoints>
-      <primaryLabelPosition x="-64.93249167326141" y="22.03739620696126"/>
+      <primaryLabelPosition x="-65.0" y="22.0"/>
     </element>
     <element uuid="22452bed-4948-441f-a5ac-1a53fc961c57" manual="true">
       <bo>
         <seg>ba.behavior_transition</seg>
         <seg>T1_POWER_ON</seg>
       </bo>
-      <primaryLabelPosition x="-117.93195343017578" y="-4.813823699951172"/>
+      <primaryLabelPosition x="-118.0" y="-5.0"/>
     </element>
     <element uuid="2b68d6ba-e2ba-418e-863c-8c335181969f" manual="true">
       <bo>
@@ -89,7 +89,7 @@
       <bendpoints>
         <point x="464.0" y="236.0"/>
       </bendpoints>
-      <primaryLabelPosition x="-92.95595338738735" y="-22.807056159934973"/>
+      <primaryLabelPosition x="-93.0" y="-23.0"/>
     </element>
     <element uuid="935cb24e-e2e0-4346-97ca-1529ce2e16e1" manual="true">
       <bo>
@@ -99,14 +99,14 @@
       <bendpoints>
         <point x="546.0" y="225.0"/>
       </bendpoints>
-      <primaryLabelPosition x="-52.26821038952596" y="2.853029105283838"/>
+      <primaryLabelPosition x="-52.0" y="3.0"/>
     </element>
     <element uuid="bef6a71a-29ba-4596-bbdf-6d9a98aff5b0" manual="true">
       <bo>
         <seg>ba.behavior_transition</seg>
         <seg>T6_VS_AFTER_VP_IS_NR</seg>
       </bo>
-      <primaryLabelPosition x="-83.2558364868164" y="-46.48607635498047"/>
+      <primaryLabelPosition x="-83.0" y="-46.0"/>
     </element>
     <element uuid="e749eefe-fbee-4ff3-9816-07ddf0574c6a" manual="true">
       <bo>
@@ -129,7 +129,7 @@
         <point x="227.0" y="263.0"/>
         <point x="226.0" y="189.0"/>
       </bendpoints>
-      <primaryLabelPosition x="-56.284221886470334" y="40.36126713221739"/>
+      <primaryLabelPosition x="-56.0" y="40.0"/>
     </element>
     <bo>
       <seg>annex_subclause</seg>
