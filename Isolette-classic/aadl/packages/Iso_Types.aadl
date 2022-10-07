@@ -40,20 +40,31 @@ annex Typedef
 --range of Monitored Temperature  
 data measured_temperature_range
   properties
-  BLESS::Typed => "measuredTemperatureRange";
+    BLESS::Typed => "measuredTemperatureRange";
+    Data_Model::Data_Representation => Float;
+		Data_Model::Measurement_Unit => "F";
+		Data_Model::Real_Range => 68.0 .. 105.0;
 end measured_temperature_range;  
 
 --Valid/Invalid enumerated type
 data valid_flag
   properties
-  BLESS::Typed => "vflag";
+    BLESS::Typed => "vflag";
+    Data_Model::Data_Representation => Enum;
+    Data_Model::Enumerators => ("Invalid", "Valid");
 end valid_flag;
 
 --Current Temperature "t" is temp, "status" is valid/invalid flag 
 data current_temperature 
+end current_temperature; 
+
+data implementation current_temperature.i
+	subcomponents
+		t : data measured_temperature_range;
+		status : data status;
   properties
   BLESS::Typed => "currentTemperature";
-end current_temperature; 
+end current_temperature.i;
 
 
 --Table A-4. Thermostat Controlled Variables for Heat Source
@@ -61,7 +72,9 @@ end current_temperature;
 --heat control and alarm value
 data on_off
   properties
-  BLESS::Typed => "cntrl";
+    BLESS::Typed => "cntrl";
+    Data_Model::Data_Representation => Enum;
+    Data_Model::Enumerators => ("O_n", "Off");
 end on_off;
 
 --Table A-5
@@ -70,60 +83,92 @@ end on_off;
 --range of Lower Desired Temperature  
 data lower_desired_range
   properties  -- fixed-point representation of 1/10ths of a degree
-  BLESS::Typed => "lowerDesiredRange";
+    BLESS::Typed => "lowerDesiredRange";
+    Data_Model::Data_Representation => Float;
+		Data_Model::Measurement_Unit => "F";
+		Data_Model::Real_Range => 97.0 .. 99.0;
 end lower_desired_range;  
 
---record for Lower Desired Temperature, "t" is temp range, "v" is valid flag  
+--record for Lower Desired Temperature, "t" is temp range, "status" is valid flag  
 data lower_desired_temperature 
-  properties
-  BLESS::Typed => "lowerDesiredTemperature";
 end lower_desired_temperature; 
+
+data implementation lower_desired_temperature.i
+	subcomponents
+		t : data lower_desired_range;
+		status : data status;
+  properties
+    BLESS::Typed => "lowerDesiredTemperature";
+end lower_desired_temperature.i;
 
 --range of Upper Desired Temperature  
 data upper_desired_range
   properties
-  BLESS::Typed => "upperDesiredRange";
+    BLESS::Typed => "upperDesiredRange";
+    Data_Model::Data_Representation => Float;
+		Data_Model::Measurement_Unit => "F";
+		Data_Model::Real_Range => 98.0 .. 100.0;
 end upper_desired_range;  
 
---record for Upper Desired Temperature, "t" is temp range, "v" is valid flag  
+--record for Upper Desired Temperature, "t" is temp range, "status" is valid flag  
 data upper_desired_temperature 
-  properties
-  BLESS::Typed => "upperDesiredTemperature";
 end upper_desired_temperature; 
+
+data implementation upper_desired_temperature.i
+	subcomponents
+		t : data upper_desired_range;
+		status : data status;
+  properties
+  BLESS::Typed => "upperDesiredTemperature";	
+end upper_desired_temperature.i;
 
 --range of Lower alarm Temperature  
 data lower_alarm_range
   properties
---  Data_Model::Base_Type => (classifier(BLESS_Types::Fixed_Point));  
---  Data_Model::Real_Range => 93.0 .. 98.0;
---  Data_Model::Measurement_Unit => "Fahrenheit";
-  BLESS::Typed => "lowerAlarmRange";
+    BLESS::Typed => "lowerAlarmRange";
+    Data_Model::Real_Range => 93.0 .. 98.0;
+    Data_Model::Measurement_Unit => "F";
 end lower_alarm_range;  
 
---record for Lower alarm Temperature, "t" is temp range, "v" is valid flag  
+--record for Lower alarm Temperature, "t" is temp range, "status" is valid flag  
 data lower_alarm_temperature 
-  properties
-  BLESS::Typed => "lowerAlarmTemperature";
 end lower_alarm_temperature; 
+
+data implementation lower_alarm_temperature.i
+	subcomponents
+		t : data lower_alarm_range;
+		status : data status;	
+  properties
+    BLESS::Typed => "lowerAlarmTemperature";
+end lower_alarm_temperature.i;
 
 --range of Upper alarm Temperature  
 data upper_alarm_range
   properties
-  BLESS::Typed => "upperAlarmRange";
+    BLESS::Typed => "upperAlarmRange";
+    Data_Model::Real_Range => 93.0 .. 98.0;
+    Data_Model::Measurement_Unit => "F";
 end upper_alarm_range;  
 
---record for Upper alarm Temperature, "t" is temp range, "v" is valid flag  
+--record for Upper alarm Temperature, "t" is temp range, "status" is valid flag  
 data upper_alarm_temperature 
-  properties
-  BLESS::Typed => "upperAlarmTemperature";
 end upper_alarm_temperature; 
 
+data implementation upper_alarm_temperature.i
+	subcomponents
+		t : data upper_alarm_range;
+		status : data status;		
+  properties
+    BLESS::Typed => "upperAlarmTemperature";
+end upper_alarm_temperature.i;
 --Table A-6
 
 --Regulator and Monitor Status
 data status
   properties
-  BLESS::Typed => "status";
+    BLESS::Typed => "status";
+    Data_Model::Data_Representation => Enum;
+    Data_Model::Enumerators => ("O_n", "Init", "Failed");
 end status;
  
 
@@ -131,21 +176,41 @@ end status;
 
 --Lower Desired Temp 
 data lower_desired_temp
-  properties
-  BLESS::Typed => "lowerDesiredTemperature";
 end lower_desired_temp;  
-  
+
+data implementation lower_desired_temp.i
+	subcomponents
+		t : data lower_desired_range;
+		status : data status;	
+  properties
+    BLESS::Typed => "lowerDesiredTemperature";
+end lower_desired_temp.i;
+ 
 --Upper Desired Temp 
 data upper_desired_temp
   properties
   BLESS::Typed => "upperDesiredTemperature";
 end upper_desired_temp;  
-  
+
+data implementation upper_desired_temp.i
+	subcomponents
+		t : data upper_desired_range;
+		status : data status;	
+  properties
+    BLESS::Typed => "upperDesiredTemperature";
+end upper_desired_temp.i;
+
 --Desired Range "l" is lower bound, "u" is upper bound
 data desired_range
-  properties
-  BLESS::Typed => "desiredRange";
 end desired_range;  
+
+data implementation desired_range.i
+	subcomponents
+		l : data lower_desired_temp.i;
+		u : data upper_desired_temp.i;
+  properties
+    BLESS::Typed => "desiredRange";
+end desired_range.i;
 
 --Regulator Mode
 data regulator_mode
@@ -176,7 +241,9 @@ end alarm_range;
 --monitor Mode
 data monitor_mode
   properties
-  BLESS::Typed => "mmode";
+    BLESS::Typed => "mmode";
+    Data_Model::Data_Representation => Enum;
+    Data_Model::Enumerators => ("Init", "Normal", "Failed");
 end monitor_mode;
 
   

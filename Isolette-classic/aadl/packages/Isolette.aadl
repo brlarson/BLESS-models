@@ -132,7 +132,7 @@ system isolette
     -- TBD: [From John] we may want the type on this port to be more abstract.
     -- And consider changing the name (to distinguish physical air temperature from
     -- sensed air temperature).
-    air_temperature: in data port Iso_Types::current_temperature
+    air_temperature: in data port Iso_Types::current_temperature.i
       {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 	flows
 	        -- specify (in terms of AADL flows) dependences that exist between the 
@@ -284,17 +284,17 @@ end isolette.dual_sensor;
 --single-temperature sensor thermostat system component type
 system thermostat_single_sensor
 features
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
     {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
-  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
     {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
   regulator_status : out data port Iso_Types::status
     {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
@@ -364,20 +364,20 @@ end thermostat_single_sensor.impl;
 system thermostat_dual_sensor
 features
   --two temperature sensors for monitor and control
-  control_temp : in data port Iso_Types::current_temperature
+  control_temp : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   --second channel for second sensor
-  monitor_temp : in data port Iso_Types::current_temperature
+  monitor_temp : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
     {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
-  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
     {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
   regulator_status : out data port Iso_Types::status
     {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
@@ -438,13 +438,13 @@ features
 --nurse interation with operator interface    
   control_monitor_alarm: in out data port Nursery::Interface_Interaction;  
 --values supplied by nurse through operator interface
-  lower_desired_temperature : out data port Iso_Types::lower_desired_temperature
+  lower_desired_temperature : out data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temperature : out data port Iso_Types::upper_desired_temperature
+  upper_desired_temperature : out data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
-  lower_alarm_temperature : out data port Iso_Types::lower_alarm_temperature
+  lower_alarm_temperature : out data port Iso_Types::lower_alarm_temperature.i
     {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
-  upper_alarm_temperature : out data port Iso_Types::upper_alarm_temperature
+  upper_alarm_temperature : out data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
 --information to be displayed by operator interface
   regulator_status : in data port Iso_Types::status

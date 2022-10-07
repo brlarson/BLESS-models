@@ -5,11 +5,11 @@ with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2;
 --A.5.2 Monitor Temperature Function
 process monitor_temperature
 features
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
     {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
   alarm : out data port Iso_Types::on_off
     {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
@@ -73,12 +73,12 @@ end monitor_temperature.impl;
 thread manage_monitor_interface
 features
 --  alarm_range : out data port Iso_Variables::alarm_range;
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   monitor_mode : in data port Iso_Types::monitor_mode
     {BLESS::Value => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature;
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature;
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i;
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i;
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
   interface_failure : out data port BLESS_Types::flag
@@ -120,7 +120,7 @@ features
     {BLESS::Assertion => "<<MONITOR_INTERFACE_FAILURE>>";};
   internal_failure : in data port BLESS_Types::flag
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
@@ -249,11 +249,11 @@ features
     {BLESS::Value=>"<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
   monitor_mode : in data port Iso_Types::monitor_mode  --enumeration type
     {BLESS::Value=>"<<+=>MONITOR_MODE(x:monitor_mode)>>";};  --Assertion-enumeration +=>
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
     {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
@@ -325,8 +325,8 @@ annex BLESS {**
     maNormal: --monitor mode is normal, check temperature
     check_mode -[monitor_mode? = mmode'Normal]-> check_temp {};
     maOor:  --REQ-MA-2  temp out of range
-    check_temp -[(current_temperature.t? < lower_alarm_temperature?) or 
-    	  (current_temperature.t? > upper_alarm_temperature?)]-> run  
+    check_temp -[(current_temperature.t < lower_alarm_temperature.t) or 
+    	  (current_temperature.t > upper_alarm_temperature.t)]-> run  
       { <<REQMA2() and not REQMA1()>>
       alarm_control!(cntrl'O_n)  --temp out of range alarm
       ; <<alarm_control=cntrl'O_n>>
@@ -334,8 +334,8 @@ annex BLESS {**
         <<alarm_previous_period' = alarm_control>>
       };  --end of maOor 
     maIr:  --REQ-MA-4  temp in range
-    check_temp -[(current_temperature.t? >= (lower_alarm_temperature + 0.5)) and 
-    	    (current_temperature.t? <= (upper_alarm_temperature? - 0.5))]-> run
+    check_temp -[(current_temperature.t? >= (lower_alarm_temperature.t + 0.5 F)) and 
+    	    (current_temperature.t? <= (upper_alarm_temperature.t - 0.5 F))]-> run
       { <<REQMA4() and not REQMA1() and AXIOM_AR()>>
       alarm_control!(cntrl'Off)  --no alarm
       ; <<REQMA4() and not REQMA1() and AXIOM_AR() and (alarm_control = cntrl'Off)>>
@@ -343,10 +343,10 @@ annex BLESS {**
         <<alarm_previous_period' = alarm_control>>
       };  --end of maIr
     maHys:  --REQ-MA-3 hysteresis at edge of temp range
-    check_temp -[((current_temperature.t? >= lower_alarm_temperature?) 
-    	  and (current_temperature.t? < (lower_alarm_temperature? + 0.5))) or 
-    	  ((current_temperature.t? > (upper_alarm_temperature? - 0.5)) 
-    	  	and (current_temperature.t? <= upper_alarm_temperature?))]-> check_hyst{};
+    check_temp -[((current_temperature.t? >= lower_alarm_temperature.t) 
+    	  and (current_temperature.t? < (lower_alarm_temperature.t + 0.5 F))) or 
+    	  ((current_temperature.t? > (upper_alarm_temperature.t - 0.5 F)) 
+    	  	and (current_temperature.t? <= upper_alarm_temperature.t))]-> check_hyst{};
     maHysOn:	--REQ-MA-3  with alarm on
     check_hyst -[alarm_previous_period = cntrl'O_n]-> run
       { <<EDGE_TEMP() and MONITOR_MODE(x:mmode'Normal) and AXIOM_AC()
@@ -365,7 +365,7 @@ annex BLESS {**
       alarm_previous_period' := cntrl'Off
         <<alarm_previous_period' = alarm_control>>      
       };  --end of maHysOn
-    maStop: run -[on dispatch stop]-> halt{};
+--    maStop: run -[on dispatch stop]-> halt{};
 **};
 end manage_alarm.impl;
 

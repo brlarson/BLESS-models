@@ -89,9 +89,9 @@ end detect_monitor_failure.impl;
 
 device temperature_sensor
 features
-  air : in data port Iso_Types::current_temperature
+  air : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
-  current_temperature : out data port Iso_Types::current_temperature
+  current_temperature : out data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
 flows
     air_temp_flow : flow path air -> current_temperature;

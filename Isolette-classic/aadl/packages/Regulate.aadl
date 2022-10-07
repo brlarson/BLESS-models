@@ -2,23 +2,20 @@ package Regulate
 public
 with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Iso_Properties;
 
---annex BLESS
---{**
---**};
 
 --@description process that holds threads that regulate air temperature
 --A.5.1 REGULATE TEMPERATURE FUNCTION
 process regulate_temperature
 features
-  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
   regulator_status : out data port Iso_Types::status
     {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
   displayed_temp : out data port Iso_Types::measured_temperature_range
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
     {BLESS::Value => "<<+=>HEAT_CONTROL(x:heat_control)>>";};
@@ -41,7 +38,7 @@ end regulate_temperature;
 --@description process implementation that holds threads that regulate air temperature
 process implementation regulate_temperature.impl
 subcomponents
---mgnage regulator info for operator interface 
+--manage regulator info for operator interface 
   manage_regulator_interface : thread manage_regulator_interface_mri.impl;
 --control heat source  
   manage_heat_source : thread manage_heat_source.impl;
@@ -85,11 +82,11 @@ thread manage_regulator_interface_mri
 features
   regulator_status : out data port Iso_Types::status
     {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
-  lower_desired_temp : in data port Iso_Types::lower_desired_temperature
+  lower_desired_temp : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temp : in data port Iso_Types::upper_desired_temperature
+  upper_desired_temp : in data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   displayed_temp : out data port Iso_Types::measured_temperature_range
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
@@ -162,7 +159,7 @@ thread manage_regulator_mode
 features
   regulator_mode : out data port Iso_Types::regulator_mode
     {BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};  --enumeration assertion
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   interface_failure : in data port BLESS_Types::FLAG
     {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
@@ -296,11 +293,11 @@ thread manage_heat_source
 features
   heat_control : out data port Iso_Types::on_off
     {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
-  current_temperature : in data port Iso_Types::current_temperature
+  current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
-  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature
+  lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
-  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature
+  upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
     {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
   regulator_mode : in data port Iso_Types::regulator_mode
     {BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};
@@ -368,7 +365,7 @@ annex BLESS {**
     mhsNormal: --regulator mode is normal, check temperature
     check_mode -[regulator_mode? = mmode'Normal]-> check_temp {};
     mhsBelow:  --REQ-MHS-2  temp below desired range
-    check_temp -[current_temperature.t? <= lower_desired_temperature?]-> run  
+    check_temp -[current_temperature.t? <= lower_desired_temperature.t]-> run  
       { <<REQMHS2() and not REQMHS1()>>
       heat_control!(cntrl'O_n)  --temp below desired range
       ; <<heat_control=cntrl'O_n>>
@@ -376,7 +373,7 @@ annex BLESS {**
         <<heat_previous_period' = heat_control>>
       };  --end of mhsBelow 
     mhsAbove:  --REQ-MHS-3  temp above desired range
-    check_temp -[current_temperature.t? >= upper_desired_temperature?]-> run
+    check_temp -[current_temperature.t? >= upper_desired_temperature.t]-> run
       { <<REQMHS3() and not REQMHS1()>>
       heat_control!(cntrl'Off)  --no heat
       ; <<REQMHS3() and not REQMHS1() and (heat_control=cntrl'Off)>>
@@ -384,8 +381,8 @@ annex BLESS {**
         <<heat_previous_period' = heat_control>>
       };  --end of check_temp
     mhsHys:  --REQ-MHS-4 hysteresis within desired temp range
-    check_temp -[(current_temperature.t? > lower_desired_temperature?) 
-    	  and (current_temperature.t? < upper_desired_temperature?)]-> check_hyst{};
+    check_temp -[(current_temperature.t? > lower_desired_temperature.t) 
+    	  and (current_temperature.t? < upper_desired_temperature.t)]-> check_hyst{};
     mhsHysOn:	--REQ-MHS-4  with heat on
     check_hyst -[ (heat_previous_period=cntrl'O_n) ]-> run
       { <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and AXIOM_HC()  
@@ -404,10 +401,10 @@ annex BLESS {**
       heat_previous_period' := cntrl'Off
         <<heat_previous_period' = heat_control>>      
       };  --end of mhsHysOff
-    mhsStop: run -[on dispatch stop]-> halt{};
+--    mhsStop: run -[on dispatch stop]-> halt{};
 **};
 end manage_heat_source.impl;
-
+ 
 
 
 end Regulate;
