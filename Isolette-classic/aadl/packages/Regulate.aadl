@@ -1,6 +1,6 @@
 package Regulate
 public
-with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Iso_Properties;
+with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Iso_Properties, Base_Types;
 
 
 --@description process that holds threads that regulate air temperature
@@ -92,7 +92,7 @@ features
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
   regulator_mode : in data port Iso_Types::regulator_mode
   	{BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};
-  interface_failure : out data port BLESS_Types::FLAG
+  interface_failure : out data port Base_Types::Boolean
     {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
@@ -161,9 +161,9 @@ features
     {BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};  --enumeration assertion
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
-  interface_failure : in data port BLESS_Types::FLAG
+  interface_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
-  internal_failure : in data port BLESS_Types::FLAG
+  internal_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;

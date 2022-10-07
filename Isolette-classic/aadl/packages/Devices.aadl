@@ -1,12 +1,12 @@
 package Devices
 public
-with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Nursery;
+with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Nursery, Base_Types;
 
 
 --A.5.1.4 Detect Regulator Failure Function
 device detect_regulator_failure
 features
-  internal_failure : out data port BLESS_Types::flag
+  internal_failure : out data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 annex EMV2 
   {** 
@@ -49,7 +49,7 @@ end detect_regulator_failure.impl;
 --internal thermostat monitor failure has been detected
 device detect_monitor_failure
 features
-  internal_failure : out data port BLESS_Types::flag
+  internal_failure : out data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 annex EMV2 
   {** 

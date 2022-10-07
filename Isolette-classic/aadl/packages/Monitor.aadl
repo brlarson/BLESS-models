@@ -1,6 +1,6 @@
 package Monitor
 public
-with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2;
+with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, Base_Types;
 
 --A.5.2 Monitor Temperature Function
 process monitor_temperature
@@ -15,9 +15,9 @@ features
     {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
-  regulator_failure : in data port BLESS_Types::flag
+  regulator_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
---  monitor_failure : in data port BLESS_Types::flag
+--  monitor_failure : in data port Base_Types::Boolean
 --    {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
 annex EMV2 
   {** 
@@ -81,7 +81,7 @@ features
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i;
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
-  interface_failure : out data port BLESS_Types::flag
+  interface_failure : out data port Base_Types::Boolean
     {BLESS::Assertion => "<<MONITOR_INTERFACE_FAILURE>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
@@ -116,9 +116,9 @@ thread manage_monitor_mode
 features
   monitor_mode : out data port Iso_Types::monitor_mode
     {BLESS::Value => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
-  interface_failure : in data port BLESS_Types::flag
+  interface_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<MONITOR_INTERFACE_FAILURE>>";};
-  internal_failure : in data port BLESS_Types::flag
+  internal_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<:=CURRENT_TEMP>>";};
