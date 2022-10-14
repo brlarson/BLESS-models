@@ -7,6 +7,10 @@ property set Iso_Properties is
     EMV2;  --error modeling annex V2 predeclared properties
 --    Timing_Properties;
    
+
+--temperature  
+  Temperature_Units : type units (r,F=>r*5,C=>r*9);
+  Fahrenheit : type aadlreal units Iso_Properties::Temperature_Units;
  
   --Table A-9. The Manage Regulator Mode Function Constant
   Initialization_Timeout_Default : constant --Timing_Properties::
@@ -76,7 +80,7 @@ property set Iso_Properties is
  
 --hysteresis temperature offset, once sounded over-temp alarm must
 --be 0.5F inside alarm range before stopping
-  HysteresisTemperatureOffset : constant Physical_Properties::Fahrenheit => 0.5 F;    
+  HysteresisTemperatureOffset : constant Iso_Properties::Fahrenheit => 0.5 F;    
     
 --Allowed Heat Source Latency; Table A-11
   AllowedHeatSourceLatency : constant --Timing_Properties::
