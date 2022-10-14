@@ -3,7 +3,6 @@
 	<name>VVI</name>
 	<comment></comment>
 	<projects>
-		<project>physical</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

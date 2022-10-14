@@ -2,17 +2,14 @@
 --simple single-chamber pacemaker, VVI mode
 package vvi_mode
 public
-	with -- BLESS_Types,PP,Thread_Properties, SI,
-	BLESS; --BLESS property set including BLESS::Assertion
+	with BLESS_Types,  --,PP,Thread_Properties, SI,
+	  Data_Model,
+	  BLESS; --BLESS property set including BLESS::Assertion
 
-	annex Typedef {**
-	type time is quantity s
-**};
+--	annex Typedef {**
+--	type time is quantity s
+--**};
 
-	data CardiacDuration
-		properties
-			BLESS::Typed => "quantity ms";
-	end CardiacDuration;
 
 	thread VVI
 		features
@@ -117,7 +114,7 @@ transitions
     & last_beat:=now <<last_beat=now>>}  
 
   T7_PACE_LRL_AFTER_VS:	--pace when LRL times out after VS
-  sense -[on dispatch timeout (p or n) lrl]-> pace
+  sense -[on dispatch timeout (n or p) lrl]-> pace
     {<< VP()>>
     p! <<p@now>>
     & last_beat:=now <<last_beat=now>>} 
@@ -195,29 +192,19 @@ transitions
 			toPG: bus access lead -> pacemaker.lead;
 	end Implant.i;
 
-	thread implementation VVI.ba
-		annex Behavior_Specification {**states
-            power_on : initial state;
-            pace : complete state;
-            sense : complete state;
-            check_pace_vrp : state;
-            check_sense_vrp : state;
-            off : final state;
-          transitions
-            T1_POWER_ON : power_on -[true]-> sense {
-              n !
-            };
-            T2_STOP : pace -[on dispatch stop]-> off;
-            T3_PACE_LRL_AFTER_VP : pace -[on dispatch]-> pace;
-            T4_VS_AFTER_VP : pace -[on dispatch s]-> check_pace_vrp;
-            T5_VS_AFTER_VP_IN_VRP : check_pace_vrp -[]-> pace;
-            T6_VS_AFTER_VP_IS_NR : check_pace_vrp -[]-> sense;
-            T7_PACE_LRL_AFTER_VS : sense -[on dispatch]-> pace;
-            T8_VS_AFTER_VS : sense -[on dispatch s]-> check_sense_vrp;
-            T9_VS_AFTER_VS_IN_VRP : check_sense_vrp -[]-> sense;
-            T10_VS_AFTER_VS_IS_NR : check_sense_vrp -[]-> sense;
-        **};
-	end VVI.ba;
+	data CardiacDuration
+		properties
+			BLESS::Typed => "quantity ms";
+			Data_Model::Data_Representation => Float;
+			Data_Model::Measurement_Unit => "ms";
+	end CardiacDuration;
 
+--added for HAMR
+  data Time
+		properties
+			BLESS::Typed => "time";  	
+			Data_Model::Data_Representation => Float;
+			Data_Model::Measurement_Unit => "s";
+  end Time;
 end vvi_mode; --end package
 --end of VVI.aadl

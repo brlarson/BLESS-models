@@ -3,7 +3,7 @@
 
 property set Iso_Properties is
   with --KSU_Isolette,     --AADL components that use the properties herein
-    Physical_Properties,  --AADL property types  
+--    Physical_Properties,  --AADL property types  
     EMV2;  --error modeling annex V2 predeclared properties
 --    Timing_Properties;
    
