@@ -20,7 +20,7 @@ annex Typedef
 	type status is enumeration (O_n Init Failed)
 	type mmode is enumeration (Init Normal Failed)
 	type vflag is enumeration (Invalid Valid)
-	type time is quantity s
+--	type time is quantity s
 	type measuredTemperatureRange is quantity F [68.0 .. 105.0]
 	type lowerDesiredRange is quantity F [97.0 .. 99.0]
 	type upperDesiredRange is quantity F [98.0 .. 100.0]
@@ -245,6 +245,13 @@ data monitor_mode
     Data_Model::Data_Representation => Enum;
     Data_Model::Enumerators => ("Init", "Normal", "Failed");
 end monitor_mode;
+
+data Time 
+  properties  
+    BLESS::Typed => "time";
+    Data_Model::Data_Representation => Integer;
+    Data_Model::Measurement_Unit => "ms";
+end Time;
 
   
 end Iso_Types;  
