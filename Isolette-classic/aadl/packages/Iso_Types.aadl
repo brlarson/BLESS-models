@@ -216,6 +216,8 @@ end desired_range.i;
 data regulator_mode
   properties
   BLESS::Typed => "mmode";
+    Data_Model::Data_Representation => Enum;
+    Data_Model::Enumerators => ("Init", "Normal", "Failed");
 end regulator_mode;
 
 --Table A-12. Monitor Temperature Internal Variables
@@ -224,12 +226,16 @@ end regulator_mode;
 data lower_alarm_temp
   properties
   BLESS::Typed => "lowerAlarmRange";
+    Data_Model::Real_Range => 93.0 .. 98.0;
+    Data_Model::Measurement_Unit => "F";
 end lower_alarm_temp;  
   
 --Upper alarm Temp 
 data upper_alarm_temp
   properties
   BLESS::Typed => "upperAlarmRange";
+    Data_Model::Real_Range => 99.0 .. 103.0;
+    Data_Model::Measurement_Unit => "F";
 end upper_alarm_temp;  
   
 --alarm Range "l" is lower bound, "u" is upper bound
@@ -237,6 +243,15 @@ data alarm_range
   properties
   BLESS::Typed => "alarmRange";
 end alarm_range;  
+
+
+data implementation alarm_range.i
+	subcomponents
+		l : data lower_alarm_temp;
+		u : data upper_alarm_temp;
+  properties
+    BLESS::Typed => "alarmRange";
+end alarm_range.i;
 
 --monitor Mode
 data monitor_mode
