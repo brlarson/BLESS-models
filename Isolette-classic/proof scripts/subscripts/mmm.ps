@@ -106,19 +106,14 @@ normalize
 axioms
 substitute-post
 normalize
-dist^
-normalize
 substitute-pre
 normalize
-transitive
-axioms
 laws
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
 guided-sub-equals[START_TIME]
 normalize
 axioms
 #[serial 1012]  <<M(check_init) and x>> -> <<M(init)>> for mmm2x:check_init-[x]->init{};
-normalize
 axioms
 #[serial 1013]  <<M(normal) and x>> A <<M(check_normal)>> for wait_normal:normal-[x]->check_normal{A};
 reduce

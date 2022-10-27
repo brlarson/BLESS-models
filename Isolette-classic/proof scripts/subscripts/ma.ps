@@ -10,14 +10,9 @@ normalize
 replace<=
 laws
 normalize
-replace-port
 cnf
 laws
 normalize
-laws
-normalize
-now
-laws
 axioms
 #[serial 1019] Serban's Theorem:  disjunction of execute conditions leaving execution state poweron, <<M(poweron)>> -> <<e1 or e2 or . . . en>>
 axioms
@@ -42,6 +37,7 @@ normalize
 laws
 normalize
 axioms
+stop*****
 #[serial 1022]  <<M(poweron)>> -> <<M(run)>> for maPo:poweron-[ ]->run{};
 axioms
 #[serial 1023]  <<M(run) and x>> -> <<M(check_mode)>> for maRun:run-[x]->check_mode{};
