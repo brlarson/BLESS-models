@@ -1,26 +1,27 @@
-#ratecontrol-atr
+#  ratecontrol-atr.ps
 push
 sort-by-component[rc::RateController.atr]
-#[serial 1004] <<M(atr_fallback)>> -> <<I>> from invariant I when complete state atr_fallback has Assertion <<M(atr_fallback)>> in its definition
+#rc::RateController.atr
+#[serial 1003] <<M(atr_fallback)>> -> <<I>> from invariant I when complete state atr_fallback has Assertion <<M(atr_fallback)>> in its definition
 make-an
 axioms
-#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start_atr, <<M(start_atr)>> -> <<e1 or e2 or . . . en>>
+#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start_atr, <<M(start_atr)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atr, <<M(check_atr)>> -> <<e1 or e2 or . . . en>>
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atr, <<M(check_atr)>> -> <<e1 or e2 or . . . en>>
 replace<=
 normalize
 laws
 axioms
-#[serial 1007]  <<M(start_atr)>> A <<M(atr_fallback)>> for ATR_RC1_start_fallback:start_atr-[ ]->atr_fallback{A};
+#[serial 1006]  <<M(start_atr)>> A <<M(atr_fallback)>> for ATR_RC1_start_fallback:start_atr-[ ]->atr_fallback{A};
 reduce
 atomic
 laws
 axioms
 normalize
 axioms
-#[serial 1008]  <<M(atr_fallback) and x>> -> <<M(check_atr)>> for ATR_RC5_atr_cci:atr_fallback-[x]->check_atr{};
+#[serial 1007]  <<M(atr_fallback) and x>> -> <<M(check_atr)>> for ATR_RC5_atr_cci:atr_fallback-[x]->check_atr{};
 axioms
-#[serial 1009]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC6_continure_atr:check_atr-[x]->atr_fallback{A};
+#[serial 1008]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC6_continure_atr:check_atr-[x]->atr_fallback{A};
 reduce
 atomic
 normalize
@@ -28,10 +29,10 @@ now
 substitute-post
 normalize
 axioms
-replace-port
+replace-port-value
 ??
 axioms
-#[serial 1010]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC_fallback:check_atr-[x]->atr_fallback{A};
+#[serial 1009]  <<M(check_atr) and x>> A <<M(atr_fallback)>> for ATR_RC_fallback:check_atr-[x]->atr_fallback{A};
 reduce
 reduce
 remove-axioms-post
@@ -49,8 +50,8 @@ normalize
 axioms
 replace<=
 normalize
-replace-port
+replace-port-value
 ??
 axioms
-#[serial 1011]  <<M(atr_fallback) and x>> -> <<M(done)>> for RCX:atr_fallback-[x]->done{};
+#[serial 1010]  <<M(atr_fallback) and x>> -> <<M(done)>> for RCX:atr_fallback-[x]->done{};
 axioms

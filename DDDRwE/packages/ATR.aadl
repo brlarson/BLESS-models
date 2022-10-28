@@ -121,12 +121,12 @@ public
 	thread AsCounter
 		features
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
-			asCount: out data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AS_COUNT()>>";};
+			asCount: out data port BLESS_Types::Integer {BLESS::Value => "<<:=AS_COUNT()>>";};
 			enable_time: out data port time --enable time, zero if not enabled
-			{BLESS::Assertion => "<<:=ATR_ET>>";}; --NOT OUTPUT AT THIS TIME
+			{BLESS::Value => "<<:=ATR_ET>>";}; --NOT OUTPUT AT THIS TIME
 			as: in event port {BLESS::Assertion => "<<AS>>";};
 		properties
-			Dispatch_Protocol => Aperiodic;
+			Thread_Properties::Dispatch_Protocol => Aperiodic;
 	end AsCounter;
 
 	thread implementation AsCounter.imp
@@ -195,9 +195,9 @@ public
 	thread AtCounter
 		features
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
-			atCount: out data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AT_COUNT()>>";};
+			atCount: out data port BLESS_Types::Integer {BLESS::Value => "<<:=AT_COUNT()>>";};
 			et: out data port time --enable time, zero if not enabled
-			{BLESS::Assertion => "<<:=ATR_ET>>";};
+			{BLESS::Value => "<<:=ATR_ET>>";};
 			at: in event port {BLESS::Assertion => "<<AT>>";};
 		properties
 			Dispatch_Protocol => Aperiodic;
@@ -273,9 +273,9 @@ public
 			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			{BLESS::Assertion => "<<FB>>";};
-			asCount: in data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AS_COUNT()>>;";};
+			asCount: in data port BLESS_Types::Integer {BLESS::Value => "<<:=AS_COUNT()>>;";};
 			denable: out data port flag;
-			atCount: in data port BLESS_Types::Integer {BLESS::Assertion => "<<:=AT_COUNT()>>";};
+			atCount: in data port BLESS_Types::Integer {BLESS::Value => "<<:=AT_COUNT()>>";};
 			atr_detect: out event port --ATR detection met
 			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB

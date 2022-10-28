@@ -173,7 +173,7 @@ connections
   a2ts : port air_temperature -> temperature_sensor.air;  
   -- sensor sends sensed current temperature to thermostat  
   ct : port temperature_sensor.current_temperature -> thermostat.current_temperature;
-  -- theormostat controls turns the heat source off and on  
+  -- thermostat controls turns the heat source off and on  
   hc : port thermostat.heat_control -> heat_source.heat_control;
   -- heat source's (abstract) output is increase in physical air temperature
   hs : port heat_source.heat_out -> heat_out;

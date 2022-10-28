@@ -13,7 +13,7 @@ thread Markers
 		tna: in data port flag;  --A-channel noise
   tnv: in data port flag;  --V-channel noise
   cci: in data port ms  --most recent cardiac cycle interval
-    {BLESS::Assertion=>"<<:=CCI>>";};
+    {BLESS::Value=>"<<:=CCI>>";};
   mark_A: out data port;	--atrial marker to telemetry and history
   mark_V: out data port;	--ventricular marker to telemetry and history
   mark_X: out data port;	--extra-line marker to telemetry and history

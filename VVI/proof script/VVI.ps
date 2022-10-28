@@ -1,5 +1,5 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1
-#  at Fri May 07 11:51:31 CDT 2021 by brianlarson
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
+#  at Fri Oct 28 05:55:03 CDT 2022 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
@@ -16,16 +16,13 @@ axioms
 substitute-pre
 normalize
 load
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
 #vvi_mode::VVI.i
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
 make-an
 substitute-both
 normalize
 axioms
-#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
-substitute-pre
-normalize
 split-quant
 axioms
 #[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
