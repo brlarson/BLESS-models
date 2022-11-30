@@ -20,6 +20,7 @@ public
 			{BLESS::Assertion => "<<VP()>>";};
 			n: out event port --non-refractory ventricular sense
 			{BLESS::Assertion => "<<(now=0) or VS()>>";};
+			halt: in event port;  --stop thread
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
 			BLESS::Invariant => "<<LRL()>>";
@@ -57,7 +58,7 @@ invariant
       that (n@t or p@t) >>  --with a pace or non-refractory sense	
 
 variables
-  last_beat ~ time := 0 s  --useless initialization needed so Slang won't complain
+  last_beat ~ time
     --the last pace or non-refractory sense occurred at last_beat
   << LAST: :(n or p)@last_beat>>  
  
@@ -92,7 +93,7 @@ transitions
     };	  
 
   T2_STOP:		--turn off pacing
-  pace,sense -[on dispatch stop]-> off{}
+  pace,sense -[on dispatch halt]-> off{}
 
   T3_PACE_LRL_AFTER_VP:	--pace when LRL times out
   pace -[on dispatch timeout (n or p) lrl]-> pace
@@ -104,11 +105,11 @@ transitions
   pace -[on dispatch s]-> check_pace_vrp{}  
 
   T5_VS_AFTER_VP_IN_VRP:  -- s in VRP,  go back to "pace" state
-  check_pace_vrp -[(now-last_beat)<vrp]-> pace{}  
+  check_pace_vrp -[now-last_beat<vrp?]-> pace{}  
 
   T6_VS_AFTER_VP_IS_NR:	--s after VRP, 
     --go to "sense" state, send n!, reset timeouts
-  check_pace_vrp -[(now-last_beat)>=vrp]-> sense	   
+  check_pace_vrp -[now-last_beat>=vrp?]-> sense	   
     {  <<VS()>>
     n! <<n@now>>  --send n! to reset timeouts now,
     & last_beat:=now <<last_beat=now>>}  
@@ -123,10 +124,10 @@ transitions
   sense -[on dispatch s]-> check_sense_vrp{}  
 
   T9_VS_AFTER_VS_IN_VRP:  -- s in VRP,  go back to "sense" state
-  check_sense_vrp -[(now-last_beat)<vrp]-> sense{}  
+  check_sense_vrp -[now-last_beat<vrp?]-> sense{}  
 
   T10_VS_AFTER_VS_IS_NR:  --s after VRP is non-refractory
-  check_sense_vrp -[(now-last_beat)>=vrp]-> sense	
+  check_sense_vrp -[now-last_beat>=vrp?]-> sense	
     --reset timeouts with n! port send
     {  << VS()>>
     n! <<n@now>>  --non-refractory ventricular sense
@@ -195,16 +196,9 @@ transitions
 	data CardiacDuration
 		properties
 			BLESS::Typed => "quantity ms";
-			Data_Model::Data_Representation => Float;
+			Data_Model::Data_Representation => Integer;
 			Data_Model::Measurement_Unit => "ms";
 	end CardiacDuration;
 
---added for HAMR
-  data Time
-		properties
-			BLESS::Typed => "time";  	
-			Data_Model::Data_Representation => Float;
-			Data_Model::Measurement_Unit => "s";
-  end Time;
 end vvi_mode; --end package
 --end of VVI.aadl
