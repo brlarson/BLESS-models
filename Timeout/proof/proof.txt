@@ -1,0 +1,3529 @@
+This file, proof.txt, was produced the BLESS Proof Assistant v3.1.5
+  at Tue Nov 29 09:06:22 CST 2022 by brianlarson
+
+Theorem (1)                               [serial 1003] 
+P [128] << true >>
+S [122] ->
+Q [122] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (2)                               [serial 1004] 
+P [130] << ST() >>
+S [122] ->
+Q [122] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (3)                               [serial 1282] 
+P [129] << true >>
+S [129] ->
+Q [129] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (4)                               [serial 1005] 
+P [129] << true >>
+S [129] ->
+Q [129] << (start^0) or 
+(not start^0) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 3:
+Theorem (3) [serial 1282] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1005]
+ 
+
+
+Theorem (5)                               [serial 1006] 
+P [127] << true >>
+S [127] ->
+Q [127] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (6)                               [serial 1296] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (7)                               [serial 1294] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 6:
+Theorem (6) [serial 1296] used for:
+    normalization of [serial 1294]
+ 
+
+
+Theorem (8)                               [serial 1293] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 7:
+Theorem (7) [serial 1294] used for:
+  Law of And-Simplification:  P and P is P [serial 1293]
+ 
+
+
+Theorem (9)                               [serial 1292] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 8:
+Theorem (8) [serial 1293] used for:
+  Law of And-Simplification:  P and P is P [serial 1292]
+ 
+
+
+Theorem (10)                               [serial 1291] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0)
+ and (true) >>
+by Less than, greater than, or equal:  |-a<b or b<a or a=b
+and theorem 9:
+Theorem (9) [serial 1292] used for:
+  Less than, greater than, or equal:  |-a<b or b<a or a=b [serial 1291]
+ 
+
+
+Theorem (11)                               [serial 1290] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (true)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 10:
+Theorem (10) [serial 1291] used for:
+  Law of And-Simplification:  P and P is P [serial 1290]
+ 
+
+
+Theorem (12)                               [serial 1289] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (true)
+ and (true)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 11:
+Theorem (11) [serial 1290] used for:
+  Law of And-Simplification:  P and P is P [serial 1289]
+ 
+
+
+Theorem (13)                               [serial 1288] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 12:
+Theorem (12) [serial 1289] used for:
+  Law of And-Simplification:  P and P is P [serial 1288]
+ 
+
+
+Theorem (14)                               [serial 1287] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (start_time = (now - duration) or 
+not start^0 or 
+not start^0 or 
+start^0)
+ and (not start^0 or 
+not start^0 or 
+not start^0 or 
+start^0)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+not start^0 or 
+start^0)
+ and (not start^0 or 
+start_time < (now - duration) or 
+not start^0 or 
+start^0)
+ and (start_time = (now - duration) or 
+not start^0 or 
+(now - duration) < start_time or 
+start^0)
+ and (not start^0 or 
+not start^0 or 
+(now - duration) < start_time or 
+start^0)
+ and (start_time = (now - duration) or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0)
+ and (not start^0 or 
+start_time < (now - duration) or 
+(now - duration) < start_time or 
+start^0) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 13:
+Theorem (13) [serial 1288] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1287]
+ 
+
+
+Theorem (15)                               [serial 1284] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << start^0 or 
+(start_time = (now - duration)
+ and not start^0) or 
+(not start^0
+ and start_time < (now - duration)) or 
+(not start^0
+ and (now - duration) < start_time) >>
+by Distribution of preconditions, and over or, and distribution of postcondtitions, or over and
+and theorem 14:
+Theorem (14) [serial 1287] used for:
+  Distribution of preconditions, and over or, and distribution of postcondtitions, or over and while transforming into
+  conjunctive normal form [serial 1284]
+ 
+
+
+Theorem (16)                               [serial 1007] 
+P [131] << ST() >>
+S [131] ->
+Q [131] << (start^0) or 
+((not start^0
+ and ((now - duration) = start_time))) or 
+((not start^0
+ and ((now - duration) < start_time))) or 
+((not start^0
+ and ((now - duration) > start_time))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Equality: (a=b) = (b=a)
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+and theorem 15:
+Theorem (15) [serial 1284] used for:
+    normalization of [serial 1007]
+ 
+
+
+Theorem (17)                               [serial 1299] 
+P [127] << true >>
+S [133] ->
+Q [128] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (18)                               [serial 1008] 
+P [127] << true >>
+S [133] ->
+Q [128] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 17:
+Theorem (17) [serial 1299] used for:
+    normalization of [serial 1008]
+ 
+
+
+Theorem (19)                               [serial 1009] 
+P [128] << true >>
+S [134] ->
+Q [129] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (20)                               [serial 1317] 
+P [111] << start >>
+S [136] ->
+Q [130] << start >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (21)                               [serial 1314] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << start@now >>
+by Assume Present:  P = P@now = P^0 
+and theorem 20:
+Theorem (20) [serial 1317] used for:
+  Assume Present:  P = P@now = P^0  [serial 1314]
+ 
+
+
+Theorem (22)                               [serial 1312] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << (start@now)^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 21:
+Theorem (21) [serial 1314] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1312]
+ 
+
+
+Theorem (23)                               [serial 1310] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << ((start@now))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 22:
+Theorem (22) [serial 1312] used for:
+    normalization of [serial 1310]
+ 
+
+
+Theorem (24)                               [serial 1308] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << (start@now
+ and true)^1 >>
+by Law of And-Simplification:  P and true is P
+and theorem 23:
+Theorem (23) [serial 1310] used for:
+  Law of And-Simplification:  P and true is P [serial 1308]
+ 
+
+
+Theorem (25)                               [serial 1306] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << (start@now
+ and not (false))^1 >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 24:
+Theorem (24) [serial 1308] used for:
+    normalization of [serial 1306]
+ 
+
+
+Theorem (26)                               [serial 1304] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << (start@now
+ and not (exists t~time
+  in now ,, now 
+  that start@t ))^1 >>
+by Solitary Open Range Law: exists a:t in j,,j that V is false
+and theorem 25:
+Theorem (25) [serial 1306] used for:
+  Solitary Open Range Law: exists a:t in j,,j that V is false [serial 1304]
+ 
+
+
+Theorem (27)                               [serial 1302] 
+P [111] << start^0 >>
+S [136] ->
+Q [130] << (((start@now
+ and not (exists t~time
+  in now ,, now 
+  that start@t ))))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 26:
+Theorem (26) [serial 1304] used for:
+    normalization of [serial 1302]
+ 
+
+
+Theorem (28)                               [serial 1301] 
+P [111] << start^0 >>
+S [136] start_time := now
+Q [130] << (((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 27:
+Theorem (27) [serial 1302] used for:
+  applied wp for assignment [serial 1301]
+ 
+
+
+Theorem (29)                               [serial 1010] 
+P [111] << start^0 >>
+S [136] start_time := now
+Q [130] << (ST())^1 >>
+by Substitution of Assertion Labels
+and theorem 28:
+Theorem (28) [serial 1301] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1010]
+ 
+
+
+Theorem (30)                               [serial 1319] 
+P [137] << not start^0 >>
+S [137] ->
+Q [128] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (31)                               [serial 1011] 
+P [137] << not start^0 >>
+S [137] ->
+Q [128] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 30:
+Theorem (30) [serial 1319] used for:
+    normalization of [serial 1011]
+ 
+
+
+Theorem (32)                               [serial 1012] 
+P [130] << ST() >>
+S [138] ->
+Q [131] << ST() >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (33)                               [serial 1334] 
+P [131] << start
+ and ST() >>
+S [140] ->
+Q [130] << start >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (34)                               [serial 1331] 
+P [131] << start^0
+ and ST() >>
+S [140] ->
+Q [130] << start@now >>
+by Assume Present:  P = P@now = P^0 
+and theorem 33:
+Theorem (33) [serial 1334] used for:
+  Assume Present:  P = P@now = P^0  [serial 1331]
+ 
+
+
+Theorem (35)                               [serial 1329] 
+P [131] << start^0
+ and ST() >>
+S [140] ->
+Q [130] << (start@now)^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 34:
+Theorem (34) [serial 1331] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1329]
+ 
+
+
+Theorem (36)                               [serial 1327] 
+P [131] << start^0
+ and ST() >>
+S [140] ->
+Q [130] << ((start@now))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 35:
+Theorem (35) [serial 1329] used for:
+    normalization of [serial 1327]
+ 
+
+
+Theorem (37)                               [serial 1325] 
+P [131] << start^0
+ and ST() >>
+S [140] ->
+Q [130] << (start@now
+ and true)^1 >>
+by Law of And-Simplification:  P and true is P
+and theorem 36:
+Theorem (36) [serial 1327] used for:
+  Law of And-Simplification:  P and true is P [serial 1325]
+ 
+
+
+Theorem (38)                               [serial 1323] 
+P [131] << (ST())
+ and (start^0) >>
+S [140] ->
+Q [130] << (((start@now
+ and not (false))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 37:
+Theorem (37) [serial 1325] used for:
+    normalization of [serial 1323]
+ 
+
+
+Theorem (39)                               [serial 1322] 
+P [131] << (ST())
+ and (start^0) >>
+S [140] ->
+Q [130] << (((start@now
+ and not (exists t~time
+  in now ,, now 
+  that start@t ))))^1 >>
+by Solitary Open Range Law: exists a:t in j,,j that V is false
+and theorem 38:
+Theorem (38) [serial 1323] used for:
+  Solitary Open Range Law: exists a:t in j,,j that V is false [serial 1322]
+ 
+
+
+Theorem (40)                               [serial 1321] 
+P [131] << (ST())
+ and (start^0) >>
+S [140] start_time := now
+Q [130] << (((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 39:
+Theorem (39) [serial 1322] used for:
+  applied wp for assignment [serial 1321]
+ 
+
+
+Theorem (41)                               [serial 1013] 
+P [131] << (ST())
+ and (start^0) >>
+S [140] start_time := now
+Q [130] << (ST())^1 >>
+by Substitution of Assertion Labels
+and theorem 40:
+Theorem (40) [serial 1321] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1013]
+ 
+
+
+Theorem (42)                               [serial 1345] 
+P [131] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and start_time = (now - duration)
+ and not start^0 >>
+S [142] ->
+Q [110] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and start_time = (now - duration) >>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (43)                               [serial 1343] 
+P [131] << (start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))
+ and (start_time = (now - duration)
+ and not start^0) >>
+S [142] ->
+Q [110] << start_time = (now - duration)
+ and (start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 42:
+Theorem (42) [serial 1345] used for:
+  Associativity: (b.c).a = a.b.c [serial 1343]
+ 
+
+
+Theorem (44)                               [serial 1341] 
+P [131] << ((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )))
+ and (start_time = (now - duration)
+ and not start^0) >>
+S [142] ->
+Q [110] << ((((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )))
+ and (start_time = (now - duration)))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 43:
+Theorem (43) [serial 1343] used for:
+    normalization of [serial 1341]
+ 
+
+
+Theorem (45)                               [serial 1340] 
+P [131] << ((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )))
+ and (start_time = (now - duration)
+ and not start^0) >>
+S [142] ->
+Q [110] << ((ST()
+ and (start_time = (now - duration)))) >>
+by Substitution of Assertion Labels
+and theorem 44:
+Theorem (44) [serial 1341] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1340]
+ 
+
+
+Theorem (46)                               [serial 1338] 
+P [131] << ST()
+ and (start_time = (now - duration)
+ and not start^0) >>
+S [142] ->
+Q [110] << TIMEOUT(now) >>
+by Substitution of Assertion Labels
+and theorem 45:
+Theorem (45) [serial 1340] used for:
+  substituted Assertions' predicates for  labels  [serial 1338]
+ 
+
+
+Theorem (47)                               [serial 1339] 
+P [142] << (ST()
+ and (start_time = (now - duration)
+ and not start^0))
+ and done^0 >>
+S [142] ->
+Q [128] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (48)                               [serial 1336] 
+P [131] << ST()
+ and (start_time = (now - duration)
+ and not start^0) >>
+S [142] done!
+Q [128] << true >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 46 47:
+Theorem (46) [serial 1338] used for:
+  applied port output <<pre>> -> <<M[done]>> [serial 1336]
+ 
+Theorem (47) [serial 1339] used for:
+  applied port output <<pre and M[done]^0>> -> <<post>> [serial 1336]
+ 
+
+
+Theorem (49)                               [serial 1014] 
+P [131] << (ST())
+ and ((not start^0
+ and ((now - duration) = start_time))) >>
+S [142] done!
+Q [128] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Equality: (a=b) = (b=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Constants are always the same
+and theorem 48:
+Theorem (48) [serial 1336] used for:
+    normalization of [serial 1014]
+ 
+
+
+Theorem (50)                               [serial 1361] 
+P [131] << start@start_time
+ and not start^0
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ) >>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (51)                               [serial 1359] 
+P [131] << start@start_time
+ and not start^0
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that (start@t)^1 ) >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 50:
+Theorem (50) [serial 1361] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1359]
+ 
+
+
+Theorem (52)                               [serial 1357] 
+P [131] << start@start_time
+ and not start^0
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 51:
+Theorem (51) [serial 1359] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1357]
+ 
+
+
+Theorem (53)                               [serial 1355] 
+P [131] << start@start_time
+ and not start^0
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << start@start_time
+ and not ((exists t~time
+  in start_time ,, now 
+  that start@t ))^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 52:
+Theorem (52) [serial 1357] used for:
+    normalization of [serial 1355]
+ 
+
+
+Theorem (54)                               [serial 1353] 
+P [131] << start@start_time
+ and not start^0
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << (start@start_time)^1
+ and (not (exists t~time
+  in start_time ,, now 
+  that start@t ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 53:
+Theorem (53) [serial 1355] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1353]
+ 
+
+
+Theorem (55)                               [serial 1351] 
+P [131] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and not start^0
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << ((start@start_time)^1
+ and (not (exists t~time
+  in start_time ,, now 
+  that start@t ))^1) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 54:
+Theorem (54) [serial 1353] used for:
+    normalization of [serial 1351]
+ 
+
+
+Theorem (56)                               [serial 1350] 
+P [131] << start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t )
+ and not start^0
+ and (now - duration) < start_time >>
+S [143] ->
+Q [130] << (start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 55:
+Theorem (55) [serial 1351] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1350]
+ 
+
+
+Theorem (57)                               [serial 1348] 
+P [131] << (start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))
+ and (not start^0
+ and (now - duration) < start_time) >>
+S [143] ->
+Q [130] << (start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))^1 >>
+by Associativity: (b.c).a = a.b.c
+and theorem 56:
+Theorem (56) [serial 1350] used for:
+  Associativity: (b.c).a = a.b.c [serial 1348]
+ 
+
+
+Theorem (58)                               [serial 1346] 
+P [131] << (((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))))
+ and ((not start^0
+ and ((now - duration) < start_time))) >>
+S [143] ->
+Q [130] << (((start@start_time
+ and not (exists t~time
+  in start_time ,, now 
+  that start@t ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 57:
+Theorem (57) [serial 1348] used for:
+    normalization of [serial 1346]
+ 
+
+
+Theorem (59)                               [serial 1015] 
+P [131] << (ST())
+ and ((not start^0
+ and ((now - duration) < start_time))) >>
+S [143] ->
+Q [130] << (ST())^1 >>
+by Substitution of Assertion Labels
+and theorem 58:
+Theorem (58) [serial 1346] used for:
+  substituted Assertions' predicates for  labels  [serial 1015]
+ 
+
+
+Theorem (60)                               [serial 1369] 
+P [131] << not start^0
+ and start_time < (now - duration)
+ and ST() >>
+S [145] ->
+Q [112] << ST()
+ and start_time < (now - duration) >>
+by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
+
+
+Theorem (61)                               [serial 1367] 
+P [131] << ST()
+ and (not start^0
+ and start_time < (now - duration)) >>
+S [145] ->
+Q [112] << ST()
+ and start_time < (now - duration) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 60:
+Theorem (60) [serial 1369] used for:
+  Associativity: (b.c).a = a.b.c [serial 1367]
+ 
+
+
+Theorem (62)                               [serial 1368] 
+P [145] << (ST()
+ and (not start^0
+ and start_time < (now - duration)))
+ and late^0 >>
+S [145] ->
+Q [128] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (63)                               [serial 1365] 
+P [131] << ST()
+ and (not start^0
+ and start_time < (now - duration)) >>
+S [145] late!
+Q [128] << true >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 61 62:
+Theorem (61) [serial 1367] used for:
+  applied port output <<pre>> -> <<M[late]>> [serial 1365]
+ 
+Theorem (62) [serial 1368] used for:
+  applied port output <<pre and M[late]^0>> -> <<post>> [serial 1365]
+ 
+
+
+Theorem (64)                               [serial 1016] 
+P [131] << (ST())
+ and ((not start^0
+ and ((now - duration) > start_time))) >>
+S [145] late!
+Q [128] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Constants are always the same
+and theorem 63:
+Theorem (63) [serial 1365] used for:
+    normalization of [serial 1016]
+ 
+
+
+Theorem (65)                               [serial 1002] 
+P [118] <<   >>
+S [122] ->
+Q [118] << TimeoutPeriodicWithTimestamp proof obligations >>
+by Initial Thread Obligations
+and theorems 1 2 4 5 16 18 19 29 31 32 41 49 59 64:
+Theorem (1) [serial 1003] used for:
+  <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+ 
+Theorem (2) [serial 1004] used for:
+  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+ 
+Theorem (4) [serial 1005] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_wait, <<M(decide_wait)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (5) [serial 1006] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state init, <<M(init)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (16) [serial 1007] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_run, <<M(decide_run)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (18) [serial 1008] used for:
+   <<M(init)>> -> <<M(wait)>> for tt0:init-[ ]->wait{};
+ 
+Theorem (19) [serial 1009] used for:
+   <<M(wait) and x>> -> <<M(decide_wait)>> for tt1:wait-[x]->decide_wait{};
+ 
+Theorem (29) [serial 1010] used for:
+   <<M(decide_wait) and x>> A <<M(run)>> for tt2:decide_wait-[x]->run{A};
+ 
+Theorem (31) [serial 1011] used for:
+   <<M(decide_wait) and x>> -> <<M(wait)>> for tt3:decide_wait-[x]->wait{};
+ 
+Theorem (32) [serial 1012] used for:
+   <<M(run) and x>> -> <<M(decide_run)>> for tt4:run-[x]->decide_run{};
+ 
+Theorem (41) [serial 1013] used for:
+   <<M(decide_run) and x>> A <<M(run)>> for tt5:decide_run-[x]->run{A};
+ 
+Theorem (49) [serial 1014] used for:
+   <<M(decide_run) and x>> A <<M(wait)>> for tt6:decide_run-[x]->wait{A};
+ 
+Theorem (59) [serial 1015] used for:
+   <<M(decide_run) and x>> -> <<M(run)>> for tt7:decide_run-[x]->run{};
+ 
+Theorem (64) [serial 1016] used for:
+   <<M(decide_run) and x>> A <<M(wait)>> for tt8:decide_run-[x]->wait{A};
+ 
+
+
+Theorem (66)                               [serial 1018] 
+P [38] << true >>
+S [32] ->
+Q [32] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (67)                               [serial 1019] 
+P [40] << TIMEOUT_DISCRETE(counter) >>
+S [32] ->
+Q [32] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (68)                               [serial 1048] 
+P [39] << true >>
+S [39] ->
+Q [39] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (69)                               [serial 1020] 
+P [39] << true >>
+S [39] ->
+Q [39] << (start^0) or 
+(not start^0) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 68:
+Theorem (68) [serial 1048] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1020]
+ 
+
+
+Theorem (70)                               [serial 1021] 
+P [37] << true >>
+S [37] ->
+Q [37] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (71)                               [serial 1060] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (72)                               [serial 1058] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (true) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 71:
+Theorem (71) [serial 1060] used for:
+    normalization of [serial 1058]
+ 
+
+
+Theorem (73)                               [serial 1057] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 72:
+Theorem (72) [serial 1058] used for:
+  Law of And-Simplification:  P and P is P [serial 1057]
+ 
+
+
+Theorem (74)                               [serial 1056] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (true)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 73:
+Theorem (73) [serial 1057] used for:
+  Law of And-Simplification:  P and P is P [serial 1056]
+ 
+
+
+Theorem (75)                               [serial 1055] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (true)
+ and (counter = limit or 
+counter < limit or 
+start^0 or 
+limit < counter)
+ and (true) >>
+by Less than, greater than, or equal:  |-a<b or b<a or a=b
+and theorem 74:
+Theorem (74) [serial 1056] used for:
+  Less than, greater than, or equal:  |-a<b or b<a or a=b [serial 1055]
+ 
+
+
+Theorem (76)                               [serial 1054] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (true)
+ and (true)
+ and (counter = limit or 
+counter < limit or 
+start^0 or 
+limit < counter)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 75:
+Theorem (75) [serial 1055] used for:
+  Law of And-Simplification:  P and P is P [serial 1054]
+ 
+
+
+Theorem (77)                               [serial 1053] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << (counter = limit or 
+not start^0 or 
+start^0 or 
+limit < counter)
+ and (not start^0 or 
+not start^0 or 
+start^0 or 
+limit < counter)
+ and (counter = limit or 
+counter < limit or 
+start^0 or 
+limit < counter)
+ and (not start^0 or 
+counter < limit or 
+start^0 or 
+limit < counter) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 76:
+Theorem (76) [serial 1054] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1053]
+ 
+
+
+Theorem (78)                               [serial 1050] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << start^0 or 
+(counter = limit
+ and not start^0) or 
+(not start^0
+ and counter < limit) or 
+limit < counter >>
+by Distribution of preconditions, and over or, and distribution of postcondtitions, or over and
+and theorem 77:
+Theorem (77) [serial 1053] used for:
+  Distribution of preconditions, and over or, and distribution of postcondtitions, or over and while transforming into
+  conjunctive normal form [serial 1050]
+ 
+
+
+Theorem (79)                               [serial 1022] 
+P [41] << TIMEOUT_DISCRETE(counter) >>
+S [41] ->
+Q [41] << ((not start^0
+ and (counter = limit))) or 
+((counter > limit)) or 
+((not start^0
+ and (counter < limit))) or 
+(start^0) >>
+by Normalization
+  Normalization Axioms:
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+and theorem 78:
+Theorem (78) [serial 1050] used for:
+    normalization of [serial 1022]
+ 
+
+
+Theorem (80)                               [serial 1063] 
+P [37] << true >>
+S [43] ->
+Q [38] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (81)                               [serial 1023] 
+P [37] << true >>
+S [43] ->
+Q [38] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 80:
+Theorem (80) [serial 1063] used for:
+    normalization of [serial 1023]
+ 
+
+
+Theorem (82)                               [serial 1024] 
+P [38] << true >>
+S [44] ->
+Q [39] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (83)                               [serial 1090] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0 >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (84)                               [serial 1088] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << (start^0) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 83:
+Theorem (83) [serial 1090] used for:
+    normalization of [serial 1088]
+ 
+
+
+Theorem (85)                               [serial 1086] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and true >>
+by Law of And-Simplification:  P and true is P
+and theorem 84:
+Theorem (84) [serial 1088] used for:
+  Law of And-Simplification:  P and true is P [serial 1086]
+ 
+
+
+Theorem (86)                               [serial 1084] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not (false) >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 85:
+Theorem (85) [serial 1086] used for:
+    normalization of [serial 1084]
+ 
+
+
+Theorem (87)                               [serial 1083] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in false 
+  that start^(1 + -i) ) >>
+by Empty Range Law, Exists: exists a:t in false that V is false
+and theorem 86:
+Theorem (86) [serial 1084] used for:
+  Empty Range Law, Exists: exists a:t in false that V is false [serial 1083]
+ 
+
+
+Theorem (88)                               [serial 1080] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^(1 + -i) ) >>
+by Empty Range
+and theorem 87:
+Theorem (87) [serial 1083] used for:
+  Empty Range [serial 1080]
+ 
+
+
+Theorem (89)                               [serial 1078] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 88:
+Theorem (88) [serial 1080] used for:
+    normalization of [serial 1078]
+ 
+
+
+Theorem (90)                               [serial 1076] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 89:
+Theorem (89) [serial 1078] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1076]
+ 
+
+
+Theorem (91)                               [serial 1074] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and not ((exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 90:
+Theorem (90) [serial 1076] used for:
+    normalization of [serial 1074]
+ 
+
+
+Theorem (92)                               [serial 1072] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << start^0
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 91:
+Theorem (91) [serial 1074] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1072]
+ 
+
+
+Theorem (93)                               [serial 1070] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << (start^(-1 + 1)
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 92:
+Theorem (92) [serial 1072] used for:
+    normalization of [serial 1070]
+ 
+
+
+Theorem (94)                               [serial 1068] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << (start^-1
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 93:
+Theorem (93) [serial 1070] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1068]
+ 
+
+
+Theorem (95)                               [serial 1066] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << (((start^-1
+ and not (exists i~quantity whole
+  in 1 .. ((1 - 1)) 
+  that start^-i ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 94:
+Theorem (94) [serial 1068] used for:
+    normalization of [serial 1066]
+ 
+
+
+Theorem (96)                               [serial 1065] 
+P [111] << start^0 >>
+S [46] ->
+Q [40] << (TIMEOUT_DISCRETE(1))^1 >>
+by Substitution of Assertion Labels
+and theorem 95:
+Theorem (95) [serial 1066] used for:
+  substituted Assertions' predicates for  labels  [serial 1065]
+ 
+
+
+Theorem (97)                               [serial 1025] 
+P [111] << start^0 >>
+S [46] counter := 1
+Q [40] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 96:
+Theorem (96) [serial 1065] used for:
+  applied wp for assignment [serial 1025]
+ 
+
+
+Theorem (98)                               [serial 1093] 
+P [47] << not start^0 >>
+S [47] ->
+Q [38] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (99)                               [serial 1026] 
+P [47] << not start^0 >>
+S [47] ->
+Q [38] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 98:
+Theorem (98) [serial 1093] used for:
+    normalization of [serial 1026]
+ 
+
+
+Theorem (100)                               [serial 1027] 
+P [40] << TIMEOUT_DISCRETE(counter) >>
+S [48] ->
+Q [41] << TIMEOUT_DISCRETE(counter) >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (101)                               [serial 1103] 
+P [41] << counter = limit
+ and not start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [50] ->
+Q [23] << TIMEOUT_DISCRETE(counter) >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (102)                               [serial 1100] 
+P [41] << counter = limit
+ and not start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [50] ->
+Q [23] << TIMEOUT_DISCRETE(limit) >>
+by Guided Substitution of Equals
+and theorem 101:
+Theorem (101) [serial 1103] used for:
+  Guided Substitution of Equals
+ replacing "limit" with its = "counter" in its postcondition [serial 1100]
+ 
+
+
+Theorem (103)                               [serial 1098] 
+P [41] << TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not start^0) >>
+S [50] ->
+Q [23] << TIMEOUT_DISCRETE(limit) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 102:
+Theorem (102) [serial 1100] used for:
+  Associativity: (b.c).a = a.b.c [serial 1098]
+ 
+
+
+Theorem (104)                               [serial 1102] 
+P [50] << counter = limit
+ and not start^0
+ and TIMEOUT_DISCRETE(counter)
+ and done^0 >>
+S [50] ->
+Q [38] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (105)                               [serial 1101] 
+P [50] << TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not start^0)
+ and done^0 >>
+S [50] ->
+Q [38] << true >>
+by Associativity: (b.c).a = a.b.c
+and theorem 104:
+Theorem (104) [serial 1102] used for:
+  Associativity: (b.c).a = a.b.c [serial 1101]
+ 
+
+
+Theorem (106)                               [serial 1099] 
+P [50] << (TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not start^0))
+ and done^0 >>
+S [50] ->
+Q [38] << true >>
+by Associativity: (b.c).a = a.b.c
+and theorem 105:
+Theorem (105) [serial 1101] used for:
+  Associativity: (b.c).a = a.b.c [serial 1099]
+ 
+
+
+Theorem (107)                               [serial 1096] 
+P [41] << TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not start^0) >>
+S [50] done!
+Q [38] << true >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 103 106:
+Theorem (103) [serial 1098] used for:
+  applied port output <<pre>> -> <<M[done]>> [serial 1096]
+ 
+Theorem (106) [serial 1099] used for:
+  applied port output <<pre and M[done]^0>> -> <<post>> [serial 1096]
+ 
+
+
+Theorem (108)                               [serial 1028] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and ((not start^0
+ and (counter = limit))) >>
+S [50] done!
+Q [38] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Constants are always the same
+and theorem 107:
+Theorem (107) [serial 1096] used for:
+    normalization of [serial 1028]
+ 
+
+
+Theorem (109)                               [serial 1105] 
+P [41] << TIMEOUT_DISCRETE(counter)
+ and limit < counter >>
+S [51] ->
+Q [38] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (110)                               [serial 1029] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and ((counter > limit)) >>
+S [51] ->
+Q [38] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Constants are always the same
+and theorem 109:
+Theorem (109) [serial 1105] used for:
+    normalization of [serial 1029]
+ 
+
+
+Theorem (111)                               [serial 1133] 
+P [40] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+S [53] ->
+Q [40] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (112)                               [serial 1132] 
+P [41] << start^-counter
+ and not start^0
+ and (all i~quantity whole
+  in 1 .. counter - 1 
+  are not (start^-i) )
+ and counter < limit >>
+S [53] ->
+Q [40] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not (start^(1 + -i)) ) >>
+by Contract Universal Quantification: 
+ (all j:integer in lb..ub are P(j)) and P(ub+1) is all j:integer in lb..ub+1 are P(j)
+and theorem 111:
+Theorem (111) [serial 1133] used for:
+  Contract Universal Quantification: 
+ (all j:integer in lb..ub are P(j)) and P(ub+1) is all j:integer in lb..ub+1 are P(j) [serial 1132]
+ 
+
+
+Theorem (113)                               [serial 1130] 
+P [41] << start^-counter
+ and not start^0
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i )
+ and counter < limit >>
+S [53] ->
+Q [40] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^(1 + -i) ) >>
+by DeMorgan's Law: not exists x:t in l..h that p = all x:t in l..h are not p
+and theorem 112:
+Theorem (112) [serial 1132] used for:
+  DeMorgan's Law: not exists x:t in l..h that p = all x:t in l..h are not p [serial 1130]
+ 
+
+
+Theorem (114)                               [serial 1128] 
+P [41] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i )
+ and not start^0
+ and counter < limit >>
+S [53] ->
+Q [40] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^(1 + -i) ) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 113:
+Theorem (113) [serial 1130] used for:
+    normalization of [serial 1128]
+ 
+
+
+Theorem (115)                               [serial 1125] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^(1 + -i) ) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 114:
+Theorem (114) [serial 1128] used for:
+  Associativity: (b.c).a = a.b.c [serial 1125]
+ 
+
+
+Theorem (116)                               [serial 1123] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 115:
+Theorem (115) [serial 1125] used for:
+    normalization of [serial 1123]
+ 
+
+
+Theorem (117)                               [serial 1121] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 116:
+Theorem (116) [serial 1123] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1121]
+ 
+
+
+Theorem (118)                               [serial 1119] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << start^-counter
+ and not ((exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 117:
+Theorem (117) [serial 1121] used for:
+    normalization of [serial 1119]
+ 
+
+
+Theorem (119)                               [serial 1117] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << start^-counter
+ and (not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 118:
+Theorem (118) [serial 1119] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1117]
+ 
+
+
+Theorem (120)                               [serial 1115] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << (start^(-(1 + counter) + 1)
+ and (not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Subtaction of Added Value:  (a+b)-a is b
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Addition: a+b=b+a
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Associativity: (b.c).a = a.b.c
+and theorem 119:
+Theorem (119) [serial 1117] used for:
+    normalization of [serial 1115]
+ 
+
+
+Theorem (121)                               [serial 1113] 
+P [41] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << (start^-(1 + counter)
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 120:
+Theorem (120) [serial 1115] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1113]
+ 
+
+
+Theorem (122)                               [serial 1111] 
+P [41] << ((start^-counter
+ and not (exists i~quantity whole
+  in 1 .. ((counter - 1)) 
+  that start^-i )))
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << ((start^-(1 + counter)
+ and not (exists i~quantity whole
+  in 1 .. (((1 + counter) - 1)) 
+  that start^-i )))^1 >>
+by Normalization
+  Normalization Axioms:
+    Subtaction of Added Value:  (a+b)-a is b
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 121:
+Theorem (121) [serial 1113] used for:
+    normalization of [serial 1111]
+ 
+
+
+Theorem (123)                               [serial 1109] 
+P [41] << TIMEOUT_DISCRETE(counter)
+ and (not start^0
+ and counter < limit) >>
+S [53] ->
+Q [40] << TIMEOUT_DISCRETE(1 + counter)^1 >>
+by Substitution of Assertion Labels
+and theorem 122:
+Theorem (122) [serial 1111] used for:
+  substituted Assertions' predicates for  labels  [serial 1109]
+ 
+
+
+Theorem (124)                               [serial 1107] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and ((not start^0
+ and (counter < limit))) >>
+S [53] ->
+Q [40] << (TIMEOUT_DISCRETE(((counter + 1))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Addition: a+b=b+a
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 123:
+Theorem (123) [serial 1109] used for:
+    normalization of [serial 1107]
+ 
+
+
+Theorem (125)                               [serial 1030] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and ((not start^0
+ and (counter < limit))) >>
+S [53] counter := (counter + 1)
+Q [40] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 124:
+Theorem (124) [serial 1107] used for:
+  applied wp for assignment [serial 1030]
+ 
+
+
+Theorem (126)                               [serial 1159] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0 >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (127)                               [serial 1157] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << (start^0) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 126:
+Theorem (126) [serial 1159] used for:
+    normalization of [serial 1157]
+ 
+
+
+Theorem (128)                               [serial 1155] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and true >>
+by Law of And-Simplification:  P and true is P
+and theorem 127:
+Theorem (127) [serial 1157] used for:
+  Law of And-Simplification:  P and true is P [serial 1155]
+ 
+
+
+Theorem (129)                               [serial 1153] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not (false) >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 128:
+Theorem (128) [serial 1155] used for:
+    normalization of [serial 1153]
+ 
+
+
+Theorem (130)                               [serial 1152] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in false 
+  that start^(1 + -i) ) >>
+by Empty Range Law, Exists: exists a:t in false that V is false
+and theorem 129:
+Theorem (129) [serial 1153] used for:
+  Empty Range Law, Exists: exists a:t in false that V is false [serial 1152]
+ 
+
+
+Theorem (131)                               [serial 1149] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^(1 + -i) ) >>
+by Empty Range
+and theorem 130:
+Theorem (130) [serial 1152] used for:
+  Empty Range [serial 1149]
+ 
+
+
+Theorem (132)                               [serial 1147] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 131:
+Theorem (131) [serial 1149] used for:
+    normalization of [serial 1147]
+ 
+
+
+Theorem (133)                               [serial 1145] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 132:
+Theorem (132) [serial 1147] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1145]
+ 
+
+
+Theorem (134)                               [serial 1143] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and not ((exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 133:
+Theorem (133) [serial 1145] used for:
+    normalization of [serial 1143]
+ 
+
+
+Theorem (135)                               [serial 1141] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << start^0
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 134:
+Theorem (134) [serial 1143] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1141]
+ 
+
+
+Theorem (136)                               [serial 1139] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << (start^(-1 + 1)
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 135:
+Theorem (135) [serial 1141] used for:
+    normalization of [serial 1139]
+ 
+
+
+Theorem (137)                               [serial 1137] 
+P [41] << start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [55] ->
+Q [40] << (start^-1
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 136:
+Theorem (136) [serial 1139] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1137]
+ 
+
+
+Theorem (138)                               [serial 1135] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and (start^0) >>
+S [55] ->
+Q [40] << (((start^-1
+ and not (exists i~quantity whole
+  in 1 .. ((1 - 1)) 
+  that start^-i ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 137:
+Theorem (137) [serial 1137] used for:
+    normalization of [serial 1135]
+ 
+
+
+Theorem (139)                               [serial 1134] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and (start^0) >>
+S [55] ->
+Q [40] << (TIMEOUT_DISCRETE(1))^1 >>
+by Substitution of Assertion Labels
+and theorem 138:
+Theorem (138) [serial 1135] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1134]
+ 
+
+
+Theorem (140)                               [serial 1031] 
+P [41] << (TIMEOUT_DISCRETE(counter))
+ and (start^0) >>
+S [55] counter := 1
+Q [40] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 139:
+Theorem (139) [serial 1134] used for:
+  applied wp for assignment [serial 1031]
+ 
+
+
+Theorem (141)                               [serial 1017] 
+P [29] <<   >>
+S [32] ->
+Q [29] << TimeoutPeriodicWithoutCancel proof obligations >>
+by Initial Thread Obligations
+and theorems 66 67 69 70 79 81 82 97 99 100 108 110 125 140:
+Theorem (66) [serial 1018] used for:
+  <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+ 
+Theorem (67) [serial 1019] used for:
+  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+ 
+Theorem (69) [serial 1020] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_wait, <<M(decide_wait)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (70) [serial 1021] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state init, <<M(init)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (79) [serial 1022] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_run, <<M(decide_run)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (81) [serial 1023] used for:
+   <<M(init)>> -> <<M(wait)>> for to0:init-[ ]->wait{};
+ 
+Theorem (82) [serial 1024] used for:
+   <<M(wait) and x>> -> <<M(decide_wait)>> for to1:wait-[x]->decide_wait{};
+ 
+Theorem (97) [serial 1025] used for:
+   <<M(decide_wait) and x>> A <<M(run)>> for to2:decide_wait-[x]->run{A};
+ 
+Theorem (99) [serial 1026] used for:
+   <<M(decide_wait) and x>> -> <<M(wait)>> for to3:decide_wait-[x]->wait{};
+ 
+Theorem (100) [serial 1027] used for:
+   <<M(run) and x>> -> <<M(decide_run)>> for to4:run-[x]->decide_run{};
+ 
+Theorem (108) [serial 1028] used for:
+   <<M(decide_run) and x>> A <<M(wait)>> for to5:decide_run-[x]->wait{A};
+ 
+Theorem (110) [serial 1029] used for:
+   <<M(decide_run) and x>> -> <<M(wait)>> for toSerban:decide_run-[x]->wait{};
+ 
+Theorem (125) [serial 1030] used for:
+   <<M(decide_run) and x>> A <<M(run)>> for to6:decide_run-[x]->run{A};
+ 
+Theorem (140) [serial 1031] used for:
+   <<M(decide_run) and x>> A <<M(run)>> for to8:decide_run-[x]->run{A};
+ 
+
+
+Theorem (142)                               [serial 1033] 
+P [82] << true >>
+S [76] ->
+Q [76] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (143)                               [serial 1034] 
+P [84] << TIMEOUT_DISCRETE(counter) >>
+S [76] ->
+Q [76] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (144)                               [serial 1161] 
+P [83] << true >>
+S [83] ->
+Q [83] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (145)                               [serial 1035] 
+P [83] << true >>
+S [83] ->
+Q [83] << (start^0) or 
+(not start^0) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 144:
+Theorem (144) [serial 1161] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1035]
+ 
+
+
+Theorem (146)                               [serial 1036] 
+P [81] << true >>
+S [81] ->
+Q [81] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (147)                               [serial 1176] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (148)                               [serial 1174] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 147:
+Theorem (147) [serial 1176] used for:
+    normalization of [serial 1174]
+ 
+
+
+Theorem (149)                               [serial 1173] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 148:
+Theorem (148) [serial 1174] used for:
+  Law of And-Simplification:  P and P is P [serial 1173]
+ 
+
+
+Theorem (150)                               [serial 1172] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 149:
+Theorem (149) [serial 1173] used for:
+  Law of And-Simplification:  P and P is P [serial 1172]
+ 
+
+
+Theorem (151)                               [serial 1171] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (true) >>
+by Less than, greater than, or equal:  |-a<b or b<a or a=b
+and theorem 150:
+Theorem (150) [serial 1172] used for:
+  Less than, greater than, or equal:  |-a<b or b<a or a=b [serial 1171]
+ 
+
+
+Theorem (152)                               [serial 1170] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 151:
+Theorem (151) [serial 1171] used for:
+  Law of And-Simplification:  P and P is P [serial 1170]
+ 
+
+
+Theorem (153)                               [serial 1169] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true)
+ and (true)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 152:
+Theorem (152) [serial 1170] used for:
+  Law of And-Simplification:  P and P is P [serial 1169]
+ 
+
+
+Theorem (154)                               [serial 1168] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (true)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 153:
+Theorem (153) [serial 1169] used for:
+  Law of And-Simplification:  P and P is P [serial 1168]
+ 
+
+
+Theorem (155)                               [serial 1167] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (true)
+ and (true)
+ and (true)
+ and (true)
+ and (true) >>
+by Law of And-Simplification:  P and P is P
+and theorem 154:
+Theorem (154) [serial 1168] used for:
+  Law of And-Simplification:  P and P is P [serial 1167]
+ 
+
+
+Theorem (156)                               [serial 1166] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << (start^0 or 
+counter = limit or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+counter = limit or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not cancel^0 or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not cancel^0 or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not start^0 or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not start^0 or 
+not cancel^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+counter = limit or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+counter = limit or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not cancel^0 or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not cancel^0 or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not start^0 or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not start^0 or 
+not start^0 or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+counter = limit or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not cancel^0 or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not cancel^0 or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (start^0 or 
+not start^0 or 
+counter < limit or 
+cancel^0 or 
+limit < counter)
+ and (not cancel^0 or 
+not start^0 or 
+counter < limit or 
+cancel^0 or 
+limit < counter) >>
+by Law of Excluded Middle: P or not P is tautology
+and theorem 155:
+Theorem (155) [serial 1167] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1166]
+ 
+
+
+Theorem (157)                               [serial 1163] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << cancel^0 or 
+(start^0
+ and not cancel^0) or 
+(counter = limit
+ and not cancel^0
+ and not start^0) or 
+(not cancel^0
+ and not start^0
+ and counter < limit) or 
+limit < counter >>
+by Distribution of preconditions, and over or, and distribution of postcondtitions, or over and
+and theorem 156:
+Theorem (156) [serial 1166] used for:
+  Distribution of preconditions, and over or, and distribution of postcondtitions, or over and while transforming into
+  conjunctive normal form [serial 1163]
+ 
+
+
+Theorem (158)                               [serial 1037] 
+P [85] << TIMEOUT_DISCRETE(counter) >>
+S [85] ->
+Q [85] << ((not cancel^0
+ and not start^0
+ and (counter = limit))) or 
+((counter > limit)) or 
+((not cancel^0
+ and not start^0
+ and (counter < limit))) or 
+(cancel^0) or 
+((start^0
+ and not cancel^0)) >>
+by Normalization
+  Normalization Axioms:
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Reflexivity of Disjunction: (m or k) = (k or m)
+and theorem 157:
+Theorem (157) [serial 1163] used for:
+    normalization of [serial 1037]
+ 
+
+
+Theorem (159)                               [serial 1179] 
+P [81] << true >>
+S [87] ->
+Q [82] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (160)                               [serial 1038] 
+P [81] << true >>
+S [87] ->
+Q [82] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 159:
+Theorem (159) [serial 1179] used for:
+    normalization of [serial 1038]
+ 
+
+
+Theorem (161)                               [serial 1039] 
+P [82] << true >>
+S [88] ->
+Q [83] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (162)                               [serial 1206] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0 >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (163)                               [serial 1204] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << (start^0) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 162:
+Theorem (162) [serial 1206] used for:
+    normalization of [serial 1204]
+ 
+
+
+Theorem (164)                               [serial 1202] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and true >>
+by Law of And-Simplification:  P and true is P
+and theorem 163:
+Theorem (163) [serial 1204] used for:
+  Law of And-Simplification:  P and true is P [serial 1202]
+ 
+
+
+Theorem (165)                               [serial 1200] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not (false) >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 164:
+Theorem (164) [serial 1202] used for:
+    normalization of [serial 1200]
+ 
+
+
+Theorem (166)                               [serial 1199] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in false 
+  that start^(1 + -i) ) >>
+by Empty Range Law, Exists: exists a:t in false that V is false
+and theorem 165:
+Theorem (165) [serial 1200] used for:
+  Empty Range Law, Exists: exists a:t in false that V is false [serial 1199]
+ 
+
+
+Theorem (167)                               [serial 1196] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^(1 + -i) ) >>
+by Empty Range
+and theorem 166:
+Theorem (166) [serial 1199] used for:
+  Empty Range [serial 1196]
+ 
+
+
+Theorem (168)                               [serial 1194] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 167:
+Theorem (167) [serial 1196] used for:
+    normalization of [serial 1194]
+ 
+
+
+Theorem (169)                               [serial 1192] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 168:
+Theorem (168) [serial 1194] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1192]
+ 
+
+
+Theorem (170)                               [serial 1190] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and not ((exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 169:
+Theorem (169) [serial 1192] used for:
+    normalization of [serial 1190]
+ 
+
+
+Theorem (171)                               [serial 1188] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << start^0
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 170:
+Theorem (170) [serial 1190] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1188]
+ 
+
+
+Theorem (172)                               [serial 1186] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << (start^(-1 + 1)
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 171:
+Theorem (171) [serial 1188] used for:
+    normalization of [serial 1186]
+ 
+
+
+Theorem (173)                               [serial 1184] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << (start^-1
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 172:
+Theorem (172) [serial 1186] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1184]
+ 
+
+
+Theorem (174)                               [serial 1182] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << (((start^-1
+ and not (exists i~quantity whole
+  in 1 .. ((1 - 1)) 
+  that start^-i ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 173:
+Theorem (173) [serial 1184] used for:
+    normalization of [serial 1182]
+ 
+
+
+Theorem (175)                               [serial 1181] 
+P [111] << start^0 >>
+S [90] ->
+Q [84] << (TIMEOUT_DISCRETE(1))^1 >>
+by Substitution of Assertion Labels
+and theorem 174:
+Theorem (174) [serial 1182] used for:
+  substituted Assertions' predicates for  labels  [serial 1181]
+ 
+
+
+Theorem (176)                               [serial 1040] 
+P [111] << start^0 >>
+S [90] counter := 1
+Q [84] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 175:
+Theorem (175) [serial 1181] used for:
+  applied wp for assignment [serial 1040]
+ 
+
+
+Theorem (177)                               [serial 1209] 
+P [91] << not start^0 >>
+S [91] ->
+Q [82] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (178)                               [serial 1041] 
+P [91] << not start^0 >>
+S [91] ->
+Q [82] << (true)^1 >>
+by Normalization
+  Normalization Axiom:
+    Constants are always the same
+and theorem 177:
+Theorem (177) [serial 1209] used for:
+    normalization of [serial 1041]
+ 
+
+
+Theorem (179)                               [serial 1042] 
+P [84] << TIMEOUT_DISCRETE(counter) >>
+S [92] ->
+Q [85] << TIMEOUT_DISCRETE(counter) >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (180)                               [serial 1223] 
+P [85] << counter = limit
+ and TIMEOUT_DISCRETE(counter)
+ and not cancel^0
+ and not start^0 >>
+S [94] ->
+Q [67] << TIMEOUT_DISCRETE(counter) >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (181)                               [serial 1221] 
+P [85] << counter = limit
+ and TIMEOUT_DISCRETE(counter)
+ and not cancel^0
+ and not start^0 >>
+S [94] ->
+Q [67] << TIMEOUT_DISCRETE(limit) >>
+by Guided Substitution of Equals
+and theorem 180:
+Theorem (180) [serial 1223] used for:
+  Guided Substitution of Equals
+ replacing "limit" with its = "counter" in its postcondition [serial 1221]
+ 
+
+
+Theorem (182)                               [serial 1219] 
+P [85] << counter = limit
+ and not cancel^0
+ and not start^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [94] ->
+Q [67] << TIMEOUT_DISCRETE(limit) >>
+by Normalization
+  Normalization Axiom:
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 181:
+Theorem (181) [serial 1221] used for:
+    normalization of [serial 1219]
+ 
+
+
+Theorem (183)                               [serial 1214] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not cancel^0
+ and not start^0) >>
+S [94] ->
+Q [67] << TIMEOUT_DISCRETE(limit) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 182:
+Theorem (182) [serial 1219] used for:
+  Associativity: (b.c).a = a.b.c [serial 1214]
+ 
+
+
+Theorem (184)                               [serial 1211] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((not cancel^0
+ and not start^0
+ and (counter = limit))) >>
+S [94] ->
+Q [67] << TIMEOUT_DISCRETE(limit) >>
+by Normalization
+  Normalization Axioms:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 183:
+Theorem (183) [serial 1214] used for:
+    normalization of [serial 1211]
+ 
+
+
+Theorem (185)                               [serial 1216] 
+P [94] << done^0
+ and (TIMEOUT_DISCRETE(counter)
+ and (counter = limit
+ and not cancel^0
+ and not start^0)) >>
+S [94] ->
+Q [82] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (186)                               [serial 1212] 
+P [94] << ((TIMEOUT_DISCRETE(counter))
+ and ((not cancel^0
+ and not start^0
+ and (counter = limit))))
+ and done^0 >>
+S [94] ->
+Q [82] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Constants are always the same
+and theorem 185:
+Theorem (185) [serial 1216] used for:
+    normalization of [serial 1212]
+ 
+
+
+Theorem (187)                               [serial 1043] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((not cancel^0
+ and not start^0
+ and (counter = limit))) >>
+S [94] done!
+Q [82] << (true)^1 >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 184 186:
+Theorem (184) [serial 1211] used for:
+  applied port output <<pre>> -> <<M[done]>> [serial 1043]
+ 
+Theorem (186) [serial 1212] used for:
+  applied port output <<pre and M[done]^0>> -> <<post>> [serial 1043]
+ 
+
+
+Theorem (188)                               [serial 1225] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and limit < counter >>
+S [95] ->
+Q [82] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (189)                               [serial 1044] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((counter > limit)) >>
+S [95] ->
+Q [82] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    Irreflexivity of Greater Than: (a>b) = (b<a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Constants are always the same
+and theorem 188:
+Theorem (188) [serial 1225] used for:
+    normalization of [serial 1044]
+ 
+
+
+Theorem (190)                               [serial 1250] 
+P [84] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+S [97] ->
+Q [84] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (191)                               [serial 1249] 
+P [85] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter - 1 
+  are not start^-i )
+ and not cancel^0
+ and not start^0
+ and counter < limit >>
+S [97] ->
+Q [84] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+by Contract Universal Quantification: 
+ (all j:integer in lb..ub are P(j)) and P(ub+1) is all j:integer in lb..ub+1 are P(j)
+and theorem 190:
+Theorem (190) [serial 1250] used for:
+  Contract Universal Quantification: 
+ (all j:integer in lb..ub are P(j)) and P(ub+1) is all j:integer in lb..ub+1 are P(j) [serial 1249]
+ 
+
+
+Theorem (192)                               [serial 1247] 
+P [85] << (start^-counter
+ and (all i~quantity whole
+  in 1 .. counter - 1 
+  are not start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not start^(1 + -i) ) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 191:
+Theorem (191) [serial 1249] used for:
+  Associativity: (b.c).a = a.b.c [serial 1247]
+ 
+
+
+Theorem (193)                               [serial 1245] 
+P [85] << (start^-counter
+ and (all i~quantity whole
+  in 1 .. counter - 1 
+  are not (start^-i) ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and (all i~quantity whole
+  in 1 .. counter 
+  are not (start^(1 + -i)) ) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 192:
+Theorem (192) [serial 1247] used for:
+    normalization of [serial 1245]
+ 
+
+
+Theorem (194)                               [serial 1242] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^(1 + -i) ) >>
+by DeMorgan's Law: not exists x:t in l..h that p = all x:t in l..h are not p
+and theorem 193:
+Theorem (193) [serial 1245] used for:
+  DeMorgan's Law: not exists x:t in l..h that p = all x:t in l..h are not p [serial 1242]
+ 
+
+
+Theorem (195)                               [serial 1240] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 194:
+Theorem (194) [serial 1242] used for:
+    normalization of [serial 1240]
+ 
+
+
+Theorem (196)                               [serial 1238] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 195:
+Theorem (195) [serial 1240] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1238]
+ 
+
+
+Theorem (197)                               [serial 1236] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and not ((exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 196:
+Theorem (196) [serial 1238] used for:
+    normalization of [serial 1236]
+ 
+
+
+Theorem (198)                               [serial 1234] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << start^-counter
+ and (not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 197:
+Theorem (197) [serial 1236] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1234]
+ 
+
+
+Theorem (199)                               [serial 1232] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << (start^(-(1 + counter) + 1)
+ and (not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Subtaction of Added Value:  (a+b)-a is b
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Addition: a+b=b+a
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Associativity: (b.c).a = a.b.c
+and theorem 198:
+Theorem (198) [serial 1234] used for:
+    normalization of [serial 1232]
+ 
+
+
+Theorem (200)                               [serial 1230] 
+P [85] << (start^-counter
+ and not (exists i~quantity whole
+  in 1 .. counter - 1 
+  that start^-i ))
+ and (not cancel^0
+ and not start^0
+ and counter < limit) >>
+S [97] ->
+Q [84] << (start^-(1 + counter)
+ and not (exists i~quantity whole
+  in 1 .. counter 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 199:
+Theorem (199) [serial 1232] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1230]
+ 
+
+
+Theorem (201)                               [serial 1228] 
+P [85] << (((start^-counter
+ and not (exists i~quantity whole
+  in 1 .. ((counter - 1)) 
+  that start^-i ))))
+ and ((not cancel^0
+ and not start^0
+ and (counter < limit))) >>
+S [97] ->
+Q [84] << (((start^-(((counter + 1)))
+ and not (exists i~quantity whole
+  in 1 .. (((((counter + 1))) - 1)) 
+  that start^-i ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Subtaction of Added Value:  (a+b)-a is b
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Addition: a+b=b+a
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 200:
+Theorem (200) [serial 1230] used for:
+    normalization of [serial 1228]
+ 
+
+
+Theorem (202)                               [serial 1227] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((not cancel^0
+ and not start^0
+ and (counter < limit))) >>
+S [97] ->
+Q [84] << (TIMEOUT_DISCRETE(((counter + 1))))^1 >>
+by Substitution of Assertion Labels
+and theorem 201:
+Theorem (201) [serial 1228] used for:
+  substituted Assertions' predicates for  labels  [serial 1227]
+ 
+
+
+Theorem (203)                               [serial 1045] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((not cancel^0
+ and not start^0
+ and (counter < limit))) >>
+S [97] counter := (counter + 1)
+Q [84] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 202:
+Theorem (202) [serial 1227] used for:
+  applied wp for assignment [serial 1045]
+ 
+
+
+Theorem (204)                               [serial 1252] 
+P [85] << cancel^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [98] ->
+Q [82] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (205)                               [serial 1046] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and (cancel^0) >>
+S [98] ->
+Q [82] << (true)^1 >>
+by Normalization
+  Normalization Axioms:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+    Constants are always the same
+and theorem 204:
+Theorem (204) [serial 1252] used for:
+    normalization of [serial 1046]
+ 
+
+
+Theorem (206)                               [serial 1280] 
+P [85] << start^0
+ and TIMEOUT_DISCRETE(counter)
+ and not cancel^0 >>
+S [100] ->
+Q [84] << start^0 >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (207)                               [serial 1278] 
+P [85] << start^0
+ and TIMEOUT_DISCRETE(counter)
+ and not cancel^0 >>
+S [100] ->
+Q [84] << (start^0) >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 206:
+Theorem (206) [serial 1280] used for:
+    normalization of [serial 1278]
+ 
+
+
+Theorem (208)                               [serial 1276] 
+P [85] << start^0
+ and TIMEOUT_DISCRETE(counter)
+ and not cancel^0 >>
+S [100] ->
+Q [84] << start^0
+ and true >>
+by Law of And-Simplification:  P and true is P
+and theorem 207:
+Theorem (207) [serial 1278] used for:
+  Law of And-Simplification:  P and true is P [serial 1276]
+ 
+
+
+Theorem (209)                               [serial 1274] 
+P [85] << start^0
+ and not cancel^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [100] ->
+Q [84] << start^0
+ and not (false) >>
+by Normalization
+  Normalization Axioms:
+    Complement
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 208:
+Theorem (208) [serial 1276] used for:
+    normalization of [serial 1274]
+ 
+
+
+Theorem (210)                               [serial 1273] 
+P [85] << start^0
+ and not cancel^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [100] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in false 
+  that start^(1 + -i) ) >>
+by Empty Range Law, Exists: exists a:t in false that V is false
+and theorem 209:
+Theorem (209) [serial 1274] used for:
+  Empty Range Law, Exists: exists a:t in false that V is false [serial 1273]
+ 
+
+
+Theorem (211)                               [serial 1272] 
+P [85] << start^0
+ and not cancel^0
+ and TIMEOUT_DISCRETE(counter) >>
+S [100] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^(1 + -i) ) >>
+by Empty Range
+and theorem 210:
+Theorem (210) [serial 1273] used for:
+  Empty Range [serial 1272]
+ 
+
+
+Theorem (212)                               [serial 1269] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^(1 + -i) ) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 211:
+Theorem (211) [serial 1272] used for:
+  Associativity: (b.c).a = a.b.c [serial 1269]
+ 
+
+
+Theorem (213)                               [serial 1267] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that (start^-i)^1 ) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Caret Compostition:  (x^a)^b is x^(a+b)
+and theorem 212:
+Theorem (212) [serial 1269] used for:
+    normalization of [serial 1267]
+ 
+
+
+Theorem (214)                               [serial 1265] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << start^0
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i )^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 213:
+Theorem (213) [serial 1267] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1265]
+ 
+
+
+Theorem (215)                               [serial 1263] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << start^0
+ and not ((exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Normalization
+  Normalization Axiom:
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 214:
+Theorem (214) [serial 1265] used for:
+    normalization of [serial 1263]
+ 
+
+
+Theorem (216)                               [serial 1261] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << start^0
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 215:
+Theorem (215) [serial 1263] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1261]
+ 
+
+
+Theorem (217)                               [serial 1259] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << (start^(-1 + 1)
+ and (not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1) >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 216:
+Theorem (216) [serial 1261] used for:
+    normalization of [serial 1259]
+ 
+
+
+Theorem (218)                               [serial 1257] 
+P [85] << TIMEOUT_DISCRETE(counter)
+ and (start^0
+ and not cancel^0) >>
+S [100] ->
+Q [84] << (start^-1
+ and not (exists i~quantity whole
+  in 1 .. 0 
+  that start^-i ))^1 >>
+by Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k
+and theorem 217:
+Theorem (217) [serial 1259] used for:
+  Distribute Carets:  (A^k op B^k or C^k) is (A op B op C)^k [serial 1257]
+ 
+
+
+Theorem (219)                               [serial 1255] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((start^0
+ and not cancel^0)) >>
+S [100] ->
+Q [84] << (((start^-1
+ and not (exists i~quantity whole
+  in 1 .. ((1 - 1)) 
+  that start^-i ))))^1 >>
+by Normalization
+  Normalization Axioms:
+    Literal Arithmetic
+    Unary Minus:  -(x-y) is (y-x)
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 218:
+Theorem (218) [serial 1257] used for:
+    normalization of [serial 1255]
+ 
+
+
+Theorem (220)                               [serial 1254] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((start^0
+ and not cancel^0)) >>
+S [100] ->
+Q [84] << (TIMEOUT_DISCRETE(1))^1 >>
+by Substitution of Assertion Labels
+and theorem 219:
+Theorem (219) [serial 1255] used for:
+  substituted Assertions' predicates for  labels in postconditions [serial 1254]
+ 
+
+
+Theorem (221)                               [serial 1047] 
+P [85] << (TIMEOUT_DISCRETE(counter))
+ and ((start^0
+ and not cancel^0)) >>
+S [100] counter := 1
+Q [84] << (TIMEOUT_DISCRETE(counter))^1 >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 220:
+Theorem (220) [serial 1254] used for:
+  applied wp for assignment [serial 1047]
+ 
+
+
+Theorem (222)                               [serial 1032] 
+P [75] <<   >>
+S [76] ->
+Q [75] << TimeoutPeriodicWithCancel proof obligations >>
+by Initial Thread Obligations
+and theorems 142 143 145 146 158 160 161 176 178 179 187 189 203 205 221:
+Theorem (142) [serial 1033] used for:
+  <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+ 
+Theorem (143) [serial 1034] used for:
+  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+ 
+Theorem (145) [serial 1035] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_wait, <<M(decide_wait)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (146) [serial 1036] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state init, <<M(init)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (158) [serial 1037] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state decide_run, <<M(decide_run)>> -> <<e1 or e2 or . . . en>>
+ 
+Theorem (160) [serial 1038] used for:
+   <<M(init)>> -> <<M(wait)>> for to0:init-[ ]->wait{};
+ 
+Theorem (161) [serial 1039] used for:
+   <<M(wait) and x>> -> <<M(decide_wait)>> for to1:wait-[x]->decide_wait{};
+ 
+Theorem (176) [serial 1040] used for:
+   <<M(decide_wait) and x>> A <<M(run)>> for to2:decide_wait-[x]->run{A};
+ 
+Theorem (178) [serial 1041] used for:
+   <<M(decide_wait) and x>> -> <<M(wait)>> for to3:decide_wait-[x]->wait{};
+ 
+Theorem (179) [serial 1042] used for:
+   <<M(run) and x>> -> <<M(decide_run)>> for to4:run-[x]->decide_run{};
+ 
+Theorem (187) [serial 1043] used for:
+   <<M(decide_run) and x>> A <<M(wait)>> for to5:decide_run-[x]->wait{A};
+ 
+Theorem (189) [serial 1044] used for:
+   <<M(decide_run) and x>> -> <<M(wait)>> for toSerban:decide_run-[x]->wait{};
+ 
+Theorem (203) [serial 1045] used for:
+   <<M(decide_run) and x>> A <<M(run)>> for to6:decide_run-[x]->run{A};
+ 
+Theorem (205) [serial 1046] used for:
+   <<M(decide_run) and x>> -> <<M(wait)>> for to7:decide_run-[x]->wait{};
+ 
+Theorem (221) [serial 1047] used for:
+   <<M(decide_run) and x>> A <<M(run)>> for to8:decide_run-[x]->run{A};
+ 
+
+
+Theorem (223)                               [serial 1001] 
+P     
+S     
+Q     
+by Initial Thread Obligations
+and theorems 65 141 222:
+Theorem (65) [serial 1002] used for:
+  Initial proof obligations for TimeoutPeriodicWithTimestamp
+ 
+Theorem (141) [serial 1017] used for:
+  Initial proof obligations for TimeoutPeriodicWithoutCancel
+ 
+Theorem (222) [serial 1032] used for:
+  Initial proof obligations for TimeoutPeriodicWithCancel
+ 
+
+
+closing proof.txt file 

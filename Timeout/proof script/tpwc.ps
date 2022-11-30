@@ -1,0 +1,71 @@
+#tpwc.ps
+#TimeoutPeriodicWithCancel
+sort-by-component[TimeoutPeriodicWithCancel]
+make-an
+#Timeout::TimeoutPeriodicWithCancel
+#[serial 1003] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition.
+axioms
+#[serial 1004] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+axioms
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state decide_wait, <<M(decide_wait)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state init, <<M(init)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state decide_run, <<M(decide_run)>> -> <<e1 or e2 or . . . en>>
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1008]  <<M(init)>> -> <<M(wait)>> for to0:init-[ ]->wait{};
+normalize
+axioms
+#[serial 1009]  <<M(wait) and x>> -> <<M(decide_wait)>> for to1:wait-[x]->decide_wait{};
+axioms
+#[serial 1010]  <<M(decide_wait) and x>> A <<M(run)>> for to2:decide_wait-[x]->run{A};
+atomic
+substitute-both
+alldist^
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1011]  <<M(decide_wait) and x>> -> <<M(wait)>> for to3:decide_wait-[x]->wait{};
+normalize
+axioms
+#[serial 1012]  <<M(run) and x>> -> <<M(decide_run)>> for to4:run-[x]->decide_run{};
+axioms
+#[serial 1013]  <<M(decide_run) and x>> A <<M(wait)>> for to5:decide_run-[x]->wait{A};
+atomic
+normalize
+axioms
+laws
+normalize
+guided-sub-equals[limit]
+axioms
+#[serial 1014]  <<M(decide_run) and x>> -> <<M(wait)>> for toSerban:decide_run-[x]->wait{};
+normalize
+axioms
+#[serial 1015]  <<M(decide_run) and x>> A <<M(run)>> for to6:decide_run-[x]->run{A};
+atomic
+substitute-both
+alldist^
+DeMorgan
+normalize
+laws
+qtiming
+axioms
+#[serial 1016]  <<M(decide_run) and x>> -> <<M(wait)>> for to7:decide_run-[x]->wait{};
+normalize
+axioms
+#[serial 1017]  <<M(decide_run) and x>> A <<M(run)>> for to8:decide_run-[x]->run{A};
+atomic
+substitute-post
+alldist^
+laws
+normalize
+laws
+normalize
+axioms

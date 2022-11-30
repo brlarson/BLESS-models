@@ -1,0 +1,70 @@
+#tpstamp.ps
+sort-by-component[TimeoutPeriodicWithTimestamp]
+#[serial 1003] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+make-an
+axioms
+#[serial 1004] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+axioms
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state decide_wait, <<M(decide_wait)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state init, <<M(init)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state decide_run, <<M(decide_run)>> -> <<e1 or e2 or . . . en>>
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1008]  <<M(init)>> -> <<M(wait)>> for tt0:init-[ ]->wait{};
+normalize
+axioms
+#[serial 1009]  <<M(wait) and x>> -> <<M(decide_wait)>> for tt1:wait-[x]->decide_wait{};
+axioms
+#[serial 1010]  <<M(decide_wait) and x>> A <<M(run)>> for tt2:decide_wait-[x]->run{A};
+substitute-post
+atomic
+normalize
+laws
+normalize
+laws
+normalize
+alldist^
+now
+axioms
+#[serial 1011]  <<M(decide_wait) and x>> -> <<M(wait)>> for tt3:decide_wait-[x]->wait{};
+normalize
+axioms
+#[serial 1012]  <<M(run) and x>> -> <<M(decide_run)>> for tt4:run-[x]->decide_run{};
+axioms
+#[serial 1013]  <<M(decide_run) and x>> A <<M(run)>> for tt5:decide_run-[x]->run{A};
+substitute-post
+atomic
+laws
+normalize
+laws
+normalize
+alldist^
+now
+axioms
+#[serial 1014]  <<M(decide_run) and x>> A <<M(wait)>> for tt6:decide_run-[x]->wait{A};
+normalize
+atomic
+axioms
+substitute-both
+substitute-post
+normalize
+laws
+axioms
+#[serial 1015]  <<M(decide_run) and x>> -> <<M(run)>> for tt7:decide_run-[x]->run{};
+substitute-both
+normalize
+laws
+alldist^
+axioms
+#[serial 1016]  <<M(decide_run) and x>> A <<M(wait)>> for tt8:decide_run-[x]->wait{A};
+normalize
+atomic
+axioms
+laws
+axioms

@@ -1,0 +1,173 @@
+--Timeout.aadl
+
+--thread component to provide the timeout dispatch trigger equivalent
+--an event received on "start" sets counter to one
+--each subsequent period the counter is incremented
+--when the counter reaches the limit, an event is sent on out event port done
+
+--duration of timeout is limit*Period property of thread
+
+
+package Timeout
+
+public
+	with BLESS_Types, BLESS, Timing_Properties;
+
+
+
+thread TimeoutPeriodicWithoutCancel
+	features
+		start : in event port;  --start timer
+		limit : in data port BLESS_Types::Integer;  --timeout in Period*limit
+		done : out event port  --timeout occurs
+		  {BLESS::Assertion=>"<< TIMEOUT_DISCRETE(limit) >>";};
+	properties
+		Dispatch_Protocol => Periodic;  
+		Timing_Properties::Period => 1 ms; --must set Period property
+annex BLESS
+	{**
+	assert
+	  << TIMEOUT_DISCRETE: z ~ quantity whole : start^-z and not ( exists i ~ quantity whole in 1 .. (z - 1) that start^-i ) >>
+	invariant
+	  << true >>
+	variables
+	  counter ~ quantity whole	
+--	  << CD: : not ( exists i ~ quantity whole in 1 .. counter that start^(-counter) ) >>
+	states
+	  init : initial state 
+	  wait : complete state 
+	  decide_wait : state   
+	  run : complete state  << TIMEOUT_DISCRETE(counter) >>
+	  decide_run : state	  << TIMEOUT_DISCRETE(counter) >>
+	transitions
+	  to0 : init -[ ]-> wait  --initially, wait for start
+	  to1 : wait -[ on dispatch ]-> decide_wait  --waiting
+	  to2 : decide_wait -[ start? ]-> run 	  --started
+	    { counter := 1 } 
+	  to3 : decide_wait -[ not start? ]-> wait  --not started
+	  to4 : run -[ on dispatch ]-> decide_run  --running
+	  to5 : decide_run -[ not start? and counter = limit ]-> wait  --timeout
+	    { done! }  
+	  toSerban : decide_run -[ counter > limit ]-> wait  --necessary only for Serbans theorem:  a<b or a=b or a>b
+	  to6 : decide_run -[ not start? and counter < limit ]-> run  --count down
+	    { counter := counter + 1 }
+	  to8 : decide_run -[ start? ]-> run  --timer restart
+	    { counter := 1 } 
+	**};
+end TimeoutPeriodicWithoutCancel;
+
+	
+-- timeout occurs when start received limit*Period previously, and not since	
+thread TimeoutPeriodicWithCancel
+	features
+		start : in event port;  --start timer
+		limit : in data port BLESS_Types::Integer;  --timeout in Period*limit
+		cancel : in event port; --stop timer
+		done : out event port  --timeout occurs
+		  {BLESS::Assertion=>"<<TIMEOUT_DISCRETE(limit)>>";};
+	properties
+		Dispatch_Protocol => Periodic;  --must set Period property
+		Timing_Properties::Period => 1 ms; --must set Period property
+annex BLESS
+	{**
+--	assert
+--	  << TIMEOUT_DISCRETE: l ~ quantity whole : start^(-l) and not (exists i ~ quantity whole in 1 .. (l - 1) that start^(-i) ) >>
+	invariant
+	  << true >>
+	variables
+	  counter ~ quantity whole	
+--	  << CD: : not ( exists i ~ quantity whole in 1 .. counter that start^(-counter) ) >>
+	states
+	  init : initial state 
+	  wait : complete state 
+	  decide_wait : state   
+	  run : complete state  << TIMEOUT_DISCRETE(counter) >>
+	  decide_run : state	  << TIMEOUT_DISCRETE(counter) >>
+	transitions
+	  to0 : init -[ ]-> wait  --initially, wait for start
+	  to1 : wait -[ on dispatch ]-> decide_wait  --waiting
+	  to2 : decide_wait -[ start? ]-> run 	  --started
+	    { counter := 1 } 
+	  to3 : decide_wait -[ not start? ]-> wait  --not started
+	  to4 : run -[ on dispatch ]-> decide_run  --running
+	  to5 : decide_run -[ not cancel? and not start? and counter = limit ]-> wait  --timeout
+	    { done! }  
+	  toSerban : decide_run -[ counter > limit ]-> wait  --necessary only for Serbans theorem:  a<b or a=b or a>b
+	  to6 : decide_run -[ not cancel? and not start? and counter < limit ]-> run  --count down
+	    { counter := counter + 1 }
+	  to7 : decide_run -[ cancel? ]-> wait  --timer cancelled
+	  to8 : decide_run -[ start? and not cancel? ]-> run  --timer restart
+	    { counter := 1 } 
+	**};
+end TimeoutPeriodicWithCancel;
+
+thread TimeoutPeriodicWithTimestamp
+	features
+		start : in event port;  --start timer
+		duration : in data port BLESS_Types::Time  --duration must be multiple of thread Period
+		  {BLESS::Assertion=>"<< PERIOD_MULTIPLE(DURATION) >>";}; 
+		done : out event port  --timeout occurs
+		  {BLESS::Assertion=>"<< TIMEOUT(now) >>";};
+		late : out event port  --late timeout because duration was not a multiple of Timing_Properties::Period
+		  {BLESS::Assertion=>"<< ST() and start_time < (now-duration) >>";};	
+	properties
+		Dispatch_Protocol => Periodic;  
+		Timing_Properties::Period => 1 ms; --must set Period property
+annex BLESS
+	{**
+	assert
+	  << TIMEOUT : n ~ time : ST() and start_time = n-duration >>
+	  << PERIOD_MULTIPLE : d ~ quantity whole : exists k ~ quantity whole in 1 .. 1000000 that d*k = self#Timing_Properties::Period >>
+	invariant
+	  << true >>
+	variables
+	  start_time ~ time
+	  <<ST: : start@start_time and not ( exists t~time in start_time ,, now that start@t ) >>
+	states
+	  init : initial state 
+	  wait : complete state 
+	  decide_wait : state   
+	  run : complete state  << ST() >>
+	  decide_run : state	  << ST() >>
+	transitions
+	  tt0: init -[ ]-> wait
+	  tt1: wait -[on dispatch]-> decide_wait
+	  tt2: decide_wait -[start?]-> run
+	    { start_time := now }
+	  tt3: decide_wait -[not start?]-> wait
+	  tt4: run -[on dispatch]-> decide_run
+	  tt5: decide_run -[start?]-> run
+	    { start_time := now }
+    tt6: decide_run -[not start? and now-duration=start_time]-> wait
+      { done! }
+    tt7: decide_run -[not start? and now-duration < start_time]-> run
+    tt8: decide_run -[not start? and now-duration > start_time]-> wait
+      { late! }
+    	  
+	**};
+	
+end TimeoutPeriodicWithTimestamp;
+
+
+
+
+--must put the thread into a process implementation and then into a system implementation
+--to get an instance model to generate either Slang or verification conditions
+process P
+end P;
+
+process implementation P.i
+ 	subcomponents 
+ 		timeout_with_cancel : thread TimeoutPeriodicWithCancel;
+ 		timeout_no_cancel : thread TimeoutPeriodicWithoutCancel;
+ 		timeout_timestamp : thread TimeoutPeriodicWithTimestamp;
+end P.i;
+
+system S
+end S;
+
+system implementation S.i
+ 	subcomponents p : process P.i;	
+end S.i;
+
+end Timeout;
