@@ -90,10 +90,10 @@ annex BLESS
 	    { counter := 1 } 
 	  to3 : decide_wait -[ not start? ]-> wait  --not started
 	  to4 : run -[ on dispatch ]-> decide_run  --running
-	  to5 : decide_run -[ not cancel? and not start? and counter = limit ]-> wait  --timeout
+	  to5 : decide_run -[ not cancel? and not start? and counter = limit? ]-> wait  --timeout
 	    { done! }  
-	  toSerban : decide_run -[ counter > limit ]-> wait  --necessary only for Serbans theorem:  a<b or a=b or a>b
-	  to6 : decide_run -[ not cancel? and not start? and counter < limit ]-> run  --count down
+	  toSerban : decide_run -[ counter > limit? ]-> wait  --necessary only for Serbans theorem:  a<b or a=b or a>b
+	  to6 : decide_run -[ not cancel? and not start? and counter < limit? ]-> run  --count down
 	    { counter := counter + 1 }
 	  to7 : decide_run -[ cancel? ]-> wait  --timer cancelled
 	  to8 : decide_run -[ start? and not cancel? ]-> run  --timer restart
@@ -138,17 +138,15 @@ annex BLESS
 	  tt4: run -[on dispatch]-> decide_run
 	  tt5: decide_run -[start?]-> run
 	    { start_time := now }
-    tt6: decide_run -[not start? and now-duration=start_time]-> wait
+    tt6: decide_run -[not start? and now-duration?=start_time]-> wait
       { done! }
-    tt7: decide_run -[not start? and now-duration < start_time]-> run
-    tt8: decide_run -[not start? and now-duration > start_time]-> wait
+    tt7: decide_run -[not start? and now-duration? < start_time]-> run
+    tt8: decide_run -[not start? and now-duration? > start_time]-> wait
       { late! }
     	  
 	**};
 	
 end TimeoutPeriodicWithTimestamp;
-
-
 
 
 --must put the thread into a process implementation and then into a system implementation
