@@ -391,8 +391,8 @@ transitions
           that (vp or vs)@tv ) 
      and LRL(now) and ap@now >>};  
     
-  T17_STOP:  --turn off pacing
-  sav,pav,va -[on dispatch stop]-> off{};  
+--  T17_STOP:  --turn off pacing
+--  sav,pav,va -[on dispatch stop]-> off{};  
   
 **};	--end of annex subclause 
 

@@ -20,7 +20,7 @@ public
 			{BLESS::Assertion => "<<VP()>>";};
 			n: out event port --non-refractory ventricular sense
 			{BLESS::Assertion => "<<(now=0) or VS()>>";};
-			halt: in event port;  --stop thread
+			h: in event port;  --stop thread
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
 			BLESS::Invariant => "<<LRL()>>";
@@ -92,8 +92,11 @@ transitions
     <<last_beat=now>>
     };	  
 
-  T2_STOP:		--turn off pacing
-  pace,sense -[on dispatch halt]-> off{}
+  T2_STOP_pace:		--turn off pacing
+  pace -[on dispatch h]-> off{}
+
+  T2_STOP_sense:		--turn off pacing
+  sense -[on dispatch h]-> off{}
 
   T3_PACE_LRL_AFTER_VP:	--pace when LRL times out
   pace -[on dispatch timeout (n or p) lrl]-> pace
