@@ -47,7 +47,7 @@ assert
     -- there has been a V-pace or a non-refractory V-sense 
     exists t~time 
       -- within the previous LRL interval
-      in (x-#PP::Lower_Rate_Limit_Interval)..x 
+      in (x-#PP::Lower_Rate_Limit_Interval ms)..x 
       -- in which a heartbeat was sensed, or caused by pacing
       that (vs or vp)@t  >>
 
@@ -61,7 +61,7 @@ assert
   -- applied to vp: out event port, no pace (out event) too soon, URL is true when event is sent 
   not -- there must not be V-sense or -pace not in previous URL open-interval ,, 
    (exists tu~time 
-      in (x-#PP::Upper_Rate_Limit_Interval),,x 
+      in (x-#PP::Upper_Rate_Limit_Interval ms),,x 
       that (vs or vp)@tu) >>       
 
 --atrial-ventricular delay
@@ -82,7 +82,7 @@ assert
 <<PAV:x~time:	--there has been A-pace during the fixed AV delay
   exists ts~time 
        --in the previous fixed AV delay milliseconds,
-      in (x-#PP::Fixed_AV_Delay)..x 
+      in (x-#PP::Fixed_AV_Delay ms)..x 
       that ap@ts >> 
 
 --sensed AV delay
@@ -94,7 +94,7 @@ assert
 <<SAV:x~time: 
   (exists ta~time 
        --in the previous fixed AV delay milliseconds,
-      in (x-#PP::Sensed_AV_Delay)..x 
+      in (x-#PP::Sensed_AV_Delay ms)..x 
       that as@ta)  >>
 --  or  --a previous V-event prevents pacing above URL
 --  (exists tu~time
@@ -108,7 +108,7 @@ assert
 --  ventricular senses shall not inhibit nor trigger pacing.
 <<VRP:x~time:
   exists tv~time
-	in (x-#PP::Ventricular_Refractory_Period),,x
+	in (x-#PP::Ventricular_Refractory_Period ms),,x
 	that (vs or vp)@tv  >>  
  
 --atrial refractory period
@@ -118,7 +118,7 @@ assert
 --  during which time atrial events shall not inhibit nor trigger pacing.
 <<ARP:x~time:
   exists tar~time
-  	in (x-#PP::Atrial_Refractory_Period),,x
+  	in (x-#PP::Atrial_Refractory_Period ms),,x
   	that (as or ap)@tar>>
 
 --post-ventricular atrial refractory period
@@ -132,7 +132,7 @@ assert
 --    2. Trigger a ventricular pace.
 <<PVARP:x~time: 
   exists tv~time 
-    in (x-#PP::PVARP),,x
+    in (x-#PP::PVARP ms),,x
     that (vs or vp)@tv >>
 
 --non-refractory ventricular sense occurs, asserted by port vs 
@@ -164,18 +164,18 @@ assert
   PACE_ON_SAV_DELAY(x) >>    
     
 <<PACE_ON_LRL:x~time:    --no intrinsic activity, pace at LRL
-  (vp or vs)@(x-#PP::Lower_Rate_Limit_Interval)
+  (vp or vs)@(x-#PP::Lower_Rate_Limit_Interval ms)
       and --and not since
       not (exists t~time
-        in (x-#PP::Lower_Rate_Limit_Interval),,x  
+        in (x-#PP::Lower_Rate_Limit_Interval ms),,x  
         --with a non-refractory ventricular sense or pace
         that (vs or vp)@t) >>
                 
 <<PACE_ON_SAV_DELAY:x~time:	--track atrial sense
-    as@(x-#PP::Sensed_AV_Delay) 
+    as@(x-#PP::Sensed_AV_Delay ms) 
       and  --there have been no ventricular events in the upper-rate interval
       not (exists tu~time
-        in (x-#PP::Upper_Rate_Limit_Interval),,x 
+        in (x-#PP::Upper_Rate_Limit_Interval ms),,x 
         that (vs or vp)@tu ) >>  
 
 --atrial pace
@@ -197,7 +197,7 @@ assert
 
 --interactive limit that LRL<URL 
 <<AXIOM_LRLi_gt_URLi_LIMIT:x~time:
-  (x-#PP::Lower_Rate_Limit_Interval) < (x-#PP::Upper_Rate_Limit_Interval) >>
+  (x-#PP::Lower_Rate_Limit_Interval ms) < (x-#PP::Upper_Rate_Limit_Interval ms) >>
 
 --A-event occurred before V-event
 <<AXIOM_A_B4_V: : last_ap_or_as <= -- ((#PP::Fixed_AV_Delay+now) - #PP::Lower_Rate_Limit_Interval) >>
@@ -228,8 +228,8 @@ variables
   last_vp_or_vs ~ time  --time of last ventricular pace or sense
   last_ap_or_as ~ time   --time of last atrial pace or sense
   va_interval ~ time constant --ventricular-atrial interval
-  	:= #PP::Lower_Rate_Limit_Interval-#PP::Fixed_AV_Delay  --atrial paces following vs or vp
-  	<<AXIOM_VA_INTERVAL: : va_interval = (#PP::Lower_Rate_Limit_Interval-#PP::Fixed_AV_Delay) >>;
+  	:= #PP::Lower_Rate_Limit_Interval ms - #PP::Fixed_AV_Delay ms  --atrial paces following vs or vp
+  	<<AXIOM_VA_INTERVAL: : va_interval = (#PP::Lower_Rate_Limit_Interval ms - #PP::Fixed_AV_Delay ms) >>;
 	
 states
   start : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
@@ -240,7 +240,7 @@ states
   sav_check_vrp : state  --ventricular sense during sensed AV delay
   	<<v@now and SAV(now) and INV() >>;  --was it in VRP? 
   sav_check_url : state  --SAV delay timeout, check for URL before tracking
-    <<as@(now-#PP::Sensed_AV_Delay) and SAV(now) and INV() >>;
+    <<as@(now-#PP::Sensed_AV_Delay ms) and SAV(now) and INV() >>;
   pav : complete state  --an atrial pace occurred 
     <<PAV(now) and INV()>>;       --  in the previous Paced AV Delay
   pav_check_vrp : state  --ventricular sense during paced AV delay
@@ -266,17 +266,17 @@ transitions
     }; 
 
   T1_PACE_AFTER_LRL:	--fundamental lower-rate pacing; keeps patients "pink"
-  va,sav,pav -[on dispatch timeout (vp vs) #PP::Lower_Rate_Limit_Interval]->va
-      { <<(vp or vs)@(now-#PP::Lower_Rate_Limit_Interval)
+  va,sav,pav -[on dispatch timeout (vp vs) #PP::Lower_Rate_Limit_Interval ms]->va
+      { <<(vp or vs)@(now-#PP::Lower_Rate_Limit_Interval ms)
           and not (exists t~time 
-           in (now-#PP::Lower_Rate_Limit_Interval),,now
+           in (now-#PP::Lower_Rate_Limit_Interval ms),,now
            that (vp or vs)@t) and LAST_AP_OR_AS_A(now)
          and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        vp! 
          <<vp@now and not (exists t~time 
-          in (now-#PP::Lower_Rate_Limit_Interval),,now
+          in (now-#PP::Lower_Rate_Limit_Interval ms),,now
           that (vp or vs)@t) 
-         and (vp or vs)@(now-#PP::Lower_Rate_Limit_Interval)
+         and (vp or vs)@(now-#PP::Lower_Rate_Limit_Interval ms)
          and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        ;	--note sequential composition
        last_vp_or_vs:=now
@@ -287,10 +287,10 @@ transitions
   sav -[on dispatch v]-> sav_check_vrp{};  --go check whether in VRP
   
   T3_VS_AFTER_AS_IN_VRP:  --ventricular sense during VRP, go back to sav
-  sav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period)]-> sav{};
+  sav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period ms)]-> sav{};
   
   T4_VS_AFTER_AS_AFTER_VRP:  --ventricular sense after VRP, wait for atrial sense
-  sav_check_vrp -[last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period)]-> va
+  sav_check_vrp -[last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period ms)]-> va
     {<<VS(now) and LAST_AP_OR_AS_A(now)>> 
     vs!
      <<vs@now and LAST_AP_OR_AS_A(now)>>
@@ -298,16 +298,16 @@ transitions
     last_vp_or_vs:=now <<last_vp_or_vs=now>>};   
 
   T5a_EXPIRED_SENSED_AV_DELAY:  --V-pace after sensed AV delay
-    sav -[on dispatch timeout (as) #PP::Sensed_AV_Delay]-> sav_check_url{};
+    sav -[on dispatch timeout (as) #PP::Sensed_AV_Delay ms]-> sav_check_url{};
   
   T5b_TRACKED_VP_TOO_SOON_AFTER_PREVIOUS_VS_OR_VP:  --tracked VP too close to previous vp or vs
-   sav_check_url -[last_vp_or_vs > (now-#PP::Upper_Rate_Limit_Interval)]-> sav{};
+   sav_check_url -[last_vp_or_vs > (now-#PP::Upper_Rate_Limit_Interval ms)]-> sav{};
      --go back and wait for another AS to track, or for LRL to time-out forcing VP
    
   T5c_TRACKED_VP_AFTER_AS:  --v-pace after a-sense, if not exceeding URL
-   sav_check_url -[last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval)]-> va
+   sav_check_url -[last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval ms)]-> va
      {<<PACE_ON_SAV_DELAY(now) and VARS(now)
-       and (last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval))>> 
+       and (last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval ms))>> 
     vp!  --ventricular pace tracking atrial sense
      <<vp@now and VARS(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
     & 
@@ -318,10 +318,10 @@ transitions
   pav -[on dispatch v]-> pav_check_vrp{};  --go check whether in VRP
 
   T7_VS_AFTER_AP_IN_VRP:  --vs too soon after previous vs or vp, go back to pav
-  pav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period)]-> pav{};  
+  pav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period ms)]-> pav{};  
   
   T8_VS_AFTER_AP_AFTER_VRP:  --ventricular sense after VRP, wait for atrial sense 
-  pav_check_vrp -[ last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period)]-> va  
+  pav_check_vrp -[ last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period ms)]-> va  
     { <<VS(now) and VARS(now)>> 
       {
         <<VS(now) and LAST_AP_OR_AS_A(now)>>
@@ -338,8 +338,8 @@ transitions
   va -[on dispatch a]-> check_atrial_refractories{};  --is a too early?
   
   T11_PVARP_EXPIRED:  --a sense not in PVARP, start sensed A-V delay
-  check_atrial_refractories -[((now-#PP::PVARP)>last_vp_or_vs)
-  	 and ((now-#PP::Atrial_Refractory_Period)>last_ap_or_as)]-> sav  
+  check_atrial_refractories -[((now-#PP::PVARP ms)>last_vp_or_vs)
+  	 and ((now-#PP::Atrial_Refractory_Period ms)>last_ap_or_as)]-> sav  
     {<<AS(now) and LRL(now) and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now)>> 
     as!
      <<as@now and LRL(now) and LAST_VP_OR_VS_A(now) 
@@ -349,17 +349,17 @@ transitions
      <<(last_ap_or_as=now) and LAST_AP_OR_AS_A(now)>>};
   
   T12_STILL_IN_PVARP:  --a sense in PVARP, go back to va
-  check_atrial_refractories -[((now-#PP::PVARP)<=last_vp_or_vs)
-  	or ((now-#PP::Atrial_Refractory_Period)<=last_ap_or_as)]-> va{}; 
+  check_atrial_refractories -[((now-#PP::PVARP ms)<=last_vp_or_vs)
+  	or ((now-#PP::Atrial_Refractory_Period ms)<=last_ap_or_as)]-> va{}; 
   
   T13_VS_AFTER_VS_OR_VP:  --v sense after v sense or v pace
   va -[on dispatch v]-> check_vrp{};  
   
   T14_STILL_IN_VRP:  -- vs in VRP, go back to va
-  check_vrp -[(now-#PP::Ventricular_Refractory_Period)<last_vp_or_vs]-> va{};  
+  check_vrp -[(now-#PP::Ventricular_Refractory_Period ms)<last_vp_or_vs]-> va{};  
     
   T15_VRP_EXPIRED:  --vs after VRP expired
-  check_vrp -[(now-#PP::Ventricular_Refractory_Period)>=last_vp_or_vs]-> va
+  check_vrp -[(now-#PP::Ventricular_Refractory_Period ms)>=last_vp_or_vs]-> va
     {<<VS(now) and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now)>> 
     vs!
      <<vs@now and LAST_AP_OR_AS_A(now)
