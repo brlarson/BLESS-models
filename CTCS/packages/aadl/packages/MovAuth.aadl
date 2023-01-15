@@ -143,7 +143,7 @@ thread implementation Controller.impl
 	
 	variables
 			
-		i ~ quantity whole := 0  -- segment indexing
+		i ~ quantity whole := 0 whole -- segment indexing
 		b ~ quantity mpss constant :=  #ma_properties::SB_Rate mpss -- deceleration rate when service brake is applied
 		  <<AXIOM_B: : b = #ma_properties::SB_Rate mpss>>
 		e ~ quantity mpss constant := #ma_properties::EB_Rate mpss -- deceleration rate when emergency brake is applied
@@ -159,14 +159,14 @@ thread implementation Controller.impl
 		CMA: state           -- CheckMA
 		RETRY: state         --Retry MA request
 		MFR: complete state  --Move Forward
-			<< iSeg=ma[i] and nSeg=ma[i+1] >>
+			<< iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
 		CMF: state           --Check Move Forward
-			<< iSeg=ma[i] and nSeg=ma[i+1] >>
+			<< iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
 		SBI: complete state  --Service Brake Intervention 
-		<<  iSeg=ma[i] and nSeg=ma[i+1] >>
+		<<  iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
 --		  << (not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and AXIOM_B() >> 
 		CSB: state --Check Service Brake
-			<<  iSeg=ma[i] and nSeg=ma[i+1] >> 
+			<<  iSeg=ma[i] and nSeg=ma[i + 1 whole] >> 
 		EBI: complete state  --Emergency Brake Intevention
 		CEB: state -- check Emergency Brake
 		STOP: final state    --a final state
@@ -199,8 +199,8 @@ thread implementation Controller.impl
 			{  << s=0 m >> 
 			m?(ma)  --save received movement authority in local variable
 			;  << s= 0 m and ma=IMA >>
-			i := 0  --first segment of new movement authority
-			; << i=0 and s= 0 m and ma=IMA >>  
+			i := 0 whole --first segment of new movement authority
+			; << i=0 whole and s= 0 m and ma=IMA >>  
       iSeg := ma[0] --set current segment of movement authority to first segment
 			; << i=0 and s= 0 m and ma=IMA and iSeg=ma[i] >> 
 			nSeg := ma[1]  --set next segment of movement authority to second segment

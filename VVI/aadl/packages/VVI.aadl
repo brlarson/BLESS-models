@@ -139,6 +139,27 @@ transitions
 **}; --end of annex subclause 
 	end VVI.i; --end thread 
 
+	thread RateControl
+		features
+			lrl: out data port CardiacDuration; --lower rate limit interval
+			vrp: out data port CardiacDuration; --ventricular refractory period 
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 100 ms;
+		annex BLESS
+		{**
+		states
+		  start : initial state;
+		  run : complete state;
+		transitions
+		  go: start -[ ]-> run
+		    {
+		    lrl!(1000 ms) & vrp!(150 ms)
+		    }
+		**};		
+	end RateControl;
+	
+
 	system PG
 		features
 			lead: requires bus access IS1;
@@ -163,9 +184,12 @@ transitions
 	process implementation PGprocess.i
 		subcomponents
 			t: thread VVI.i;
+			rc: thread RateControl;
 		connections
 			s: port sense -> t.s;
 			p: port t.p -> pace;
+			l: port rc.lrl -> t.lrl;
+			v: port rc.vrp -> t.vrp;
 	end PGprocess.i;
 
 	device FrontEnd
@@ -173,6 +197,8 @@ transitions
 			sense: out event port;
 			pace: in event port;
 			lead: requires bus access IS1;
+		properties
+			Dispatch_Protocol => Sporadic;
 	end FrontEnd;
 
 	bus IS1
