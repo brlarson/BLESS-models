@@ -21,12 +21,29 @@ public
 			n: out event port --non-refractory ventricular sense
 			{BLESS::Assertion => "<<(now=0) or VS()>>";};
 			h: in event port;  --stop thread
+	end VVI;
+
+	thread implementation VVI.VOO
+		-- periodic pacing to test firmata4j
+		properties
+			Thread_Properties::Dispatch_Protocol => Periodic;
+		  Period => 1 sec;
+		annex BLESS
+		{**
+		states
+		  power_on : initial state;
+		  run : complete state;
+		transitions
+		  VOO1: power_on -[ ]-> run
+		  VOO2: run -[on dispatch]-> run
+		    { p! }
+		**};
+	end VVI.VOO;
+
+	thread implementation VVI.i
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
 			BLESS::Invariant => "<<LRL()>>";
-	end VVI;
-
-	thread implementation VVI.i
 		annex BLESS {**
 assert	     
   << notVRP: : --Ventricular Refractory Period
@@ -156,6 +173,7 @@ transitions
 		    {
 		    lrl!(1000 ms) & vrp!(150 ms)
 		    }
+		  cyc: run-[on dispatch]-> run
 		**};		
 	end RateControl;
 	
@@ -175,6 +193,16 @@ transitions
 			pace: port pp.pace -> fe.pace;
 	end PG.i;
 
+	system implementation PG.VOO
+		subcomponents
+			pp: process PGprocess.VOO;
+			fe: device FrontEnd;
+		connections
+			header: bus access fe.lead -> lead;
+			sense: port fe.sense -> pp.sense;
+			pace: port pp.pace -> fe.pace;
+	end PG.VOO;
+
 	process PGprocess
 		features
 			sense: in event port;
@@ -191,6 +219,17 @@ transitions
 			l: port rc.lrl -> t.lrl;
 			v: port rc.vrp -> t.vrp;
 	end PGprocess.i;
+
+	process implementation PGprocess.VOO
+		subcomponents
+			t: thread VVI.VOO;
+			rc: thread RateControl;
+		connections
+			s: port sense -> t.s;
+			p: port t.p -> pace;
+			l: port rc.lrl -> t.lrl;
+			v: port rc.vrp -> t.vrp;
+	end PGprocess.VOO;
 
 	device FrontEnd
 		features
