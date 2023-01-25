@@ -145,7 +145,7 @@ transitions
 			vrp: out data port CardiacDuration; --ventricular refractory period 
 		properties
 			Dispatch_Protocol => Periodic;
-			Period => 100 ms;
+			Period => 10000 ms;
 		annex BLESS
 		{**
 		states
