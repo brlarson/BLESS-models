@@ -110,7 +110,7 @@ end pController.impl;
 --------------Controller Thread----------
 thread Controller
 	features
-		ca: out data port ma_types:: Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration
+		ca: out data port ma_types::Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration
 		r: out event port {BLESS::Assertion=> "<<(s = 0) or (s >= (eoa - SR))>>";};  -- request for new MA
 		m: in event data port ma_types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current movement authority
 		ea: in data port ma_types::EOA  {BLESS::Value=> "<<:=EOA>>";}; -- EoA end of the las segment
@@ -159,14 +159,14 @@ thread implementation Controller.impl
 		CMA: state           -- CheckMA
 		RETRY: state         --Retry MA request
 		MFR: complete state  --Move Forward
-			<< iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
+			<< iSeg=ma[i] and nSeg=ma[i + 1] >>
 		CMF: state           --Check Move Forward
-			<< iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
+			<< iSeg=ma[i] and nSeg=ma[i + 1] >>
 		SBI: complete state  --Service Brake Intervention 
-		<<  iSeg=ma[i] and nSeg=ma[i + 1 whole] >>
+		<<  iSeg=ma[i] and nSeg=ma[i + 1] >>
 --		  << (not (v < iSeg.v2) or not (v*v + 2*b*s < (nSeg.v2*nSeg.v2) + 2*b*iSeg.e)) and AXIOM_B() >> 
 		CSB: state --Check Service Brake
-			<<  iSeg=ma[i] and nSeg=ma[i + 1 whole] >> 
+			<<  iSeg=ma[i] and nSeg=ma[i + 1] >> 
 		EBI: complete state  --Emergency Brake Intevention
 		CEB: state -- check Emergency Brake
 		STOP: final state    --a final state

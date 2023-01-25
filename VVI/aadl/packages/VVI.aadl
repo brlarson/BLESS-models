@@ -104,6 +104,7 @@ transitions
     {
     	<<now=0>>
     n! <<n@now>>   --first "sense" at initialization
+    & p!
     & 
     last_beat:=now 
     <<last_beat=now>>
@@ -162,7 +163,7 @@ transitions
 			vrp: out data port CardiacDuration; --ventricular refractory period 
 		properties
 			Dispatch_Protocol => Periodic;
-			Period => 100 ms;
+			Period => 100 sec;
 		annex BLESS
 		{**
 		states
