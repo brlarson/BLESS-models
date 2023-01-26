@@ -192,7 +192,7 @@ ATR_RC_fallback: check_atr -[(now-dur_met) <= fb_time]-> atr_fallback
     }
   };   --end of RC_fallback
   
-RCX : atr_fallback -[on dispatch stop]-> done{};
+--RCX : atr_fallback -[on dispatch stop]-> done{};
   
 **};
   

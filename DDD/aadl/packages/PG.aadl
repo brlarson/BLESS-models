@@ -23,16 +23,15 @@ end Pacemaker.imp;
 
 device FrontEnd
   features	
-	atrial_lead : requires bus access AtrialLead.imp;  --lead to atrium
-	ventricular_lead : requires bus access VentricularLead.imp;  --lead to ventricle
+	  atrial_lead : requires bus access AtrialLead.imp;  --lead to atrium
+	  ventricular_lead : requires bus access VentricularLead.imp;  --lead to ventricle
     a : out event port;  --signal in atrium
     v : out event port;  --signal in ventricle
     ap : in event port;  --pace atrium
     vp : in event port;  --pace ventricle   	
+	properties
+		Dispatch_Protocol => Sporadic;
 end FrontEnd;		
-
-device implementation FrontEnd.imp
-end FrontEnd.imp;	
 		
 bus AtrialLead
 end AtrialLead;

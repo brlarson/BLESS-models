@@ -441,8 +441,8 @@ transitions
      and LRL_A(now) and AP@now >>
   };  
     
-  T20_STOP :  --turn off pacing
-  sav,pav,va -[on dispatch stop]-> off{};  
+--  T20_STOP :  --turn off pacing
+--  sav,pav,va -[on dispatch stop]-> off{};  
   
 **};	--end of annex subclause 
 end DDD.imp;
