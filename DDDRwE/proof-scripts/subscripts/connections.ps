@@ -1,0 +1,137 @@
+#connections
+#[serial 1081] Subcomponent's Invariant implies PG.imp's Invariant
+axioms
+#[serial 1082] Subcomponent's Invariant implies pg_process.imp's Invariant
+axioms
+#[serial 1083] Composition of Subcomponents via Directional Connection dc.asCount -> atr.asCount:
+axioms
+#[serial 1084] Composition of Subcomponents via Directional Connection ac.atCount -> atr.atCount:
+axioms
+#[serial 1085] Composition of Subcomponents via Directional Connection ddd.last_v_was_vs -> rc.last_v_was_vs:
+axioms
+#[serial 1086] Composition of Subcomponents via Directional Connection ddd.last_v_was_vs -> atr_rc.last_v_was_vs:
+axioms
+#[serial 1087] Composition of Subcomponents via Directional Connection ddd.cci -> rc.cci:
+axioms
+#[serial 1088] Composition of Subcomponents via Directional Connection ddd.cci -> atr_rc.cci:
+axioms
+#[serial 1089] Composition of Subcomponents via Directional Connection ddd.cci -> mkr.cci:
+axioms
+#[serial 1090] Composition of Subcomponents via Directional Connection ddd.ap -> mkr.ap:
+axioms
+#[serial 1091] Composition of Subcomponents via Directional Connection ddd.vp -> mkr.vp:
+axioms
+#[serial 1092] Composition of Subcomponents via Directional Connection ddd.as -> mkr.as:
+axioms
+#[serial 1093] Composition of Subcomponents via Directional Connection ddd.as -> atr.dc.as:
+axioms
+#[serial 1094] Composition of Subcomponents via Directional Connection ddd.at -> mkr.at:
+axioms
+#[serial 1095] Composition of Subcomponents via Directional Connection ddd.at -> atr.ac.at:
+axioms
+#[serial 1096] Composition of Subcomponents via Directional Connection ddd.vs -> mkr.vs:
+axioms
+#[serial 1097] Composition of Subcomponents via Directional Connection ddd.pvc -> mkr.pvc:
+axioms
+#[serial 1098] Composition of Subcomponents via Directional Connection ddd.ras -> mkr.ras:
+axioms
+#[serial 1099] Composition of Subcomponents via Directional Connection ddd.rvs -> mkr.rvs:
+axioms
+#[serial 1100] Composition of Subcomponents via Directional Connection rc.min_cci -> ddd.min_cci:
+axioms
+#[serial 1101] Composition of Subcomponents via Directional Connection rc.max_cci -> ddd.max_cci:
+axioms
+#[serial 1102] Composition of Subcomponents via Directional Connection rc.dav -> ddd.dav:
+axioms
+#[serial 1103] Composition of Subcomponents via Directional Connection atr_rc.min_cci -> ddd.min_cci:
+normalize
+axioms
+#[serial 1104] Composition of Subcomponents via Directional Connection atr_rc.max_cci -> ddd.max_cci:
+axioms
+#[serial 1105] Composition of Subcomponents via Directional Connection atr_rc.atr_max_cci -> ddd.atr_max_cci:
+substitute-pre
+substitute-post
+axioms
+#[serial 1106] Composition of Subcomponents via Directional Connection atr_rc.dav -> ddd.dav:
+axioms
+#[serial 1107] Composition of Subcomponents via Directional Connection atr.atr.fb -> ddd.fb:
+axioms
+#[serial 1108] Composition of Subcomponents via Directional Connection atr.atr.atr_detect -> mkr.atr_dct:
+axioms
+#[serial 1109] Composition of Subcomponents via Directional Connection atr.atr.atr_fallback -> mkr.atr_fb:
+axioms
+#[serial 1110] Composition of Subcomponents via Directional Connection atr.atr.atr_end -> mkr.atr_end:
+axioms
+#[serial 1111] Composition of Subcomponents via Directional Connection DDD.ddd.ap -> front_end.ap:
+axioms
+#[serial 1112] Composition of Subcomponents via Directional Connection DDD.ddd.vp -> front_end.vp:
+axioms
+#[serial 1109] Composition of Subcomponents via Directional Connection PACEMAKER::PG.imp.pa:
+axioms
+#[serial 1110] Composition of Subcomponents via Directional Connection PACEMAKER::PG.imp.pv:
+axioms
+#[serial 1111] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.fbo:
+axioms
+#[serial 1112] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.atrd:
+axioms
+#[serial 1113] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.atrf:
+axioms
+#[serial 1114] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.atre:
+axioms
+#[serial 1115] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.dcnt:
+axioms
+#[serial 1116] Composition of Subcomponents via Directional Connection ATR::AtrialTachyResponse.imp.atcnt:
+axioms
+#[serial 1117] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.dap:
+axioms
+#[serial 1118] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.dvp:
+axioms
+#[serial 1119] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.ccidrc:
+axioms
+#[serial 1120] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.lvwvs:
+axioms
+#[serial 1121] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.ccidatr_rc:
+axioms
+#[serial 1122] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.lvwvsatr_rc:
+axioms
+#[serial 1123] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.mxatr:
+axioms
+#[serial 1124] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.mnrcd:
+axioms
+#[serial 1125] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.mxrcd:
+axioms
+#[serial 1126] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.davrcd:
+axioms
+#[serial 1127] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.atr_mnrcd:
+axioms
+#[serial 1128] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.atr_mxrcd:
+substitute-both
+axioms
+#[serial 1129] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.atr_davrcd:
+axioms
+#[serial 1130] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.apdm:
+axioms
+#[serial 1131] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.vpdm:
+axioms
+#[serial 1132] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.asdm:
+axioms
+#[serial 1133] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.vsdm:
+axioms
+#[serial 1134] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.atdm:
+axioms
+#[serial 1135] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.pvcdm:
+axioms
+#[serial 1136] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.rasdm:
+axioms
+#[serial 1137] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.rvsdm:
+axioms
+#[serial 1138] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.ccidm:
+axioms
+#[serial 1139] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.fbad:
+axioms
+#[serial 1140] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.dctam:
+axioms
+#[serial 1141] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.fbam:
+axioms
+#[serial 1142] Composition of Subcomponents via Directional Connection PGprocess::pg_process.imp.endam:
+axioms

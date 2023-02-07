@@ -1,0 +1,59 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
+#  at Wed Feb 01 13:05:43 CST 2023 by brianlarson
+sort-by-component[ATR::ATRcontrol.imp]
+make-an
+#ATR::ATRcontrol.imp
+#[serial 1032] <<M(normal)>> -> <<I>> from invariant I when complete state normal has Assertion <<M(normal)>> in its definition.
+axioms
+#[serial 1033] <<M(atr_duration)>> -> <<I>> from invariant I when complete state atr_duration has Assertion <<M(atr_duration)>> in its definition.
+axioms
+#[serial 1034] <<M(fallback)>> -> <<I>> from invariant I when complete state fallback has Assertion <<M(fallback)>> in its definition.
+axioms
+#[serial 1035] Serban's Theorem:  disjunction of execute conditions leaving execution state check_fallback, <<M(check_fallback)>> -> <<e1 or e2 or . . . en>>
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state check_duration, <<M(check_duration)>> -> <<e1 or e2 or . . . en>>
+replace<=
+normalize
+laws
+cnf
+laws
+normalize
+replace<=
+normalize
+laws
+normalize
+axioms
+#[serial 1038] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+cnf
+laws
+normalize
+laws
+normalize
+axioms
+#[serial 1039]  <<M(start)>> -> <<M(normal)>> for atrd_go:start-[ ]->normal{};
+axioms
+#[serial 1040]  <<M(normal) and x>> -> <<M(check_normal)>> for norm_as:normal-[x]->check_normal{};
+normalize
+split-post
+axioms
+replace-port
+axioms
+#[serial 1041]  <<M(check_normal) and x>> -> <<M(normal)>> for norm_lt7:check_normal-[x]->normal{};
+normalize
+laws
+axioms
+#[serial 1042]  <<M(check_normal) and x>> -> <<M(err)>> for norm_gt7:check_normal-[x]->err{};
+axioms
+#[serial 1043]  <<M(check_normal) and x>> -> <<M(normal)>> for norm_few:check_normal-[x]->normal{};
+normalize
+laws
+axioms

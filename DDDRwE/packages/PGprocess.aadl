@@ -17,9 +17,9 @@ process pg_process
   tnv : in data port flag;  --noise V-channel
   --to front end
   ap: out event port	--pace atrium 
-    {BLESS::Assertion=>"<<AP_A(now) or now=0>>";};
+    {BLESS::Assertion=>"<<AP>>";};
   vp: out event port	--pace ventricle, but not too soon 
-    {BLESS::Assertion=>"<<VP_A(now) and URL(now)>>";};
+    {BLESS::Assertion=>"<<VP>>";};
   --to telemetry
   settings : in out data port; 
   --from accelerometer

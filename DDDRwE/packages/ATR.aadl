@@ -29,15 +29,20 @@ public
 -- 4. The detection period shall be long enough that occasional premature atrial 
 --   contractions do not cause unnecessary ATR therapy, nor cease necessary ATR 
 --   therapy upon occasional slow beats.	
+
+-- ATR_DETECT interprets 5.6.1.1 that "predominantly" means at least 5 of the last 7
+-- atrial senses had less then the Upper Ralte Limit Interval since the previous atrial sense
+-- Atrial senses faster than URL are considered "AT" atrial tachycrdia
 <<ATR_DETECT: x~time :  --at least 5 of 7 A-events were AT
   exists s~time which s<x that  --there is an earlier time s
    ((7=(numberof t~time in s..x that AS@t))  --seven atrial senses
     and (5<=(numberof t~time in s..x that (AS@t and AT@t))))>>  --five or more were faster than URL
-    
+ 
+-- ATR_END interprets 5.6.1.2 as 3 or fewer of the previous 7 atrial senses were AT    
 <<ATR_END: x~time :  --at most 3 of 7 A-events were AT
   exists s~time which s<x that  --there is an earlier time s
-   ((7 = (numberof t~time in s..x that AS@t))  --seven atrial senses
-    and ( 3 >= (numberof t~time in s..x that (AS@t and AT@t))))>>  --three or fewer were faster than URL
+   (7 = (numberof t~time in s..x that AS@t)  --seven atrial senses
+    and 3 >= (numberof t~time in s..x that (AS@t and AT@t)))>>  --three or fewer were faster than URL
 
 
 -- 5.6.2 ATR Duration
@@ -81,13 +86,13 @@ public
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			{BLESS::Assertion => "<<FB>>";};
 			as: in event port --non-refractory atrial sense
-			; --{BLESS::Assertion=>"<<AS_A(now) or now=0>>";};
+			  {BLESS::Assertion=>"<<AS>>";};
 			at: in event port --non-refractory atrial sense above URL
-			; --{BLESS::Assertion=>"<<AT(now)>>";};
+			  {BLESS::Assertion=>"<<AT>>";};
 			atr_detect: out event port --ATR detection met
 			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
-			{BLESS::Assertion => "<<FB>>";};
+			{BLESS::Assertion => "<<FB_START>>";};
 			atr_end: out event port --resume DDD; marker ATR-End
 			{BLESS::Assertion => "<<ATR_END(now)>>";};
 
@@ -108,14 +113,16 @@ public
 			atrf: port atr.atr_fallback -> atr_fallback; --fall-back start
 			atre: port atr.atr_end -> atr_end; --A-tachy ended
 			--from group to dc
-			asidc: port as -> dc.as; --duration count
+			asidc: port as -> dc.as; --atrial sense
+			--from thread group to atr
+			asatr: port as -> atr.as;
 			--from group to ac
-			atiac: port at -> ac.at; --atrial pace
+			atiac: port at -> ac.at; --atrial tachycardia
 			--internal
-			duren: port atr.denable -> dc.enable; --do count duration
+--			duren: port atr.denable -> dc.enable; --do count duration
 			dcnt: port dc.asCount -> atr.asCount; --current duration count
 			atcnt: port ac.atCount -> atr.atCount; --number of last seven as that were also at	
-			AtrialTachyResponse_imp_new_connection: port atr.denable -> ac.enable;
+--			AtrialTachyResponse_imp_new_connection: port atr.denable -> ac.enable;
 	end AtrialTachyResponse.imp;
 
 	thread AsCounter
@@ -123,7 +130,7 @@ public
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			asCount: out data port BLESS_Types::Integer {BLESS::Value => "<<:=AS_COUNT()>>";};
 			enable_time: out data port time --enable time, zero if not enabled
-			{BLESS::Value => "<<:=ATR_ET>>";}; --NOT OUTPUT AT THIS TIME
+			  {BLESS::Value => "<<:=ATR_ET>>";}; --NOT OUTPUT AT THIS TIME
 			as: in event port {BLESS::Assertion => "<<AS>>";};
 		properties
 			Thread_Properties::Dispatch_Protocol => Aperiodic;
@@ -197,10 +204,10 @@ public
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			atCount: out data port BLESS_Types::Integer {BLESS::Value => "<<:=AT_COUNT()>>";};
 			et: out data port time --enable time, zero if not enabled
-			{BLESS::Value => "<<:=ATR_ET>>";};
+			  {BLESS::Value => "<<:=ATR_ET>>";};
 			at: in event port {BLESS::Assertion => "<<AT>>";};
 		properties
-			Dispatch_Protocol => Aperiodic;
+			Dispatch_Protocol => Sporadic;
 --    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
 	end AtCounter;
 
@@ -272,20 +279,24 @@ public
 			atr_enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
 			fb: out data port flag --fall-back to LRL, ignore A-channel
-			{BLESS::Assertion => "<<FB>>";};
+			  {BLESS::Assertion => "<<FB>>";};
 			asCount: in data port BLESS_Types::Integer {BLESS::Value => "<<:=AS_COUNT()>>;";};
-			denable: out data port flag;
+--			denable: out data port flag;
 			atCount: in data port BLESS_Types::Integer {BLESS::Value => "<<:=AT_COUNT()>>";};
 			atr_detect: out event port --ATR detection met
-			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			  {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
-			{BLESS::Assertion => "<<FB_START>>";};
+			  {BLESS::Assertion => "<<FB_START>>";};
 			atr_end: out event port --resume DDD; marker ATR-End
-			{BLESS::Assertion => "<<ATR_END(now)>>";};
+			  {BLESS::Assertion => "<<ATR_END(now)>>";};
+			as: in event port  --atrial sense for counting AS for determining whether "Duration" has been met 5.6.2
+			  {BLESS::Assertion => "<<AS>>";};
+		properties
+			Dispatch_Protocol => Sporadic;
 	end ATRcontrol;
 
 	thread implementation ATRcontrol.imp
-		annex BLESSX {**
+		annex BLESS {**
 --assert
 --
 --<<AXIOM_ATR_DETECT:x~time: 5<=(numberof j~quantity whole in 1 .. 7 that atr_detect^(-j)) iff ATR_DETECT(x)>>
@@ -295,279 +306,326 @@ public
 --<<AXIOM_FB: : FB iff FB(d:detection_time, x:now)>>	   
 
   	
-invariant <<ATRD: :AS_IS_AT_A() and AT_COUNT_A()>>
+invariant <<true>>
 
 variables
   -- as or ap is clock for thread, even though not constant
-  as_is_at ~ array [0 .. 7] of boolean := false  --whether as is also at
-    <<AS_IS_AT_A: :all j~quantity whole in 1 .. 7 are as_is_at[j] iff at^(-j)>>;
-  at_count ~ quantity whole := 0  --count of at in last 7 as
-    <<AT_COUNT_A: :at_count = (numberof j~quantity whole in 1 .. 7 that at^(-j))>>;
-  detection_time ~ time := 0.0 ;  --time ATR is detected  <<ATR_DETECT(detection_time)>>
-  duration_count ~ quantity whole  --number of cardiac cycles since detection
-    <<DC:x ~ time:=(numberof t~time in detection_time ,, x that as@t )>>;
+--  as_is_at ~ array [0 .. 7] of boolean := false  --whether as is also at
+  detection_time ~ time := 0.0 ms  --time ATR is detected  <<ATR_DETECT(detection_time)>>
+  duration_count ~ quantity whole := 0 --number of cardiac cycles since detection
+--    <<DC: x~time returns quantity whole := (numberof t~time in detection_time .. x that as@t ) >>
   
 states
   start : initial state 
-    <<at_count=0 and detection_time=0.0 and (ATRD())'>>;  --Xtext oddity: by the grammar of TimedPredicate, parentheses should not be needed around a PredicateInvocation
+    << detection_time=0.0 ms >>;  --Xtext oddity: by the grammar of TimedPredicate, parentheses should not be needed around a PredicateInvocation
   normal : complete state  --normal pacing
-    <<detection_time=0.0 and ATRD()>>;
-  duration: complete state  -- wait for duration count to not mode switch on brief AT
-    <<(ATR_DETECT(detection_time))^(-1) --detection criteria met,
-    and duration_count<dur^(-1)  --too few CCI since detection for mode switch
-    and not (ATR_END(now))^(-1) --not ended or fallback
-    and not (FB(d:detection_time,x:now))^(-1) 
-    and duration_count=DC(now)^(-1)
-    and ATRD()>>;  
+    <<detection_time=0.0 ms>>;
+  atr_duration: complete state  -- wait for duration count to not mode switch on brief AT
+    << ATR_DETECT(detection_time) --detection criteria met,
+--    and duration_count<dur  --too few CCI since detection for mode switch
+       and not ATR_END(now) --not ended or fallback
+       and not FB(d:detection_time,x:now)
+       and dur >= now - detection_time >>;  
   fallback: complete state  --switch to ventricle-only pacing at LRL
-    <<(ATR_DETECT(detection_time))^(-1) 
-    and duration_count>=dur^(-1)
-    and not (ATR_END(now))^(-1) and ATRD()>>; --not ended
+    << ATR_DETECT(detection_time)
+       and FB(d:detection_time,x:now)
+       and not ATR_END(now) >> 
   check_normal: state 
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and detection_time=0.0 and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>;
+    << as@now and detection_time=0.0 ms >>
   check_duration: state
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  
-      and ATR_DETECT(detection_time) and duration_count=DC(now)>>;
+    << as @ now and ATR_DETECT(detection_time)
+       and FB(d:detection_time,x:now)
+       and not ATR_END(now) >> 
   check_fallback: state
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  
-      and ATR_DETECT(detection_time) and duration_count=DC(now)
-      and duration_count>=dur>>;
+    << as@now and ATR_DETECT(detection_time)
+       and FB(d:detection_time,x:now)
+       and not ATR_END(now) >> 
   done : final state;
+  err : final state;
 
 transitions
   atrd_go: --transition out of initial state
     start -[ ]-> normal
-    {detection_time':=detection_time <<detection_time' = 0.0 and (ATRD())'>>};
-  atrd_as: normal -[on dispatch as]-> check_normal
-    { <<as^0 and ATRD() and detection_time=0.0>>
-    --put current at into as_is_at
-    as_is_at[0]:=at?	
-    ;  <<(as_is_at[0] iff at^0)	and (all j~quantity whole in 1 .. 7 are as_is_at[j] iff at^(-j)) and 
-       at_count = (numberof j~quantity whole in 1 .. 7 that at^(-j)) and detection_time=0.0>>	
-    --subtract last at from count
-    at_count:=at_count-(if as_is_at[7] then 1 else 0)
-    ; <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
-        at_count = ((numberof j~quantity whole in 1 .. 7 that at^(-j))-(if at^(-7) then 1 else 0)) and detection_time=0.0>> 
-    skip ;
-       <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
-        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j)) and detection_time=0.0>>      
-    --add current at
-    at_count:=at_count+(if at? then 1 else 0)
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and detection_time=0.0 and
-        (at_count-(if at^0 then 1 else 0)) = ((numberof j~quantity whole in 0 .. 6 that at^(-j))-(if at^0 then 1 else 0))>>  
-        
-    };  --end of atrd_as
-  atrd_ok: check_normal -[at_count<5 ]-> normal  --fewer that 5 of last seven are fast
-    { <<at_count<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time=0.0>>
-    (at_count',detection_time' := at_count,detection_time)  --set at_count for next dispatch
-    ;
-    <<at_count'<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time'=0.0>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    <<at_count'<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time'=0.0>>       
-    };  --end of atrd_ok
-  atrd_detect: check_normal -[at_count>=5 ]-> duration  --met detection criteria of 5 of 7 fast
-    {<<at_count>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
-    --age at_count and as_is_at    
-    at_count' := at_count  --set at_count for next dispatch
-    ;
-    <<at_count'>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    <<at_count'>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>       
-    ; <<AXIOM_ATR_DETECT(now) and AXIOM_DUR_POSITIVE()>>   
-    --put out ATR detection marker, safe time-stamp, reset counter   
-    {atr_detect! & detection_time':=now & duration_count':=0}
-    <<ATR_DETECT(detection_time') --detection criteria met,
-    and duration_count'<dur  --too few CCI since detection for mode switch
-    and not ATR_END(now) --not ended or fallback
-    and not FB(d:detection_time',x:now) 
-    and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))
-    and duration_count'=DC(now)>>   
-    };  --end of atrd_detect
- atrd_dur_as: duration -[on dispatch as]-> check_duration
-   { <<as^0 and ATR_DETECT(detection_time) 
-    and duration_count=DC(now)^(-1)
-    and ATRD()>>
-    --put current at into as_is_at
-    as_is_at[0]:=at	
-    ;  <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>	
-    --subtract last at from count
-    at_count:=at_count-(if as_is_at[7] then 1 else 0)
-    ; <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j))  --counts 1 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
-    --add current at
-    at_count:=at_count+(if at? then 1 else 0)
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
-    ;  --increment duration count
-    duration_count:=duration_count+1
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  
-      and ATR_DETECT(detection_time) and duration_count=DC(now)>>    
-   };  --end of atrd_dur_as 
- atrd_cd_fb: check_duration -[(at_count>3) and (duration_count>=dur)]-> fallback
-   { <<duration_count>=dur and at_count>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time) and duration_count=DC(now)>>
-    (duration_count',at_count',detection_time':=
-    	 duration_count,at_count,detection_time)
-    ; <<duration_count'>=dur and at_count'>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    ; <<duration_count'>=dur and at_count'>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
-    { fb!(true) & atr_fallback! }  --enter ATR fallback 
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>  
-   };  --end of atrd_cd_fb 
- atrd_cd_end: check_duration -[at_count<=3]-> normal
-   { <<at_count<=3 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>
-   (duration_count',at_count':=0,at_count)    
-    ; <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    ; <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
-    { atr_end! & fb!(false) }  --end ATR, no fallback
-    <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>
-   };  --end of atrd_cd_end
- atrd_dc_dur: check_duration -[(at_count>3) and (duration_count<dur)]-> duration
-   { <<duration_count<dur and at_count>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time) and duration_count=DC(now)>>
-    (duration_count',at_count',detection_time':=
-    	 duration_count,at_count,detection_time)
-    ; <<duration_count'<dur and at_count'>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>     
-   };  --end of atrd_dc_dur
- atrd_fb_as: fallback -[on dispatch as]-> check_fallback
-   { <<as^0 and ATR_DETECT(detection_time) 
-    and duration_count=DC(now)^(-1)
-    and ATRD() and duration_count>=dur>>
-    --put current at into as_is_at
-    as_is_at[0]:=at	
-    ;  <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
-      and duration_count>=dur>>	
-    --subtract last at from count
-    at_count:=at_count-(if as_is_at[7] then 1 else 0)
-    ; <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j))  --counts 1 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
-      and duration_count>=dur>>  
-    --add current at
-    at_count:=at_count+(if at? then 1 else 0)
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
-      and duration_count>=dur>>  
-    ;  --increment duration count
-    duration_count:=duration_count+1
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)
-      and duration_count>=dur>>    
-   };  --end of atrd_fb_as 
- atrd_cf_end: check_fallback -[at_count<=3]-> normal
-   { <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
-      and ATR_DETECT(detection_time) and duration_count=DC(now)
-      and duration_count>=dur and at_count<=3>>
-    (duration_count',at_count':=0,at_count)    
-    ; <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    ; <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
-    { atr_end! & fb!(false) }  --end ATR, no fallback
-    <<duration_count'=0 and at_count'<=3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
-   };  --end of atrd_cf_end
- atrd_cf_fb: check_fallback -[at_count>3]-> fallback
-   { <<duration_count>=dur and at_count>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time) and duration_count=DC(now)>>
-    (duration_count',at_count',detection_time':=
-    	 duration_count,at_count,detection_time)
-    ; <<duration_count'>=dur and at_count'>3 and
-   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
-      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
-    forall j~quantity whole in 0 .. 6  
-      {
-      <<as_is_at[j] iff at^(-j)>>
-      as_is_at[j+1]' :=as_is_at[j]
-      <<as_is_at[j+1]' iff at^(-j)>>
-      }   
-    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
-        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
-      ATR_DETECT(detection_time') and duration_count'>=dur and 
-      duration_count'=DC(now)>>     
-   };     
+
+  norm_as: --check each atrial sense
+    normal -[on dispatch as]-> check_normal
+    
+  norm_lt7: -- not enough samples
+    check_normal -[asCount < 7 and atr_enable]-> normal  
+    
+  norm_gt7: --error termination, should never have AS_COUNT>7
+    check_normal -[asCount > 7 and atr_enable]-> err  
+    
+  norm_few: --too few AT for detection
+    check_normal -[asCount = 7 and atCount < 5 and atr_enable]-> normal  
+    
+  norm_detect: --detection criteria met
+    check_normal -[asCount = 7 and atCount >= 5 and atr_enable]-> atr_duration  
+      { << AS_COUNT()@now = 7 and AT_COUNT()@now >= 5 and as@now >>
+      	duration_count := 0
+      	<< duration_count = 0 >>
+      	&
+        detection_time := now
+        << detection_time = now and not FB(d:detection_time,x:now) >>
+        & 
+        atr_detect!
+        << AT_COUNT()@detection_time >= 5 and 
+           not (exists t~time in detection_time ,, now that ATR_END(t)) >>
+      }
+    
+  norm_dis:  --enable lost
+    check_normal -[not atr_enable]-> normal
+      
+  dur_as:  --check sense while waiting for duration to be met
+    atr_duration -[on dispatch as]-> check_duration
+    
+  dur_norm: -- too few AT to stay in duration
+    check_duration -[atCount <= 3 or not atr_enable]-> normal  
+    
+  dur_fb: -- duration condition met, commense fallback
+    check_duration -[atCount > 3 and dur > duration_count and atr_enable]-> fallback  
+      { atr_fallback! }
+    
+  dur_dur: --duration condition not met
+    check_duration -[atCount > 3 and dur <= duration_count and atr_enable]-> atr_duration 
+      { duration_count := duration_count + 1 } 
+    
+  fall_as: --check sense while in fallback
+    fallback -[on dispatch as]-> check_fallback
+    
+  fall_end: --too few AT to remain in ATR fallback or enable lost
+    check_fallback -[atCount <= 3 or not atr_enable]-> normal
+      { atr_end! & detection_time := 0.0 ms }
+      
+  fall_nc:  --remain in fallback
+    check_fallback -[atCount > 3 and atr_enable]-> fallback
+    
+--    { <<as^0 and ATRD() and detection_time=0.0>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at?	
+--    ;  <<(as_is_at[0] iff at^0)	and (all j~quantity whole in 1 .. 7 are as_is_at[j] iff at^(-j)) and 
+--       at_count = (numberof j~quantity whole in 1 .. 7 that at^(-j)) and detection_time=0.0>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
+--        at_count = ((numberof j~quantity whole in 1 .. 7 that at^(-j))-(if at^(-7) then 1 else 0)) and detection_time=0.0>> 
+--    skip ;
+--       <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and (as_is_at[7] iff at^(-7)) and
+--        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j)) and detection_time=0.0>>      
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and detection_time=0.0 and
+--        (at_count-(if at^0 then 1 else 0)) = ((numberof j~quantity whole in 0 .. 6 that at^(-j))-(if at^0 then 1 else 0))>>  
+--        
+--    };  --end of atrd_as
+--  atrd_ok: check_normal -[at_count<5 ]-> normal  --fewer that 5 of last seven are fast
+--    { <<at_count<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time=0.0>>
+--    (at_count',detection_time' := at_count,detection_time)  --set at_count for next dispatch
+--    ;
+--    <<at_count'<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time'=0.0>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<at_count'<5 and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and detection_time'=0.0>>       
+--    };  --end of atrd_ok
+--  atrd_detect: check_normal -[at_count>=5 ]-> duration  --met detection criteria of 5 of 7 fast
+--    {<<at_count>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
+--    --age at_count and as_is_at    
+--    at_count' := at_count  --set at_count for next dispatch
+--    ;
+--    <<at_count'>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<at_count'>=5 and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>       
+--    ; <<AXIOM_ATR_DETECT(now) and AXIOM_DUR_POSITIVE()>>   
+--    --put out ATR detection marker, safe time-stamp, reset counter   
+--    {atr_detect! & detection_time':=now & duration_count':=0}
+--    <<ATR_DETECT(detection_time') --detection criteria met,
+--    and duration_count'<dur  --too few CCI since detection for mode switch
+--    and not ATR_END(now) --not ended or fallback
+--    and not FB(d:detection_time',x:now) 
+--    and (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))
+--    and duration_count'=DC(now)>>   
+--    };  --end of atrd_detect
+-- atrd_dur_as: duration -[on dispatch as]-> check_duration
+--   { <<as^0 and ATR_DETECT(detection_time) 
+--    and duration_count=DC(now)^(-1)
+--    and ATRD()>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at	
+--    ;  <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j))  --counts 1 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)>>  
+--    ;  --increment duration count
+--    duration_count:=duration_count+1
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)>>    
+--   };  --end of atrd_dur_as 
+-- atrd_cd_fb: check_duration -[(at_count>3) and (duration_count>=dur)]-> fallback
+--   { <<duration_count>=dur and at_count>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    { fb!(true) & atr_fallback! }  --enter ATR fallback 
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>  
+--   };  --end of atrd_cd_fb 
+-- atrd_cd_end: check_duration -[at_count<=3]-> normal
+--   { <<at_count<=3 and (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>
+--   (duration_count',at_count':=0,at_count)    
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
+--    { atr_end! & fb!(false) }  --end ATR, no fallback
+--    <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>
+--   };  --end of atrd_cd_end
+-- atrd_dc_dur: check_duration -[(at_count>3) and (duration_count<dur)]-> duration
+--   { <<duration_count<dur and at_count>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'<dur and at_count'>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>     
+--   };  --end of atrd_dc_dur
+-- atrd_fb_as: fallback -[on dispatch as]-> check_fallback
+--   { <<as^0 and ATR_DETECT(detection_time) 
+--    and duration_count=DC(now)^(-1)
+--    and ATRD() and duration_count>=dur>>
+--    --put current at into as_is_at
+--    as_is_at[0]:=at	
+--    ;  <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and AT_COUNT()
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>	
+--    --subtract last at from count
+--    at_count:=at_count-(if as_is_at[7] then 1 else 0)
+--    ; <<(all j~quantity whole in 0 .. 7 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 1 .. 6 that at^(-j))  --counts 1 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>  
+--    --add current at
+--    at_count:=at_count+(if at? then 1 else 0)
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)^(-1)
+--      and duration_count>=dur>>  
+--    ;  --increment duration count
+--    duration_count:=duration_count+1
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)
+--      and duration_count>=dur>>    
+--   };  --end of atrd_fb_as 
+-- atrd_cf_end: check_fallback -[at_count<=3]-> normal
+--   { <<(all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--        at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j))  --now counts 0 to 6
+--      and ATR_DETECT(detection_time) and duration_count=DC(now)
+--      and duration_count>=dur and at_count<=3>>
+--    (duration_count',at_count':=0,at_count)    
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j))>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    ; <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
+--    { atr_end! & fb!(false) }  --end ATR, no fallback
+--    <<duration_count'=0 and at_count'<=3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) >>  
+--   };  --end of atrd_cf_end
+-- atrd_cf_fb: check_fallback -[at_count>3]-> fallback
+--   { <<duration_count>=dur and at_count>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time) and duration_count=DC(now)>>
+--    (duration_count',at_count',detection_time':=
+--    	 duration_count,at_count,detection_time)
+--    ; <<duration_count'>=dur and at_count'>3 and
+--   	  (all j~quantity whole in 0 .. 6 are as_is_at[j] iff at^(-j)) and
+--      at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'=DC(now)>>
+--    forall j~quantity whole in 0 .. 6  
+--      {
+--      <<as_is_at[j] iff at^(-j)>>
+--      as_is_at[j+1]' :=as_is_at[j]
+--      <<as_is_at[j+1]' iff at^(-j)>>
+--      }   
+--    <<(all j~quantity whole in 0 .. 6 are as_is_at[j+1]' iff at^(-j)) and
+--        at_count' = (numberof j~quantity whole in 0 .. 6 that at^(-j)) and   
+--      ATR_DETECT(detection_time') and duration_count'>=dur and 
+--      duration_count'=DC(now)>>     
+--   };     
 **};
 	end ATRcontrol.imp;
 

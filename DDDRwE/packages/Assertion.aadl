@@ -299,8 +299,8 @@ ghost variables
 -- The device shall have the ability to adjust the cardiac cycle in response 
 --   to metabolic need as measured from body motion using an accelerometer.
 <<SIRi_A: returns time := MAX(a:MSR,b:(LRL- (RESPONSE_FACTOR*(XL-ACTIVITY_THRESHOLD))))>>  --sensor indicated rate interval
-<<Z_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0*(REACTION_TIME-LRL))>>  --up rate smoothing for reaction time (RT)
-<<Y_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0*(RECOVERY_TIME-LRL))>>  --down rate smoothing for recovery time (CT)
+<<Z_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0 scalar * (REACTION_TIME-LRL))>>  --up rate smoothing for reaction time (RT)
+<<Y_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0 scalar *(RECOVERY_TIME-LRL))>>  --down rate smoothing for recovery time (CT)
 <<UP_SIRi_A: returns time := MAX(a:SIRi_A(), b:(CCI-Z_A() ))>>  --includes reaction time
 <<DN_SIRi_A: returns time := MIN2(a:(CCI+Y_A()), b:SIRi_A() )>>  --includes recovery
 <<MaxCCI: returns time := MIN3(a:HyLRL(now), b:DN_SIRi_A(), c:DOWN_A())>>  
@@ -316,8 +316,8 @@ ghost variables
 -- 2. Rate Smoothing Down
 -- The increase in pacing rate shall not exceed the Rate Smoothing Up percentage.
 -- The decrease in pacing rate shall not exceed the Rate Smoothing Down percentage.
-<<DOWN_A: returns time := CCI*(1.0+(DRS/100.0))>>  --convert drs% to real
-<<UP_A: returns time := CCI*(1.0-(URS/100.0))>>  --convert urs% to real
+<<DOWN_A: returns time := CCI*(1.0 scalar +(DRS/100.0 scalar ))>>  --convert drs% to real
+<<UP_A: returns time := CCI*(1.0 scalar -(URS/100.0 scalar ))>>  --convert urs% to real
 
 
 

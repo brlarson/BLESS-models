@@ -93,28 +93,28 @@ RC0_init : first_rate -[ ]-> wait {} ;
 RC1_cci : wait -[on dispatch cci ]-> check_zero_division{};
 
 RC2_zero : check_zero_division -[
-   ((2.0*(rt? -lrl? ))=0.0)
-   or ((2.0*(ct? -lrl? ))=0.0)
-   or ((lrl? -url? )=0.0)
+   ((2.0 scalar *(rt? -lrl? )) = 0.0 ms)
+   or ((2.0 scalar *(ct? -lrl? )) = 0.0 ms)
+   or ((lrl? -url? ) = 0.0 ms)
    ]-> err{};
    
 RC3_nonzero : check_zero_division -[   
-	 ((2.0*(rt? -lrl? ))<>0.0)
-   and ((2.0*(ct? -lrl? ))<>0.0)
-   and ((lrl? -url? )<>0.0)
+	 ((2.0 scalar *(rt? -lrl? )) <> 0.0 ms)
+   and ((2.0 scalar *(ct? -lrl? )) <> 0.0 ms)
+   and ((lrl? -url? ) <> 0.0 ms)
  ]-> wait
 {
-  <<((2.0*(REACTION_TIME - LRL)) <> 0.0 s) and ((2.0*(RECOVERY_TIME - LRL)) <> 0.0 s) 
+  <<((2.0 scalar *(REACTION_TIME - LRL)) <> 0.0 s) and ((2.0 scalar *(RECOVERY_TIME - LRL)) <> 0.0 s) 
     and ((LRL - URL) <> 0 s) >>
   declare  --transient, local variables
     siri  ~ time := (if msr? >= (lrl? - (rf? *(xl? - at? ))) 
     	then msr? else lrl? - (rf? *(xl? - at?)))  --sensor indicated rate interval
-    z  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0*(rt? -lrl? ))	 --up rate smoothing for reaction time (REACTION_TIME)
-    y  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0*(ct? -lrl? ))  --down rate smoothing for recovery time (RECOVERY_TIME)
+    z  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0 scalar *(rt? -lrl? ))	 --up rate smoothing for reaction time (REACTION_TIME)
+    y  ~ time := ((lrl? -msr? )*(lrl? +msr? )) / (2.0 scalar *(ct? -lrl? ))  --down rate smoothing for recovery time (RECOVERY_TIME)
     up_siri  ~ time := (if (cci? -z) <= siri then siri else cci? -z)  --up rate sensor interval, max of siri and cci-z
     dn_siri  ~ time := (if (cci? +y) <= siri then cci? +y else siri)  --down rate sensor interval, min of siri and cci+y
-    down  ~ time :=  cci? *(1.0+(drs? /100.0));  --down rate smoothing
-    up  ~ time := cci? *(1.0-(urs? /100.0));  --up rate smoothing
+    down  ~ time :=  cci? *(1.0 scalar +(drs? /100.0 scalar ));  --down rate smoothing
+    up  ~ time := cci? *(1.0 scalar -(urs? /100.0 scalar ));  --up rate smoothing
     hylrl  ~ time := (last_v_was_vs? ?? lrl? + hy? : lrl? );  --hysteresis pacing
   {  
   <<(LRL - URL) <> 0.0 s and z=Z_A() and y=Y_A()
