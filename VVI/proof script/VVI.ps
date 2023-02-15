@@ -1,7 +1,6 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Tue Feb 14 15:27:14 CST 2023 by brianlarson
+#  at Wed Feb 15 10:24:19 CST 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
-#vvi_mode::VVI.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
 make-an
 axioms
@@ -30,6 +29,10 @@ substitute-both
 normalize
 replace<=
 laws
+normalize
+cnf
+laws
+normalize
 axioms
 #[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
 reduce
@@ -39,8 +42,8 @@ laws
 normalize
 axioms
 push
+#[serial 1074]   normalization of [serial 1066
 make-an
-#[serial 1064]   normalization of [serial 1056]
 substitute-post
 normalize
 split-post
@@ -49,7 +52,7 @@ quant
 axioms
 guided-sub-equals[last_beat]
 axioms
-#[serial 1068]   normalization of [serial 1060]
+#[serial 1078]   normalization of [serial 1070]
 replace-port
 normalize
 axioms
@@ -59,15 +62,14 @@ normalize
 laws
 normalize
 push
+#[serial 1103] <<P1>> S1 <<Q1>> in concurrent composition for [serial 1010
 make-an
-#vvi_mode::VVI.i
-#[serial 1093] <<P1>> S1 <<Q1>> in concurrent composition for [serial 1010]
 atomic
 axioms
 replace-port
 normalize
 axioms
-#[serial 1098]   normalization of [serial 1092]
+#[serial 1108]   normalization of [serial 1102]
 substitute-post
 normalize
 split-post
@@ -76,12 +78,12 @@ axioms
 normalize
 quant
 axioms
-#[serial 1110]   normalization of [serial 1105]
+#[serial 1120]   normalization of [serial 1115]
 substitute-post
 normalize
 split-post
 axioms
-#[serial 1112]   normalization of [serial 1106]
+#[serial 1122]   normalization of [serial 1116]
 atomic
 laws
 axioms
@@ -99,3 +101,126 @@ laws
 split-post
 axioms
 normalize
+quant
+axioms
+#[serial 1013]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
+reduce
+normalize
+laws
+atomic
+laws
+axioms
+push
+#[serial 1188] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1173
+make-an
+replace-port
+axioms
+#[serial 1178]   normalization of [serial 1172]
+substitute-post
+normalize
+split-post
+normalize
+guided-sub-equals[last_beat]
+axioms
+quant
+axioms
+#[serial 1185] Associativity: (b.c).a = a.b.c [serial 1176]
+substitute-both
+normalize
+laws
+split-post
+axioms
+substitute-post
+normalize
+split-post
+axioms
+split@
+normalize
+axioms
+#[serial 1014]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
+normalize
+laws
+normalize
+reduce
+atomic
+laws
+axioms
+push
+#[serial 1228] P -> P1 in concurrent composition for [serial 1226
+make-an
+substitute-pre
+substitute-post
+normalize
+laws
+normalize
+split-post
+axioms
+#[serial 1229] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1226]
+substitute-post
+normalize
+split-post
+normalize
+guided-sub-equals[last_beat]
+axioms
+quant
+axioms
+#[serial 1233] applied port output <<pre and M[p]@now>> -> <<post>> [serial 1230]
+replace-port
+axioms
+#[serial 1015]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
+normalize
+axioms
+#[serial 1016]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
+normalize
+laws
+substitute-post
+substitute-pre
+normalize
+laws
+normalize
+split-post
+axioms
+normalize
+quant
+axioms
+#[serial 1017]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
+reduce
+atomic
+normalize
+laws
+axioms
+push
+make-an
+#[serial 1292]   normalization of [serial 1283]
+substitute-post
+normalize
+split-post
+guided-sub-equals[last_beat]
+axioms
+normalize
+quant
+axioms
+#[serial 1296]   normalization of [serial 1287]
+replace-port
+normalize
+axioms
+#[serial 1304] Associativity: (b.c).a = a.b.c [serial 1290]
+substitute-post
+normalize
+split-post
+axioms
+substitute-post
+normalize
+split-post
+axioms
+substitute-pre
+normalize
+laws
+split@
+normalize
+axioms
+#[serial 1018]  <<M(check_pace_vrp) and x>> -> <<M(err)>> for T11_LAST_BEAT_ERROR:check_pace_vrp-[x]->err{};
+axioms
+#[serial 1019]  <<M(check_sense_vrp) and x>> -> <<M(err)>> for T11_LAST_BEAT_ERROR:check_sense_vrp-[x]->err{};
+axioms
+#Q.E.D.
