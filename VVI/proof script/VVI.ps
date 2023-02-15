@@ -1,32 +1,17 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Tue Dec 13 13:41:28 CST 2022 by brianlarson
+#  at Tue Feb 14 15:27:14 CST 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
 make-an
-substitute-both
-normalize
 axioms
 #[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
-substitute-pre
-normalize
-split-quant
-axioms
-#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
-substitute-pre
-normalize
-load
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
-#vvi_mode::VVI.i
-#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
-make-an
 substitute-both
 normalize
-axioms
 split-quant
 axioms
 #[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
-substitute-pre
+substitute-both
 normalize
 split-quant
 axioms
@@ -35,12 +20,15 @@ axioms
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
+cnf
 laws
+normalize
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>
+make-an
 axioms
-#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+substitute-both
 normalize
 replace<=
-normalize
 laws
 axioms
 #[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
@@ -51,9 +39,35 @@ laws
 normalize
 axioms
 push
-#vvi_mode::VVI.i
-#[serial 1056]   normalization of [serial 1048
 make-an
+#[serial 1064]   normalization of [serial 1056]
+substitute-post
+normalize
+split-post
+normalize
+quant
+axioms
+guided-sub-equals[last_beat]
+axioms
+#[serial 1068]   normalization of [serial 1060]
+replace-port
+normalize
+axioms
+#[serial 1010]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
+reduce
+normalize
+laws
+normalize
+push
+make-an
+#vvi_mode::VVI.i
+#[serial 1093] <<P1>> S1 <<Q1>> in concurrent composition for [serial 1010]
+atomic
+axioms
+replace-port
+normalize
+axioms
+#[serial 1098]   normalization of [serial 1092]
 substitute-post
 normalize
 split-post
@@ -62,154 +76,26 @@ axioms
 normalize
 quant
 axioms
-#[serial 1060]   normalization of [serial 1052]
-replace-port
+#[serial 1110]   normalization of [serial 1105]
+substitute-post
 normalize
+split-post
 axioms
-#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
-axioms
-#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
-axioms
-#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
-substitute-both
-normalize
-laws
-normalize
-reduce
+#[serial 1112]   normalization of [serial 1106]
 atomic
 laws
 axioms
+#[serial 1011]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
 normalize
 split-post
-normalize
-push
-#vvi_mode::VVI.i
-#[serial 1090] P -> P1 in concurrent composition for [serial 1088
-make-an
-substitute-post
-normalize
 axioms
-#[serial 1102]   normalization of [serial 1095]
-replace-port
-axioms
-#[serial 1105] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1100]
-guided-sub-equals[last_beat]
-axioms
-#[serial 1111]   normalization of [serial 1106]
-quant
-axioms
-#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
-normalize
-axioms
-#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
-normalize
-laws
-axioms
-#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#vvi_mode::VVI.i
-#[serial 1136]   normalization of [serial 1127
-make-an
-substitute-both
-normalize
-laws
+#[serial 1012]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
 substitute-post
 normalize
 laws
-split-post
-axioms
-split@
-normalize
-axioms
-now
-axioms
-#[serial 1138]   normalization of [serial 1128]
-substitute-post
-normalize
-split-post
-guided-sub-equals[last_beat]
-axioms
-normalize
-quant
-axioms
-#[serial 1142]   normalization of [serial 1132]
-replace-port
-normalize
-axioms
-#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#vvi_mode::VVI.i
-#[serial 1194]   normalization of [serial 1185
-make-an
-substitute-post
-laws
-normalize
-axioms
-#[serial 1196]   normalization of [serial 1186]
-substitute-post
-normalize
-split-post
-guided-sub-equals[last_beat]
-axioms
-normalize
-quant
-axioms
-#[serial 1199]   normalization of [serial 1190]
-replace-port
-axioms
-#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
-normalize
-axioms
-#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
-normalize
-laws
-axioms
-#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#vvi_mode::VVI.i
-#[serial 1239]   normalization of [serial 1230
-make-an
-substitute-post
-normalize
-split-post
-laws
-axioms
-substitute-post
-normalize
-split-post
-now
-axioms
 substitute-pre
-split@
 normalize
 laws
-axioms
-#[serial 1241]   normalization of [serial 1231]
-substitute-post
-normalize
 split-post
-guided-sub-equals[last_beat]
 axioms
 normalize
-quant
-axioms
-#[serial 1245]   normalization of [serial 1235]
-replace-port
-normalize
-axioms
-#Q.E.D.
