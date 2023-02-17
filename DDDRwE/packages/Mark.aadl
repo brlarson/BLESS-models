@@ -36,7 +36,7 @@ thread Markers
     {BLESS::Assertion=>"<<RAS(now)>>";};
   rvs: in event port	--refractory ventricular sense
     {BLESS::Assertion=>"<<RVS(now)>>";};
-		atr_dct: in event port  --ATR detection met
+	atr_dct: in event port  --ATR detection met
     {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
   atr_fb: in event port   --start fall-back to VVI; marker ATR-FB
     {BLESS::Assertion=>"<<FB_START>>";};

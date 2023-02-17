@@ -12,7 +12,7 @@ ResponseFactor renames data PACE_Data::ResponseFactor;
 CCcount renames data PACE_Data::CCcount; 
 
 
-thread DDD  --main PACEMAKER behavior thread
+thread pacer  --main PACEMAKER behavior thread
   features
   --signals from front-end, possibly from chamber contraction
   a: in event port	--atrial signal
@@ -99,9 +99,9 @@ thread DDD  --main PACEMAKER behavior thread
     {BLESS::Value=>"<<:=TRACK>>";};
   properties
   	BLESS::Invariant => "<<LRL_A(now)>>";  -- and (SAV(now) or PAV(now) or VAI(now))>>";
-end DDD;
+end pacer;
 
-thread implementation DDD.imp
+thread implementation pacer.imp
 annex BLESS
 {**
 assert
@@ -139,30 +139,32 @@ assert
 --cardiac cycle interval is output of cci port
 
 --associate ghost variables with the predicates that make them true
-<<AXIOM_AP: :AP iff (AP_A(now) or now=0) >>
-<<AXIOM_VP: :VP iff (VP_A(now) and URL_A(now))  >>
-<<AXIOM_AS: :AS iff (AS_A(now) or now=0) >>
-<<AXIOM_VS: :VS iff (VS_A(now) or now=0)  >>
-<<AXIOM_AT: :AT iff AT_A(now) >>
-
-
+<<AXIOM_AP: n~time :AP iff (AP_A(n) or n=0.0 ms) >>
+<<AXIOM_VP: n~time :VP iff (VP_A(n) and URL_A(n))  >>
+<<AXIOM_AS: n~time :AS iff (AS_A(n) or n=0.0 ms) >>
+<<AXIOM_VS: n~time :VS iff (VS_A(n) or n=0.0 ms)  >>
+<<AXIOM_AT: n~time :AT iff AT_A(n) >>
 
 --initial condition
-<<START : : (now=0) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
+<<START : n~time : (n=0) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
 
-invariant    --to prove this is always true at complete states, only externally-observed behavior
-<<INV : : 
-  LRL_A(now)   --lower rate limit property holds now, always
+--invariant
+<<INV : n~time : 
+  LRL_A(n)   --lower rate limit property holds now, always
   and 
-  (SAV(now)  --tracking atrial senses
+  (SAV(n)  --tracking atrial senses
   or
-  PAV(now)  --tracking atrial paces
+  PAV(n)  --tracking atrial paces
   or
-  VAI(now))  --have V-paced or V-sensed, waiting for A-sense
+  VAI(n))  --have V-paced or V-sensed, waiting for A-sense
   and
-  LAST(now)  --invariant of internal variables
+  LAST(n)  --invariant of internal variables
   >>
 
+
+invariant    --to prove this is always true at complete states, only externally-observed behavior
+  <<INV(now)>>
+  
 variables
   last_vp_or_vs ~ time  --time of last ventricular pace or sense
     <<LAST_VP_OR_VS_A : x~time : --Assertions of state variables must also be invariant
@@ -177,7 +179,7 @@ variables
        in last_ap_or_as,,x   
        that (AS or AP)@t) >>;
   lastVwasVS ~ boolean  --most recent V-event was vs
-    <<LVVS : : lastVwasVS iff LAST_V_WAS_VS(now)>>;
+    <<LVVS : n~time : lastVwasVS iff LAST_V_WAS_VS(n)>>;
   va_interval ~ time  --ventrucular-atrial interval
      <<AXIOM_VA_INTERVAL : : va_interval = VA_INTERVAL_A() >>;
   dur ~ time;
@@ -208,7 +210,7 @@ transitions
   T0_GO :	--start pacing immediately
   go -[ ]-> va 
     {<<(now=0) and (CCI = LRL)>>
-      { <<now=0 and AXIOM_VS() >>
+      { <<now=0 and AXIOM_VS(now) >>
       vs!   --fake, harmless event needed to establish LAST_VP_OR_VS_A
         <<VS@now>> 
       & 
@@ -219,7 +221,7 @@ transitions
       last_vp_or_vs := now
         <<last_vp_or_vs=now>>
       &
-        <<now=0 and AXIOM_AS()>> 
+        <<now=0 and AXIOM_AS(now)>> 
       as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
         <<AS@now>>
       &
@@ -234,7 +236,7 @@ transitions
       { <<(vp or vs)@(now-max_cci)
           and not (exists t~time 
            in (now-max_cci),,now
-           that (vp or vs)@t) and AXIOM_VP() and AXIOM_VS()
+           that (vp or vs)@t) and AXIOM_VP(now) and AXIOM_VS(now)
          and LAST_AP_OR_AS_A(now) and AXIOM_LAST_AS_LE_TOPS() and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        vp! 
          <<VP@now and not (exists t~time 
@@ -268,7 +270,7 @@ transitions
   T5_VS_AFTER_AS_AFTER_VRP :  --ventricular sense after VRP_A, wait for atrial sense
   sav_check_vrp -[sv? and not tnv? and (vrp? <= (now-last_vp_or_vs))]-> va
     {
-      <<VS_A(now) and LAST_AP_OR_AS_A(now) and AXIOM_VS()>> 
+      <<VS_A(now) and LAST_AP_OR_AS_A(now) and AXIOM_VS(now)>> 
     vs!
       <<VS@now and LAST_AP_OR_AS_A(now)>>
     ;
@@ -288,7 +290,7 @@ transitions
    
   T8_TRACKED_VP_AFTER_AS :  --v-pace after a-sense, if not exceeding URL
    sav_check_url -[last_vp_or_vs <= (now-min_cci)]-> va
-     {<<PACE_ON_SAV_DELAY(now) and LAST(now) and AXIOM_VP()
+     {<<PACE_ON_SAV_DELAY(now) and LAST(now) and AXIOM_VP(now)
        and (last_vp_or_vs <= (now-min_cci))>>  
      vp!  --ventricular pace tracking atrial sense
        <<VP@now and LAST(now)>>
@@ -311,7 +313,7 @@ transitions
   pav_check_vrp -[sv? and not tnv? and (vrp? <= (now-last_vp_or_vs))]-> va  
     { <<VS_A(now) and LAST(now)>> 
       {
-        <<VS_A(now) and LAST_AP_OR_AS_A(now) and AXIOM_VS()>>
+        <<VS_A(now) and LAST_AP_OR_AS_A(now) and AXIOM_VS(now)>>
       vs!
         <<VS@now and LAST_AP_OR_AS_A(now)
         and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
@@ -341,7 +343,7 @@ transitions
     and (dav?<=(now-last_ap_or_as))          --Dynamic Paced AV delay expired
     and (url?<=(now-last_ap_or_as))             --not also AT
         ]-> sav  
-    {<<AS_A(now) and LRL_A(now) and LAST_VP_OR_VS_A(now) and AXIOM_AS()>> 
+    {<<AS_A(now) and LRL_A(now) and LAST_VP_OR_VS_A(now) and AXIOM_AS(now)>> 
     as!
      <<AS@now and LRL_A(now) and LAST_VP_OR_VS_A(now) 
        and AXIOM_LRLi_gt_URLi_LIMIT(now) >>
@@ -363,10 +365,10 @@ transitions
         ]-> sav  
     {
       <<AS_A(now) and LRL_A(now) and LAST(now) and ((now-last_ap_or_as)<url) 
-        and AXIOM_AS()>> 
+        and AXIOM_AS(now)>> 
     as!
       <<AS@now and LRL_A(now) and LAST(now) 
-       and AXIOM_AT() and AT_A(now)>>
+       and AXIOM_AT(now) and AT_A(now)>>
     ;   
     at!
       <<AT@now and AS@now and LRL_A(now) and LAST(now)>>
@@ -397,7 +399,7 @@ transitions
     
   T18_VRP_EXPIRED :  --vs after VRP_A expired
   check_vrp -[sv? and not tnv? and (vrp?<=(now-last_vp_or_vs))]-> va
-    {<<VS_A(now) and LAST(now) and AXIOM_VS()>> 
+    {<<VS_A(now) and LAST(now) and AXIOM_VS(now)>> 
     vs!
         <<VS@now and LAST(now)>>
         -- and AXIOM_LRLi_gt_URLi_LIMIT(now)
@@ -418,7 +420,7 @@ transitions
             that (VP or VS)@tv ) and
        not (exists ta~time in tops,,now that A@ta) >>
     {<<AP_A(now) and LAST(now) and 
-       AXIOM_AP() and AXIOM_VA_INTERVAL() and
+       AXIOM_AP(now) and AXIOM_VA_INTERVAL() and
   	   (VP or VS)@(now-va_interval) and 
        not (exists tv~time
             in (now-va_interval) ,, now 
@@ -445,7 +447,7 @@ transitions
 --  sav,pav,va -[on dispatch stop]-> off{};  
   
 **};	--end of annex subclause 
-end DDD.imp;
+end pacer.imp;
 
 
 end sw;

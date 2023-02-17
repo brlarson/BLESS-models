@@ -120,7 +120,7 @@ RC3_nonzero : check_zero_division -[
   <<(LRL - URL) <> 0.0 s and z=Z_A() and y=Y_A()
       and siri=SIRi_A() and dn_siri=DN_SIRi_A() and up_siri=UP_SIRi_A()
       and down=DOWN_A() and up=UP_A() and hylrl=HyLRL(now)
-      and AXIOM_MAX_CCI() and AXIOM_MIN_CCI() >>	
+      and AXIOM_MAX_CCI(now) and AXIOM_MIN_CCI() >>	
   dav!((cci? *((av?-min_av? )/(LRL-url? ))) + min_av? )
   &
 --  min_cci!((if url >(if up_siri > up then up_siri else up) then url else (if up_siri > up then up_siri else up)))  --(maximum3($url,up_siri,up))
@@ -156,9 +156,9 @@ annex BLESS
 	assert
 	<<AXIOM_FB_NONZERO: :FBT <> 0 s>>  --needed for fall_back rate division
 --Must slow pacing from URL to LRL over fallback time,  LRL until mode switch ends
-  <<FallBack_MaxCCI: dur_met~time, x~time returns time :=( if ((now-dur_met)>FBT) then LRL 
-	  else URL+(((x-dur_met)*(LRL-URL))/FBT))>>  --duration met at time dur_met
-  <<FB_MaxCCI: returns time :=FallBack_MaxCCI(dur_met:dur_met, x:now)>>
+  <<FallBack_MaxCCI: dur_met~time, n~time returns time :=( if ((n-dur_met)>FBT) then LRL 
+	  else URL+(((n-dur_met)*(LRL-URL))/FBT))>>  --duration met at time dur_met
+  <<FB_MaxCCI: n~time returns time :=FallBack_MaxCCI(dur_met:dur_met, n:n)>>
 invariant <<true>>	
 variables
   dur_met ~ time;  --ATR duration met, start of ATR fallback
@@ -186,7 +186,7 @@ ATR_RC_fallback: check_atr -[(now-dur_met) <= fb_time]-> atr_fallback
   	declare
   	  fallback_rate ~ time := url + (((now-dur_met)*(lrl-url))/fb_time);
     {
-      <<fallback_rate=FB_MaxCCI() and (now-dur_met) <= fb_time>>
+      <<fallback_rate=FB_MaxCCI(now) and (now-dur_met) <= fb_time>>
     atr_max_cci!(fallback_rate)
       <<(now-dur_met) <= fb_time>>
     }

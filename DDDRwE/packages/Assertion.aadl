@@ -249,7 +249,7 @@ ghost variables
         that (VS@tv) or VP@tv) 
       and  --not atrial-sensed since tops
       not (exists ta~time
-        in tops,,now 
+        in tops,,x 
         that A@ta ) >>
 
 <<VA_INTERVAL_A: returns time := MAX_CCI-DAV_A() >>
@@ -303,7 +303,7 @@ ghost variables
 <<Y_A: returns time := ((LRL-MSR)*(LRL+MSR)) / (2.0 scalar *(RECOVERY_TIME-LRL))>>  --down rate smoothing for recovery time (CT)
 <<UP_SIRi_A: returns time := MAX(a:SIRi_A(), b:(CCI-Z_A() ))>>  --includes reaction time
 <<DN_SIRi_A: returns time := MIN2(a:(CCI+Y_A()), b:SIRi_A() )>>  --includes recovery
-<<MaxCCI: returns time := MIN3(a:HyLRL(now), b:DN_SIRi_A(), c:DOWN_A())>>  
+<<MaxCCI: n~time returns time := MIN3(a:HyLRL(n), b:DN_SIRi_A(), c:DOWN_A())>>  
 <<MinCCI: returns time := MAX3(a:URL, b:UP_SIRi_A(), c:UP_A())>>  
  
 -- 5.9 Rate Smoothing
@@ -343,7 +343,7 @@ ghost variables
   (if LAST_V_WAS_VS(x) then LRL+HY else LRL) >>  --use Hysteresis Rate Limit if last V was VS_A.
 
 --equivlances of ghost variables and assertions
-<<AXIOM_MAX_CCI: :  MAX_CCI = MaxCCI() >>
+<<AXIOM_MAX_CCI: n~time :  MAX_CCI = MaxCCI(n) >>
 <<AXIOM_MIN_CCI: :  MIN_CCI = MinCCI() >>
   
 **};
