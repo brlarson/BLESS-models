@@ -193,40 +193,32 @@ assert
         that (vs or vp or as or ap)@tv) >>
           
 --invariant of internal variables
-<<VARS:x~time: LAST_VP_OR_VS_A(x) and LAST_AP_OR_AS_A(x) >>
+<<VARS: :   -- last_vp_or_vs is the most-recent timestamp of (vs or vp)
+  MR(e:(vs or vp), ts:last_vp_or_vs)
+    -- last_ap_or_as is most-recent timestamp of (ap or as)
+  and MR(e:(as or ap), ts:last_ap_or_as) >>
 
 --interactive limit that LRL<URL 
 <<AXIOM_LRLi_gt_URLi_LIMIT:x~time:
   (x-#PP::Lower_Rate_Limit_Interval ms) < (x-#PP::Upper_Rate_Limit_Interval ms) >>
 
 --A-event occurred before V-event
-<<AXIOM_A_B4_V: : last_ap_or_as <= -- ((#PP::Fixed_AV_Delay+now) - #PP::Lower_Rate_Limit_Interval) >>
-    (now - va_interval)  >>
+<<AXIOM_A_B4_V: n~time : last_ap_or_as <= -- ((#PP::Fixed_AV_Delay+now) - #PP::Lower_Rate_Limit_Interval) >>
+    (n - va_interval)  >>
 
-    <<LAST_VP_OR_VS_A:x~time: --Assertions of state variables must also be invariant
-      (vp@last_vp_or_vs or vs@last_vp_or_vs) and  --V-event occurred at last_vp_or_vs time
-      not (exists t~time  --and not since
-       in last_vp_or_vs,,x   --note open interval
-       that (vs or vp)@t) >>
-       
-    <<LAST_AP_OR_AS_A:x~time: 
-      (ap@last_ap_or_as or as@last_ap_or_as) and -- A-event occurred at last_ap_or_as
-      not (exists t~time  --and not since
-       in last_ap_or_as,,x   
-       that (as or ap)@t) >>
+<<INV: n~time : 
+  LRL(n)   --lower rate limit property holds now, always
+  and 
+  VARS()  --variable invariant properties
+  >>
        
 invariant    
 --invariant including internal variables
-<<INV: : 
-  LRL(now)   --lower rate limit property holds now, always
-  and 
-  VARS(now)  --variable invariant properties
-  >>
-  
+<<INV(now)>>  
   
 variables
-  last_vp_or_vs ~ time  --time of last ventricular pace or sense
-  last_ap_or_as ~ time   --time of last atrial pace or sense
+  last_vp_or_vs ~ time := 0 ms  --time of last ventricular pace or sense
+  last_ap_or_as ~ time := 0 ms   --time of last atrial pace or sense
   va_interval ~ time constant --ventricular-atrial interval
   	:= #PP::Lower_Rate_Limit_Interval ms - #PP::Fixed_AV_Delay ms  --atrial paces following vs or vp
   	<<AXIOM_VA_INTERVAL: : va_interval = (#PP::Lower_Rate_Limit_Interval ms - #PP::Fixed_AV_Delay ms) >>;
@@ -234,23 +226,24 @@ variables
 states
   start : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
     <<AS(now) and VS(now)>>; --first instant of operation
-  off : final state;
   sav : complete state  --an atrial sense occurred 
-    <<SAV(now) and INV() >>;    --  in the previous Sensed AV Delay
+    <<SAV(now) and INV(now) >>;    --  in the previous Sensed AV Delay
   sav_check_vrp : state  --ventricular sense during sensed AV delay
-  	<<v@now and SAV(now) and INV() >>;  --was it in VRP? 
+  	<<v@now and SAV(tops) and INV(tops) and AXIOM_T_N() >>;  --was it in VRP? 
   sav_check_url : state  --SAV delay timeout, check for URL before tracking
-    <<as@(now-#PP::Sensed_AV_Delay ms) and SAV(now) and INV() >>;
+    <<as@(now-#PP::Sensed_AV_Delay ms) and SAV(tops) and INV(tops) and AXIOM_T_N() >>;
   pav : complete state  --an atrial pace occurred 
-    <<PAV(now) and INV()>>;       --  in the previous Paced AV Delay
+    <<PAV(now) and INV(now)>>;       --  in the previous Paced AV Delay
   pav_check_vrp : state  --ventricular sense during paced AV delay
-  	<<v@now and PAV(now) and INV()>>;  --was it in VRP? 
+  	<<v@now and PAV(tops) and INV(tops) and AXIOM_T_N() >>;  --was it in VRP? 
   va : complete state   --a V pace or sense occurred in the previous VA interval
-    <<INV()>>;   
+    <<INV(now)>>;   
   check_atrial_refractories : state   --check if atrial sense is in PVARP or ARP
-    <<a@now and INV()>>;  
+    <<a@now and INV(tops) and AXIOM_T_N() >>;  
   check_vrp : state     --check if ventricular sense is premature ventricular contraction
-    <<v@now and INV()>>;
+    <<v@now and INV(tops)>>;
+  off : final state;  --normal termination
+  err : final state;  --error termination
 
 transitions
   T0_GO:	--assume atrial and ventricular senses at start
@@ -270,32 +263,39 @@ transitions
       { <<(vp or vs)@(now-#PP::Lower_Rate_Limit_Interval ms)
           and not (exists t~time 
            in (now-#PP::Lower_Rate_Limit_Interval ms),,now
-           that (vp or vs)@t) and LAST_AP_OR_AS_A(now)
+           that (vp or vs)@t) and MR(e:(as or ap), ts:last_ap_or_as)
          and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        vp! 
          <<vp@now and not (exists t~time 
           in (now-#PP::Lower_Rate_Limit_Interval ms),,now
           that (vp or vs)@t) 
          and (vp or vs)@(now-#PP::Lower_Rate_Limit_Interval ms)
-         and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+         and MR(e:(as or ap), ts:last_ap_or_as) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        ;	--note sequential composition
        last_vp_or_vs:=now
        <<vp@last_vp_or_vs and vp@now  
-         and (last_vp_or_vs=now) and LAST_AP_OR_AS_A(now)>>};
+         and (last_vp_or_vs=now) and MR(e:(as or ap), ts:last_ap_or_as)>>};
 
   T2_VS_AFTER_AS:    --ventricular sense during SAV delay
   sav -[on dispatch v]-> sav_check_vrp{};  --go check whether in VRP
   
   T3_VS_AFTER_AS_IN_VRP:  --ventricular sense during VRP, go back to sav
-  sav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period ms)]-> sav{};
+  sav_check_vrp -[last_vp_or_vs >= (now-#PP::Ventricular_Refractory_Period ms) 
+  	              and last_vp_or_vs >= now - #PP::Lower_Rate_Limit_Interval
+  	              and last_vp_or_vs <= now ]-> sav{};
   
   T4_VS_AFTER_AS_AFTER_VRP:  --ventricular sense after VRP, wait for atrial sense
-  sav_check_vrp -[last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period ms)]-> va
-    {<<VS(now) and LAST_AP_OR_AS_A(now)>> 
+  sav_check_vrp -[last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period ms) 
+  	              and last_vp_or_vs >= now - #PP::Lower_Rate_Limit_Interval
+  	              and last_vp_or_vs <= now ]-> va
+    {<<VS(now) and MR(e:(as or ap), ts:last_vp_or_vs)>> 
     vs!
-     <<vs@now and LAST_AP_OR_AS_A(now)>>
+     <<vs@now and MR(e:(as or ap), ts:last_vp_or_vs)>>
     & 
     last_vp_or_vs:=now <<last_vp_or_vs=now>>};   
+  
+  T3_T4_SERBAN:
+  sav_check_vrp -[last_vp_or_vs < now - #PP::Lower_Rate_Limit_Interval or last_vp_or_vs > now ]-> err
 
   T5a_EXPIRED_SENSED_AV_DELAY:  --V-pace after sensed AV delay
     sav -[on dispatch timeout (as) #PP::Sensed_AV_Delay ms]-> sav_check_url{};
@@ -306,10 +306,10 @@ transitions
    
   T5c_TRACKED_VP_AFTER_AS:  --v-pace after a-sense, if not exceeding URL
    sav_check_url -[last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval ms)]-> va
-     {<<PACE_ON_SAV_DELAY(now) and VARS(now)
+     {<<PACE_ON_SAV_DELAY(now) and VARS()
        and (last_vp_or_vs <= (now-#PP::Upper_Rate_Limit_Interval ms))>> 
     vp!  --ventricular pace tracking atrial sense
-     <<vp@now and VARS(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+     <<vp@now and VARS() and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
     & 
     last_vp_or_vs:=now <<last_vp_or_vs=now >>};
    
@@ -322,17 +322,17 @@ transitions
   
   T8_VS_AFTER_AP_AFTER_VRP:  --ventricular sense after VRP, wait for atrial sense 
   pav_check_vrp -[ last_vp_or_vs < (now-#PP::Ventricular_Refractory_Period ms)]-> va  
-    { <<VS(now) and VARS(now)>> 
+    { <<VS(now) and VARS()>> 
       {
-        <<VS(now) and LAST_AP_OR_AS_A(now)>>
+        <<VS(now) and MR(e:(as or ap), ts:last_ap_or_as)>>
       vs!
-        <<vs@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
+        <<vs@now and MR(e:(as or ap), ts:last_ap_or_as) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       & 
       last_vp_or_vs:=now 
         <<last_vp_or_vs=now>>
       }
       <<vs@now and (last_vp_or_vs=now) and
-        LAST_AP_OR_AS_A(now) and LAST_VP_OR_VS_A(now)>> };  
+        MR(e:(as or ap), ts:last_ap_or_as) and MR(e:(vs or vp), ts:last_vp_or_vs)>> };  
    
   T10_AS_AFTER_VS_OR_VP:   --a sense after v sense or v pace
   va -[on dispatch a]-> check_atrial_refractories{};  --is a too early?
@@ -340,13 +340,13 @@ transitions
   T11_PVARP_EXPIRED:  --a sense not in PVARP, start sensed A-V delay
   check_atrial_refractories -[((now-#PP::PVARP ms)>last_vp_or_vs)
   	 and ((now-#PP::Atrial_Refractory_Period ms)>last_ap_or_as)]-> sav  
-    {<<AS(now) and LRL(now) and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now)>> 
+    {<<AS(now) and LRL(now) and MR(e:(vs or vp), ts:last_vp_or_vs) and MR(e:(as or ap), ts:last_ap_or_as)>> 
     as!
-     <<as@now and LRL(now) and LAST_VP_OR_VS_A(now) 
+     <<as@now and LRL(now) and MR(e:(vs or vp), ts:last_vp_or_vs) 
        and AXIOM_LRLi_gt_URLi_LIMIT(now) >>
     & 
     last_ap_or_as:=now 
-     <<(last_ap_or_as=now) and LAST_AP_OR_AS_A(now)>>};
+     <<(last_ap_or_as=now) and MR(e:(as or ap), ts:last_ap_or_as)>>};
   
   T12_STILL_IN_PVARP:  --a sense in PVARP, go back to va
   check_atrial_refractories -[((now-#PP::PVARP ms)<=last_vp_or_vs)
@@ -360,24 +360,24 @@ transitions
     
   T15_VRP_EXPIRED:  --vs after VRP expired
   check_vrp -[(now-#PP::Ventricular_Refractory_Period ms)>=last_vp_or_vs]-> va
-    {<<VS(now) and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now)>> 
+    {<<VS(now) and MR(e:(vs or vp), ts:last_vp_or_vs) and MR(e:(as or ap), ts:last_ap_or_as)>> 
     vs!
-     <<vs@now and LAST_AP_OR_AS_A(now)
+     <<vs@now and MR(e:(as or ap), ts:last_ap_or_as)
      >>
     & 
     last_vp_or_vs:=now 
-     <<(last_vp_or_vs=now) and LAST_VP_OR_VS_A(now)>>};  
+     <<(last_vp_or_vs=now) and MR(e:(vs or vp), ts:last_vp_or_vs)>>};  
     
   T16_AP_AFTER_TIMEOUT_VS_OR_VP:  --atrial pace if no atrial sense during V-A interval
   va -[on dispatch timeout (vp vs) va_interval ]-> pav
-    {{<<AXIOM_A_B4_V() and --last atrial event occurred before last ventricular event
-       LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now) and
+    {{<<AXIOM_A_B4_V(now) and --last atrial event occurred before last ventricular event
+       MR(e:(vs or vp), ts:last_vp_or_vs) and MR(e:(as or ap), ts:last_ap_or_as) and
        (vp or vs)@(now - va_interval) and
        not (exists tv~time
             in (now-va_interval),,now 
             that (vp or vs)@tv )>> 
     ap! 
-     <<ap@now and LAST_VP_OR_VS_A(now) and LAST_AP_OR_AS_A(now) and
+     <<ap@now and MR(e:(vs or vp), ts:last_vp_or_vs) and MR(e:(as or ap), ts:last_ap_or_as) and
        not (exists tap~time
             in (now - va_interval),,now 
             that (vp or vs)@tap )>>
@@ -385,14 +385,15 @@ transitions
       <<LRL(now) >>
     last_ap_or_as:=now
       <<(last_ap_or_as=now) and LRL(now) >> }
-    <<(last_ap_or_as=now) and LAST_AP_OR_AS_A(now) and LAST_VP_OR_VS_A(now) and
+    <<(last_ap_or_as=now) and MR(e:(as or ap), ts:last_ap_or_as) and MR(e:(vs or vp), ts:last_vp_or_vs) and
      not (exists tv~time
           in (now - va_interval),,now 
           that (vp or vs)@tv ) 
      and LRL(now) and ap@now >>};  
     
 --  T17_STOP:  --turn off pacing
---  sav,pav,va -[on dispatch stop]-> off{};  
+--  sav,pav,va -[on dispatch stop]-> off{}; 
+   
   
 **};	--end of annex subclause 
 
