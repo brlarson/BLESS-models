@@ -1,599 +1,566 @@
-This file, proof.txt, was produced the BLESS Proof Assistant v3.1
-  at Sun Jan 10 14:21:14 CST 2021 by brianlarson
+This file, proof.txt, was produced the BLESS Proof Assistant v3.1.5
+  at Thu Feb 23 11:40:56 CST 2023 by brianlarson
 
-Theorem (1)                               [serial 1024] 
-P [59] << exists t~time
-  in now - lrl..now 
+Theorem (1)                               [serial 1023] 
+P [55] << exists t~time
+  in now - lrl .. now 
   that n@t or p@t  >>
-S [59] ->
-Q [30] << exists t~time
-  in now - lrl..now 
+S [55] ->
+Q [27] << exists t~time
+  in now - lrl .. now 
   that n@t or p@t  >>
 by Identity (id):  P->P is tautology
 
 
 Theorem (2)                               [serial 1020] 
-P [59] << exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t)  >>
-S [59] ->
-Q [30] << (exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t) ) >>
+P [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
+S [55] ->
+Q [27] << (exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t)) ) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
 and theorem 1:
-Theorem (1) [serial 1024] used for:
+Theorem (1) [serial 1023] used for:
     normalization of [serial 1020]
  
 
 
 Theorem (3)                               [serial 1003] 
-P [59] << exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t)  >>
-S [59] ->
-Q [30] << LRL() >>
+P [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
+S [55] ->
+Q [27] << LRL() >>
 by Substitution of Assertion Labels
 and theorem 2:
 Theorem (2) [serial 1020] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1003]
+  Substituted assertions' predicates for labels  [serial 1003]
  
 
 
-Theorem (4)                               [serial 1030] 
-P [75] << p@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (4)                               [serial 1028] 
+P [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
-S [59] ->
-Q [59] << (exists t~time
-  in now - lrl..now 
+S [55] ->
+Q [55] << (exists t~time
+  in now - lrl .. now 
   that n@t ) or (exists t~time
-  in now - lrl..now 
+  in now - lrl .. now 
   that p@t ) >>
 by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
 
 
-Theorem (5)                               [serial 1028] 
-P [75] << (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-S [59] ->
-Q [59] << (exists t~time
-  in now - lrl..now 
-  that n@t ) or (exists t~time
-  in now - lrl..now 
+Theorem (5)                               [serial 1025] 
+P [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 4:
-Theorem (4) [serial 1030] used for:
-    normalization of [serial 1028]
- 
-
-
-Theorem (6)                               [serial 1027] 
-P [75] << (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-S [59] ->
-Q [59] << exists t~time
-  in now - lrl..now 
+S [55] ->
+Q [55] << exists t~time
+  in now - lrl .. now 
   that n@t or p@t  >>
 by Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B)
-and theorem 5:
-Theorem (5) [serial 1028] used for:
-  Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B) [serial 1027]
+and theorem 4:
+Theorem (4) [serial 1028] used for:
+  Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B) [serial 1025]
  
 
 
-Theorem (7)                               [serial 1022] 
-P [75] << PACE(now) >>
-S [59] ->
-Q [59] << exists t~time
-  in now - lrl..now 
-  that n@t or p@t  >>
-by Substitution of Assertion Labels
-and theorem 6:
-Theorem (6) [serial 1027] used for:
-  substituted Assertions' predicates for  labels in preconditions [serial 1022]
- 
-
-
-Theorem (8)                               [serial 1004] 
-P [75] << PACE(now) >>
-S [59] ->
-Q [59] << exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t)  >>
+Theorem (6)                               [serial 1021] 
+P [71] << ((p@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that p@t ))) >>
+S [55] ->
+Q [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 7:
-Theorem (7) [serial 1022] used for:
-    normalization of [serial 1004]
+and theorem 5:
+Theorem (5) [serial 1025] used for:
+    normalization of [serial 1021]
  
 
 
-Theorem (9)                               [serial 1035] 
-P [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (7)                               [serial 1004] 
+P [71] << PACE(now) >>
+S [55] ->
+Q [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
+by Substitution of Assertion Labels
+and theorem 6:
+Theorem (6) [serial 1021] used for:
+  Substituted assertions' predicates for labels  [serial 1004]
+ 
+
+
+Theorem (8)                               [serial 1033] 
+P [75] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
-S [59] ->
-Q [59] << (exists t~time
-  in now - lrl..now 
+S [55] ->
+Q [55] << (exists t~time
+  in now - lrl .. now 
   that n@t ) or (exists t~time
-  in now - lrl..now 
+  in now - lrl .. now 
   that p@t ) >>
 by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
 
 
-Theorem (10)                               [serial 1033] 
-P [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-S [59] ->
-Q [59] << (exists t~time
-  in (now - lrl)..now 
-  that n@t ) or (exists t~time
-  in (now - lrl)..now 
-  that p@t ) >>
+Theorem (9)                               [serial 1031] 
+P [75] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that n@t ) >>
+S [55] ->
+Q [55] << exists t~time
+  in now - lrl .. now 
+  that n@t or p@t  >>
+by Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B)
+and theorem 8:
+Theorem (8) [serial 1033] used for:
+  Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B) [serial 1031]
+ 
+
+
+Theorem (10)                               [serial 1029] 
+P [75] << ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
+S [55] ->
+Q [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
 and theorem 9:
-Theorem (9) [serial 1035] used for:
-    normalization of [serial 1033]
+Theorem (9) [serial 1031] used for:
+    normalization of [serial 1029]
  
 
 
-Theorem (11)                               [serial 1032] 
-P [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-S [59] ->
-Q [59] << exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t)  >>
-by Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B)
-and theorem 10:
-Theorem (10) [serial 1033] used for:
-  Combine Existential Quantifications: exists x:t in R that (A or B) = (exists x:t in R that A) or (exists x:t in R that B) [serial 1032]
- 
-
-
-Theorem (12)                               [serial 1005] 
-P [79] << SENSE(now) >>
-S [59] ->
-Q [59] << exists t~time
-  in (now - lrl)..now 
-  that (n@t or p@t)  >>
+Theorem (11)                               [serial 1005] 
+P [75] << SENSE(now) >>
+S [55] ->
+Q [55] << exists t~time
+  in ((now - lrl)) .. now 
+  that ((n@t or p@t))  >>
 by Substitution of Assertion Labels
-and theorem 11:
-Theorem (11) [serial 1032] used for:
-  substituted Assertions' predicates for  labels in preconditions [serial 1005]
+and theorem 10:
+Theorem (10) [serial 1029] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1005]
  
 
 
-Theorem (13)                               [serial 1006] 
-P [71] << (now = 0) >>
-S [71] ->
-Q [71] << true >>
+Theorem (12)                               [serial 1006] 
+P [67] << (now = 0) >>
+S [67] ->
+Q [67] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (14)                               [serial 1044] 
-P [82] << s@now and PACE(now) >>
-S [82] ->
-Q [82] << true >>
+Theorem (13)                               [serial 1038] 
+P [78] << s@now
+ and PACE(now) >>
+S [78] ->
+Q [78] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (15)                               [serial 1042] 
-P [82] << s@now and PACE(now) >>
-S [82] ->
-Q [82] << not (now - last_beat) < vrp or (now - last_beat) < vrp >>
+Theorem (14)                               [serial 1037] 
+P [78] << s@now
+ and PACE(now) >>
+S [78] ->
+Q [78] << (not ((now - last_beat) < vrp@now)) or (now - last_beat) < vrp@now >>
 by Law of Excluded Middle: P or not P is tautology
-and theorem 14:
-Theorem (14) [serial 1044] used for:
-  Law of Excluded Middle: P or not P is tautology [serial 1042]
+and theorem 13:
+Theorem (13) [serial 1038] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1037]
  
 
 
-Theorem (16)                               [serial 1040] 
-P [82] << s@now and PACE(now) >>
-S [82] ->
-Q [82] << (not ((now - last_beat) < vrp)) or (now - last_beat) < vrp >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 15:
-Theorem (15) [serial 1042] used for:
-    normalization of [serial 1040]
- 
-
-
-Theorem (17)                               [serial 1038] 
-P [82] << s@now and PACE(now) >>
-S [82] ->
-Q [82] << vrp <= (now - last_beat) or (now - last_beat) < vrp >>
+Theorem (15)                               [serial 1035] 
+P [78] << s@now
+ and PACE(now) >>
+S [78] ->
+Q [78] << vrp@now <= (now - last_beat) or (now - last_beat) < vrp@now >>
 by At Most Is Not Less Than: (a<=b) = not(b<a)
-and theorem 16:
-Theorem (16) [serial 1040] used for:
-  At Most Is Not Less Than: (a<=b) = not(b<a) [serial 1038]
+and theorem 14:
+Theorem (14) [serial 1037] used for:
+  At Most Is Not Less Than: (a<=b) = not(b<a) [serial 1035]
  
 
 
-Theorem (18)                               [serial 1007] 
-P [82] << s@now and PACE(now) >>
-S [82] ->
-Q [82] << (((now - last_beat) < vrp)) or (((now - last_beat) >= vrp)) >>
+Theorem (16)                               [serial 1007] 
+P [78] << (s@now
+ and PACE(now)) >>
+S [78] ->
+Q [78] << (((now - last_beat) < vrp@now)) or (((now - last_beat) >= vrp@now)) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Disjunction: (m or k) = (k or m)
-and theorem 17:
-Theorem (17) [serial 1038] used for:
+and theorem 15:
+Theorem (15) [serial 1035] used for:
     normalization of [serial 1007]
  
 
 
-Theorem (19)                               [serial 1057] 
-P [85] << n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t ) and s@now >>
-S [85] ->
-Q [85] << true >>
+Theorem (17)                               [serial 1046] 
+P [81] << s@now
+ and SENSE(now) >>
+S [81] ->
+Q [81] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (20)                               [serial 1056] 
-P [85] << s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [85] ->
-Q [85] << true >>
-by Associativity: (b.c).a = a.b.c
-and theorem 19:
-Theorem (19) [serial 1057] used for:
-  Associativity: (b.c).a = a.b.c [serial 1056]
- 
-
-
-Theorem (21)                               [serial 1054] 
-P [85] << s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [85] ->
-Q [85] << not (now - last_beat) < vrp or (now - last_beat) < vrp >>
+Theorem (18)                               [serial 1044] 
+P [81] << s@now
+ and SENSE(now) >>
+S [81] ->
+Q [81] << not (now - last_beat) < vrp@now or (now - last_beat) < vrp@now >>
 by Law of Excluded Middle: P or not P is tautology
-and theorem 20:
-Theorem (20) [serial 1056] used for:
-  Law of Excluded Middle: P or not P is tautology [serial 1054]
+and theorem 17:
+Theorem (17) [serial 1046] used for:
+  Law of Excluded Middle: P or not P is tautology [serial 1044]
  
 
 
-Theorem (22)                               [serial 1052] 
-P [85] << s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [85] ->
-Q [85] << (not ((now - last_beat) < vrp)) or (now - last_beat) < vrp >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 21:
-Theorem (21) [serial 1054] used for:
-    normalization of [serial 1052]
- 
-
-
-Theorem (23)                               [serial 1050] 
-P [85] << s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [85] ->
-Q [85] << vrp <= (now - last_beat) or (now - last_beat) < vrp >>
-by At Most Is Not Less Than: (a<=b) = not(b<a)
-and theorem 22:
-Theorem (22) [serial 1052] used for:
-  At Most Is Not Less Than: (a<=b) = not(b<a) [serial 1050]
- 
-
-
-Theorem (24)                               [serial 1048] 
-P [85] << s@now and (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-S [85] ->
-Q [85] << vrp <= (now - last_beat) or (now - last_beat) < vrp >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
-and theorem 23:
-Theorem (23) [serial 1050] used for:
-    normalization of [serial 1048]
- 
-
-
-Theorem (25)                               [serial 1046] 
-P [85] << s@now and SENSE(now) >>
-S [85] ->
-Q [85] << vrp <= (now - last_beat) or (now - last_beat) < vrp >>
-by Substitution of Assertion Labels
-and theorem 24:
-Theorem (24) [serial 1048] used for:
-  substituted Assertions' predicates for  labels in preconditions [serial 1046]
- 
-
-
-Theorem (26)                               [serial 1008] 
-P [85] << s@now and SENSE(now) >>
-S [85] ->
-Q [85] << (((now - last_beat) < vrp)) or (((now - last_beat) >= vrp)) >>
+Theorem (19)                               [serial 1042] 
+P [81] << s@now
+ and SENSE(now) >>
+S [81] ->
+Q [81] << (not ((now - last_beat) < vrp@now)) or (now - last_beat) < vrp@now >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 18:
+Theorem (18) [serial 1044] used for:
+    normalization of [serial 1042]
+ 
+
+
+Theorem (20)                               [serial 1040] 
+P [81] << s@now
+ and SENSE(now) >>
+S [81] ->
+Q [81] << vrp@now <= (now - last_beat) or (now - last_beat) < vrp@now >>
+by At Most Is Not Less Than: (a<=b) = not(b<a)
+and theorem 19:
+Theorem (19) [serial 1042] used for:
+  At Most Is Not Less Than: (a<=b) = not(b<a) [serial 1040]
+ 
+
+
+Theorem (21)                               [serial 1008] 
+P [81] << (s@now
+ and SENSE(now)) >>
+S [81] ->
+Q [81] << (((now - last_beat) < vrp@now)) or (((now - last_beat) >= vrp@now)) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Disjunction: (m or k) = (k or m)
-and theorem 25:
-Theorem (25) [serial 1046] used for:
+and theorem 20:
+Theorem (20) [serial 1040] used for:
     normalization of [serial 1008]
  
 
 
-Theorem (27)                               [serial 1066] 
-P [71] << 0 = now >>
-S [92] ->
-Q [92] << 0 = now >>
+Theorem (22)                               [serial 1047] 
+P [67] << (now = 0) >>
+S [88] ->
+Q [88] << (now = 0) >>
 by Identity (id):  P->P is tautology
 
 
-Theorem (28)                               [serial 1058] 
-P [71] << (now = 0) >>
-S [92] ->
-Q [92] << (now = 0) >>
-by Normalization
-  Normalization Axioms:
-    Reflexivity of Equality: (a=b) = (b=a)
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 27:
-Theorem (27) [serial 1066] used for:
-    normalization of [serial 1058]
+Theorem (23)                               [serial 1073] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [49] << n@now >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (24)                               [serial 1071] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [49] << n@last_beat >>
+by Guided Substitution of Equals
+and theorem 23:
+Theorem (23) [serial 1073] used for:
+  Guided Substitution of Equals
+ replacing "last_beat" with its = "now" in its postcondition [serial 1071]
  
 
 
-Theorem (29)                               [serial 1086] 
-P [92] << n@last_beat and n@now and last_beat = now >>
-S [93] ->
-Q [53] << n@last_beat >>
+Theorem (25)                               [serial 1077] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [50] << n@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (30)                               [serial 1091] 
-P [92] << n@last_beat and n@now and last_beat = now >>
-S [93] ->
-Q [54] << n@now >>
-by And Introduction Schema (aisph):  (X and Y)->X
-
-
-Theorem (31)                               [serial 1089] 
-P [92] << n@last_beat and n@now and last_beat = now >>
-S [93] ->
-Q [54] << exists t~time
-  in now - lrl..now 
+Theorem (26)                               [serial 1075] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [50] << exists t~time
+  in now - lrl .. now 
   that n@t  >>
 by Introduction of Existential Quantification
-and theorem 30:
-Theorem (30) [serial 1091] used for:
-  replace exists with upper or lower bound [serial 1089]
+and theorem 25:
+Theorem (25) [serial 1077] used for:
+  replace exististential quantification with predicate [serial 1075]
  
 
 
-Theorem (32)                               [serial 1087] 
-P [92] << n@last_beat and n@now and last_beat = now >>
-S [93] ->
-Q [54] << (exists t~time
-  in now - lrl..now 
+Theorem (27)                               [serial 1072] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [50] << (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 31:
-Theorem (31) [serial 1089] used for:
-    normalization of [serial 1087]
- 
-
-
-Theorem (33)                               [serial 1084] 
-P [92] << n@last_beat and n@now and last_beat = now >>
-S [93] ->
-Q [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t ) >>
-by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 29 32:
-Theorem (29) [serial 1086] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1084]
- 
-Theorem (32) [serial 1087] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1084]
- 
-
-
-Theorem (34)                               [serial 1082] 
-P [92] << n@now and last_beat = now and n@last_beat >>
-S [93] ->
-Q [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 26:
+Theorem (26) [serial 1075] used for:
+    normalization of [serial 1072]
+ 
+
+
+Theorem (28)                               [serial 1069] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [75] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that n@t ) >>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 24 27:
+Theorem (24) [serial 1071] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1069]
+ 
+Theorem (27) [serial 1072] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1069]
+ 
+
+
+Theorem (29)                               [serial 1067] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [75] << ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 33:
-Theorem (33) [serial 1084] used for:
-    normalization of [serial 1082]
+and theorem 28:
+Theorem (28) [serial 1069] used for:
+    normalization of [serial 1067]
  
 
 
-Theorem (35)                               [serial 1081] 
-P [92] << n@now and last_beat = now >>
-S [93] ->
-Q [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-by Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b
-and theorem 34:
-Theorem (34) [serial 1082] used for:
-  Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b [serial 1081]
- 
-
-
-Theorem (36)                               [serial 1068] 
-P [92] << n@now and last_beat = now >>
-S [93] ->
-Q [79] << SENSE(now) >>
+Theorem (30)                               [serial 1056] 
+P [88] << n@now
+ and last_beat = now >>
+S [89] ->
+Q [75] << SENSE(now) >>
 by Substitution of Assertion Labels
-and theorem 35:
-Theorem (35) [serial 1081] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1068]
+and theorem 29:
+Theorem (29) [serial 1067] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1056]
  
 
 
-Theorem (37)                               [serial 1059] 
-P [92] << n@now and ((last_beat = now)) >>
-S [93] ->
-Q [79] << SENSE(now) >>
+Theorem (31)                               [serial 1048] 
+P [88] << n@now
+ and ((last_beat = now)) >>
+S [89] ->
+Q [75] << SENSE(now) >>
 by Normalization
   Normalization Axiom:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 36:
-Theorem (36) [serial 1068] used for:
-    normalization of [serial 1059]
+and theorem 30:
+Theorem (30) [serial 1056] used for:
+    normalization of [serial 1048]
  
 
 
-Theorem (38)                               [serial 1070] 
-P [92] << 0 = now >>
-S [93] ->
-Q [24] << 0 = now or VS() >>
+Theorem (32)                               [serial 1058] 
+P [88] << 0 = now >>
+S [89] ->
+Q [22] << 0 = now or VS() >>
 by Or Introduction Schema (orcwl):  X->(X or Y)
 
 
-Theorem (39)                               [serial 1062] 
-P [92] << (now = 0) >>
-S [93] ->
-Q [24] << (now = 0) or VS() >>
+Theorem (33)                               [serial 1051] 
+P [88] << (now = 0) >>
+S [89] ->
+Q [22] << (now = 0) or VS() >>
 by Normalization
   Normalization Axioms:
     Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 38:
-Theorem (38) [serial 1070] used for:
-    normalization of [serial 1062]
+and theorem 32:
+Theorem (32) [serial 1058] used for:
+    normalization of [serial 1051]
  
 
 
-Theorem (40)                               [serial 1072] 
-P [93] << n@now and 0 = now >>
-S [93] ->
-Q [93] << n@now >>
+Theorem (34)                               [serial 1080] 
+P [89] << (0 = now or VS())@now
+ and 0 = now >>
+S [89] ->
+Q [89] << (0 = now or VS())@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (41)                               [serial 1063] 
-P [93] << ((now = 0)) and n@now >>
-S [93] ->
-Q [93] << n@now >>
+Theorem (35)                               [serial 1078] 
+P [89] << (0 = now or VS())@now
+ and 0 = now >>
+S [89] ->
+Q [89] << ((now = 0) or VS())@now >>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 34:
+Theorem (34) [serial 1080] used for:
+    normalization of [serial 1078]
+ 
+
+
+Theorem (36)                               [serial 1060] 
+P [89] << (0 = now or VS())@now
+ and 0 = now >>
+S [89] ->
+Q [89] << n@now >>
+by Replacing port names with BLESS::Assertion properties
+and theorem 35:
+Theorem (35) [serial 1078] used for:
+  Replacing port names with BLESS::Assertion properties [serial 1060]
+ 
+
+
+Theorem (37)                               [serial 1052] 
+P [89] << ((now = 0))
+ and ((now = 0) or VS())@now >>
+S [89] ->
+Q [89] << n@now >>
 by Normalization
   Normalization Axioms:
     Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 40:
-Theorem (40) [serial 1072] used for:
-    normalization of [serial 1063]
+and theorem 36:
+Theorem (36) [serial 1060] used for:
+    normalization of [serial 1052]
  
 
 
-Theorem (42)                               [serial 1060] 
-P [92] << (now = 0) >>
-S [93] n!
-Q [93] << n@now >>
+Theorem (38)                               [serial 1049] 
+P [88] << (now = 0) >>
+S [89] n!
+Q [89] << n@now >>
 by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
-and theorems 39 41:
-Theorem (39) [serial 1062] used for:
-  applied port output <<pre>> -> <<M(n)>> [serial 1060]
+and theorems 33 37:
+Theorem (33) [serial 1051] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1049]
  
-Theorem (41) [serial 1063] used for:
-  applied port output <<pre and n@now>> -> <<post>> [serial 1060]
+Theorem (37) [serial 1052] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1049]
  
 
 
-Theorem (43)                               [serial 1080] 
-P [71] << 0 = now >>
-S [95] ->
-Q [96] << true >>
+Theorem (39)                               [serial 1062] 
+P [67] << 0 = now >>
+S [91] ->
+Q [92] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (44)                               [serial 1074] 
-P [71] << 0 = now >>
-S [95] ->
-Q [96] << now = now >>
-by Equality Law (idistr):  a=a <-> true
-and theorem 43:
-Theorem (43) [serial 1080] used for:
-  Equality Law (idistr):  a=a <-> true [serial 1074]
- 
-
-
-Theorem (45)                               [serial 1064] 
-P [71] << (now = 0) >>
-S [95] ->
-Q [96] << (now = now) >>
+Theorem (40)                               [serial 1054] 
+P [67] << (now = 0) >>
+S [91] ->
+Q [92] << (true) >>
 by Normalization
   Normalization Axioms:
     Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 44:
-Theorem (44) [serial 1074] used for:
-    normalization of [serial 1064]
+and theorem 39:
+Theorem (39) [serial 1062] used for:
+    normalization of [serial 1054]
  
 
 
-Theorem (46)                               [serial 1061] 
-P [71] << (now = 0) >>
-S [95] last_beat := now
-Q [96] << (last_beat = now) >>
+Theorem (41)                               [serial 1053] 
+P [67] << (now = 0) >>
+S [91] ->
+Q [92] << (now = now) >>
+by Equality Law (idistr):  a=a <-> true
+and theorem 40:
+Theorem (40) [serial 1054] used for:
+  Equality Law (idistr):  a=a <-> true [serial 1053]
+ 
+
+
+Theorem (42)                               [serial 1050] 
+P [67] << (now = 0) >>
+S [91] last_beat := now
+Q [92] << (last_beat = now) >>
 by Assignment Rule:
  <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
  ---------------------------------------
              <<P>> x:=e <<Q>> (bl.a)
-and theorem 45:
-Theorem (45) [serial 1064] used for:
-  applied wp for assignment [serial 1061]
+and theorem 41:
+Theorem (41) [serial 1053] used for:
+  applied wp for assignment [serial 1050]
  
 
 
-Theorem (47)                               [serial 1009] 
-P [71] << (now = 0) >>
-S [92] << (now = 0) >>
+Theorem (43)                               [serial 1009] 
+P [67] << (now = 0) >>
+S [88] << (now = 0) >>
 n!
 << n@now >>
 &
 last_beat := now
 << (last_beat = now) >>
-Q [79] << SENSE(now) >>
+Q [75] << SENSE(now) >>
 by Concurrent Composition Rule:
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
  <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
@@ -601,889 +568,1224 @@ by Concurrent Composition Rule:
  -----------------------------------------------
        <<P>> S <<Q>> where S is
  <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
-and theorems 28 37 42 46:
-Theorem (28) [serial 1058] used for:
+and theorems 22 31 38 42:
+Theorem (22) [serial 1047] used for:
   P -> P1 in concurrent composition for [serial 1009]
  
-Theorem (37) [serial 1059] used for:
+Theorem (31) [serial 1048] used for:
   Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1009]
  
-Theorem (42) [serial 1060] used for:
+Theorem (38) [serial 1049] used for:
   <<P1>> S1 <<Q1>> in concurrent composition for [serial 1009]
  
-Theorem (46) [serial 1061] used for:
+Theorem (42) [serial 1050] used for:
   <<P>> S2 <<Q2>> in concurrent composition for [serial 1009]
  
 
 
-Theorem (48)                               [serial 1010] 
-P [100] << (PACE(now)) and stop@now and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (44)                               [serial 1010] 
+P [96] << (PACE(now))
+ and h@now
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [99] ->
-Q [86] << true >>
+S [95] ->
+Q [82] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (49)                               [serial 1011] 
-P [100] << (SENSE(now)) and stop@now and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((p or n)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (p or n)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (45)                               [serial 1011] 
+P [99] << (SENSE(now))
+ and h@now
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [99] ->
-Q [86] << true >>
+S [98] ->
+Q [82] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (50)                               [serial 1120] 
-P [103] << (n or p)@(now-lrl) and PACE(now) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [104] ->
-Q [104] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
+Theorem (46)                               [serial 1115] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [103] ->
+Q [103] << (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
   that (n or p)@t ) >>
 by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
 
 
-Theorem (51)                               [serial 1116] 
-P [103] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [104] ->
-Q [104] << ((n or p)@(now-lrl) and not (exists t~time
-  in (now - lrl),,now 
-  that (n or p)@t )) >>
+Theorem (47)                               [serial 1113] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [103] ->
+Q [103] << ((((n or p))@((now-lrl))
+ and not (exists t~time
+  in ((now - lrl)) ,, now 
+  that ((n or p))@t ))) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 50:
-Theorem (50) [serial 1120] used for:
-    normalization of [serial 1116]
+and theorem 46:
+Theorem (46) [serial 1115] used for:
+    normalization of [serial 1113]
  
 
 
-Theorem (52)                               [serial 1112] 
-P [103] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [104] ->
-Q [104] << VP() >>
+Theorem (48)                               [serial 1090] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [103] ->
+Q [103] << VP() >>
 by Substitution of Assertion Labels
-and theorem 51:
-Theorem (51) [serial 1116] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1112]
+and theorem 47:
+Theorem (47) [serial 1113] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1090]
  
 
 
-Theorem (53)                               [serial 1100] 
-P [103] << PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
+Theorem (49)                               [serial 1118] 
+P [103] << p@now
+ and last_beat = now >>
 S [104] ->
-Q [104] << VP() >>
-by Associativity: (b.c).a = a.b.c
-and theorem 52:
-Theorem (52) [serial 1112] used for:
-  Associativity: (b.c).a = a.b.c [serial 1100]
- 
-
-
-Theorem (54)                               [serial 1092] 
-P [103] << (PACE(now)) and (((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
-  that s@u ) >>
-S [104] ->
-Q [104] << VP() >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 53:
-Theorem (53) [serial 1100] used for:
-    normalization of [serial 1092]
- 
-
-
-Theorem (55)                               [serial 1124] 
-P [104] << p@now and last_beat = now and p@last_beat >>
-S [105] ->
-Q [48] << p@last_beat >>
+Q [44] << p@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (56)                               [serial 1129] 
-P [104] << p@last_beat and p@now and last_beat = now >>
-S [105] ->
-Q [49] << p@now >>
+Theorem (50)                               [serial 1105] 
+P [103] << p@now
+ and last_beat = now >>
+S [104] ->
+Q [44] << p@last_beat >>
+by Guided Substitution of Equals
+and theorem 49:
+Theorem (49) [serial 1118] used for:
+  Guided Substitution of Equals
+ replacing "last_beat" with its = "now" in its postcondition [serial 1105]
+ 
+
+
+Theorem (51)                               [serial 1119] 
+P [103] << p@now
+ and last_beat = now >>
+S [104] ->
+Q [45] << p@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (57)                               [serial 1127] 
-P [104] << p@last_beat and p@now and last_beat = now >>
-S [105] ->
-Q [49] << exists t~time
-  in now - lrl..now 
+Theorem (52)                               [serial 1111] 
+P [103] << p@now
+ and last_beat = now >>
+S [104] ->
+Q [45] << exists t~time
+  in now - lrl .. now 
   that p@t  >>
 by Introduction of Existential Quantification
-and theorem 56:
-Theorem (56) [serial 1129] used for:
-  replace exists with upper or lower bound [serial 1127]
+and theorem 51:
+Theorem (51) [serial 1119] used for:
+  replace exististential quantification with predicate [serial 1111]
  
 
 
-Theorem (58)                               [serial 1125] 
-P [104] << p@now and last_beat = now and p@last_beat >>
-S [105] ->
-Q [49] << (exists t~time
-  in now - lrl..now 
+Theorem (53)                               [serial 1106] 
+P [103] << p@now
+ and last_beat = now >>
+S [104] ->
+Q [45] << (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 52:
+Theorem (52) [serial 1111] used for:
+    normalization of [serial 1106]
+ 
+
+
+Theorem (54)                               [serial 1100] 
+P [103] << p@now
+ and last_beat = now >>
+S [104] ->
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 50 53:
+Theorem (50) [serial 1105] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1100]
+ 
+Theorem (53) [serial 1106] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1100]
+ 
+
+
+Theorem (55)                               [serial 1091] 
+P [103] << p@now
+ and (last_beat = now) >>
+S [104] ->
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 54:
+Theorem (54) [serial 1100] used for:
+    normalization of [serial 1091]
+ 
+
+
+Theorem (56)                               [serial 1094] 
+P [103] << VP() >>
+S [104] ->
+Q [20] << VP() >>
+by Identity (id):  P->P is tautology
+
+
+Theorem (57)                               [serial 1117] 
+P [104] << VP()@now
+ and VP() >>
+S [104] ->
+Q [104] << VP()@now >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (58)                               [serial 1102] 
+P [104] << VP()@now
+ and VP() >>
+S [104] ->
+Q [104] << p@now >>
+by Replacing port names with BLESS::Assertion properties
+and theorem 57:
+Theorem (57) [serial 1117] used for:
+  Replacing port names with BLESS::Assertion properties [serial 1102]
+ 
+
+
+Theorem (59)                               [serial 1095] 
+P [104] << (VP())
+ and VP()@now >>
+S [104] ->
+Q [104] << p@now >>
 by Normalization
   Normalization Axioms:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 57:
-Theorem (57) [serial 1127] used for:
-    normalization of [serial 1125]
+and theorem 58:
+Theorem (58) [serial 1102] used for:
+    normalization of [serial 1095]
  
 
 
-Theorem (59)                               [serial 1123] 
-P [104] << p@now and last_beat = now and p@last_beat >>
-S [105] ->
-Q [75] << p@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (60)                               [serial 1092] 
+P [103] << VP() >>
+S [104] p!
+Q [104] << p@now >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 56 59:
+Theorem (56) [serial 1094] used for:
+  applied port output <<pre>> -> <<M[p]>> [serial 1092]
+ 
+Theorem (59) [serial 1095] used for:
+  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1092]
+ 
+
+
+Theorem (61)                               [serial 1097] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
-by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 55 58:
-Theorem (55) [serial 1124] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1123]
- 
-Theorem (58) [serial 1125] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1123]
- 
-
-
-Theorem (60)                               [serial 1118] 
-P [104] << p@now and last_beat = now >>
 S [105] ->
-Q [75] << p@last_beat and (exists t~time
-  in now - lrl..now 
+Q [105] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (62)                               [serial 1096] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
-by Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b
-and theorem 59:
-Theorem (59) [serial 1123] used for:
-  Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b [serial 1118]
- 
-
-
-Theorem (61)                               [serial 1115] 
-P [104] << p@now and last_beat = now >>
 S [105] ->
-Q [75] << (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 60:
-Theorem (60) [serial 1118] used for:
-    normalization of [serial 1115]
- 
-
-
-Theorem (62)                               [serial 1102] 
-P [104] << p@now and last_beat = now >>
-S [105] ->
-Q [75] << PACE(now) >>
-by Substitution of Assertion Labels
+Q [105] << now = now >>
+by Equality Law (idistr):  a=a <-> true
 and theorem 61:
-Theorem (61) [serial 1115] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1102]
+Theorem (61) [serial 1097] used for:
+  Equality Law (idistr):  a=a <-> true [serial 1096]
  
 
 
 Theorem (63)                               [serial 1093] 
-P [104] << p@now and ((last_beat = now)) >>
-S [105] ->
-Q [75] << PACE(now) >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 62:
-Theorem (62) [serial 1102] used for:
-    normalization of [serial 1093]
- 
-
-
-Theorem (64)                               [serial 1096] 
-P [104] << VP() >>
-S [105] ->
-Q [22] << VP() >>
-by Identity (id):  P->P is tautology
-
-
-Theorem (65)                               [serial 1105] 
-P [105] << p@now and VP() >>
-S [105] ->
-Q [105] << p@now >>
-by And Introduction Schema (aisph):  (X and Y)->X
-
-
-Theorem (66)                               [serial 1097] 
-P [105] << (VP()) and p@now >>
-S [105] ->
-Q [105] << p@now >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 65:
-Theorem (65) [serial 1105] used for:
-    normalization of [serial 1097]
- 
-
-
-Theorem (67)                               [serial 1094] 
-P [104] << VP() >>
-S [105] p!
-Q [105] << p@now >>
-by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
-and theorems 64 66:
-Theorem (64) [serial 1096] used for:
-  applied port output <<pre>> -> <<M(p)>> [serial 1094]
- 
-Theorem (66) [serial 1097] used for:
-  applied port output <<pre and p@now>> -> <<post>> [serial 1094]
- 
-
-
-Theorem (68)                               [serial 1114] 
-P [103] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [106] ->
-Q [106] << true >>
-by True Conclusion Schema (tc): P->true
-
-
-Theorem (69)                               [serial 1113] 
-P [103] << PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [106] ->
-Q [106] << true >>
-by Associativity: (b.c).a = a.b.c
-and theorem 68:
-Theorem (68) [serial 1114] used for:
-  Associativity: (b.c).a = a.b.c [serial 1113]
- 
-
-
-Theorem (70)                               [serial 1107] 
-P [103] << PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [106] ->
-Q [106] << now = now >>
-by Equality Law (idistr):  a=a <-> true
-and theorem 69:
-Theorem (69) [serial 1113] used for:
-  Equality Law (idistr):  a=a <-> true [serial 1107]
- 
-
-
-Theorem (71)                               [serial 1098] 
-P [103] << (PACE(now)) and (((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
-  that s@u ) >>
-S [106] ->
-Q [106] << (now = now) >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 70:
-Theorem (70) [serial 1107] used for:
-    normalization of [serial 1098]
- 
-
-
-Theorem (72)                               [serial 1095] 
-P [103] << (PACE(now)) and (((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
-  that s@u ) >>
-S [106] last_beat := now
-Q [106] << (last_beat = now) >>
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [105] last_beat := now
+Q [105] << last_beat = now >>
 by Assignment Rule:
  <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
  ---------------------------------------
              <<P>> x:=e <<Q>> (bl.a)
-and theorem 71:
-Theorem (71) [serial 1098] used for:
-  applied wp for assignment [serial 1095]
+and theorem 62:
+Theorem (62) [serial 1096] used for:
+  applied wp for assignment [serial 1093]
  
 
 
-Theorem (73)                               [serial 1012] 
-P [103] << (PACE(now)) and (((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (64)                               [serial 1088] 
+P [102] << p@last_beat
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [103] << VP() >>
+p!
+<< p@now >>
+&
+last_beat := now
+<< last_beat = now >>
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Concurrent Composition Rule:
+ <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
+ <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
+ <<Q1 and Q2 and  . . . and Qn>> -> <<Q>>
+ -----------------------------------------------
+       <<P>> S <<Q>> where S is
+ <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
+and theorems 48 55 60 63:
+Theorem (48) [serial 1090] used for:
+  P -> P1 in concurrent composition for [serial 1088]
+ 
+Theorem (55) [serial 1091] used for:
+  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1088]
+ 
+Theorem (60) [serial 1092] used for:
+  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1088]
+ 
+Theorem (63) [serial 1093] used for:
+  <<P>> S2 <<Q2>> in concurrent composition for [serial 1088]
+ 
+
+
+Theorem (65)                               [serial 1086] 
+P [102] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t )
+ and (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) ) >>
+S [103] << VP() >>
+p!
+<< p@now >>
+&
+last_beat := now
+<< last_beat = now >>
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 64:
+Theorem (64) [serial 1088] used for:
+    normalization of [serial 1086]
+ 
+
+
+Theorem (66)                               [serial 1084] 
+P [102] << not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and (p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ))
+ and ((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )) >>
+S [103] << VP() >>
+p!
+<< p@now >>
+&
+last_beat := now
+<< last_beat = now >>
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 65:
+Theorem (65) [serial 1086] used for:
+  Associativity: (b.c).a = a.b.c [serial 1084]
+ 
+
+
+Theorem (67)                               [serial 1082] 
+P [102] << (((p@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that p@t ))))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [104] << VP() >>
+S [103] << VP() >>
 p!
 << p@now >>
 &
 last_beat := now
 << (last_beat = now) >>
-Q [75] << PACE(now) >>
-by Concurrent Composition Rule:
- <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
- <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
- <<Q1 and Q2 and  . . . and Qn>> -> <<Q>>
- -----------------------------------------------
-       <<P>> S <<Q>> where S is
- <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
-and theorems 54 63 67 72:
-Theorem (54) [serial 1092] used for:
-  P -> P1 in concurrent composition for [serial 1012]
- 
-Theorem (63) [serial 1093] used for:
-  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1012]
- 
-Theorem (67) [serial 1094] used for:
-  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1012]
- 
-Theorem (72) [serial 1095] used for:
-  <<P>> S2 <<Q2>> in concurrent composition for [serial 1012]
+Q [71] << ((p@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that p@t ))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 66:
+Theorem (66) [serial 1084] used for:
+    normalization of [serial 1082]
  
 
 
-Theorem (74)                               [serial 1131] 
-P [109] << s@now and PACE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
+Theorem (68)                               [serial 1012] 
+P [102] << (PACE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u ) >>
+S [103] << VP() >>
+p!
+<< p@now >>
+&
+last_beat := now
+<< (last_beat = now) >>
+Q [71] << PACE(now) >>
+by Substitution of Assertion Labels
+and theorem 67:
+Theorem (67) [serial 1082] used for:
+  Substituted assertions' predicates for labels  [serial 1012]
+ 
+
+
+Theorem (69)                               [serial 1121] 
+P [108] << s@now
+ and PACE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
          that (n or p)@t ) ) >>
-S [108] ->
-Q [82] << s@now and PACE(now) >>
+S [107] ->
+Q [78] << s@now
+ and PACE(now) >>
 by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
 
 
-Theorem (75)                               [serial 1013] 
-P [109] << (PACE(now)) and s@now and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (70)                               [serial 1013] 
+P [108] << (PACE(now))
+ and s@now
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [108] ->
-Q [82] << s@now and PACE(now) >>
+S [107] ->
+Q [78] << (s@now
+ and PACE(now)) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 74:
-Theorem (74) [serial 1131] used for:
+and theorem 69:
+Theorem (69) [serial 1121] used for:
     normalization of [serial 1013]
  
 
 
-Theorem (76)                               [serial 1014] 
-P [82] << s@now and PACE(now) and (((now - last_beat) < vrp)) >>
-S [111] ->
-Q [75] << PACE(now) >>
+Theorem (71)                               [serial 1126] 
+P [78] << s@now
+ and PACE(now)
+ and (now - last_beat) < vrp@now >>
+S [110] ->
+Q [71] << PACE(now) >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (77)                               [serial 1168] 
-P [82] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) and vrp <= (now - last_beat) and s@now >>
-S [117] ->
+Theorem (72)                               [serial 1124] 
+P [78] << (s@now
+ and PACE(now))
+ and (now - last_beat) < vrp@now >>
+S [110] ->
+Q [71] << PACE(now) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 71:
+Theorem (71) [serial 1126] used for:
+  Associativity: (b.c).a = a.b.c [serial 1124]
+ 
+
+
+Theorem (73)                               [serial 1014] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) < vrp@now)) >>
+S [110] ->
+Q [71] << PACE(now) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 72:
+Theorem (72) [serial 1124] used for:
+    normalization of [serial 1014]
+ 
+
+
+Theorem (74)                               [serial 1169] 
+P [78] << vrp <= (now - last_beat)
+ and p@last_beat
+ and s
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
 Q [1] << vrp <= (now - last_beat) >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (78)                               [serial 1177] 
-P [82] << vrp <= (now - last_beat) and p@last_beat and s@now and (exists t~time
-  in now - lrl..now 
+Theorem (75)                               [serial 1161] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
-S [117] ->
-Q [37] << n@last_beat or p@last_beat >>
+S [116] ->
+Q [1] << vrp <= (now - last_beat) >>
+by Assume Present:  P = P@now = P^0 
+and theorem 74:
+Theorem (74) [serial 1169] used for:
+  Assume Present:  P = P@now = P^0  [serial 1161]
+ 
+
+
+Theorem (76)                               [serial 1167] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [33] << n@last_beat or p@last_beat >>
 by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
 
 
-Theorem (79)                               [serial 1173] 
-P [82] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) and vrp <= (now - last_beat) and s@now >>
-S [117] ->
-Q [37] << (n@last_beat or p@last_beat) >>
+Theorem (77)                               [serial 1164] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [33] << (n@last_beat or p@last_beat) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 78:
-Theorem (78) [serial 1177] used for:
-    normalization of [serial 1173]
+and theorem 76:
+Theorem (76) [serial 1167] used for:
+    normalization of [serial 1164]
  
 
 
-Theorem (80)                               [serial 1169] 
-P [82] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) and vrp <= (now - last_beat) and s@now >>
-S [117] ->
-Q [37] << (n or p)@last_beat >>
+Theorem (78)                               [serial 1162] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [33] << (n or p)@last_beat >>
 by Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t)
-and theorem 79:
-Theorem (79) [serial 1173] used for:
-  Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t) [serial 1169]
+and theorem 77:
+Theorem (77) [serial 1164] used for:
+  Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t) [serial 1162]
  
 
 
-Theorem (81)                               [serial 1170] 
-P [82] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) and vrp <= (now - last_beat) and s@now >>
-S [117] ->
-Q [40] << s@now >>
+Theorem (79)                               [serial 1163] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [36] << s@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (82)                               [serial 1166] 
-P [82] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) and vrp <= (now - last_beat) and s@now >>
-S [117] ->
-Q [117] << vrp <= (now - last_beat) and (n or p)@last_beat and s@now >>
+Theorem (80)                               [serial 1160] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [116] << vrp <= (now - last_beat)
+ and (n or p)@last_beat
+ and s@now >>
 by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 77 80 81:
-Theorem (77) [serial 1168] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1166]
+and theorems 75 78 79:
+Theorem (75) [serial 1161] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1160]
  
-Theorem (80) [serial 1169] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1166]
+Theorem (78) [serial 1162] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1160]
  
-Theorem (81) [serial 1170] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1166]
+Theorem (79) [serial 1163] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1160]
  
 
 
-Theorem (83)                               [serial 1163] 
-P [82] << vrp <= (now - last_beat) and s@now and (p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t )) >>
-S [117] ->
-Q [117] << s@now and (vrp <= (now - last_beat) and (n or p)@last_beat) >>
+Theorem (81)                               [serial 1158] 
+P [78] << vrp@now <= (now - last_beat)
+ and p@last_beat
+ and s@now
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+S [116] ->
+Q [116] << s@now
+ and (vrp <= (now - last_beat)
+ and (n or p)@last_beat) >>
 by Associativity: (b.c).a = a.b.c
-and theorem 82:
-Theorem (82) [serial 1166] used for:
-  Associativity: (b.c).a = a.b.c [serial 1163]
+and theorem 80:
+Theorem (80) [serial 1160] used for:
+  Associativity: (b.c).a = a.b.c [serial 1158]
  
 
 
-Theorem (84)                               [serial 1159] 
-P [82] << vrp <= (now - last_beat) and s@now and (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-S [117] ->
-Q [117] << (s@now and ((n or p)@last_beat and (((now - last_beat) >= vrp)))) >>
+Theorem (82)                               [serial 1156] 
+P [78] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t )
+ and s@now
+ and vrp@now <= (now - last_beat) >>
+S [116] ->
+Q [116] << s@now
+ and ((((n or p))@last_beat
+ and ((((now - last_beat)) >= vrp)))) >>
 by Normalization
   Normalization Axioms:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 81:
+Theorem (81) [serial 1158] used for:
+    normalization of [serial 1156]
+ 
+
+
+Theorem (83)                               [serial 1155] 
+P [78] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t )
+ and s@now
+ and vrp@now <= (now - last_beat) >>
+S [116] ->
+Q [116] << s@now
+ and notVRP() >>
+by Substitution of Assertion Labels
+and theorem 82:
+Theorem (82) [serial 1156] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1155]
+ 
+
+
+Theorem (84)                               [serial 1154] 
+P [78] << s@now
+ and (p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ))
+ and vrp@now <= (now - last_beat) >>
+S [116] ->
+Q [116] << s@now
+ and notVRP() >>
+by Associativity: (b.c).a = a.b.c
 and theorem 83:
-Theorem (83) [serial 1163] used for:
-    normalization of [serial 1159]
+Theorem (83) [serial 1155] used for:
+  Associativity: (b.c).a = a.b.c [serial 1154]
  
 
 
-Theorem (85)                               [serial 1158] 
-P [82] << vrp <= (now - last_beat) and s@now and (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-S [117] ->
-Q [117] << (s@now and notVRP()) >>
-by Substitution of Assertion Labels
+Theorem (85)                               [serial 1152] 
+P [78] << vrp@now <= (now - last_beat)
+ and (s@now
+ and (p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ))) >>
+S [116] ->
+Q [116] << s@now
+ and notVRP() >>
+by Associativity: (b.c).a = a.b.c
 and theorem 84:
-Theorem (84) [serial 1159] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1158]
+Theorem (84) [serial 1154] used for:
+  Associativity: (b.c).a = a.b.c [serial 1152]
  
 
 
-Theorem (86)                               [serial 1156] 
-P [82] << vrp <= (now - last_beat) and s@now and PACE(now) >>
-S [117] ->
-Q [117] << (s@now and notVRP()) >>
-by Substitution of Assertion Labels
-and theorem 85:
-Theorem (85) [serial 1158] used for:
-  substituted Assertions' predicates for  labels in preconditions [serial 1156]
- 
-
-
-Theorem (87)                               [serial 1142] 
-P [82] << vrp <= (now - last_beat) and s@now and PACE(now) >>
-S [117] ->
-Q [117] << VS() >>
-by Substitution of Assertion Labels
-and theorem 86:
-Theorem (86) [serial 1156] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1142]
- 
-
-
-Theorem (88)                               [serial 1133] 
-P [82] << s@now and PACE(now) and (((now - last_beat) >= vrp)) >>
-S [117] ->
-Q [117] << VS() >>
+Theorem (86)                               [serial 1150] 
+P [78] << vrp@now <= (now - last_beat)
+ and (s@now
+ and ((p@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that p@t )))) >>
+S [116] ->
+Q [116] << ((s@now
+ and notVRP())) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 85:
+Theorem (85) [serial 1152] used for:
+    normalization of [serial 1150]
+ 
+
+
+Theorem (87)                               [serial 1136] 
+P [78] << vrp@now <= (now - last_beat)
+ and (s@now
+ and PACE(now)) >>
+S [116] ->
+Q [116] << VS() >>
+by Substitution of Assertion Labels
+and theorem 86:
+Theorem (86) [serial 1150] used for:
+  Substituted assertions' predicates for labels  [serial 1136]
+ 
+
+
+Theorem (88)                               [serial 1127] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [116] ->
+Q [116] << VS() >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
 and theorem 87:
-Theorem (87) [serial 1142] used for:
-    normalization of [serial 1133]
+Theorem (87) [serial 1136] used for:
+    normalization of [serial 1127]
  
 
 
-Theorem (89)                               [serial 1171] 
-P [117] << n@now and last_beat = now and n@last_beat >>
-S [118] ->
-Q [53] << n@last_beat >>
+Theorem (89)                               [serial 1176] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [49] << n@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (90)                               [serial 1180] 
-P [117] << n@last_beat and n@now and last_beat = now >>
-S [118] ->
-Q [54] << n@now >>
+Theorem (90)                               [serial 1174] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [49] << n@last_beat >>
+by Guided Substitution of Equals
+and theorem 89:
+Theorem (89) [serial 1176] used for:
+  Guided Substitution of Equals
+ replacing "last_beat" with its = "now" in its postcondition [serial 1174]
+ 
+
+
+Theorem (91)                               [serial 1180] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [50] << n@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (91)                               [serial 1175] 
-P [117] << n@last_beat and n@now and last_beat = now >>
-S [118] ->
-Q [54] << exists t~time
-  in now - lrl..now 
+Theorem (92)                               [serial 1178] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [50] << exists t~time
+  in now - lrl .. now 
   that n@t  >>
 by Introduction of Existential Quantification
-and theorem 90:
-Theorem (90) [serial 1180] used for:
-  replace exists with upper or lower bound [serial 1175]
+and theorem 91:
+Theorem (91) [serial 1180] used for:
+  replace exististential quantification with predicate [serial 1178]
  
 
 
-Theorem (92)                               [serial 1172] 
-P [117] << n@now and last_beat = now and n@last_beat >>
-S [118] ->
-Q [54] << (exists t~time
-  in now - lrl..now 
+Theorem (93)                               [serial 1175] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [50] << (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 91:
-Theorem (91) [serial 1175] used for:
-    normalization of [serial 1172]
+and theorem 92:
+Theorem (92) [serial 1178] used for:
+    normalization of [serial 1175]
  
 
 
-Theorem (93)                               [serial 1167] 
-P [117] << n@now and last_beat = now and n@last_beat >>
-S [118] ->
-Q [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (94)                               [serial 1172] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [75] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
 by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 89 92:
-Theorem (89) [serial 1171] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1167]
+and theorems 90 93:
+Theorem (90) [serial 1174] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1172]
  
-Theorem (92) [serial 1172] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1167]
- 
-
-
-Theorem (94)                               [serial 1161] 
-P [117] << n@now and last_beat = now >>
-S [118] ->
-Q [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t ) >>
-by Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b
-and theorem 93:
-Theorem (93) [serial 1167] used for:
-  Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b [serial 1161]
+Theorem (93) [serial 1175] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1172]
  
 
 
-Theorem (95)                               [serial 1157] 
-P [117] << n@now and last_beat = now >>
-S [118] ->
-Q [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
+Theorem (95)                               [serial 1170] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [75] << ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
 and theorem 94:
-Theorem (94) [serial 1161] used for:
-    normalization of [serial 1157]
+Theorem (94) [serial 1172] used for:
+    normalization of [serial 1170]
  
 
 
-Theorem (96)                               [serial 1144] 
-P [117] << n@now and last_beat = now >>
-S [118] ->
-Q [79] << SENSE(now) >>
+Theorem (96)                               [serial 1138] 
+P [116] << n@now
+ and last_beat = now >>
+S [117] ->
+Q [75] << SENSE(now) >>
 by Substitution of Assertion Labels
 and theorem 95:
-Theorem (95) [serial 1157] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1144]
+Theorem (95) [serial 1170] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1138]
  
 
 
-Theorem (97)                               [serial 1134] 
-P [117] << n@now and ((last_beat = now)) >>
-S [118] ->
-Q [79] << SENSE(now) >>
+Theorem (97)                               [serial 1128] 
+P [116] << n@now
+ and ((last_beat = now)) >>
+S [117] ->
+Q [75] << SENSE(now) >>
 by Normalization
   Normalization Axiom:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
 and theorem 96:
-Theorem (96) [serial 1144] used for:
-    normalization of [serial 1134]
+Theorem (96) [serial 1138] used for:
+    normalization of [serial 1128]
  
 
 
-Theorem (98)                               [serial 1146] 
-P [117] << VS() >>
-S [118] ->
-Q [24] << 0 = now or VS() >>
+Theorem (98)                               [serial 1140] 
+P [116] << VS() >>
+S [117] ->
+Q [22] << 0 = now or VS() >>
 by Or Introduction Schema (orcwl):  X->(X or Y)
 
 
-Theorem (99)                               [serial 1137] 
-P [117] << VS() >>
-S [118] ->
-Q [24] << (now = 0) or VS() >>
+Theorem (99)                               [serial 1131] 
+P [116] << VS() >>
+S [117] ->
+Q [22] << (now = 0) or VS() >>
 by Normalization
   Normalization Axioms:
     Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
 and theorem 98:
-Theorem (98) [serial 1146] used for:
-    normalization of [serial 1137]
+Theorem (98) [serial 1140] used for:
+    normalization of [serial 1131]
  
 
 
-Theorem (100)                               [serial 1148] 
-P [118] << n@now and VS() >>
-S [118] ->
-Q [118] << n@now >>
+Theorem (100)                               [serial 1183] 
+P [117] << (0 = now or VS())@now
+ and VS() >>
+S [117] ->
+Q [117] << (0 = now or VS())@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (101)                               [serial 1138] 
-P [118] << (VS()) and n@now >>
-S [118] ->
-Q [118] << n@now >>
+Theorem (101)                               [serial 1181] 
+P [117] << (0 = now or VS())@now
+ and VS() >>
+S [117] ->
+Q [117] << ((now = 0) or VS())@now >>
 by Normalization
   Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 100:
+Theorem (100) [serial 1183] used for:
+    normalization of [serial 1181]
+ 
+
+
+Theorem (102)                               [serial 1142] 
+P [117] << (0 = now or VS())@now
+ and VS() >>
+S [117] ->
+Q [117] << n@now >>
+by Replacing port names with BLESS::Assertion properties
+and theorem 101:
+Theorem (101) [serial 1181] used for:
+  Replacing port names with BLESS::Assertion properties [serial 1142]
+ 
+
+
+Theorem (103)                               [serial 1132] 
+P [117] << (VS())
+ and ((now = 0) or VS())@now >>
+S [117] ->
+Q [117] << n@now >>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 100:
-Theorem (100) [serial 1148] used for:
-    normalization of [serial 1138]
+and theorem 102:
+Theorem (102) [serial 1142] used for:
+    normalization of [serial 1132]
  
 
 
-Theorem (102)                               [serial 1135] 
-P [117] << VS() >>
-S [118] n!
-Q [118] << n@now >>
+Theorem (104)                               [serial 1129] 
+P [116] << VS() >>
+S [117] n!
+Q [117] << n@now >>
 by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
-and theorems 99 101:
-Theorem (99) [serial 1137] used for:
-  applied port output <<pre>> -> <<M(n)>> [serial 1135]
+and theorems 99 103:
+Theorem (99) [serial 1131] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1129]
  
-Theorem (101) [serial 1138] used for:
-  applied port output <<pre and n@now>> -> <<post>> [serial 1135]
+Theorem (103) [serial 1132] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1129]
  
 
 
-Theorem (103)                               [serial 1150] 
-P [82] << vrp <= (now - last_beat) and s@now and PACE(now) >>
-S [119] ->
-Q [119] << true >>
+Theorem (105)                               [serial 1144] 
+P [78] << vrp@now <= (now - last_beat)
+ and (s@now
+ and PACE(now)) >>
+S [118] ->
+Q [118] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (104)                               [serial 1140] 
-P [82] << s@now and PACE(now) and (((now - last_beat) >= vrp)) >>
-S [119] ->
-Q [119] << (true) >>
+Theorem (106)                               [serial 1134] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [118] ->
+Q [118] << (true) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 103:
-Theorem (103) [serial 1150] used for:
-    normalization of [serial 1140]
+and theorem 105:
+Theorem (105) [serial 1144] used for:
+    normalization of [serial 1134]
  
 
 
-Theorem (105)                               [serial 1139] 
-P [82] << s@now and PACE(now) and (((now - last_beat) >= vrp)) >>
-S [119] ->
-Q [119] << (now = now) >>
+Theorem (107)                               [serial 1133] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [118] ->
+Q [118] << (now = now) >>
 by Equality Law (idistr):  a=a <-> true
-and theorem 104:
-Theorem (104) [serial 1140] used for:
-  Equality Law (idistr):  a=a <-> true [serial 1139]
+and theorem 106:
+Theorem (106) [serial 1134] used for:
+  Equality Law (idistr):  a=a <-> true [serial 1133]
  
 
 
-Theorem (106)                               [serial 1136] 
-P [82] << s@now and PACE(now) and (((now - last_beat) >= vrp)) >>
-S [119] last_beat := now
-Q [119] << (last_beat = now) >>
+Theorem (108)                               [serial 1130] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [118] last_beat := now
+Q [118] << (last_beat = now) >>
 by Assignment Rule:
  <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
  ---------------------------------------
              <<P>> x:=e <<Q>> (bl.a)
-and theorem 105:
-Theorem (105) [serial 1139] used for:
-  applied wp for assignment [serial 1136]
+and theorem 107:
+Theorem (107) [serial 1133] used for:
+  applied wp for assignment [serial 1130]
  
 
 
-Theorem (107)                               [serial 1015] 
-P [82] << s@now and PACE(now) and (((now - last_beat) >= vrp)) >>
-S [117] << VS() >>
+Theorem (109)                               [serial 1015] 
+P [78] << ((s@now
+ and PACE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [116] << VS() >>
 n!
 << n@now >>
 &
 last_beat := now
 << (last_beat = now) >>
-Q [79] << SENSE(now) >>
+Q [75] << SENSE(now) >>
 by Concurrent Composition Rule:
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
  <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
@@ -1491,401 +1793,485 @@ by Concurrent Composition Rule:
  -----------------------------------------------
        <<P>> S <<Q>> where S is
  <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
-and theorems 88 97 102 106:
-Theorem (88) [serial 1133] used for:
+and theorems 88 97 104 108:
+Theorem (88) [serial 1127] used for:
   P -> P1 in concurrent composition for [serial 1015]
  
-Theorem (97) [serial 1134] used for:
+Theorem (97) [serial 1128] used for:
   Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1015]
  
-Theorem (102) [serial 1135] used for:
+Theorem (104) [serial 1129] used for:
   <<P1>> S1 <<Q1>> in concurrent composition for [serial 1015]
  
-Theorem (106) [serial 1136] used for:
+Theorem (108) [serial 1130] used for:
   <<P>> S2 <<Q2>> in concurrent composition for [serial 1015]
  
 
 
-Theorem (108)                               [serial 1206] 
-P [122] << (n or p)@(now-lrl) and SENSE(now) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
+Theorem (110)                               [serial 1209] 
+P [121] << (n or p)@(now-lrl)
+ and SENSE(now)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
          that (n or p)@t ) ) >>
-S [123] ->
-Q [123] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
+S [122] ->
+Q [122] << (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
   that (n or p)@t ) >>
 by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
 
 
-Theorem (109)                               [serial 1202] 
-P [122] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
+Theorem (111)                               [serial 1207] 
+P [121] << (n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )
+ and SENSE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
          that (n or p)@t ) ) >>
-S [123] ->
-Q [123] << ((n or p)@(now-lrl) and not (exists t~time
-  in (now - lrl),,now 
-  that (n or p)@t )) >>
+S [122] ->
+Q [122] << ((((n or p))@((now-lrl))
+ and not (exists t~time
+  in ((now - lrl)) ,, now 
+  that ((n or p))@t ))) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 108:
-Theorem (108) [serial 1206] used for:
-    normalization of [serial 1202]
- 
-
-
-Theorem (110)                               [serial 1198] 
-P [122] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [123] ->
-Q [123] << VP() >>
-by Substitution of Assertion Labels
-and theorem 109:
-Theorem (109) [serial 1202] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1198]
- 
-
-
-Theorem (111)                               [serial 1186] 
-P [122] << SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [123] ->
-Q [123] << VP() >>
-by Associativity: (b.c).a = a.b.c
 and theorem 110:
-Theorem (110) [serial 1198] used for:
-  Associativity: (b.c).a = a.b.c [serial 1186]
+Theorem (110) [serial 1209] used for:
+    normalization of [serial 1207]
  
 
 
-Theorem (112)                               [serial 1181] 
-P [122] << (SENSE(now)) and (((p or n)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (p or n)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((p or n)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (p or n)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (112)                               [serial 1206] 
+P [121] << SENSE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and ((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )) >>
+S [122] ->
+Q [122] << ((((n or p))@((now-lrl))
+ and not (exists t~time
+  in ((now - lrl)) ,, now 
+  that ((n or p))@t ))) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 111:
+Theorem (111) [serial 1207] used for:
+  Associativity: (b.c).a = a.b.c [serial 1206]
+ 
+
+
+Theorem (113)                               [serial 1194] 
+P [121] << SENSE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and ((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )) >>
+S [122] ->
+Q [122] << VP() >>
+by Substitution of Assertion Labels
+and theorem 112:
+Theorem (112) [serial 1206] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1194]
+ 
+
+
+Theorem (114)                               [serial 1185] 
+P [121] << (SENSE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [123] ->
-Q [123] << VP() >>
+S [122] ->
+Q [122] << VP() >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-    Reflexivity of Disjunction: (m or k) = (k or m)
-and theorem 111:
-Theorem (111) [serial 1186] used for:
-    normalization of [serial 1181]
+and theorem 113:
+Theorem (113) [serial 1194] used for:
+    normalization of [serial 1185]
  
 
 
-Theorem (113)                               [serial 1210] 
-P [123] << p@now and last_beat = now and p@last_beat >>
-S [124] ->
-Q [48] << p@last_beat >>
+Theorem (115)                               [serial 1217] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [44] << p@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (114)                               [serial 1215] 
-P [123] << p@last_beat and p@now and last_beat = now >>
-S [124] ->
-Q [49] << p@now >>
+Theorem (116)                               [serial 1215] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [44] << p@last_beat >>
+by Guided Substitution of Equals
+and theorem 115:
+Theorem (115) [serial 1217] used for:
+  Guided Substitution of Equals
+ replacing "last_beat" with its = "now" in its postcondition [serial 1215]
+ 
+
+
+Theorem (117)                               [serial 1221] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [45] << p@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (115)                               [serial 1213] 
-P [123] << p@last_beat and p@now and last_beat = now >>
-S [124] ->
-Q [49] << exists t~time
-  in now - lrl..now 
+Theorem (118)                               [serial 1219] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [45] << exists t~time
+  in now - lrl .. now 
   that p@t  >>
 by Introduction of Existential Quantification
-and theorem 114:
-Theorem (114) [serial 1215] used for:
-  replace exists with upper or lower bound [serial 1213]
+and theorem 117:
+Theorem (117) [serial 1221] used for:
+  replace exististential quantification with predicate [serial 1219]
  
 
 
-Theorem (116)                               [serial 1211] 
-P [123] << p@now and last_beat = now and p@last_beat >>
-S [124] ->
-Q [49] << (exists t~time
-  in now - lrl..now 
+Theorem (119)                               [serial 1216] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [45] << (exists t~time
+  in now - lrl .. now 
   that p@t ) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 115:
-Theorem (115) [serial 1213] used for:
+and theorem 118:
+Theorem (118) [serial 1219] used for:
+    normalization of [serial 1216]
+ 
+
+
+Theorem (120)                               [serial 1213] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [71] << p@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that p@t ) >>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 116 119:
+Theorem (116) [serial 1215] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
+ 
+Theorem (119) [serial 1216] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
+ 
+
+
+Theorem (121)                               [serial 1211] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [71] << ((p@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that p@t ))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 120:
+Theorem (120) [serial 1213] used for:
     normalization of [serial 1211]
  
 
 
-Theorem (117)                               [serial 1209] 
-P [123] << p@now and last_beat = now and p@last_beat >>
-S [124] ->
-Q [75] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) >>
-by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 113 116:
-Theorem (113) [serial 1210] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1209]
- 
-Theorem (116) [serial 1211] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1209]
- 
-
-
-Theorem (118)                               [serial 1204] 
-P [123] << p@now and last_beat = now >>
-S [124] ->
-Q [75] << p@last_beat and (exists t~time
-  in now - lrl..now 
-  that p@t ) >>
-by Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b
-and theorem 117:
-Theorem (117) [serial 1209] used for:
-  Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b [serial 1204]
- 
-
-
-Theorem (119)                               [serial 1201] 
-P [123] << p@now and last_beat = now >>
-S [124] ->
-Q [75] << (p@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that p@t )) >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 118:
-Theorem (118) [serial 1204] used for:
-    normalization of [serial 1201]
- 
-
-
-Theorem (120)                               [serial 1188] 
-P [123] << p@now and last_beat = now >>
-S [124] ->
-Q [75] << PACE(now) >>
+Theorem (122)                               [serial 1196] 
+P [122] << p@now
+ and last_beat = now >>
+S [123] ->
+Q [71] << PACE(now) >>
 by Substitution of Assertion Labels
-and theorem 119:
-Theorem (119) [serial 1201] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1188]
+and theorem 121:
+Theorem (121) [serial 1211] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1196]
  
 
 
-Theorem (121)                               [serial 1182] 
-P [123] << p@now and ((last_beat = now)) >>
-S [124] ->
-Q [75] << PACE(now) >>
+Theorem (123)                               [serial 1186] 
+P [122] << p@now
+ and ((last_beat = now)) >>
+S [123] ->
+Q [71] << PACE(now) >>
 by Normalization
   Normalization Axiom:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 120:
-Theorem (120) [serial 1188] used for:
-    normalization of [serial 1182]
+and theorem 122:
+Theorem (122) [serial 1196] used for:
+    normalization of [serial 1186]
  
 
 
-Theorem (122)                               [serial 1195] 
-P [123] << VP() >>
-S [124] ->
-Q [22] << VP() >>
+Theorem (124)                               [serial 1189] 
+P [122] << VP() >>
+S [123] ->
+Q [20] << VP() >>
 by Identity (id):  P->P is tautology
 
 
-Theorem (123)                               [serial 1196] 
-P [124] << (VP()) and p@now >>
-S [124] ->
-Q [124] << p@now >>
+Theorem (125)                               [serial 1222] 
+P [123] << VP()@now
+ and VP() >>
+S [123] ->
+Q [123] << VP()@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (124)                               [serial 1183] 
-P [123] << VP() >>
-S [124] p!
-Q [124] << p@now >>
-by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
-and theorems 122 123:
-Theorem (122) [serial 1195] used for:
-  applied port output <<pre>> -> <<M(p)>> [serial 1183]
- 
-Theorem (123) [serial 1196] used for:
-  applied port output <<pre and p@now>> -> <<post>> [serial 1183]
- 
-
-
-Theorem (125)                               [serial 1200] 
-P [122] << (n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t ) and SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) >>
-S [125] ->
-Q [125] << true >>
-by True Conclusion Schema (tc): P->true
-
-
 Theorem (126)                               [serial 1199] 
-P [122] << SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [125] ->
-Q [125] << true >>
-by Associativity: (b.c).a = a.b.c
+P [123] << VP()@now
+ and VP() >>
+S [123] ->
+Q [123] << p@now >>
+by Replacing port names with BLESS::Assertion properties
 and theorem 125:
-Theorem (125) [serial 1200] used for:
-  Associativity: (b.c).a = a.b.c [serial 1199]
+Theorem (125) [serial 1222] used for:
+  Replacing port names with BLESS::Assertion properties [serial 1199]
  
 
 
-Theorem (127)                               [serial 1197] 
-P [122] << SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [125] ->
-Q [125] << now = now >>
-by Equality Law (idistr):  a=a <-> true
-and theorem 126:
-Theorem (126) [serial 1199] used for:
-  Equality Law (idistr):  a=a <-> true [serial 1197]
- 
-
-
-Theorem (128)                               [serial 1191] 
-P [122] << SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (n or p)@t ) ) and ((n or p)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (n or p)@t )) >>
-S [125] last_beat := now
-Q [125] << last_beat = now >>
-by Assignment Rule:
- <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
- ---------------------------------------
-             <<P>> x:=e <<Q>> (bl.a)
-and theorem 127:
-Theorem (127) [serial 1197] used for:
-  applied wp for assignment [serial 1191]
- 
-
-
-Theorem (129)                               [serial 1184] 
-P [122] << (SENSE(now)) and (((p or n)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (p or n)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((p or n)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (p or n)@t ))) ) and not (exists u~time
-  in tops,,now 
-  that s@u ) >>
-S [125] last_beat := now
-Q [125] << (last_beat = now) >>
+Theorem (127)                               [serial 1190] 
+P [123] << (VP())
+ and VP()@now >>
+S [123] ->
+Q [123] << p@now >>
 by Normalization
   Normalization Axioms:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-    Reflexivity of Disjunction: (m or k) = (k or m)
-and theorem 128:
-Theorem (128) [serial 1191] used for:
-    normalization of [serial 1184]
+and theorem 126:
+Theorem (126) [serial 1199] used for:
+    normalization of [serial 1190]
  
 
 
-Theorem (130)                               [serial 1016] 
-P [122] << (SENSE(now)) and (((p or n)@(now-lrl) and not (exists t~time
-  in now - lrl,,now 
-  that (p or n)@t ))) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((p or n)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (p or n)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (128)                               [serial 1187] 
+P [122] << VP() >>
+S [123] p!
+Q [123] << p@now >>
+by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+and theorems 124 127:
+Theorem (124) [serial 1189] used for:
+  applied port output <<pre>> -> <<M[p]>> [serial 1187]
+ 
+Theorem (127) [serial 1190] used for:
+  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1187]
+ 
+
+
+Theorem (129)                               [serial 1201] 
+P [121] << SENSE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ) )
+ and ((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )) >>
+S [124] ->
+Q [124] << true >>
+by True Conclusion Schema (tc): P->true
+
+
+Theorem (130)                               [serial 1192] 
+P [121] << (SENSE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [123] << VP() >>
+S [124] ->
+Q [124] << (true) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 129:
+Theorem (129) [serial 1201] used for:
+    normalization of [serial 1192]
+ 
+
+
+Theorem (131)                               [serial 1191] 
+P [121] << (SENSE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u ) >>
+S [124] ->
+Q [124] << (now = now) >>
+by Equality Law (idistr):  a=a <-> true
+and theorem 130:
+Theorem (130) [serial 1192] used for:
+  Equality Law (idistr):  a=a <-> true [serial 1191]
+ 
+
+
+Theorem (132)                               [serial 1188] 
+P [121] << (SENSE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u ) >>
+S [124] last_beat := now
+Q [124] << (last_beat = now) >>
+by Assignment Rule:
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>> (bl.a)
+and theorem 131:
+Theorem (131) [serial 1191] used for:
+  applied wp for assignment [serial 1188]
+ 
+
+
+Theorem (133)                               [serial 1016] 
+P [121] << (SENSE(now))
+ and (((n or p)@(now-lrl)
+ and not (exists t~time
+  in now - lrl ,, now 
+  that (n or p)@t )))
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u ) >>
+S [122] << VP() >>
 p!
 << p@now >>
 &
 last_beat := now
 << (last_beat = now) >>
-Q [75] << PACE(now) >>
+Q [71] << PACE(now) >>
 by Concurrent Composition Rule:
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
  <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
@@ -1893,473 +2279,646 @@ by Concurrent Composition Rule:
  -----------------------------------------------
        <<P>> S <<Q>> where S is
  <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
-and theorems 112 121 124 129:
-Theorem (112) [serial 1181] used for:
+and theorems 114 123 128 132:
+Theorem (114) [serial 1185] used for:
   P -> P1 in concurrent composition for [serial 1016]
  
-Theorem (121) [serial 1182] used for:
+Theorem (123) [serial 1186] used for:
   Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1016]
  
-Theorem (124) [serial 1183] used for:
+Theorem (128) [serial 1187] used for:
   <<P1>> S1 <<Q1>> in concurrent composition for [serial 1016]
  
-Theorem (129) [serial 1184] used for:
+Theorem (132) [serial 1188] used for:
   <<P>> S2 <<Q2>> in concurrent composition for [serial 1016]
  
 
 
-Theorem (131)                               [serial 1217] 
-P [128] << s@now and SENSE(now) and not (exists u~time
-  in tops,,now 
-  that s@u ) and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (n or p)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
+Theorem (134)                               [serial 1224] 
+P [127] << s@now
+ and SENSE(now)
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that s@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
          that (n or p)@t ) ) >>
-S [127] ->
-Q [85] << s@now and SENSE(now) >>
+S [126] ->
+Q [81] << s@now
+ and SENSE(now) >>
 by And Introduction Schema (aiswl):  (X and Y and Z)->(X and Y)
 
 
-Theorem (132)                               [serial 1017] 
-P [128] << (SENSE(now)) and s@now and not (exists u~time
-  in tops,,now 
-  that stop@u ) and not (exists u~time
-  in tops,,now 
-  that (((p or n)@(u-lrl) and not (exists t~time
-         in u - lrl,,u 
-         that (p or n)@t ))) ) and not (exists u~time
-  in tops,,now 
+Theorem (135)                               [serial 1017] 
+P [127] << (SENSE(now))
+ and s@now
+ and not (exists u~time
+  in tops ,, now 
+  that h@u )
+ and not (exists u~time
+  in tops ,, now 
+  that (((n or p)@(u-lrl)
+        and not (exists t~time
+         in u - lrl ,, u 
+         that (n or p)@t ))) )
+ and not (exists u~time
+  in tops ,, now 
   that s@u ) >>
-S [127] ->
-Q [85] << s@now and SENSE(now) >>
+S [126] ->
+Q [81] << (s@now
+ and SENSE(now)) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-    Reflexivity of Disjunction: (m or k) = (k or m)
-and theorem 131:
-Theorem (131) [serial 1217] used for:
+and theorem 134:
+Theorem (134) [serial 1224] used for:
     normalization of [serial 1017]
  
 
 
-Theorem (133)                               [serial 1018] 
-P [85] << s@now and SENSE(now) and (((now - last_beat) < vrp)) >>
-S [130] ->
-Q [79] << SENSE(now) >>
+Theorem (136)                               [serial 1229] 
+P [81] << s@now
+ and SENSE(now)
+ and (now - last_beat) < vrp@now >>
+S [129] ->
+Q [75] << SENSE(now) >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (134)                               [serial 1253] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [40] << s@now >>
+Theorem (137)                               [serial 1227] 
+P [81] << (s@now
+ and SENSE(now))
+ and (now - last_beat) < vrp@now >>
+S [129] ->
+Q [75] << SENSE(now) >>
+by Associativity: (b.c).a = a.b.c
+and theorem 136:
+Theorem (136) [serial 1229] used for:
+  Associativity: (b.c).a = a.b.c [serial 1227]
+ 
+
+
+Theorem (138)                               [serial 1018] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) < vrp@now)) >>
+S [129] ->
+Q [75] << SENSE(now) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 137:
+Theorem (137) [serial 1227] used for:
+    normalization of [serial 1018]
+ 
+
+
+Theorem (139)                               [serial 1259] 
+P [81] << s@now
+ and SENSE(now)
+ and vrp@now <= (now - last_beat) >>
+S [135] ->
+Q [36] << s@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (135)                               [serial 1264] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
+Theorem (140)                               [serial 1257] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [135] ->
+Q [36] << s@now >>
+by Associativity: (b.c).a = a.b.c
+and theorem 139:
+Theorem (139) [serial 1259] used for:
+  Associativity: (b.c).a = a.b.c [serial 1257]
+ 
+
+
+Theorem (141)                               [serial 1267] 
+P [81] << vrp <= (now - last_beat)
+ and s
+ and SENSE(now) >>
+S [135] ->
 Q [1] << vrp <= (now - last_beat) >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (136)                               [serial 1272] 
-P [85] << n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t ) and vrp <= (now - last_beat) and s@now >>
-S [136] ->
-Q [37] << n@last_beat or p@last_beat >>
+Theorem (142)                               [serial 1265] 
+P [81] << vrp@now <= (now - last_beat)
+ and s@now
+ and SENSE(now) >>
+S [135] ->
+Q [1] << vrp <= (now - last_beat) >>
+by Assume Present:  P = P@now = P^0 
+and theorem 141:
+Theorem (141) [serial 1267] used for:
+  Assume Present:  P = P@now = P^0  [serial 1265]
+ 
+
+
+Theorem (143)                               [serial 1274] 
+P [81] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
+  that n@t )
+ and vrp <= (now - last_beat)
+ and s >>
+S [135] ->
+Q [33] << n@last_beat or p@last_beat >>
 by And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
 
 
-Theorem (137)                               [serial 1270] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (144)                               [serial 1272] 
+P [81] << vrp <= (now - last_beat)
+ and s
+ and (n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that n@t )) >>
-S [136] ->
-Q [37] << n@last_beat or p@last_beat >>
+S [135] ->
+Q [33] << n@last_beat or p@last_beat >>
 by Associativity: (b.c).a = a.b.c
-and theorem 136:
-Theorem (136) [serial 1272] used for:
-  Associativity: (b.c).a = a.b.c [serial 1270]
- 
-
-
-Theorem (138)                               [serial 1266] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [37] << (n@last_beat or p@last_beat) >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 137:
-Theorem (137) [serial 1270] used for:
-    normalization of [serial 1266]
- 
-
-
-Theorem (139)                               [serial 1265] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [37] << (n or p)@last_beat >>
-by Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t)
-and theorem 138:
-Theorem (138) [serial 1266] used for:
-  Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t) [serial 1265]
- 
-
-
-Theorem (140)                               [serial 1258] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [37] << vrp <= (now - last_beat) and (n or p)@last_beat >>
-by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 135 139:
-Theorem (135) [serial 1264] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1258]
- 
-Theorem (139) [serial 1265] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1258]
- 
-
-
-Theorem (141)                               [serial 1254] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [37] << (vrp <= (now - last_beat) and (n or p)@last_beat) >>
-by Normalization
-  Normalization Axiom:
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 140:
-Theorem (140) [serial 1258] used for:
-    normalization of [serial 1254]
- 
-
-
-Theorem (142)                               [serial 1249] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t )) >>
-S [136] ->
-Q [136] << s@now and (vrp <= (now - last_beat) and (n or p)@last_beat) >>
-by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 134 141:
-Theorem (134) [serial 1253] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1249]
- 
-Theorem (141) [serial 1254] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1249]
- 
-
-
-Theorem (143)                               [serial 1245] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-S [136] ->
-Q [136] << (s@now and ((n or p)@last_beat and (((now - last_beat) >= vrp)))) >>
-by Normalization
-  Normalization Axioms:
-    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
-    Irreflexivity of At Least: (a>=b) = (b<=a)
-    Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 142:
-Theorem (142) [serial 1249] used for:
-    normalization of [serial 1245]
- 
-
-
-Theorem (144)                               [serial 1244] 
-P [85] << vrp <= (now - last_beat) and s@now and (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
-S [136] ->
-Q [136] << (s@now and notVRP()) >>
-by Substitution of Assertion Labels
 and theorem 143:
-Theorem (143) [serial 1245] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1244]
+Theorem (143) [serial 1274] used for:
+  Associativity: (b.c).a = a.b.c [serial 1272]
  
 
 
-Theorem (145)                               [serial 1242] 
-P [85] << vrp <= (now - last_beat) and s@now and SENSE(now) >>
-S [136] ->
-Q [136] << (s@now and notVRP()) >>
-by Substitution of Assertion Labels
-and theorem 144:
-Theorem (144) [serial 1244] used for:
-  substituted Assertions' predicates for  labels in preconditions [serial 1242]
- 
-
-
-Theorem (146)                               [serial 1227] 
-P [85] << vrp <= (now - last_beat) and s@now and SENSE(now) >>
-S [136] ->
-Q [136] << VS() >>
-by Substitution of Assertion Labels
-and theorem 145:
-Theorem (145) [serial 1242] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1227]
- 
-
-
-Theorem (147)                               [serial 1219] 
-P [85] << s@now and SENSE(now) and (((now - last_beat) >= vrp)) >>
-S [136] ->
-Q [136] << VS() >>
+Theorem (145)                               [serial 1270] 
+P [81] << vrp <= (now - last_beat)
+ and s
+ and ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
+S [135] ->
+Q [33] << (n@last_beat or p@last_beat) >>
 by Normalization
   Normalization Axioms:
-    Irreflexivity of At Least: (a>=b) = (b<=a)
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 146:
-Theorem (146) [serial 1227] used for:
-    normalization of [serial 1219]
+and theorem 144:
+Theorem (144) [serial 1272] used for:
+    normalization of [serial 1270]
  
 
 
-Theorem (148)                               [serial 1255] 
-P [136] << n@now and last_beat = now and n@last_beat >>
-S [137] ->
-Q [53] << n@last_beat >>
-by And Introduction Schema (aisph):  (X and Y)->X
+Theorem (146)                               [serial 1269] 
+P [81] << vrp <= (now - last_beat)
+ and s
+ and ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
+S [135] ->
+Q [33] << (n or p)@last_beat >>
+by Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t)
+and theorem 145:
+Theorem (145) [serial 1270] used for:
+  Combine Timed Atoms: (a or b)@t = (a@t or b@t)  (a and b)@t = (a@t and b@t) [serial 1269]
+ 
+
+
+Theorem (147)                               [serial 1268] 
+P [81] << vrp <= (now - last_beat)
+ and s
+ and SENSE(now) >>
+S [135] ->
+Q [33] << (n or p)@last_beat >>
+by Substitution of Assertion Labels
+and theorem 146:
+Theorem (146) [serial 1269] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1268]
+ 
+
+
+Theorem (148)                               [serial 1266] 
+P [81] << vrp@now <= (now - last_beat)
+ and s@now
+ and SENSE(now) >>
+S [135] ->
+Q [33] << (n or p)@last_beat >>
+by Assume Present:  P = P@now = P^0 
+and theorem 147:
+Theorem (147) [serial 1268] used for:
+  Assume Present:  P = P@now = P^0  [serial 1266]
+ 
 
 
 Theorem (149)                               [serial 1263] 
-P [136] << n@last_beat and n@now and last_beat = now >>
-S [137] ->
-Q [54] << n@now >>
+P [81] << vrp@now <= (now - last_beat)
+ and s@now
+ and SENSE(now) >>
+S [135] ->
+Q [36] << vrp <= (now - last_beat)
+ and (n or p)@last_beat >>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 142 148:
+Theorem (142) [serial 1265] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1263]
+ 
+Theorem (148) [serial 1266] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1263]
+ 
+
+
+Theorem (150)                               [serial 1261] 
+P [81] << s@now
+ and SENSE(now)
+ and vrp@now <= (now - last_beat) >>
+S [135] ->
+Q [36] << ((((n or p))@last_beat
+ and ((((now - last_beat)) >= vrp)))) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 149:
+Theorem (149) [serial 1263] used for:
+    normalization of [serial 1261]
+ 
+
+
+Theorem (151)                               [serial 1260] 
+P [81] << s@now
+ and SENSE(now)
+ and vrp@now <= (now - last_beat) >>
+S [135] ->
+Q [36] << notVRP() >>
+by Substitution of Assertion Labels
+and theorem 150:
+Theorem (150) [serial 1261] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1260]
+ 
+
+
+Theorem (152)                               [serial 1258] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [135] ->
+Q [36] << notVRP() >>
+by Associativity: (b.c).a = a.b.c
+and theorem 151:
+Theorem (151) [serial 1260] used for:
+  Associativity: (b.c).a = a.b.c [serial 1258]
+ 
+
+
+Theorem (153)                               [serial 1255] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [135] ->
+Q [135] << s@now
+ and notVRP() >>
+by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
+and theorems 140 152:
+Theorem (140) [serial 1257] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255]
+ 
+Theorem (152) [serial 1258] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1255]
+ 
+
+
+Theorem (154)                               [serial 1253] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [135] ->
+Q [135] << ((s@now
+ and notVRP())) >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 153:
+Theorem (153) [serial 1255] used for:
+    normalization of [serial 1253]
+ 
+
+
+Theorem (155)                               [serial 1239] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [135] ->
+Q [135] << VS() >>
+by Substitution of Assertion Labels
+and theorem 154:
+Theorem (154) [serial 1253] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1239]
+ 
+
+
+Theorem (156)                               [serial 1230] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [135] ->
+Q [135] << VS() >>
+by Normalization
+  Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
+    Irreflexivity of At Least: (a>=b) = (b<=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+    Reflexivity of Conjunction: (m and k) = (k and m)
+and theorem 155:
+Theorem (155) [serial 1239] used for:
+    normalization of [serial 1230]
+ 
+
+
+Theorem (157)                               [serial 1281] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [49] << n@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (150)                               [serial 1260] 
-P [136] << n@last_beat and n@now and last_beat = now >>
-S [137] ->
-Q [54] << exists t~time
-  in now - lrl..now 
+Theorem (158)                               [serial 1279] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [49] << n@last_beat >>
+by Guided Substitution of Equals
+and theorem 157:
+Theorem (157) [serial 1281] used for:
+  Guided Substitution of Equals
+ replacing "last_beat" with its = "now" in its postcondition [serial 1279]
+ 
+
+
+Theorem (159)                               [serial 1285] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [50] << n@now >>
+by And Introduction Schema (aisph):  (X and Y)->X
+
+
+Theorem (160)                               [serial 1283] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [50] << exists t~time
+  in now - lrl .. now 
   that n@t  >>
 by Introduction of Existential Quantification
-and theorem 149:
-Theorem (149) [serial 1263] used for:
-  replace exists with upper or lower bound [serial 1260]
+and theorem 159:
+Theorem (159) [serial 1285] used for:
+  replace exististential quantification with predicate [serial 1283]
  
 
 
-Theorem (151)                               [serial 1256] 
-P [136] << n@now and last_beat = now and n@last_beat >>
-S [137] ->
-Q [54] << (exists t~time
-  in now - lrl..now 
+Theorem (161)                               [serial 1280] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [50] << (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-    Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 150:
-Theorem (150) [serial 1260] used for:
-    normalization of [serial 1256]
+and theorem 160:
+Theorem (160) [serial 1283] used for:
+    normalization of [serial 1280]
  
 
 
-Theorem (152)                               [serial 1252] 
-P [136] << n@now and last_beat = now and n@last_beat >>
-S [137] ->
-Q [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
+Theorem (162)                               [serial 1277] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [75] << n@last_beat
+ and (exists t~time
+  in now - lrl .. now 
   that n@t ) >>
 by Sequent Composition: if A->B and A->C and A->D then A->(B and C and D)
-and theorems 148 151:
-Theorem (148) [serial 1255] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1252]
+and theorems 158 161:
+Theorem (158) [serial 1279] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1277]
  
-Theorem (151) [serial 1256] used for:
-  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1252]
- 
-
-
-Theorem (153)                               [serial 1247] 
-P [136] << n@now and last_beat = now >>
-S [137] ->
-Q [79] << n@last_beat and (exists t~time
-  in now - lrl..now 
-  that n@t ) >>
-by Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b
-and theorem 152:
-Theorem (152) [serial 1252] used for:
-  Remove Equivalent Term: P(a) and P(b) and a=b is P(a) and a=b [serial 1247]
+Theorem (161) [serial 1280] used for:
+  Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1277]
  
 
 
-Theorem (154)                               [serial 1243] 
-P [136] << n@now and last_beat = now >>
-S [137] ->
-Q [79] << (n@last_beat and (exists t~time
-  in (now - lrl)..now 
-  that n@t )) >>
+Theorem (163)                               [serial 1275] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [75] << ((n@last_beat
+ and (exists t~time
+  in ((now - lrl)) .. now 
+  that n@t ))) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Add Unnecessary Parentheses to Range Bound For No Good Reason: a..b = (a)..b
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 153:
-Theorem (153) [serial 1247] used for:
-    normalization of [serial 1243]
+and theorem 162:
+Theorem (162) [serial 1277] used for:
+    normalization of [serial 1275]
  
 
 
-Theorem (155)                               [serial 1229] 
-P [136] << n@now and last_beat = now >>
-S [137] ->
-Q [79] << SENSE(now) >>
+Theorem (164)                               [serial 1241] 
+P [135] << n@now
+ and last_beat = now >>
+S [136] ->
+Q [75] << SENSE(now) >>
 by Substitution of Assertion Labels
-and theorem 154:
-Theorem (154) [serial 1243] used for:
-  substituted Assertions' predicates for  labels in postconditions [serial 1229]
+and theorem 163:
+Theorem (163) [serial 1275] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1241]
  
 
 
-Theorem (156)                               [serial 1220] 
-P [136] << n@now and ((last_beat = now)) >>
-S [137] ->
-Q [79] << SENSE(now) >>
+Theorem (165)                               [serial 1231] 
+P [135] << n@now
+ and ((last_beat = now)) >>
+S [136] ->
+Q [75] << SENSE(now) >>
 by Normalization
   Normalization Axiom:
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 155:
-Theorem (155) [serial 1229] used for:
-    normalization of [serial 1220]
+and theorem 164:
+Theorem (164) [serial 1241] used for:
+    normalization of [serial 1231]
  
 
 
-Theorem (157)                               [serial 1231] 
-P [136] << VS() >>
-S [137] ->
-Q [24] << 0 = now or VS() >>
+Theorem (166)                               [serial 1243] 
+P [135] << VS() >>
+S [136] ->
+Q [22] << 0 = now or VS() >>
 by Or Introduction Schema (orcwl):  X->(X or Y)
 
 
-Theorem (158)                               [serial 1223] 
-P [136] << VS() >>
-S [137] ->
-Q [24] << (now = 0) or VS() >>
+Theorem (167)                               [serial 1234] 
+P [135] << VS() >>
+S [136] ->
+Q [22] << (now = 0) or VS() >>
 by Normalization
   Normalization Axioms:
     Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
-and theorem 157:
-Theorem (157) [serial 1231] used for:
-    normalization of [serial 1223]
+and theorem 166:
+Theorem (166) [serial 1243] used for:
+    normalization of [serial 1234]
  
 
 
-Theorem (159)                               [serial 1233] 
-P [137] << n@now and VS() >>
-S [137] ->
-Q [137] << n@now >>
+Theorem (168)                               [serial 1288] 
+P [136] << (0 = now or VS())@now
+ and VS() >>
+S [136] ->
+Q [136] << (0 = now or VS())@now >>
 by And Introduction Schema (aisph):  (X and Y)->X
 
 
-Theorem (160)                               [serial 1224] 
-P [137] << (VS()) and n@now >>
-S [137] ->
-Q [137] << n@now >>
+Theorem (169)                               [serial 1286] 
+P [136] << (0 = now or VS())@now
+ and VS() >>
+S [136] ->
+Q [136] << ((now = 0) or VS())@now >>
 by Normalization
   Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
+    Add Unnecessary Parentheses For No Good Reason: a = (a)
+and theorem 168:
+Theorem (168) [serial 1288] used for:
+    normalization of [serial 1286]
+ 
+
+
+Theorem (170)                               [serial 1245] 
+P [136] << (0 = now or VS())@now
+ and VS() >>
+S [136] ->
+Q [136] << n@now >>
+by Replacing port names with BLESS::Assertion properties
+and theorem 169:
+Theorem (169) [serial 1286] used for:
+  Replacing port names with BLESS::Assertion properties [serial 1245]
+ 
+
+
+Theorem (171)                               [serial 1235] 
+P [136] << (VS())
+ and ((now = 0) or VS())@now >>
+S [136] ->
+Q [136] << n@now >>
+by Normalization
+  Normalization Axioms:
+    Reflexivity of Equality: (a=b) = (b=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 159:
-Theorem (159) [serial 1233] used for:
-    normalization of [serial 1224]
+and theorem 170:
+Theorem (170) [serial 1245] used for:
+    normalization of [serial 1235]
  
 
 
-Theorem (161)                               [serial 1221] 
-P [136] << VS() >>
-S [137] n!
-Q [137] << n@now >>
+Theorem (172)                               [serial 1232] 
+P [135] << VS() >>
+S [136] n!
+Q [136] << n@now >>
 by Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
-and theorems 158 160:
-Theorem (158) [serial 1223] used for:
-  applied port output <<pre>> -> <<M(n)>> [serial 1221]
+and theorems 167 171:
+Theorem (167) [serial 1234] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1232]
  
-Theorem (160) [serial 1224] used for:
-  applied port output <<pre and n@now>> -> <<post>> [serial 1221]
+Theorem (171) [serial 1235] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1232]
  
 
 
-Theorem (162)                               [serial 1241] 
-P [85] << vrp <= (now - last_beat) and s@now and SENSE(now) >>
-S [138] ->
-Q [138] << true >>
+Theorem (173)                               [serial 1247] 
+P [81] << vrp@now <= (now - last_beat)
+ and (s@now
+ and SENSE(now)) >>
+S [137] ->
+Q [137] << true >>
 by True Conclusion Schema (tc): P->true
 
 
-Theorem (163)                               [serial 1235] 
-P [85] << vrp <= (now - last_beat) and s@now and SENSE(now) >>
-S [138] ->
-Q [138] << now = now >>
-by Equality Law (idistr):  a=a <-> true
-and theorem 162:
-Theorem (162) [serial 1241] used for:
-  Equality Law (idistr):  a=a <-> true [serial 1235]
- 
-
-
-Theorem (164)                               [serial 1225] 
-P [85] << s@now and SENSE(now) and (((now - last_beat) >= vrp)) >>
-S [138] ->
-Q [138] << (now = now) >>
+Theorem (174)                               [serial 1237] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [137] ->
+Q [137] << (true) >>
 by Normalization
   Normalization Axioms:
+    By Zero: (0*x)=0 or (0/x)=0 or (0+x)=x or (x-0)=x or (0-x)=-x
     Irreflexivity of At Least: (a>=b) = (b<=a)
     Add Unnecessary Parentheses For No Good Reason: a = (a)
     Reflexivity of Conjunction: (m and k) = (k and m)
-and theorem 163:
-Theorem (163) [serial 1235] used for:
-    normalization of [serial 1225]
+and theorem 173:
+Theorem (173) [serial 1247] used for:
+    normalization of [serial 1237]
  
 
 
-Theorem (165)                               [serial 1222] 
-P [85] << s@now and SENSE(now) and (((now - last_beat) >= vrp)) >>
-S [138] last_beat := now
-Q [138] << (last_beat = now) >>
+Theorem (175)                               [serial 1236] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [137] ->
+Q [137] << (now = now) >>
+by Equality Law (idistr):  a=a <-> true
+and theorem 174:
+Theorem (174) [serial 1237] used for:
+  Equality Law (idistr):  a=a <-> true [serial 1236]
+ 
+
+
+Theorem (176)                               [serial 1233] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [137] last_beat := now
+Q [137] << (last_beat = now) >>
 by Assignment Rule:
  <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
  ---------------------------------------
              <<P>> x:=e <<Q>> (bl.a)
-and theorem 164:
-Theorem (164) [serial 1225] used for:
-  applied wp for assignment [serial 1222]
+and theorem 175:
+Theorem (175) [serial 1236] used for:
+  applied wp for assignment [serial 1233]
  
 
 
-Theorem (166)                               [serial 1019] 
-P [85] << s@now and SENSE(now) and (((now - last_beat) >= vrp)) >>
-S [136] << VS() >>
+Theorem (177)                               [serial 1019] 
+P [81] << ((s@now
+ and SENSE(now)))
+ and (((now - last_beat) >= vrp@now)) >>
+S [135] << VS() >>
 n!
 << n@now >>
 &
 last_beat := now
 << (last_beat = now) >>
-Q [79] << SENSE(now) >>
+Q [75] << SENSE(now) >>
 by Concurrent Composition Rule:
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
  <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
@@ -2367,87 +2926,87 @@ by Concurrent Composition Rule:
  -----------------------------------------------
        <<P>> S <<Q>> where S is
  <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>> (bl.cck)
-and theorems 147 156 161 165:
-Theorem (147) [serial 1219] used for:
+and theorems 156 165 172 176:
+Theorem (156) [serial 1230] used for:
   P -> P1 in concurrent composition for [serial 1019]
  
-Theorem (156) [serial 1220] used for:
+Theorem (165) [serial 1231] used for:
   Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1019]
  
-Theorem (161) [serial 1221] used for:
+Theorem (172) [serial 1232] used for:
   <<P1>> S1 <<Q1>> in concurrent composition for [serial 1019]
  
-Theorem (165) [serial 1222] used for:
+Theorem (176) [serial 1233] used for:
   <<P>> S2 <<Q2>> in concurrent composition for [serial 1019]
  
 
 
-Theorem (167)                               [serial 1002] 
-P [35] <<   >>
-S [59] ->
-Q [35] << VVI.i proof obligations >>
+Theorem (178)                               [serial 1002] 
+P [31] <<   >>
+S [55] ->
+Q [31] << VVI.i proof obligations >>
 by Initial Thread Obligations
-and theorems 3 8 12 13 18 26 47 48 49 73 75 76 107 130 132 133 166:
+and theorems 3 7 11 12 16 21 43 44 45 68 70 73 109 133 135 138 177:
 Theorem (3) [serial 1003] used for:
   <<I>> -> BLESS::Invariant of thread VVI.i
  
-Theorem (8) [serial 1004] used for:
+Theorem (7) [serial 1004] used for:
   <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
  
-Theorem (12) [serial 1005] used for:
+Theorem (11) [serial 1005] used for:
   <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
  
-Theorem (13) [serial 1006] used for:
+Theorem (12) [serial 1006] used for:
   Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
  
-Theorem (18) [serial 1007] used for:
+Theorem (16) [serial 1007] used for:
   Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
  
-Theorem (26) [serial 1008] used for:
+Theorem (21) [serial 1008] used for:
   Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
  
-Theorem (47) [serial 1009] used for:
+Theorem (43) [serial 1009] used for:
    <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
  
-Theorem (48) [serial 1010] used for:
-   <<M(pace) and x>> -> <<M(off)>> for T2_STOP:pace-[x]->off{};
+Theorem (44) [serial 1010] used for:
+   <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace:pace-[x]->off{};
  
-Theorem (49) [serial 1011] used for:
-   <<M(sense) and x>> -> <<M(off)>> for T2_STOP:sense-[x]->off{};
+Theorem (45) [serial 1011] used for:
+   <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense:sense-[x]->off{};
  
-Theorem (73) [serial 1012] used for:
+Theorem (68) [serial 1012] used for:
    <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
  
-Theorem (75) [serial 1013] used for:
+Theorem (70) [serial 1013] used for:
    <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
  
-Theorem (76) [serial 1014] used for:
+Theorem (73) [serial 1014] used for:
    <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
  
-Theorem (107) [serial 1015] used for:
+Theorem (109) [serial 1015] used for:
    <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
  
-Theorem (130) [serial 1016] used for:
+Theorem (133) [serial 1016] used for:
    <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
  
-Theorem (132) [serial 1017] used for:
+Theorem (135) [serial 1017] used for:
    <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
  
-Theorem (133) [serial 1018] used for:
+Theorem (138) [serial 1018] used for:
    <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
  
-Theorem (166) [serial 1019] used for:
+Theorem (177) [serial 1019] used for:
    <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
  
 
 
-Theorem (168)                               [serial 1001] 
+Theorem (179)                               [serial 1001] 
 P     
 S     
 Q     
 by Initial Thread Obligations
-and theorem 167:
-Theorem (167) [serial 1002] used for:
+and theorem 178:
+Theorem (178) [serial 1002] used for:
   Initial proof obligations for VVI.i
  
 
