@@ -1,14 +1,6 @@
 package PG
 public
 	with ddd_mode, BLESS;
-
-annex Assertion
-{**
-<<  -- most-recent; ts is the most-recent timestamp which e was true
-  MR: e~boolean, ts~time : e@ts and not (exists t~time in ts,,now that e@t) >>
-<<  -- tops os at most now
-  AXIOM_T_N: : tops <= now >>
-**};
 	
 
 system Pacemaker
@@ -19,14 +11,14 @@ system implementation Pacemaker.imp
   	fe : device FrontEnd;
   	alead : bus AtrialLead.imp;
   	vlead : bus VentricularLead.imp;
-  	proc : process DDDprocess.imp;
+  	ddd : process DDDprocess.imp;
   connections
   	a_header : bus access alead <-> fe.atrial_lead;
   	v_header : bus access vlead <-> fe.ventricular_lead;
-  	fd_a : port fe.a -> proc.a;
-  	fd_v : port fe.v -> proc.v;
-  	fd_ap : port proc.ap -> fe.ap;
-  	fd_vp : port proc.vp -> fe.vp;
+  	fd_a : port fe.a -> ddd.a;
+  	fd_v : port fe.v -> ddd.v;
+  	fd_ap : port ddd.ap -> fe.ap;
+  	fd_vp : port ddd.vp -> fe.vp;
 end Pacemaker.imp;
 
 device FrontEnd
