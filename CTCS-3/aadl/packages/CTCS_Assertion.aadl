@@ -1,0 +1,19 @@
+package CTCS_Assertion
+public
+	
+annex Assertion
+{**
+-- brake intervention
+-- current velocity is at least the current segment velocity limit
+-- or must slow down for next segment
+<<BRAKE: cv~quantity kph, -- current velocity
+  v_l~quantity kph,   -- current segment  brake velocity limit
+  next_v_l~quantity kph,  -- next segment brake velocity limit
+  br~quantity mpss,  -- braking acceleration (negative is slowing)
+  pos~quantity m,    --current position
+  e~quantity m :
+  cv >= v_l or (cv*cv + 2*br*pos) >= (next_v_l*next_v_l + 2*br*e) >>
+	
+**};		
+	
+end CTCS_Assertion;

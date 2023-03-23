@@ -1,0 +1,294 @@
+--Train.aadl
+
+
+package Train
+public
+  with BLESS, CTCS_Types, CTCS_Property, BLESS_Types;	
+
+--flag renames BLESS_Types::Boolean;
+
+system Train
+  features
+		r : out event port;	--train requests movement authority
+		ma : in event data port --movement authority granted
+		  CTCS_Types::MovementAuthority  {BLESS::Value=> "<<:=IMA>>";};	  
+    ea: in data port --end of authority
+      CTCS_Types::Position {BLESS::Value=> "<<:=EOA>>";};	
+end Train;
+
+--Motor moves the train
+device Motor
+	features
+		ca : in data port CTCS_Types::Acceleration;  --commanded acceleration 
+end Motor;
+
+--Sensor detects position, velocity, and acceleration
+device Sensor
+	features
+    p : out data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";};
+    v : out data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
+end Sensor;
+
+--service brake
+device ServiceBrake
+  features
+	  brake : in event data port BLESS_Types::Boolean;
+end ServiceBrake;
+
+--emergency brake
+device EmergencyBrake
+  features
+	  brake : in event data port BLESS_Types::Boolean;	
+end EmergencyBrake;
+
+--Human operator (engineer) of the train
+--Chooses acceleration, except for automatic braking
+abstract Operator
+	features
+		xl : out data port CTCS_Types::Acceleration;
+end Operator;
+	
+system implementation Train.i
+	subcomponents
+		motor : device Motor;
+		sensor : device Sensor;
+		controller : process ControllerProcess.i;
+		driver: abstract Operator;
+	connections
+		ma_request : port controller.r -> r;
+		auth : port ma -> controller.ma;
+		pos: port sensor.p -> controller.p;
+		vel : port sensor.v -> controller.v;
+		mxl : port controller.ca -> motor.ca;
+		auth_end: port ea -> controller.ea;
+		dxl : port driver.xl -> controller.xl;
+end Train.i;
+
+-----Controller process and thread----
+process ControllerProcess
+features
+	  sb : out event data port BLESS_Types::Boolean;  --apply service brake
+	  eb : out event data port BLESS_Types::Boolean;  --apply emergency brake
+		ca : out data port  CTCS_Types::Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration     
+		p: in data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position 
+		v: in data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity 
+		r: out event port {BLESS::Assertion=> "<<(p = 0) or (p >= (eoa - SR))>>";};  -- request for new MA
+		ea: in data port CTCS_Types::Position {BLESS::Value=> "<<:=EOA>>";};  --end of authority
+		ma: in event data port CTCS_Types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current movement authority 
+		xl : in data port CTCS_Types::Acceleration;  --operator chosen acceleration
+end ControllerProcess;
+
+process implementation ControllerProcess.i
+	subcomponents
+		control: thread Controller.i;
+	connections
+		conn_s: port p -> control.p;
+		conn_v: port v -> control.v;
+		conn_a: port control.ca -> ca;
+		conn_req: port control.r -> r;
+		conn_ma: port ma -> control.m_a;
+		conn_ea: port ea -> control.ea;
+		conn_xl: port xl -> control.xl;
+		conn_sb: port control.sb -> sb;
+		conn_eb: port control.eb -> eb;
+end ControllerProcess.i;
+
+--------------Controller Thread----------
+thread Controller
+	features
+	  sb : out event data port BLESS_Types::Boolean  -- apply service brake
+	    {BLESS::Assertion => "<<SB()>>";};
+	  eb : out event data port BLESS_Types::Boolean  -- apply emergency brake
+	    {BLESS::Assertion => "<<EB()>>";};
+		ca: out data port CTCS_Types:: Acceleration --current acceleration
+		  {BLESS::Value=> "<<:=TRAIN_XL()>>";}; 
+		r: out event port -- request new movement authority
+		  {BLESS::Assertion=> "<<(p = 0) or (p >= (eoa - SR))>>";};  
+		m_a: in event data port CTCS_Types::MovementAuthority -- current movement authority
+		  {BLESS::Value=> "<<:=IMA>>";};  
+		ea: in data port CTCS_Types::Position -- position of end of authority
+		  {BLESS::Value=> "<<:=EOA>>";}; 
+		p: in data port CTCS_Types::Position   -- current position
+		  {BLESS::Value=> "<<:=POSITION>>";}; 
+		v: in data port CTCS_Types::Velocity   -- current velocity
+		  {BLESS::Value=> "<<:=VELOCITY>>";}; 
+		xl : in data port CTCS_Types::Acceleration;  -- operator chosen acceleration
+	properties
+		Dispatch_Protocol => Periodic;
+		Period => 200 ms;
+end Controller;
+
+thread implementation Controller.i
+	annex BLESS{**
+	
+	assert
+		--B0 is missing
+		<<SBL: : v <iSeg.v_n >> -- No Service Brake Intervetion, B1
+		<<DSPV2: : (v*v+2*b*p) < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e >> -- Dynamic speed profile for v_n, B2
+		<<EBL: : v < iSeg.v_e >> -- Emergency Brake Intervention, B3
+		<<DSPV1: : p=0 m or (v*v+2*e*p) < (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e >> -- Dynamic speed profile for v_e, B4
+		
+		<<SB: :  --apply service brake
+		   BRAKE(pos:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, br:#CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
+		<<EB: :  --apply emergency brake
+		   BRAKE(pos:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, br:#CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>
+	
+		<<TRAIN_XL: returns quantity mpss := [                                			
+  		(SB() and not EB() )-> #CTCS_Property::SB_Rate mpss, -- deceleration rate when service brake is applied 
+  		(EB() )-> #CTCS_Property::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
+  		(not SB() and not EB()  )-> xl   --use train operator acceleration
+  		] >> 
+	
+	invariant
+		<< true >>
+	
+	variables
+			
+		i ~ quantity whole := 0 whole -- segment indexing
+		b ~ quantity mpss constant :=  #CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
+		  <<AXIOM_B: : b = #CTCS_Property::SB_Rate mpss>>
+		e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
+			<<AXIOM_E: : e = #CTCS_Property::EB_Rate mpss >> 
+		ma ~ movementAuthority --initial MA
+		iSeg ~ segment --current segement
+		nSeg ~ segment --next segment
+		SR ~ quantity m -- specific distance from the EoA, to request for new MA
+		
+	states
+		READY: initial state --train stopped
+		  <<p=0 m>>
+		GMA: complete state  --Get MA
+		  <<p=0 m>>
+		CMA: state           -- CheckMA
+		  <<p=0 m>>
+--		RETRY: state         --Retry MA request
+		MFR: complete state  --Move Forward
+			<< iSeg=ma[i] and nSeg=ma[i + 1] 
+					-- and i+1<#CTCS_Property::Segments			
+			>>
+		CMF: state           --Check Move Forward
+			<< iSeg=ma[i] and nSeg=ma[i + 1] 
+					-- and i+1<#CTCS_Property::Segments			
+		  >>
+		SBI: complete state  --Service Brake Intervention 
+		  << iSeg=ma[i] and nSeg=ma[i + 1] and EB()
+					-- and i+1<#CTCS_Property::Segments			
+			>>
+		CSB: state --Check Service Brake
+			<<  iSeg=ma[i] and nSeg=ma[i + 1]  
+					-- and i+1<#CTCS_Property::Segments			
+			>> 
+		EBI: complete state  --Emergency Brake Intevention
+		CEB: state -- check Emergency Brake
+		STOP: final state    --a final state
+		FAIL: final state    --failure occurred
+		
+	transitions
+		T0_Go: READY -[]-> GMA
+			{ << p=0 m >>
+				r!  --request movement authority
+			}
+			
+		T1_MA_Check: GMA -[on dispatch]-> CMA 
+
+		T2_MA_NotFresh: --did not get requested movement authority
+		  CMA -[not m_a'fresh]-> GMA 
+				
+		T2_MA_Ok:  --received movement authority
+		  CMA -[m_a'fresh]-> MFR
+			{  << p=0 m >> 
+			m_a?(ma)  --save received movement authority in local variable
+			;  << p= 0 m and ma=IMA >>
+			i := 0  --first segment of new movement authority
+			; << i=0 and p= 0 m and ma=IMA >>  
+      iSeg := ma[0] --set current segment of movement authority to first segment
+			; << i=0 and p= 0 m and ma=IMA and iSeg=ma[i] >> 
+			nSeg := ma[1]  --set next segment of movement authority to second segment
+			; << i=0 and p= 0 m and ma=IMA and iSeg=ma[i] and nSeg=ma[i+1] >> 		
+			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
+				<< (i=0  and iSeg=ma[i] and nSeg=ma[i+1]
+					-- and i+1<#CTCS_Property::Segments
+				)^1  >>
+			}
+				
+		T3_Move_Check: MFR -[on dispatch]-> CMF
+
+		T4_SBI_Point: CMF -[not (v < iSeg.v_n) or
+			not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e) ]-> SBI 
+			-- nSeg.v_n instead of ma[i+1], check dynamic speed profile formula. it is square of v_n
+			{  << (not (v < iSeg.v_n) or not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e))
+				and iSeg=ma[i] and nSeg=ma[i+1] >>
+			{ ca!(#CTCS_Property::SB_Rate mpss) 
+			  & 
+			  sb! }
+			; << iSeg=ma[i] and nSeg=ma[i+1] >>
+			|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+				<< (iSeg=ma[i] and nSeg=ma[i+1])^1 >>
+			}
+
+		T5_Move_Ok: CMF -[v < iSeg.v_n and v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e]->	MFR	
+			{  --velocity is below limit, and we can still stop in time
+				<< SBL() and DSPV2() and iSeg=ma[i] and nSeg=ma[i+1]>> 
+				if (p>=iSeg.e and (i+1) < #CTCS_Property::Segments - 1)~>
+					{  --near end of current segment, there is a next segment, then transition to next segment
+					<<SBL() and DSPV2() and p>=iSeg.e and (i+1) <#CTCS_Property::Segments - 1 >>
+					i:=i+1
+					; <<SBL() and DSPV2() and p>=iSeg.e and i < #CTCS_Property::Segments - 1  >>
+					iSeg:=ma[i]
+					; <<SBL() and DSPV2() and i<#CTCS_Property::Segments - 1 and iSeg=ma[i] >>
+					nSeg:=ma[i+1]
+					; <<SBL() and DSPV2() and i<#CTCS_Property::Segments - 1 and iSeg=ma[i] and nSeg=ma[i+1] >>
+				
+					ca!(xl)
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
+					}
+				[] (p<iSeg.e or (i+1) >= #CTCS_Property::Segments - 1)~>
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
+					skip	
+					<<iSeg=ma[i] and nSeg=ma[i+1]>> 
+				fi	
+			;		<<iSeg=ma[i] and nSeg=ma[i+1]>>   
+			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+				<<(iSeg=ma[i] and nSeg=ma[i+1])^1>>
+			}
+		
+		T6_BI_Check: SBI -[on dispatch]-> CSB   --just check SBI after each period like T3_Move_Check
+			
+		T7_SBI_Out: CSB -[v < iSeg.v_n and v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ]-> MFR
+			{
+				<< v < iSeg.v_n and ((2 * b * p) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v_n * nSeg.v_n)) 
+				  and iSeg = ma[i] and ma[1 + i] = nSeg>>
+			ca!(xl)
+			;  << iSeg = ma[i] and ma[1 + i] = nSeg >>
+			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+				 << (iSeg = ma[i] and ma[1 + i] = nSeg)^1 >>
+			}
+		
+		T8_SBI_Ok: CSB -[ (not(v < iSeg.v_n) or not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e)) and --apply service brake
+										not(not (v < iSeg.v_e) or not (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) +2*e*iSeg.e ))  --but not emergency brake
+										]-> SBI
+					
+			{
+				|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+					<< (iSeg=ma[i] and nSeg=ma[i+1])^1 >>
+			} 
+		
+		
+		T11_Check_EBI: EBI -[on dispatch]-> CEB 
+		
+		T14_EBI_Still: CEB -[v <> 0 kph]-> EBI
+		
+		T12_Stop: CEB -[v = 0 kph]-> STOP
+		
+		
+	
+		T13_EBI_Point: CSB -[not (v < iSeg.v_e) or not (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) +2*e*iSeg.e )]-> EBI
+		
+	--	T14_EBI_Fail: EBI -[on dispatch]-> FAIL
+
+	**};
+	
+end Controller.i;
+
+	
+end Train;

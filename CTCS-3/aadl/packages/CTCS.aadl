@@ -1,0 +1,37 @@
+--CTCS.aadl
+
+--Chinese Train Control System, level 3, Movement Authority Scenario
+
+
+package CTCS
+public
+	with BLESS, CTCS_Types, CTCS_Property, Train;
+
+--Movement Authority Scenario
+system MA
+end MA;
+
+system implementation MA.i
+	subcomponents
+		rbc : system RBC;
+		train : system Train::Train.i;
+	connections
+		ma_request : port train.r -> rbc.r;
+		ma : port rbc.ma -> train.ma;
+		auth_end : port rbc.ea -> train.ea;	
+end MA.i;
+
+--Radio Block Center
+system RBC  
+	features
+		r : in event port;	--train requests movement authority
+		ma : out event data port --movement authority granted
+		  CTCS_Types::MovementAuthority  {BLESS::Value=> "<<:=IMA>>";};	  
+    ea: out data port --end of authority
+      CTCS_Types::Position {BLESS::Value=> "<<:=EOA>>";};
+end RBC;
+
+
+
+
+end CTCS;

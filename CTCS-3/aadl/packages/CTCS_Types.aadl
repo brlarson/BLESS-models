@@ -1,0 +1,50 @@
+--CTCS_Types.aadl
+
+--types used in the CTCS-3 example
+
+package CTCS_Types
+public
+  with BLESS, BLESS_Types;
+  
+annex Typedef
+	{**
+	type trainModes is enumeration (FS CO)
+	type segment is record (
+ 	  v_n :  quantity kph -- velocity for (normal) service brake limit (SBL)
+ 	  v_e :  quantity kph -- velocity for emergency brake limit (EBL)
+  	  e :   quantity m  -- position of end of this segment
+   	  m:    trainModes ) -- train mode
+  type movementAuthority is array[#CTCS_Property::Segments] of segment
+	**};
+
+annex Assertion
+	{**
+	ghost variables
+	  def IMA ~ movementAuthority
+	  def POSITION ~ quantity m
+	  def VELOCITY ~ quantity kph
+	  def EOA ~ quantity m
+	**};
+
+data Segment
+properties BLESS::Typed => "segment";
+end Segment;
+
+data MovementAuthority
+  properties BLESS::Typed => "movementAuthority";
+end MovementAuthority;
+
+data Position
+  Properties BLESS::Typed => "quantity m";
+end Position;
+
+data Velocity
+  Properties BLESS::Typed => "quantity kph";
+end Velocity;
+
+data Acceleration
+Properties
+  BLESS::Typed => "quantity mpss";
+end Acceleration;
+	
+end CTCS_Types;
