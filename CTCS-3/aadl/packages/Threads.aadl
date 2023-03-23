@@ -1,0 +1,244 @@
+--Threads.aadl
+
+-- threads and their BLESS behavior
+
+
+package Threads
+public
+
+with BLESS, BLESS_Types, CTCS_Types;
+
+
+--------------AutoBrake Thread----------
+thread AutoBrake
+	features
+	  sb : out event data port BLESS_Types::Boolean  -- apply service brake
+	    {BLESS::Assertion => "<<SB()>>";};
+	  eb : out event data port BLESS_Types::Boolean  -- apply emergency brake
+	    {BLESS::Assertion => "<<EB()>>";};
+		ca: out data port CTCS_Types:: Acceleration --current acceleration
+		  {BLESS::Value=> "<<:=TRAIN_XL()>>";}; 
+		r: out event port -- request new movement authority
+		  {BLESS::Assertion=> "<<(p = 0) or (p >= (eoa - SR))>>";};  
+		m_a: in event data port CTCS_Types::MovementAuthority -- current movement authority
+		  {BLESS::Value=> "<<:=IMA>>";};  
+--		ea: in data port CTCS_Types::Position -- position of end of authority
+--		  {BLESS::Value=> "<<:=EOA>>";}; 
+		p: in data port CTCS_Types::Position   -- current position
+		  {BLESS::Value=> "<<:=POSITION>>";}; 
+		v: in data port CTCS_Types::Velocity   -- current velocity
+		  {BLESS::Value=> "<<:=VELOCITY>>";}; 
+		xl : in data port CTCS_Types::Acceleration;  -- operator chosen acceleration
+	properties
+		Dispatch_Protocol => Periodic;
+		Period => 200 ms;
+end AutoBrake;
+
+thread implementation AutoBrake.i
+	annex BLESS{**
+	
+	assert
+		--B0 is missing
+--		<<SBL: : v <iSeg.v_n >> -- No Service Brake Intervetion, B1
+--		<<DSPV2: : (v*v+2*b*p) < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e >> -- Dynamic speed profile for v_n, B2
+--		<<EBL: : v < iSeg.v_e >> -- Emergency Brake Intervention, B3
+--		<<DSPV1: : p=0 m or (v*v+2*e*p) < (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e >> -- Dynamic speed profile for v_e, B4
+		
+		<<SB: :  --apply service brake
+		   BRAKE(pos:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, br:#CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
+		<<EB: :  --apply emergency brake
+		   BRAKE(pos:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, br:#CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>
+	
+		<<TRAIN_XL: returns quantity mpss := [                                			
+  		(SB() and not EB() )-> #CTCS_Property::SB_Rate mpss, -- deceleration rate when service brake is applied 
+  		(EB() )-> #CTCS_Property::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
+  		(not SB() and not EB()  )-> xl   --use train operator acceleration
+  		] >> 
+	
+	invariant
+		<< true >>
+	
+	variables
+			
+		i ~ quantity whole := 0 whole -- segment indexing
+		b ~ quantity mpss constant :=  #CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
+		  <<AXIOM_B: : b = #CTCS_Property::SB_Rate mpss>>
+		e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
+			<<AXIOM_E: : e = #CTCS_Property::EB_Rate mpss >> 
+		ma ~ movementAuthority -- current movement authority
+		next_ma ~ movementAuthority  --next movement authority (valid only on last segment)
+		iSeg ~ segment --current segement
+		nSeg ~ segment --next segment
+		SR ~ quantity m -- specific distance from the EoA, to request for new MA
+		
+	states
+		READY: initial state --train stopped
+		GMA: complete state  --Get first MA
+		CMA: state           -- Check first MA
+		MF: complete state  --Move Forward
+			<< i<ma.num_segments and iSeg=ma.seg[i] and nSeg=ma.seg[i + 1] >>
+		CMF: state           --Check Move Forward
+			<< i<ma.num_segments and iSeg=ma.seg[i] and nSeg=ma.seg[i + 1] >>
+		CLS: state  --check for last segment	
+		MFLS: complete state  --Move Forward Last Segment
+		CMFLA: state  --check move forward last segment
+--		SBI: complete state  --Service Brake Intervention 
+--		  << iSeg=ma.seg[i] and nSeg=ma.seg[i + 1] and SB() >>
+--		CSB: state --Check Service Brake
+--			<<  iSeg=ma.seg[i] and nSeg=ma.seg[i + 1]  
+--			>> 
+--		EBI: complete state  --Emergency Brake Intevention
+--		CEB: state -- check Emergency Brake
+		STOP: final state    --a final state
+		FAIL: final state    --failure occurred
+		
+	transitions
+		Go: READY -[]-> GMA
+			{ 
+				r!  --request movement authority
+			}
+			
+		GetFirstMA: GMA -[on dispatch]-> CMA 
+
+		NotYet: --did not get requested movement authority
+		  CMA -[not m_a'fresh]-> GMA 
+				
+		GotFirstMA:  --received movement authority
+		  CMA -[m_a'fresh]-> MF
+			{   
+			m_a?(ma)  --save received movement authority in local variable
+			;  << ma=IMA >>
+			i := 1  --first segment of new movement authority
+			; << i=1 and ma=IMA >>  
+      iSeg := ma.seg[1] --set current segment of movement authority to first segment
+			; << i=1 and ma=IMA and iSeg=ma.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
+			nSeg := ma.seg[2]  --set next segment of movement authority to second segment
+			; << i=1 and ma=IMA and iSeg=ma.seg[i] and nSeg=ma.seg[i+1] >> 		
+			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
+				<< (i=1  and iSeg=ma.seg[i] and nSeg=ma.seg[i+1])^1  >>
+			}
+				
+		CheckSpeed: 
+		  MF -[on dispatch]-> CMF
+		  {
+		  if  --exceed emergency brake velocity?
+		    (v >= iSeg.v_e  )~> eb!
+		  []  --emergency brake for next segment?
+		    (v*v + 2*b*p >= (nSeg.v_e*nSeg.v_e) + 2*b*iSeg.e )~> eb!
+		  []  --exceed service brake velocity?
+		    (v >= iSeg.v_n and v < iSeg.v_e )~> sb!
+		  []  --service brake for next segment?
+		    (v*v + 2*b*p < (nSeg.v_e*nSeg.v_e) + 2*b*iSeg.e
+		    	and (v*v + 2*b*p >= (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ) )~> eb!
+		  []  --no auto brake needed
+		    ( v < iSeg.v_n and (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ) )~> skip
+		  fi
+		  }
+
+    SameSegment:   --not at end of this segment
+      CMF -[p < iSeg.e]-> MF
+
+    NextSegment:  --go to next segment
+      CMF -[p >= iSeg.e]-> CLS
+      {
+      iSeg := nSeg
+      ;
+      i := i+1
+      }
+    
+    NotLastSegment:  --not the last segment
+      CLS -[i < ma.num_segments]-> MF
+      {
+      nSeg := ma.seg[i+1]
+      }  
+      
+    IsLastSegment:  --is the last segment
+      CLS -[i >= ma.num_segments]-> MFLS
+      {
+			r!  --request new movement authority
+      &  --set nSeg to stop
+      nSeg := ( segment :
+      	        v_n => 0 kph 
+      	        v_e => 0 kph
+      	        e => ma.ea
+      	        m => trainModes'FS )
+      }
+      
+      
+--		T4_SBI_Point: CMF -[not (v < iSeg.v_n) or
+--			not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e) ]-> SBI 
+--			-- nSeg.v_n instead of ma.seg[i+1], check dynamic speed profile formula. it is square of v_n
+--			{  << (not (v < iSeg.v_n) or not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e))
+--				and iSeg=ma.seg[i] and nSeg=ma.seg[i+1] >>
+--			{ ca!(#CTCS_Property::SB_Rate mpss) 
+--			  & 
+--			  sb! }
+--			; << iSeg=ma.seg[i] and nSeg=ma.seg[i+1] >>
+--			|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+--				<< (iSeg=ma.seg[i] and nSeg=ma.seg[i+1])^1 >>
+--			}
+
+		T5_Move_Ok: CMF -[v < iSeg.v_n and v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e]->	MF	
+			{  --velocity is below limit, and we can still stop in time
+--				<< SBL() and DSPV2() and iSeg=ma.seg[i] and nSeg=ma.seg[i+1]>> 
+--				if (p>=iSeg.e and (i+1) < #CTCS_Property::Segments - 1)~>
+--					{  --near end of current segment, there is a next segment, then transition to next segment
+--					<<SBL() and DSPV2() and p>=iSeg.e and (i+1) <#CTCS_Property::Segments - 1 >>
+--					i:=i+1
+--					; <<SBL() and DSPV2() and p>=iSeg.e and i < #CTCS_Property::Segments - 1  >>
+--					iSeg:=ma.seg[i]
+--					; <<SBL() and DSPV2() and i<#CTCS_Property::Segments - 1 and iSeg=ma.seg[i] >>
+--					nSeg:=ma.seg[i+1]
+--					; <<SBL() and DSPV2() and i<#CTCS_Property::Segments - 1 and iSeg=ma.seg[i] and nSeg=ma.seg[i+1] >>
+--				
+--					ca!(xl)
+--					<<iSeg=ma.seg[i] and nSeg=ma.seg[i+1]>> 
+--					}
+--				[] (p<iSeg.e or (i+1) >= #CTCS_Property::Segments - 1)~>
+--					<<iSeg=ma.seg[i] and nSeg=ma.seg[i+1]>> 
+--					skip	
+--					<<iSeg=ma.seg[i] and nSeg=ma.seg[i+1]>> 
+--				fi	
+--			;		<<iSeg=ma.seg[i] and nSeg=ma.seg[i+1]>>   
+--			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+--				<<(iSeg=ma.seg[i] and nSeg=ma.seg[i+1])^1>>
+			}
+		
+--		T6_BI_Check: SBI -[on dispatch]-> CSB   --just check SBI after each period like T3_Move_Check
+--			
+--		T7_SBI_Out: CSB -[v < iSeg.v_n and v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ]-> MF
+--			{
+--				<< v < iSeg.v_n and ((2 * b * p) + (v * v)) < ((2 * b * iSeg.e) + (nSeg.v_n * nSeg.v_n)) 
+--				  and iSeg = ma.seg[i] and ma.seg[1 + i] = nSeg>>
+--			ca!(xl)
+--			;  << iSeg = ma.seg[i] and ma.seg[1 + i] = nSeg >>
+--			|i',iSeg',nSeg', ma' := i, iSeg, nSeg, ma|
+--				 << (iSeg = ma.seg[i] and ma.seg[1 + i] = nSeg)^1 >>
+--			}
+--		
+--		T8_SBI_Ok: CSB -[ (not(v < iSeg.v_n) or not (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e)) and --apply service brake
+--										not(not (v < iSeg.v_e) or not (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) +2*e*iSeg.e ))  --but not emergency brake
+--										]-> SBI
+--					
+--			{
+--				|iSeg',i',nSeg', ma':= iSeg, i, nSeg, ma|
+--					<< (iSeg=ma.seg[i] and nSeg=ma.seg[i+1])^1 >>
+--			} 
+--		
+--		
+--		T11_Check_EBI: EBI -[on dispatch]-> CEB 
+--		
+--		T14_EBI_Still: CEB -[v <> 0 kph]-> EBI
+--		
+--		T12_Stop: CEB -[v = 0 kph]-> STOP
+--		
+--		
+--	
+--		T13_EBI_Point: CSB -[not (v < iSeg.v_e) or not (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) +2*e*iSeg.e )]-> EBI
+		
+
+	**};
+	
+end AutoBrake.i;
+	
+end Threads;

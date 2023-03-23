@@ -14,7 +14,11 @@ annex Typedef
  	  v_e :  quantity kph -- velocity for emergency brake limit (EBL)
   	  e :   quantity m  -- position of end of this segment
    	  m:    trainModes ) -- train mode
-  type movementAuthority is array[#CTCS_Property::Segments] of segment
+  type movementAuthority is record (
+  	ba : quantity m  --beginning position of this MA
+  	num_segments : quantity whole  --number of segments in this MA
+  	seg : array[#CTCS_Property::Segments] of segment 
+  	ea : quantity m )  --ending position of authority
 	**};
 
 annex Assertion

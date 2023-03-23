@@ -4,7 +4,7 @@
 
 property set CTCS_Property is
 
-Segments : aadlinteger =>3 applies to (all) ;  -- number of segments is an MA
+Segments : aadlinteger =>3 applies to (all) ;  -- maximum number of segments is Movement Authority
 SB_Rate : aadlreal =>-0.8 applies to (all);-- service brake deceleration rate
 EB_Rate: aadlinteger =>-1 applies to (all); -- emergency brake deceleration rate
 	

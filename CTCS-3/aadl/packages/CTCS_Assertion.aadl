@@ -1,5 +1,8 @@
 package CTCS_Assertion
 public
+
+with
+  CTCS_Types, CTCS_Property;
 	
 annex Assertion
 {**
@@ -13,6 +16,9 @@ annex Assertion
   pos~quantity m,    --current position
   e~quantity m :
   cv >= v_l or (cv*cv + 2*br*pos) >= (next_v_l*next_v_l + 2*br*e) >>
+
+--every Movement Authority will have more than one segment
+<<AXIOM_NUM_SEG: ma~movementAuthority : 1 < ma.num_segments>>
 	
 **};		
 	
