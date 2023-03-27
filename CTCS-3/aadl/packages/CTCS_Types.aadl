@@ -4,16 +4,18 @@
 
 package CTCS_Types
 public
-  with BLESS, BLESS_Types;
+  with BLESS;
   
 annex Typedef
 	{**
 	type trainModes is enumeration (FS CO)
+	
 	type segment is record (
  	  v_n :  quantity kph -- velocity for (normal) service brake limit (SBL)
  	  v_e :  quantity kph -- velocity for emergency brake limit (EBL)
   	  e :   quantity m  -- position of end of this segment
    	  m:    trainModes ) -- train mode
+   	  
   type movementAuthority is record (
   	ba : quantity m  --beginning position of this MA
   	num_segments : quantity whole  --number of segments in this MA
@@ -21,14 +23,6 @@ annex Typedef
   	ea : quantity m )  --ending position of authority
 	**};
 
-annex Assertion
-	{**
-	ghost variables
-	  def IMA ~ movementAuthority
-	  def POSITION ~ quantity m
-	  def VELOCITY ~ quantity kph
-	  def EOA ~ quantity m
-	**};
 
 data Segment
 properties BLESS::Typed => "segment";

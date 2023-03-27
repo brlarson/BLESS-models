@@ -6,6 +6,13 @@ with
 	
 annex Assertion
 {**
+	ghost variables
+	  def POSITION ~ quantity m    -- measured position
+	  def VELOCITY ~ quantity kph  -- measured velocity
+	  def RMA ~ movementAuthority  -- received movement authority
+	  def CMA ~ movementAuthority  -- currently active movement authority
+	  def NEXT_MA ~ movementAuthority  -- movment authority following IMA if granted 
+	
 -- brake intervention
 -- current velocity is at least the current segment velocity limit
 -- or must slow down for next segment
@@ -17,8 +24,31 @@ annex Assertion
   e~quantity m :
   cv >= v_l or (cv*cv + 2*br*pos) >= (next_v_l*next_v_l + 2*br*e) >>
 
---every Movement Authority will have more than one segment
+-- every Movement Authority will have more than one segment
 <<AXIOM_NUM_SEG: ma~movementAuthority : 1 < ma.num_segments>>
+
+-- next negment when in the last segment of a movement aurthority
+-- but the next movement authority has not been received
+-- this will cause the train to automatically stop at the end of the last segment
+-- if a new movement authority is not received
+<<NULL_SEGMENT: returns segment := 
+  ( segment :
+     v_n => 0 kph 
+     v_e => 0 kph
+     e => CMA.ea
+     m => trainModes'FS ) >>
+
+-- when a movement authority is received by the train it is a received movement authority (RMA)
+
+-- when the RMA becomes the current movement authority (CMA);
+-- this happens when the train receives its firt MA
+<<AXIOM_CMA_IS_RMA: : CMA = RMA >>
+-- when the RMA is saved to be the next movement authority (NEXT_MA);
+-- this happens when the train gets a new movement authority before ending the current movement authority
+<<AXIOM_NEXT_MA_IS_RMA: : NEXT_MA = RMA >>
+-- when NEXT_MA becomes CMA;
+-- this happens when the train crosses into the new movement authority
+<<AXIOM_CMA_IS_NEXT_MA: : CMA = NEXT_MA >>
 	
 **};		
 	
