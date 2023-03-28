@@ -23,8 +23,11 @@ end Motor;
 --Sensor detects position, velocity, and acceleration
 device Sensor
 	features
-    p : out data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";};
-    v : out data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
+    p : out event data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";};
+    v : out event data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
+  properties
+	  Dispatch_Protocol => Periodic;
+	  Period => 200 ms;
 end Sensor;
 
 --service brake

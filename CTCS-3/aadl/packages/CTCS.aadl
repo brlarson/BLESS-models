@@ -5,7 +5,7 @@
 
 package CTCS
 public
-	with BLESS, CTCS_Types, CTCS_Property, Train;
+	with BLESS, CTCS_Types, Train;
 
 --Movement Authority Scenario
 system MA

@@ -21,14 +21,13 @@ thread AutoBrake
 		r: out event port; -- request new movement authority
 		m_a: in event data port CTCS_Types::MovementAuthority -- received movement authority
 		  {BLESS::Value=> "<<:=RMA>>";};  
-		p: in data port CTCS_Types::Position   -- current measured position
+		p: in event data port CTCS_Types::Position   -- current measured position
 		  {BLESS::Value=> "<<:=POSITION>>";}; 
-		v: in data port CTCS_Types::Velocity   -- current measured velocity
+		v: in event data port CTCS_Types::Velocity   -- current measured velocity
 		  {BLESS::Value=> "<<:=VELOCITY>>";}; 
 		xl : in data port CTCS_Types::Acceleration;  -- operator chosen acceleration
 	properties
-		Dispatch_Protocol => Periodic;
-		Period => 200 ms;
+		Dispatch_Protocol => Sporadic;
 end AutoBrake;
 
 thread implementation AutoBrake.i
@@ -95,7 +94,7 @@ thread implementation AutoBrake.i
 				r!  --request movement authority
 			}
 			
-		GetFirstMA: GetFirstMA -[on dispatch]-> CheckFirstMA 
+		GetFirstMA: GetFirstMA -[on dispatch p]-> CheckFirstMA 
 
 		NotYet: --did not get requested movement authority
 		  CheckFirstMA -[not m_a'fresh]-> GetFirstMA 
@@ -112,11 +111,11 @@ thread implementation AutoBrake.i
 			nSeg := ma.seg[2]  --set next segment of movement authority to second segment
 			; << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] >> 		
 			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
-				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1])^1  >>
+				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA))^1  >>
 			}
 				
 		CheckSpeed: 
-		  MoveForward -[on dispatch]-> CheckMoveForward
+		  MoveForward -[on dispatch p]-> CheckMoveForward
 		  {
 		  if  --exceed emergency brake velocity?
 		    (v >= iSeg.v_e  )~> eb!
@@ -163,7 +162,7 @@ thread implementation AutoBrake.i
       }
       
     LastSegment:
-      MoveForwardLastSegment -[on dispatch]-> CheckMoveForwardLastSegment
+      MoveForwardLastSegment -[on dispatch p]-> CheckMoveForwardLastSegment
       {
 		  if  --exceed emergency brake velocity?
 		    (v >= iSeg.v_e  )~> eb!
@@ -195,7 +194,7 @@ thread implementation AutoBrake.i
       }   
     
     LastBitOfMa:
-      GotNewMA -[on dispatch]-> CheckMATransition
+      GotNewMA -[on dispatch p]-> CheckMATransition
 
     NotEndOfMA:
       CheckMATransition -[p < ma.ea]-> GotNewMA

@@ -1,0 +1,37 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
+#  at Tue Mar 28 14:28:48 CDT 2023 by brianlarson
+make-an
+#Threads::AutoBrake.i
+#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition.
+axioms
+#[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
+axioms
+#[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
+axioms
+#[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for Go:Start-[ ]->GetFirstMA{A};
+normalize
