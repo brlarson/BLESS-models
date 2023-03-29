@@ -109,14 +109,14 @@ thread implementation AutoBrake.i
       iSeg := ma.seg[1] --set current segment of movement authority to first segment
 			; << i=1 and ma=CMA and iSeg=CMA.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
 			nSeg := ma.seg[2]  --set next segment of movement authority to second segment
-			; << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] >> 		
-			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
-				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA))^1  >>
+			<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA) >> 		
+--			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
+--				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA))^1  >>
 			}
 				
 		CheckSpeed: 
 		  MoveForward -[on dispatch p]-> CheckMoveForward
-		  {
+		  { << i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and AXIOM_B() and AXIOM_E() >>
 		  if  --exceed emergency brake velocity?
 		    (v >= iSeg.v_e  )~> eb!
 		  []  --emergency brake for next segment?
@@ -133,7 +133,7 @@ thread implementation AutoBrake.i
 
     SameSegment:   --not at end of this segment
       CheckMoveForward -[p < iSeg.e]-> MoveForward
-      { |iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma| }
+ --     { |iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma| }
 
     NextSegment:  --go to next segment
       CheckMoveForward -[p >= iSeg.e]-> CheckForLastSegment
@@ -209,9 +209,9 @@ thread implementation AutoBrake.i
       iSeg := ma.seg[1] --set current segment of movement authority to first segment
 			; << i=1 and ma=CMA and iSeg=CMA.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
 			nSeg := ma.seg[2]  --set next segment of movement authority to second segment
-			; << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] >> 		
-			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
-				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1])^1  >>      
+			<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] >> 		
+--			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
+--				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1])^1  >>      
       }            
        		
 

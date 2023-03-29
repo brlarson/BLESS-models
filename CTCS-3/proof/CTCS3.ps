@@ -1,8 +1,9 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Tue Mar 28 14:28:48 CDT 2023 by brianlarson
-make-an
+#  at Tue Mar 28 17:07:20 CDT 2023 by brianlarson
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
-#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition.
+#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition
+make-an
 axioms
 #[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
 axioms
@@ -13,6 +14,7 @@ axioms
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
+normalize
 laws
 axioms
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
@@ -23,6 +25,7 @@ axioms
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
+normalize
 laws
 axioms
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
@@ -31,7 +34,87 @@ axioms
 #[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
+normalize
 laws
 axioms
 #[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for Go:Start-[ ]->GetFirstMA{A};
+atomic
+axioms
+#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMA:GetFirstMA-[x]->CheckFirstMA{};
+axioms
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYet:CheckFirstMA-[x]->GetFirstMA{};
+axioms
+#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMA:CheckFirstMA-[x]->MoveForward{A};
+reduce
+normalize
+remove-axioms-post
+laws
+push
+make-an
+#Threads::AutoBrake.i
+#[serial 1075]   normalization of [serial 1068]
+substitute-pre
+normalize
+split-post
+axioms
+guided-sub-equals[i]
+axioms
+#[serial 1077]   normalization of [serial 1069]
+atomic
+make-an
+#Threads::AutoBrake.i
+#[serial 1079]   normalization of [serial 1070]
+atomic
+substitute-pre
+laws
+normalize
+axioms
+guided-sub-equals[CMA]
+axioms
+#[serial 1089]  add user-defined axioms to postcondition:
+axioms
+#[serial 1092] Law of And-Simplification:  P and true is P [serial 1090]
+atomic
+guided-sub-equals[CMA]
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1093] Law of And-Simplification:  P and true is P [serial 1091]
+substitute-pre
+atomic
+split-post
+axioms
+guided-sub-equals[i]
+guided-sub-equals[CMA]
+normalize
+laws
+axioms
+#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeed:MoveForward-[x]->CheckMoveForward{A};
+normalize
+reduce
+reduce
+atomic
+normalize
+laws
+normalize
+push
+make-an
+#[serial 1203]   normalization of [serial 1183]
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1205]   normalization of [serial 1193]
+substitute-post
+normalize
+replace<=
+normalize
+axioms
+#[serial 1207]   normalization of [serial 1194]
+axioms
+#[serial 1209]   normalization of [serial 1195]
+substitute-post
 normalize
