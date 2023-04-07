@@ -56,6 +56,7 @@ invariant
     exists t~time  --there was a moment
       in (now-lrl)..now   --within the previous LRL interval
       that (n@t or p@t) >>  --with a pace or non-refractory sense	
+  
 
 variables
   last_beat ~ time
@@ -90,7 +91,7 @@ transitions
     & 
     last_beat:=now 
     <<last_beat=now>>
-    };	  
+    }	  
 
   T2_STOP_pace:		--turn off pacing
   pace -[on dispatch h]-> off{}
@@ -101,8 +102,11 @@ transitions
   T3_PACE_LRL_AFTER_VP:	--pace when LRL times out
   pace -[on dispatch timeout (n or p) lrl]-> pace
     { << VP()>>
-    p! <<p@now>>   --cause pace when LRL times out
-    & last_beat:=now <<last_beat=now>>}  
+    p!    --cause pace when LRL times out
+    <<p@now>>
+    ;
+    last_beat:=now 
+    <<last_beat=now and p@now>>}  
 
   T4_VS_AFTER_VP:	--sense after pace=>check if in VRP
   pace -[on dispatch s]-> check_pace_vrp{}  
@@ -111,17 +115,22 @@ transitions
   check_pace_vrp -[now-last_beat<vrp?]-> pace{}  
 
   T6_VS_AFTER_VP_IS_NR:	--s after VRP, 
-    --go to "sense" state, send n!, reset timeouts
   check_pace_vrp -[now-last_beat>=vrp?]-> sense	   
     {  <<VS()>>
-    n! <<n@now>>  --send n! to reset timeouts now,
-    & last_beat:=now <<last_beat=now>>}  
+    n! 
+    <<n@now>> 
+    ; 
+    last_beat:=now 
+    <<last_beat=now and n@now>>}  
 
   T7_PACE_LRL_AFTER_VS:	--pace when LRL times out after VS
   sense -[on dispatch timeout (n or p) lrl]-> pace
     {<< VP()>>
-    p! <<p@now>>
-    & last_beat:=now <<last_beat=now>>} 
+    p! 
+    <<p@now>>
+    ; 
+    last_beat:=now 
+    <<last_beat=now and p@now>>} 
 
   T8_VS_AFTER_VS:	--check if s in VRP
   sense -[on dispatch s]-> check_sense_vrp{}  
@@ -131,12 +140,15 @@ transitions
 
   T10_VS_AFTER_VS_IS_NR:  --s after VRP is non-refractory
   check_sense_vrp -[now-last_beat>=vrp?]-> sense	
-    --reset timeouts with n! port send
     {  << VS()>>
-    n! <<n@now>>  --non-refractory ventricular sense
-    & last_beat:=now <<last_beat=now>>
+    n! 
+    <<n@now>> 
+    ; 
+    last_beat:=now 
+    <<last_beat=now and n@now>>
     }  
 **}; --end of annex subclause 
+
 	end VVI.i; --end thread 
 
 	thread RateControl

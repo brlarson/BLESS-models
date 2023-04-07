@@ -1,48 +1,17 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Thu Feb 23 11:40:56 CST 2023 by brianlarson
+#  at Thu Apr 06 21:31:48 CDT 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
-load
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
 make-an
-substitute-both
-normalize
+substitute-post
 axioms
 #[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
 substitute-pre
-normalize
 split-quant
 axioms
 #[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
 substitute-pre
-normalize
-load
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
-#vvi_mode::VVI.i
-#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
-make-an
-substitute-both
-normalize
-axioms
-split-quant
-axioms
-#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
-substitute-pre
-normalize
-load
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.i
-#vvi_mode::VVI.i
-#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition
-make-an
-substitute-both
-normalize
-axioms
-split-quant
-axioms
-#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
-substitute-pre
-normalize
 split-quant
 axioms
 #[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
@@ -55,141 +24,61 @@ axioms
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
-normalize
 laws
 axioms
-#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ONpower_on-[ ]->sense{A};
 reduce
-axioms
 atomic
 laws
-normalize
 axioms
 push
 #vvi_mode::VVI.i
-#[serial 1056]   normalization of [serial 1048
+#[serial 1036] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1009
 make-an
 substitute-post
-normalize
 split-post
+normalize
 guided-sub-equals[last_beat]
 axioms
-normalize
 quant
 axioms
-#[serial 1060]   normalization of [serial 1052]
+#[serial 1040] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1037]
+alldist^
 replace-port
 normalize
+alldist^
 axioms
-#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace:pace-[x]->off{};
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pacepace-[x]->off{};
 axioms
-#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense:sense-[x]->off{};
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sensesense-[x]->off{};
 axioms
-#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
-substitute-both
-normalize
-laws
-normalize
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VPpace-[x]->pace{A};
 reduce
 atomic
 laws
+normalize
 axioms
-normalize
-split-post
-normalize
 push
 #vvi_mode::VVI.i
-#[serial 1090] P -> P1 in concurrent composition for [serial 1088
+#[serial 1087]   normalization of [serial 1077
 make-an
 substitute-post
-normalize
+split-post
+quant
 axioms
-#[serial 1102]   normalization of [serial 1095]
-replace-port
-axioms
-#[serial 1105] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1100]
 guided-sub-equals[last_beat]
 axioms
-#[serial 1111]   normalization of [serial 1106]
-quant
-axioms
-#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
-normalize
-axioms
-#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
-normalize
-laws
-axioms
-#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#vvi_mode::VVI.i
-#[serial 1136]   normalization of [serial 1127
-make-an
-substitute-both
-normalize
-laws
-substitute-post
-normalize
-laws
-split-post
-axioms
-split@
-normalize
-axioms
-now
-axioms
-#[serial 1138]   normalization of [serial 1128]
-substitute-post
-normalize
-split-post
-guided-sub-equals[last_beat]
-axioms
-normalize
-quant
-axioms
-#[serial 1142]   normalization of [serial 1132]
-replace-port
-normalize
-axioms
-#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
-reduce
-atomic
-laws
-normalize
-axioms
-push
-#vvi_mode::VVI.i
-#[serial 1194]   normalization of [serial 1185
-make-an
-substitute-post
-laws
-normalize
-axioms
-#[serial 1196]   normalization of [serial 1186]
-substitute-post
-normalize
-split-post
-guided-sub-equals[last_beat]
-axioms
-normalize
-quant
-axioms
-#[serial 1199]   normalization of [serial 1190]
+#[serial 1090]   normalization of [serial 1081]
 replace-port
 axioms
-#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
-normalize
+#[serial 1092]   normalization of [serial 1083]
+substitute-post
 axioms
-#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
-normalize
-laws
+#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VPpace-[x]->check_pace_vrp{};
 axioms
-#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
+#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRPcheck_pace_vrp-[x]->pace{};
+axioms
+#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NRcheck_pace_vrp-[x]->sense{A};
 reduce
 atomic
 laws
@@ -197,33 +86,92 @@ normalize
 axioms
 push
 #vvi_mode::VVI.i
-#[serial 1239]   normalization of [serial 1230
+#[serial 1116]   normalization of [serial 1106
 make-an
 substitute-post
-normalize
 split-post
-laws
 axioms
 substitute-post
-normalize
-split-post
-now
-axioms
 substitute-pre
-split@
 normalize
 laws
-axioms
-#[serial 1241]   normalization of [serial 1231]
-substitute-post
-normalize
 split-post
+split@
+normalize
+axioms
+now
+axioms
+#[serial 1118]   normalization of [serial 1107]
+substitute-post
+split-post
+quant
+normalize
+axioms
 guided-sub-equals[last_beat]
 axioms
+#[serial 1122]   normalization of [serial 1111]
+replace-port
 normalize
+axioms
+#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VSsense-[x]->pace{A};
+reduce
+atomic
+laws
+normalize
+axioms
+push
+make-an
+#vvi_mode::VVI.i
+#[serial 1173]   normalization of [serial 1163]
+substitute-post
+split-post
 quant
 axioms
-#[serial 1245]   normalization of [serial 1235]
+guided-sub-equals[last_beat]
+axioms
+#[serial 1176]   normalization of [serial 1167]
+replace-port
+axioms
+#[serial 1178]   normalization of [serial 1169]
+substitute-post
+axioms
+#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VSsense-[x]->check_sense_vrp{};
+normalize
+axioms
+#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRPcheck_sense_vrp-[x]->sense{};
+axioms
+#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NRcheck_sense_vrp-[x]->sense{A};
+reduce
+atomic
+laws
+normalize
+axioms
+push
+make-an
+#vvi_mode::VVI.i
+#[serial 1205]   normalization of [serial 1195]
+substitute-post
+split-post
+axioms
+substitute-post
+substitute-pre
+laws
+normalize
+split-post
+split@
+normalize
+axioms
+now
+axioms
+#[serial 1207]   normalization of [serial 1196]
+substitute-post
+split-post
+quant
+normalize
+axioms
+guided-sub-equals[last_beat]
+axioms
+#[serial 1211]   normalization of [serial 1200]
 replace-port
 normalize
 axioms

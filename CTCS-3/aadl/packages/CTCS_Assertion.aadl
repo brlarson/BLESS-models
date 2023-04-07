@@ -32,11 +32,11 @@ annex Assertion
 -- this will cause the train to automatically stop at the end of the last segment
 -- if a new movement authority is not received
 <<NULL_SEGMENT: returns segment := 
-  ( segment :
+  [ segment :
      v_n => 0 kph 
      v_e => 0 kph
      e => CMA.ea
-     m => trainModes'FS ) >>
+     m => trainModes'FS ] >>
 
 -- when a movement authority is received by the train it is a received movement authority (RMA)
 

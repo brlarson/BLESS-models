@@ -1,6 +1,3 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Tue Mar 28 17:07:20 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition
 make-an
@@ -23,8 +20,6 @@ axioms
 #[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
-normalize
-replace<=
 normalize
 laws
 axioms
@@ -50,71 +45,147 @@ normalize
 remove-axioms-post
 laws
 push
-make-an
 #Threads::AutoBrake.i
-#[serial 1075]   normalization of [serial 1068]
+#[serial 1073]   normalization of [serial 1066
+make-an
 substitute-pre
 normalize
 split-post
 axioms
 guided-sub-equals[i]
 axioms
-#[serial 1077]   normalization of [serial 1069]
+#[serial 1075]   normalization of [serial 1067]
 atomic
-make-an
 #Threads::AutoBrake.i
-#[serial 1079]   normalization of [serial 1070]
+#[serial 1077]   normalization of [serial 1068
+make-an
 atomic
 substitute-pre
 laws
 normalize
-axioms
 guided-sub-equals[CMA]
 axioms
-#[serial 1089]  add user-defined axioms to postcondition:
+laws
 axioms
-#[serial 1092] Law of And-Simplification:  P and true is P [serial 1090]
+#[serial 1087]  add user-defined axioms to postcondition:
+axioms
+#[serial 1090] Law of And-Simplification:  P and true is P [serial 1088]
 atomic
-guided-sub-equals[CMA]
+normalize
+split-post
 guided-sub-equals[i]
-normalize
+guided-sub-equals[CMA]
 laws
 axioms
-#[serial 1093] Law of And-Simplification:  P and true is P [serial 1091]
-substitute-pre
+#[serial 1091] Law of And-Simplification:  P and true is P [serial 1089]
 atomic
+normalize
 split-post
 axioms
-guided-sub-equals[i]
 guided-sub-equals[CMA]
+guided-sub-equals[i]
 normalize
 laws
 axioms
 #[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeed:MoveForward-[x]->CheckMoveForward{A};
-normalize
 reduce
 reduce
-atomic
+remove-axioms-post
 normalize
 laws
 normalize
 push
+#Threads::AutoBrake.i
+#[serial 1157]   normalization of [serial 1149
 make-an
-#[serial 1203]   normalization of [serial 1183]
 replace<=
-normalize
 cnf
 laws
 normalize
 axioms
-#[serial 1205]   normalization of [serial 1193]
-substitute-post
+#[serial 1181] Associativity: (b.c).a = a.b.c [serial 1167]
+atomic
+axioms
+#[serial 1186]   normalization of [serial 1177]
+atomic
+laws
+axioms
+substitute-both
 normalize
+axioms
+#[serial 1188]   normalization of [serial 1178]
+atomic
+laws
+axioms
+substitute-both
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1190]   normalization of [serial 1179]
+atomic
+laws
+axioms
+substitute-both
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+guided-sub-equals[#CTCS_Property::SB_Rate]
+split-post
+normalize
+axioms
 replace<=
 normalize
-axioms
-#[serial 1207]   normalization of [serial 1194]
-axioms
-#[serial 1209]   normalization of [serial 1195]
-substitute-post
+DeMorgan
 normalize
+split-post
+axioms
+#[serial 1192]   normalization of [serial 1180]
+atomic
+laws
+axioms
+split-post
+substitute-both
+normalize
+guided-sub-equals[#CTCS_Property::SB_Rate]
+normalize
+axioms
+guided-sub-equals[#CTCS_Property::EB_Rate]
+replace<=
+normalize
+DeMorgan
+normalize
+axioms
+#[serial 1195]   normalization of [serial 1183]
+axioms
+#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegment:CheckMoveForward-[x]->MoveForward{};
+normalize
+axioms
+#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegment:CheckMoveForward-[x]->CheckForLastSegment{A};
+normalize
+laws
+reduce
+atomic
+normalize
+axioms
+#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegment:CheckForLastSegment-[x]->MoveForward{A};
+normalize
+laws
+atomic
+normalize
+split-post
+axioms
+guided-sub-equals[CMA]
+axioms
+laws
+axioms
+#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegment:CheckForLastSegment-[x]->MoveForwardLastSegment{A};
+normalize
+laws
+reduce
+atomic
+normalize
+laws
+axioms
+normalize
+split-post
+axioms
