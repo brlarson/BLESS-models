@@ -6,9 +6,9 @@ public
   with BLESS, SI,  --predeclared BLESS properties
    PP;	--imported property set defining pacing settings that control the behavior of the device
 
-annex Typedef {**
-	type time is quantity s
-**};
+--annex Typedef {**
+--	type time is quantity s
+--**};
 
 thread DDD
   features

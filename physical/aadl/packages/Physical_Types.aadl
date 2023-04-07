@@ -61,7 +61,7 @@ end Sound;
 data Minute extends BLESS_Types::Integer
   properties
     Data_Model::Measurement_Unit=>"Time_Units";
-    BLESS::Typed=>"time";
+    BLESS::Typed=>"quantity min";
 end Minute;
 
 

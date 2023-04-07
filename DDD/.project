@@ -3,7 +3,6 @@
 	<name>DDD</name>
 	<comment></comment>
 	<projects>
-		<project>physical</project>
 		<project>Plugin_Resources</project>
 	</projects>
 	<buildSpec>
