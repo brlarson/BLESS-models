@@ -134,8 +134,8 @@ ghost variables
   Normal -> REGULATOR_OK() and RUN(),  
   Failed -> not REGULATOR_OK() and RUN() >>
 
-    <<AXIOM_PAST_INIT: : (now-START_TIME) <= (now-START_TIME)^1>>	
-    <<AXIOM_TOGT0: :0 < #Iso_Properties::Initialization_Timeout>>
+<<AXIOM_PAST_INIT: : (now-START_TIME) <= (now-START_TIME)^1>>	
+<<AXIOM_TOGT0: :0 < #Iso_Properties::Initialization_Timeout>>
 
 **};  --end of Assertion annex library
 

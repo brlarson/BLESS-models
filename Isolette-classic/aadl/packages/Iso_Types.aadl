@@ -6,7 +6,7 @@
 
 package Iso_Types
   public
-  with Data_Model, BLESS, BLESS_Types;
+  with Data_Model, BLESS;
 
 
 annex Unit

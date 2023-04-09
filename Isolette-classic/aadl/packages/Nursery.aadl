@@ -16,7 +16,7 @@ public
 			infant_interaction : in out data port Air_Interaction;
 --actual air temperature that the sensor measures			
 			air_temperature : out data port Iso_Types::current_temperature.i
-        {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+        {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
 		flows
 			heat_flow_sink: flow sink heat_in;
 			temp_source: flow source air_temperature;

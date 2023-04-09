@@ -8,17 +8,17 @@ with KSU_Isolette, Iso_Types, BLESS, BLESS_Types, EMV2, ARP4761, Iso_Properties,
 process regulate_temperature
 features
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   regulator_status : out data port Iso_Types::status
-    {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_STATUS(x:regulator_status)>>";};
   displayed_temp : out data port Iso_Types::measured_temperature_range
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>HEAT_CONTROL(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
 annex EMV2 
   {** 
   use types ErrorLibrary, KSU_Isolette;
@@ -81,17 +81,17 @@ end regulate_temperature.impl;
 thread manage_regulator_interface_mri
 features
   regulator_status : out data port Iso_Types::status
-    {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_STATUS(x:regulator_status)>>";};
   lower_desired_temp : in data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temp : in data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   displayed_temp : out data port Iso_Types::measured_temperature_range
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   regulator_mode : in data port Iso_Types::regulator_mode
-  	{BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};
+  	{BLESS::Value => "<< +=> REGULATOR_MODE(x:regulator_mode)>>";};
   interface_failure : out data port Base_Types::Boolean
     {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
 properties
@@ -158,9 +158,9 @@ end manage_regulator_interface_mri.impl;
 thread manage_regulator_mode
 features
   regulator_mode : out data port Iso_Types::regulator_mode
-    {BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};  --enumeration assertion
+    {BLESS::Value => "<< +=> REGULATOR_MODE(x:regulator_mode)>>";};  --enumeration assertion
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   interface_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<REGULATOR_INTERFACE_FAILURE>>";};
   internal_failure : in data port Base_Types::Boolean

@@ -133,7 +133,7 @@ system isolette
     -- And consider changing the name (to distinguish physical air temperature from
     -- sensed air temperature).
     air_temperature: in data port Iso_Types::current_temperature.i
-      {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+      {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
 	flows
 	        -- specify (in terms of AADL flows) dependences that exist between the 
 	        -- environmental entities
@@ -285,25 +285,25 @@ end isolette.dual_sensor;
 system thermostat_single_sensor
 features
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
-    {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
-    {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
   regulator_status : out data port Iso_Types::status
-    {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_STATUS(x:regulator_status)>>";};
   monitor_status : out data port Iso_Types::status
-    {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
+    {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   display_temperature : out data port Iso_Types::measured_temperature_range
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   alarm : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm)>>";};
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm)>>";};
 flows
   temp_to_heat_flow : flow path current_temperature -> heat_control;
 annex EMV2 
@@ -365,28 +365,28 @@ system thermostat_dual_sensor
 features
   --two temperature sensors for monitor and control
   control_temp : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   --second channel for second sensor
   monitor_temp : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
-    {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
-    {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
   regulator_status : out data port Iso_Types::status
-    {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_STATUS(x:regulator_status)>>";};
   monitor_status : out data port Iso_Types::status
-    {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
+    {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   display_temperature : out data port Iso_Types::measured_temperature_range
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   alarm_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
 annex EMV2 
   {** 
   use types ErrorLibrary, KSU_Isolette;
@@ -439,22 +439,22 @@ features
   control_monitor_alarm: in out data port Nursery::Interface_Interaction;  
 --values supplied by nurse through operator interface
   lower_desired_temperature : out data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : out data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   lower_alarm_temperature : out data port Iso_Types::lower_alarm_temperature.i
-    {BLESS::Value => "<<:=LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : out data port Iso_Types::upper_alarm_temperature.i
-    {BLESS::Value => "<<:=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
 --information to be displayed by operator interface
   regulator_status : in data port Iso_Types::status
-    {BLESS::Value => "<<+=>REGULATOR_STATUS(x:regulator_status)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_STATUS(x:regulator_status)>>";};
   monitor_status : in data port Iso_Types::status
-    {BLESS::Value => "<<:=MONITOR_STATUS()>>";};
+    {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   display_temperature : in data port Iso_Types::measured_temperature_range
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   alarm : in data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
 annex EMV2 
   {** 
   use types ErrorLibrary, KSU_Isolette;
