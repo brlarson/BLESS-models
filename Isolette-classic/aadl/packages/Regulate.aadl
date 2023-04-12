@@ -292,15 +292,15 @@ end manage_regulator_mode.impl;
 thread manage_heat_source
 features
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<<+=>HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<:=CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
-    {BLESS::Value => "<<:=LOWER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
-    {BLESS::Value => "<<:=UPPER_DESIRED_TEMP>>";};
+    {BLESS::Value => "<<returns upperDesiredRange := UPPER_DESIRED_TEMP>>";};
   regulator_mode : in data port Iso_Types::regulator_mode
-    {BLESS::Value => "<<+=>REGULATOR_MODE(x:regulator_mode)>>";};
+    {BLESS::Value => "<< +=> REGULATOR_MODE(x:regulator_mode)>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
 	Period => Iso_Properties::ThreadPeriod;

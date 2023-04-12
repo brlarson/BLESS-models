@@ -9,19 +9,20 @@ public
 	thread AutoBrake
 		features
 			sb: out event data port BLESS_Types::Boolean -- apply service brake
-			{BLESS::Assertion => "<<SB() and not EB()>>";};
+			  {BLESS::Assertion => "<<SB() and not EB()>>";};
 			eb: out event data port BLESS_Types::Boolean -- apply emergency brake
-			{BLESS::Assertion => "<<EB()>>";};
+			  {BLESS::Assertion => "<<EB()>>";};
 			ca: out data port CTCS_Types:: Acceleration --current acceleration
-			{BLESS::Value => "<<:=TRAIN_XL()>>";};
+			  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
 			r: out event port; -- request new movement authority
 			m_a: in event data port CTCS_Types::MovementAuthority -- received movement authority
-			{BLESS::Value => "<<:=RMA>>";};
+			  {BLESS::Value => "<<returns movementAuthority := RMA>>";};
 			p: in event data port CTCS_Types::Position -- current measured position
-			{BLESS::Value => "<<:=POSITION>>";};
+			  {BLESS::Value => "<<returns quantity m := POSITION>>";};
 			v: in event data port CTCS_Types::Velocity -- current measured velocity
-			{BLESS::Value => "<<:=VELOCITY>>";};
-			xl: in data port CTCS_Types::Acceleration; -- operator chosen acceleration
+			  {BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
+			xl: in data port CTCS_Types::Acceleration -- operator chosen acceleration
+			  {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 		properties
 			Dispatch_Protocol => Sporadic;
 	end AutoBrake;
@@ -54,9 +55,9 @@ public
 						
 					i ~ quantity whole := 0 whole -- segment indexing
 					b ~ quantity mpss constant :=  #CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
-					  <<AXIOM_B: : b = #CTCS_Property::SB_Rate mpss>>
+					  <<AXIOM_B: : b = #CTCS_Property::SB_Rate>>
 					e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
-						<<AXIOM_E: : e = #CTCS_Property::EB_Rate mpss >> 
+						<<AXIOM_E: : e = #CTCS_Property::EB_Rate>> 
 					ma ~ movementAuthority -- current movement authority
 					next_ma ~ movementAuthority  --next movement authority (valid only on last segment)
 					iSeg ~ segment --current segement
@@ -112,7 +113,8 @@ public
 							
 					CheckSpeed: 
 					  MoveForward -[on dispatch p]-> CheckMoveForward
-					  { << i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and AXIOM_B() and AXIOM_E() and ma=CMA >>
+					  { << i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] 
+					  	   and AXIOM_B() and AXIOM_E() and ma=CMA >>
 					  if  --exceed emergency brake velocity?
 					    (v >= iSeg.v_e  )~> eb!
 					  []  --emergency brake for next segment?
@@ -163,15 +165,16 @@ public
 			      
 			    LastSegment:
 			      MoveForwardLastSegment -[on dispatch p]-> CheckMoveForwardLastSegment
-			      {
+			      { << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() 
+			      	   and ma=CMA and AXIOM_B() and AXIOM_E() >>		
 					  if  --exceed emergency brake velocity?
 					    (v >= iSeg.v_e  )~> eb!
 					  []  --emergency brake for next segment?
 					    (v*v + 2*e*p >= (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e )~> eb!
-					  []  --exceed service brake velocity?
-					    (v >= iSeg.v_n and v < iSeg.v_e )~> sb!
+					  []  --exceed service brake velocity, but not emergency brake velocity?
+					    (v >= iSeg.v_n and v < iSeg.v_e and v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e )~> sb!
 					  []  --service brake for next segment?
-					    (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e
+					    (v*v + 2*e*p < (nSeg.v_e*nSeg.v_e) + 2*e*iSeg.e and v < iSeg.v_e
 					    	and (v*v + 2*b*p >= (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ) )~> sb!
 					  []  --no auto brake needed
 					    ( v < iSeg.v_n and (v*v + 2*b*p < (nSeg.v_n*nSeg.v_n) + 2*b*iSeg.e ) )~> skip
@@ -201,17 +204,16 @@ public
 			      
 			    StartNextMa:
 			      CheckMATransition -[p >= ma.ea]-> MoveForward
-			      {
+			      {  << AXIOM_CMA_IS_NEXT_MA() and next_ma=NEXT_MA >>
 			      ma := next_ma
-			      ;
+			      ;  <<ma=CMA>>
 						i := 1  --first segment of new movement authority
 						; << i=1 and ma=CMA >>  
 			      iSeg := ma.seg[1] --set current segment of movement authority to first segment
-						; << i=1 and ma=CMA and iSeg=CMA.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
+						; << i=1 and ma=CMA and iSeg=CMA.seg[i]>> 
 						nSeg := ma.seg[2]  --set next segment of movement authority to second segment
-						<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] >> 		
-			--			|iSeg', nSeg', i', ma' := iSeg, nSeg, i, ma|
-			--				<< (i=1  and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1])^1  >>      
+						<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1]
+						   and AXIOM_NUM_SEG(ma:ma)  >> 		
 			      }            
 			       		
 			

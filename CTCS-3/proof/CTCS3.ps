@@ -1,3 +1,6 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
+#  at Wed Apr 12 10:40:09 CDT 2023 by brianlarson
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition
 make-an
@@ -11,7 +14,6 @@ axioms
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
-normalize
 laws
 axioms
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
@@ -29,147 +31,166 @@ axioms
 #[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
-normalize
 laws
 axioms
-#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for Go:Start-[ ]->GetFirstMA{A};
+#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for GoStart-[ ]->GetFirstMA{A};
 atomic
 axioms
-#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMA:GetFirstMA-[x]->CheckFirstMA{};
+#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMAGetFirstMA-[x]->CheckFirstMA{};
 axioms
-#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYet:CheckFirstMA-[x]->GetFirstMA{};
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYetCheckFirstMA-[x]->GetFirstMA{};
 axioms
-#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMA:CheckFirstMA-[x]->MoveForward{A};
-reduce
-normalize
-remove-axioms-post
-laws
-push
-#Threads::AutoBrake.i
-#[serial 1073]   normalization of [serial 1066
-make-an
-substitute-pre
-normalize
-split-post
-axioms
-guided-sub-equals[i]
-axioms
-#[serial 1075]   normalization of [serial 1067]
-atomic
-#Threads::AutoBrake.i
-#[serial 1077]   normalization of [serial 1068
-make-an
-atomic
-substitute-pre
-laws
-normalize
-guided-sub-equals[CMA]
-axioms
-laws
-axioms
-#[serial 1087]  add user-defined axioms to postcondition:
-axioms
-#[serial 1090] Law of And-Simplification:  P and true is P [serial 1088]
-atomic
-normalize
-split-post
-guided-sub-equals[i]
-guided-sub-equals[CMA]
-laws
-axioms
-#[serial 1091] Law of And-Simplification:  P and true is P [serial 1089]
-atomic
-normalize
-split-post
-axioms
-guided-sub-equals[CMA]
-guided-sub-equals[i]
-normalize
-laws
-axioms
-#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeed:MoveForward-[x]->CheckMoveForward{A};
-reduce
+#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
 reduce
 remove-axioms-post
-normalize
 laws
 normalize
 push
 #Threads::AutoBrake.i
-#[serial 1157]   normalization of [serial 1149
+#[serial 1067]  add user-defined axioms to postconditio
+make-an
+axioms
+#[serial 1073]   normalization of [serial 1062]
+split-post
+axioms
+substitute-pre
+guided-sub-equals[CMA]
+normalize
+guided-sub-equals[i]
+normalize
+axioms
+#[serial 1075]   normalization of [serial 1063]
+atomic
+substitute-pre
+normalize
+guided-sub-equals[CMA]
+axioms
+#[serial 1077]   normalization of [serial 1064]
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1080]   normalization of [serial 1070]
+atomic
+split-post
+axioms
+guided-sub-equals[CMA]
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1082]   normalization of [serial 1071]
+guided-sub-equals[i]
+normalize
+guided-sub-equals[CMA]
+atomic
+laws
+normalize
+guided-sub-equals[ma]
+normalize
+guided-sub-equals[1]
+axioms
+#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeedMoveForward-[x]->CheckMoveForward{A};
+reduce
+reduce
+normalize
+laws
+normalize
+push
+#Threads::AutoBrake.i
+#[serial 1153]   normalization of [serial 1144
 make-an
 replace<=
 cnf
 laws
 normalize
 axioms
-#[serial 1181] Associativity: (b.c).a = a.b.c [serial 1167]
+#[serial 1176] Associativity: (b.c).a = a.b.c [serial 1163]
 atomic
 axioms
-#[serial 1186]   normalization of [serial 1177]
+#[serial 1179]   normalization of [serial 1171]
+remove-axioms-post
+laws
+axioms
+#[serial 1181]   normalization of [serial 1172]
 atomic
 laws
 axioms
-substitute-both
+substitute-post
+substitute-post
 normalize
 axioms
-#[serial 1188]   normalization of [serial 1178]
+#[serial 1183]   normalization of [serial 1173]
 atomic
 laws
 axioms
-substitute-both
+substitute-post
+substitute-post
+normalize
+substitute-pre
 normalize
 guided-sub-equals[#CTCS_Property::EB_Rate]
 normalize
 axioms
-#[serial 1190]   normalization of [serial 1179]
+#[serial 1185]   normalization of [serial 1174]
 atomic
 laws
 axioms
-substitute-both
-normalize
-guided-sub-equals[#CTCS_Property::EB_Rate]
-guided-sub-equals[#CTCS_Property::SB_Rate]
 split-post
+push
+#Threads::AutoBrake.i
+#[serial 1235] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1232
+make-an
+substitute-both
+substitute-both
 normalize
 axioms
+#[serial 1236] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1232]
+substitute-both
+substitute-post
+normalize
+replace<=
+DeMorgan
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1187]   normalization of [serial 1175]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1259] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1256
+make-an
+substitute-post
+substitute-post
+substitute-pre
+normalize
+guided-sub-equals[#CTCS_Property::SB_Rate]
+normalize
+axioms
+#[serial 1260] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1256]
+substitute-both
+substitute-post
+normalize
 replace<=
 normalize
 DeMorgan
 normalize
-split-post
-axioms
-#[serial 1192]   normalization of [serial 1180]
-atomic
-laws
-axioms
-split-post
-substitute-both
-normalize
-guided-sub-equals[#CTCS_Property::SB_Rate]
-normalize
-axioms
 guided-sub-equals[#CTCS_Property::EB_Rate]
-replace<=
-normalize
-DeMorgan
 normalize
 axioms
-#[serial 1195]   normalization of [serial 1183]
+#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegmentCheckMoveForward-[x]->MoveForward{};
 axioms
-#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegment:CheckMoveForward-[x]->MoveForward{};
-normalize
-axioms
-#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegment:CheckMoveForward-[x]->CheckForLastSegment{A};
-normalize
-laws
+#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegmentCheckMoveForward-[x]->CheckForLastSegment{A};
 reduce
 atomic
 normalize
 axioms
-#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegment:CheckForLastSegment-[x]->MoveForward{A};
-normalize
-laws
+#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegmentCheckForLastSegment-[x]->MoveForward{A};
 atomic
 normalize
 split-post
@@ -178,14 +199,588 @@ guided-sub-equals[CMA]
 axioms
 laws
 axioms
-#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegment:CheckForLastSegment-[x]->MoveForwardLastSegment{A};
-normalize
-laws
+#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegmentCheckForLastSegment-[x]->MoveForwardLastSegment{A};
 reduce
 atomic
 normalize
 laws
+split-post
 axioms
+normalize
+axioms
+guided-sub-equals[CMA]
+normalize
+axioms
+substitute-post
+guided-sub-equals[CMA]
+laws
+axioms
+#[serial 1022]  <<M(CheckForLastSegment) and x>> -> <<M(FAIL)>> for PastLastSegmentCheckForLastSegment-[x]->FAIL{};
+axioms
+#[serial 1023]  <<M(MoveForwardLastSegment) and x>> A <<M(CheckMoveForwardLastSegment)>> for LastSegmentMoveForwardLastSegment-[x]->CheckMoveForwardLastSegment{A};
+reduce
+reduce
+normalize
+laws
+remove-axioms-post
+laws
+axioms
+push
+#Threads::AutoBrake.i
+#[serial 1360]   normalization of [serial 1351
+make-an
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1379] Associativity: (b.c).a = a.b.c [serial 1362]
+atomic
+laws
+axioms
+substitute-both
+substitute-post
+normalize
+axioms
+#[serial 1380] Associativity: (b.c).a = a.b.c [serial 1364]
+atomic
+substitute-both
+substitute-post
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+laws
+axioms
+#[serial 1381] Associativity: (b.c).a = a.b.c [serial 1366]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1428] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1425
+make-an
+substitute-both
+substitute-post
+normalize
+axioms
+#[serial 1429] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1425]
+substitute-both
+substitute-post
+normalize
+replace<=
+normalize
+DeMorgan
 normalize
 split-post
 axioms
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1382] Associativity: (b.c).a = a.b.c [serial 1368]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1457] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1454
+make-an
+substitute-both
+substitute-post
+guided-sub-equals[#CTCS_Property::SB_Rate]
+normalize
+axioms
+#[serial 1458] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1454]
+substitute-both
+substitute-post
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1383] Associativity: (b.c).a = a.b.c [serial 1370]
+atomic
+axioms
+#[serial 1024]  <<M(CheckMoveForwardLastSegment) and x>> -> <<M(MoveForwardLastSegment)>> for NoMAYetCheckMoveForwardLastSegment-[x]->MoveForwardLastSegment{};
+axioms
+#[serial 1025]  <<M(CheckMoveForwardLastSegment) and x>> A <<M(GotNewMA)>> for GetNewMACheckMoveForwardLastSegment-[x]->GotNewMA{A};
+reduce
+normalize
+remove-axioms-post
+laws
+axioms
+push
+#Threads::AutoBrake.i
+#[serial 1490]   normalization of [serial 1484
+make-an
+split-post
+axioms
+guided-sub-equals[i]
+axioms
+#[serial 1492]   normalization of [serial 1485]
+atomic
+normalize
+split-post
+laws
+axioms
+substitute-pre
+normalize
+guided-sub-equals[NEXT_MA]
+axioms
+guided-sub-equals[CMA.num_segments]
+axioms
+#[serial 1494]   normalization of [serial 1486]
+atomic
+split-post
+axioms
+guided-sub-equals[NEXT_MA]
+laws
+axioms
+#[serial 1026]  <<M(GotNewMA) and x>> -> <<M(CheckMATransition)>> for LastBitOfMaGotNewMA-[x]->CheckMATransition{};
+laws
+axioms
+#[serial 1027]  <<M(CheckMATransition) and x>> -> <<M(GotNewMA)>> for NotEndOfMACheckMATransition-[x]->GotNewMA{};
+axioms
+#[serial 1028]  <<M(CheckMATransition) and x>> A <<M(MoveForward)>> for StartNextMaCheckMATransition-[x]->MoveForward{A};
+reduce
+push
+#Threads::AutoBrake.i
+#[serial 1538] <<P>> -> <<P1>> in sequential composition for [serial 1028
+make-an
+normalize
+split-post
+axioms
+load
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
+#Threads::AutoBrake.i
+#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition
+make-an
+axioms
+#[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
+axioms
+#[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
+axioms
+#[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for GoStart-[ ]->GetFirstMA{A};
+atomic
+axioms
+#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMAGetFirstMA-[x]->CheckFirstMA{};
+axioms
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYetCheckFirstMA-[x]->GetFirstMA{};
+axioms
+#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
+reduce
+remove-axioms-post
+laws
+normalize
+push
+#Threads::AutoBrake.i
+#[serial 1067]  add user-defined axioms to postconditio
+make-an
+axioms
+#[serial 1073]   normalization of [serial 1062]
+split-post
+axioms
+substitute-pre
+guided-sub-equals[CMA]
+normalize
+guided-sub-equals[i]
+normalize
+axioms
+#[serial 1075]   normalization of [serial 1063]
+atomic
+substitute-pre
+normalize
+guided-sub-equals[CMA]
+axioms
+#[serial 1077]   normalization of [serial 1064]
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1080]   normalization of [serial 1070]
+atomic
+split-post
+axioms
+guided-sub-equals[CMA]
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1082]   normalization of [serial 1071]
+guided-sub-equals[i]
+normalize
+guided-sub-equals[CMA]
+atomic
+laws
+normalize
+guided-sub-equals[ma]
+normalize
+guided-sub-equals[1]
+axioms
+#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeedMoveForward-[x]->CheckMoveForward{A};
+reduce
+reduce
+normalize
+laws
+normalize
+push
+#Threads::AutoBrake.i
+#[serial 1153]   normalization of [serial 1144
+make-an
+replace<=
+cnf
+laws
+normalize
+axioms
+#[serial 1176] Associativity: (b.c).a = a.b.c [serial 1163]
+atomic
+axioms
+#[serial 1179]   normalization of [serial 1171]
+remove-axioms-post
+laws
+axioms
+#[serial 1181]   normalization of [serial 1172]
+atomic
+laws
+axioms
+substitute-post
+substitute-post
+normalize
+axioms
+#[serial 1183]   normalization of [serial 1173]
+atomic
+laws
+axioms
+substitute-post
+substitute-post
+normalize
+substitute-pre
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1185]   normalization of [serial 1174]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1235] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1232
+make-an
+substitute-both
+substitute-both
+normalize
+axioms
+#[serial 1236] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1232]
+substitute-both
+substitute-post
+normalize
+replace<=
+DeMorgan
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1187]   normalization of [serial 1175]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1259] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1256
+make-an
+substitute-post
+substitute-post
+substitute-pre
+normalize
+guided-sub-equals[#CTCS_Property::SB_Rate]
+normalize
+axioms
+#[serial 1260] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1256]
+substitute-both
+substitute-post
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegmentCheckMoveForward-[x]->MoveForward{};
+axioms
+#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegmentCheckMoveForward-[x]->CheckForLastSegment{A};
+reduce
+atomic
+normalize
+axioms
+#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegmentCheckForLastSegment-[x]->MoveForward{A};
+atomic
+normalize
+split-post
+axioms
+guided-sub-equals[CMA]
+axioms
+laws
+axioms
+#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegmentCheckForLastSegment-[x]->MoveForwardLastSegment{A};
+reduce
+atomic
+normalize
+laws
+split-post
+axioms
+normalize
+axioms
+guided-sub-equals[CMA]
+normalize
+axioms
+substitute-post
+guided-sub-equals[CMA]
+laws
+axioms
+#[serial 1022]  <<M(CheckForLastSegment) and x>> -> <<M(FAIL)>> for PastLastSegmentCheckForLastSegment-[x]->FAIL{};
+axioms
+#[serial 1023]  <<M(MoveForwardLastSegment) and x>> A <<M(CheckMoveForwardLastSegment)>> for LastSegmentMoveForwardLastSegment-[x]->CheckMoveForwardLastSegment{A};
+reduce
+reduce
+normalize
+laws
+remove-axioms-post
+laws
+axioms
+push
+#Threads::AutoBrake.i
+#[serial 1360]   normalization of [serial 1351
+make-an
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1379] Associativity: (b.c).a = a.b.c [serial 1362]
+atomic
+laws
+axioms
+substitute-both
+substitute-post
+normalize
+axioms
+#[serial 1380] Associativity: (b.c).a = a.b.c [serial 1364]
+atomic
+substitute-both
+substitute-post
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+laws
+axioms
+#[serial 1381] Associativity: (b.c).a = a.b.c [serial 1366]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1428] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1425
+make-an
+substitute-both
+substitute-post
+normalize
+axioms
+#[serial 1429] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1425]
+substitute-both
+substitute-post
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+split-post
+axioms
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1382] Associativity: (b.c).a = a.b.c [serial 1368]
+atomic
+laws
+axioms
+split-post
+push
+#Threads::AutoBrake.i
+#[serial 1457] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1454
+make-an
+substitute-both
+substitute-post
+guided-sub-equals[#CTCS_Property::SB_Rate]
+normalize
+axioms
+#[serial 1458] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1454]
+substitute-both
+substitute-post
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+guided-sub-equals[#CTCS_Property::EB_Rate]
+normalize
+axioms
+#[serial 1383] Associativity: (b.c).a = a.b.c [serial 1370]
+atomic
+axioms
+#[serial 1024]  <<M(CheckMoveForwardLastSegment) and x>> -> <<M(MoveForwardLastSegment)>> for NoMAYetCheckMoveForwardLastSegment-[x]->MoveForwardLastSegment{};
+axioms
+#[serial 1025]  <<M(CheckMoveForwardLastSegment) and x>> A <<M(GotNewMA)>> for GetNewMACheckMoveForwardLastSegment-[x]->GotNewMA{A};
+reduce
+normalize
+remove-axioms-post
+laws
+axioms
+push
+#Threads::AutoBrake.i
+#[serial 1490]   normalization of [serial 1484
+make-an
+split-post
+axioms
+guided-sub-equals[i]
+axioms
+#[serial 1492]   normalization of [serial 1485]
+atomic
+normalize
+split-post
+laws
+axioms
+substitute-pre
+normalize
+guided-sub-equals[NEXT_MA]
+axioms
+guided-sub-equals[CMA.num_segments]
+axioms
+#[serial 1494]   normalization of [serial 1486]
+atomic
+split-post
+axioms
+guided-sub-equals[NEXT_MA]
+laws
+axioms
+#[serial 1026]  <<M(GotNewMA) and x>> -> <<M(CheckMATransition)>> for LastBitOfMaGotNewMA-[x]->CheckMATransition{};
+laws
+axioms
+#[serial 1027]  <<M(CheckMATransition) and x>> -> <<M(GotNewMA)>> for NotEndOfMACheckMATransition-[x]->GotNewMA{};
+axioms
+#[serial 1028]  <<M(CheckMATransition) and x>> A <<M(MoveForward)>> for StartNextMaCheckMATransition-[x]->MoveForward{A};
+reduce
+push
+#Threads::AutoBrake.i
+#[serial 1538] <<P>> -> <<P1>> in sequential composition for [serial 1028
+make-an
+remove-axioms-post
+laws
+normalize
+axioms
+#[serial 1539] <<Q3>> -> <<Q>> in sequential composition for [serial 1028]
+substitute-pre
+normalize
+split-post
+axioms
+guided-sub-equals[i]
+guided-sub-equals[CMA]
+normalize
+axioms
+#[serial 1540] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1028]
+atomic
+substitute-pre
+normalize
+guided-sub-equals[CMA]
+axioms
+#[serial 1541] <<Q0 and P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1542] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
+atomic
+split-post
+axioms
+guided-sub-equals[CMA]
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1543] <<Q2 and P3>> S3 <<Q3>> in sequential composition for [serial 1028]
+remove-axioms-post
+laws
+atomic
+split-post
+axioms
+guided-sub-equals[i]
+normalize
+guided-sub-equals[CMA]
+laws
+axioms
+#[serial 1029] Composition of Subcomponents via Directional Connection sensor.p -> controller.control.p:
+axioms
+#[serial 1030] Composition of Subcomponents via Directional Connection sensor.v -> controller.control.v:
+axioms
+#[serial 1031] Composition of Subcomponents via Directional Connection rbc.ma -> train.controller.control.m_a:
+axioms
+#[serial 1032] Composition of Subcomponents via Directional Connection CTCS::MA.i.ma:
+axioms
+#[serial 1033] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
+axioms
+#[serial 1034] Composition of Subcomponents via Directional Connection Train::Train.i.pos:
+axioms
+#[serial 1035] Composition of Subcomponents via Directional Connection Train::Train.i.vel:
+axioms
+#[serial 1036] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_s:
+axioms
+#[serial 1037] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_v:
+axioms
+#[serial 1038] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_a:
+axioms
+#[serial 1039] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
+axioms
+#[serial 1040] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_xl:
+axioms
+#[serial 1041] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
+axioms
+#[serial 1042] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
+axioms
+#Q.E.D.

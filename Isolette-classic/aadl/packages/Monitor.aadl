@@ -12,7 +12,7 @@ features
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
   alarm : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm)>>";};
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE( x : alarm)>>";};
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   regulator_failure : in data port Base_Types::Boolean
@@ -76,9 +76,11 @@ features
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   monitor_mode : in data port Iso_Types::monitor_mode
-    {BLESS::Value => "<<+=>MONITOR_MODE(x:monitor_mode)>>";};
-  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i;
-  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i;
+    {BLESS::Value => "<< +=> MONITOR_MODE(x:monitor_mode)>>";};
+  upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
+    {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
+  lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
+    {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   interface_failure : out data port Base_Types::Boolean
@@ -121,7 +123,7 @@ features
   internal_failure : in data port Base_Types::Boolean
     {BLESS::Assertion => "<<INTERNAL_FAILURE>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
-    {BLESS::Value => "<<reurns measuredTemperatureRange := CURRENT_TEMP>>";};
+    {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
 properties
 	Thread_Properties::Dispatch_Protocol => Periodic;
 	Period => Iso_Properties::ThreadPeriod;
@@ -164,11 +166,11 @@ thread implementation manage_monitor_mode.impl
     start : initial state;     --power up state
     init : complete state;     --wait for valid monitor status
     check_init : state 
-      <<current_temperature_status=temperature.status  
+      <<current_temperature_status = temperature.status  
           	  and AXIOM_ST() and AXIOM_CTS() >>;  
     normal : complete state
       <<RUN()>>;   --normal operation
-    check_normal : state <<current_temperature_status=temperature.status
+    check_normal : state <<current_temperature_status = temperature.status
         and RUN() and AXIOM_CTS() and AXIOM_ST() >>;
     failed : final state;      --failure detected
     darnit : final state;			 --internal error    
@@ -202,8 +204,8 @@ thread implementation manage_monitor_mode.impl
     mmm2: --transition to normal operation
       check_init-[((now-start_time) >= 
             #Iso_Properties::Initialization_Timeout) and
-        not (interface_failure? or internal_failure?)
-        and (current_temperature_status = status'Valid)]->normal
+        not ((interface_failure? or internal_failure?)
+          or not (current_temperature_status = status'Valid)) ]->normal
           { <<MONITOR_OK() and RUN()>>
           monitor_mode!(mmode'Normal)
           <<RUN() and AXIOM_PAST_INIT()>>

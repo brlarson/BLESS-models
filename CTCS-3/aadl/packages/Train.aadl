@@ -10,8 +10,8 @@ public
 system Train
   features
 		r : out event port;	--train requests movement authority
-		ma : in event data port --movement authority granted
-		  CTCS_Types::MovementAuthority  {BLESS::Value=> "<<:=IMA>>";};	  
+		ma : in event data port CTCS_Types::MovementAuthority --movement authority granted
+			{BLESS::Value => "<<returns movementAuthority := RMA>>";};
 end Train;
 
 --Motor moves the train
@@ -23,8 +23,10 @@ end Motor;
 --Sensor detects position, velocity, and acceleration
 device Sensor
 	features
-    p : out event data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";};
-    v : out event data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";};
+    p : out event data port CTCS_Types::Position 
+      {BLESS::Value=> "<<returns quantity m := POSITION>>";};
+    v : out event data port CTCS_Types::Velocity 
+      {BLESS::Value=> "<<returns quantity kph := VELOCITY>>";};
   properties
 	  Dispatch_Protocol => Periodic;
 	  Period => 200 ms;
@@ -57,7 +59,7 @@ system implementation Train.i
 		driver: abstract Operator;
 	connections
 		ma_request : port controller.r -> r;
-		auth : port ma -> controller.ma;
+		auth : port ma -> controller.m_a;
 		pos: port sensor.p -> controller.p;
 		vel : port sensor.v -> controller.v;
 		mxl : port controller.ca -> motor.ca;
@@ -66,15 +68,22 @@ end Train.i;
 
 -----Controller process and thread----
 process ControllerProcess
-features
-	  sb : out event data port BLESS_Types::Boolean;  --apply service brake
-	  eb : out event data port BLESS_Types::Boolean;  --apply emergency brake
-		ca : out data port  CTCS_Types::Acceleration {BLESS::Value=> "<<:=TRAIN_XL()>>";}; --current acceleration     
-		p: in data port CTCS_Types::Position {BLESS::Value=> "<<:=POSITION>>";}; --current position 
-		v: in data port CTCS_Types::Velocity {BLESS::Value=> "<<:=VELOCITY>>";}; --current velocity 
-		r: out event port {BLESS::Assertion=> "<<(p = 0) or (p >= (eoa - SR))>>";};  -- request for new MA
-		ma: in event data port CTCS_Types::MovementAuthority {BLESS::Value=> "<<:=IMA>>";};  -- current movement authority 
-		xl : in data port CTCS_Types::Acceleration;  --operator chosen acceleration
+  features
+	  sb : out event data port BLESS_Types::Boolean  --apply service brake
+			{BLESS::Assertion => "<<SB() and not EB()>>";};
+	  eb : out event data port BLESS_Types::Boolean  --apply emergency brake
+			{BLESS::Assertion => "<<EB()>>";};
+		ca : out data port  CTCS_Types::Acceleration  --current acceleration     
+			{BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
+		p: in data port CTCS_Types::Position  --current position 
+			{BLESS::Value => "<<returns quantity m := POSITION>>";};
+		v: in data port CTCS_Types::Velocity  --current velocity 
+			{BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
+		r: out event port;  -- request for new MA
+		m_a: in event data port  -- received movement authority 
+			{BLESS::Value => "<<returns movementAuthority := RMA>>";};
+		xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
+			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 end ControllerProcess;
 
 process implementation ControllerProcess.i
@@ -85,7 +94,7 @@ process implementation ControllerProcess.i
 		conn_v: port v -> control.v;
 		conn_a: port control.ca -> ca;
 		conn_req: port control.r -> r;
-		conn_ma: port ma -> control.m_a;
+		conn_ma: port m_a -> control.m_a;
 		conn_xl: port xl -> control.xl;
 		conn_sb: port control.sb -> sb;
 		conn_eb: port control.eb -> eb;

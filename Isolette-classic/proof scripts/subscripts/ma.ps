@@ -37,7 +37,6 @@ normalize
 laws
 normalize
 axioms
-stop*****
 #[serial 1022]  <<M(poweron)>> -> <<M(run)>> for maPo:poweron-[ ]->run{};
 axioms
 #[serial 1023]  <<M(run) and x>> -> <<M(check_mode)>> for maRun:run-[x]->check_mode{};
@@ -45,7 +44,6 @@ axioms
 #[serial 1024]  <<M(check_mode) and x>> A <<M(run)>> for maFailed:check_mode-[x]->run{A};
 reduce
 atomic
-dist^
 dist^
 normalize
 axioms
@@ -56,7 +54,12 @@ dist^
 normalize
 now
 axioms
-#[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInit:check_mode-[x]->run{A};
+replace-port-value
+axioms
+substitute-post
+normalize
+axioms
+#[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInitcheck_mode-[x]->run{A};
 reduce
 atomic
 normalize
@@ -66,18 +69,20 @@ axioms
 substitute-post
 normalize
 alldist^
-axioms
 substitute-pre
 now
 normalize
 axioms
-#[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormal:check_mode-[x]->check_temp{};
+substitute-post
+substitute-post
 normalize
+axioms
+#[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormalcheck_mode-[x]->check_temp{};
 remove-axioms-post
 laws
-split-post
 axioms
-#[serial 1027]  <<M(check_temp) and x>> A <<M(run)>> for maOor:check_temp-[x]->run{A};
+#[serial 1027]  <<M(check_temp) and x>> A <<M(run)>> for maOorcheck_temp-[x]->run{A};
+normalize
 reduce
 atomic
 normalize
@@ -88,21 +93,23 @@ laws
 normalize
 dist^
 normalize
-dist^
-normalize
-axioms
 split-post
-replace-port
+now
 axioms
+push
+make-an
+#[serial 1373] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1358]
 substitute-post
 normalize
 axioms
+#[serial 1374] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1358]
+substitute-post
+substitute-post
 substitute-pre
 normalize
 replace<=
-normalize
-now
 axioms
+stop*****
 #[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr:check_temp-[x]->run{A};
 reduce
 atomic

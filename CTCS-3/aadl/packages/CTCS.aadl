@@ -24,8 +24,8 @@ end MA.i;
 system RBC  
 	features
 		r : in event port;	--train requests movement authority
-		ma : out event data port --movement authority granted
-		  CTCS_Types::MovementAuthority  {BLESS::Value=> "<<:=IMA>>";};	  
+		ma : out event data port CTCS_Types::MovementAuthority --movement authority granted
+			{BLESS::Value => "<<returns movementAuthority := RMA>>";};
 end RBC;
 
 

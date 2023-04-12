@@ -7,11 +7,12 @@ with
 annex Assertion
 {**
 	ghost variables
-	  def POSITION ~ quantity m    -- measured position
-	  def VELOCITY ~ quantity kph  -- measured velocity
-	  def RMA ~ movementAuthority  -- received movement authority
-	  def CMA ~ movementAuthority  -- currently active movement authority
-	  def NEXT_MA ~ movementAuthority  -- movment authority following IMA if granted 
+	  def POSITION ~ quantity m    		-- measured position
+	  def VELOCITY ~ quantity kph  		-- measured velocity
+	  def RMA ~ movementAuthority  		-- received movement authority
+	  def CMA ~ movementAuthority  		-- currently active movement authority
+	  def NEXT_MA ~ movementAuthority -- movment authority following IMA if granted
+	  def OPERATOR_XL ~ quantity mpss	--operator commanded acceleration 
 	
 -- brake intervention
 -- current velocity is at least the current segment velocity limit
