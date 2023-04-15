@@ -13,8 +13,8 @@ annex Typedef
 	type segment is record (
  	  v_n :  quantity kph -- velocity for (normal) service brake limit (SBL)
  	  v_e :  quantity kph -- velocity for emergency brake limit (EBL)
-  	  e :   quantity m  -- position of end of this segment
-   	  m:    trainModes ) -- train mode
+  	  e :  quantity m  -- position of end of this segment
+   	  m :  trainModes ) -- train mode
    	  
   type movementAuthority is record (
   	ba : quantity m  --beginning position of this MA

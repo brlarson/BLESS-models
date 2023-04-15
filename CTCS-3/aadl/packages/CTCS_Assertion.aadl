@@ -25,6 +25,16 @@ annex Assertion
   e~quantity m :
   cv >= v_l or (cv*cv + 2*br*pos) >= (next_v_l*next_v_l + 2*br*e) >>
 
+--train acceleration conditions
+<<TRAIN_XL: returns quantity mpss := [                               			
+	(SB() and not EB() )-> #CTCS_Property::SB_Rate mpss, -- deceleration rate when service brake is applied 
+	(EB() )-> #CTCS_Property::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
+	(not SB() and not EB()  )-> OPERATOR_XL   --use train operator acceleration
+	] >> 
+
+--normal (service) brake velocity < emergency brake velocity	
+ <<AXIOM_V:seg~segment : seg.v_n < seg.v_e >>
+
 -- every Movement Authority will have more than one segment
 <<AXIOM_NUM_SEG: ma~movementAuthority : 1 < ma.num_segments>>
 

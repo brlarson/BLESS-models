@@ -17,7 +17,8 @@ end Train;
 --Motor moves the train
 device Motor
 	features
-		ca : in data port CTCS_Types::Acceleration;  --commanded acceleration 
+		ca : in data port CTCS_Types::Acceleration  --current acceleration     
+			{BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};   
 end Motor;
 
 --Sensor detects position, velocity, and acceleration
@@ -35,20 +36,23 @@ end Sensor;
 --service brake
 device ServiceBrake
   features
-	  brake : in event data port BLESS_Types::Boolean;
+	  brake : in event data port BLESS_Types::Boolean  --apply service brake
+			{BLESS::Assertion => "<<SB() and not EB()>>";};
 end ServiceBrake;
 
 --emergency brake
 device EmergencyBrake
   features
-	  brake : in event data port BLESS_Types::Boolean;	
+	  brake : in event data port BLESS_Types::Boolean  --apply emergency brake
+			{BLESS::Assertion => "<<EB()>>";};	
 end EmergencyBrake;
 
 --Human operator (engineer) of the train
 --Chooses acceleration, except for automatic braking
 abstract Operator
 	features
-		xl : out data port CTCS_Types::Acceleration;
+		xl : out data port CTCS_Types::Acceleration  --operator chosen acceleration
+			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 end Operator;
 	
 system implementation Train.i
@@ -57,6 +61,8 @@ system implementation Train.i
 		sensor : device Sensor;
 		controller : process ControllerProcess.i;
 		driver: abstract Operator;
+		ebrake: device EmergencyBrake;
+		sbrake: device ServiceBrake;
 	connections
 		ma_request : port controller.r -> r;
 		auth : port ma -> controller.m_a;
@@ -64,6 +70,8 @@ system implementation Train.i
 		vel : port sensor.v -> controller.v;
 		mxl : port controller.ca -> motor.ca;
 		dxl : port driver.xl -> controller.xl;
+		cpsb: port controller.sb -> sbrake.brake;
+		cpeb: port controller.eb -> ebrake.brake;
 end Train.i;
 
 -----Controller process and thread----
@@ -75,12 +83,12 @@ process ControllerProcess
 			{BLESS::Assertion => "<<EB()>>";};
 		ca : out data port  CTCS_Types::Acceleration  --current acceleration     
 			{BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
-		p: in data port CTCS_Types::Position  --current position 
+		p: in event data port CTCS_Types::Position  --current position 
 			{BLESS::Value => "<<returns quantity m := POSITION>>";};
-		v: in data port CTCS_Types::Velocity  --current velocity 
+		v: in event data port CTCS_Types::Velocity  --current velocity 
 			{BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
 		r: out event port;  -- request for new MA
-		m_a: in event data port  -- received movement authority 
+		m_a: in event data port CTCS_Types::MovementAuthority  -- received movement authority 
 			{BLESS::Value => "<<returns movementAuthority := RMA>>";};
 		xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
 			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};

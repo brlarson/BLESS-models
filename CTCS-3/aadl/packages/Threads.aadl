@@ -34,15 +34,8 @@ public
 				   BRAKE(pos:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, br:#CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
 				<<EB: :  --apply emergency brake
 				   BRAKE(pos:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, br:#CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>	
-				<<TRAIN_XL: returns quantity mpss := [    --train acceleration conditions                            			
-			  	(SB() and not EB() )-> #CTCS_Property::SB_Rate mpss, -- deceleration rate when service brake is applied 
-			  	(EB() )-> #CTCS_Property::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
-			  	(not SB() and not EB()  )-> xl   --use train operator acceleration
-			  	] >> 
-			  <<AXIOM_V:seg~segment :  --normal (service) brake velocity < emergency brake velocity
-			    seg.v_n < seg.v_e >>
-			invariant
-				<< true >>
+				   
+			invariant << true >>  --no thread invariant is necessary
 			
 			variables
 					
