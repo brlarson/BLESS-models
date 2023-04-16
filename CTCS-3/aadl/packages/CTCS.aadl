@@ -8,24 +8,24 @@ public
 	with BLESS, CTCS_Types, Train;
 
 --Movement Authority Scenario
-system MA
-end MA;
+system movementAuthorization
+end movementAuthorization;
 
-system implementation MA.i
+system implementation movementAuthorization.i
 	subcomponents
 		rbc : system RBC;
 		train : system Train::Train.i;
 	connections
 		ma_request : port train.r -> rbc.r;
 		ma : port rbc.ma -> train.ma;
-end MA.i;
+end movementAuthorization.i;
 
 --Radio Block Center
 system RBC  
 	features
 		r : in event port;	--train requests movement authority
-		ma : out event data port CTCS_Types::MovementAuthority --movement authority granted
-			{BLESS::Value => "<<returns movementAuthority := RMA>>";};
+		ma : out event data port CTCS_Types::movementAuthorization --movement authority granted
+			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 end RBC;
 
 

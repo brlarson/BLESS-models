@@ -15,8 +15,8 @@ public
 			ca: out data port CTCS_Types:: Acceleration --current acceleration
 			  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
 			r: out event port; -- request new movement authority
-			m_a: in event data port CTCS_Types::MovementAuthority -- received movement authority
-			  {BLESS::Value => "<<returns movementAuthority := RMA>>";};
+			m_a: in event data port CTCS_Types::movementAuthorization -- received movement authority
+			  {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 			p: in event data port CTCS_Types::Position -- current measured position
 			  {BLESS::Value => "<<returns quantity m := POSITION>>";};
 			v: in event data port CTCS_Types::Velocity -- current measured velocity
@@ -44,8 +44,8 @@ public
 				  <<AXIOM_B: : b = #CTCS_Property::SB_Rate>>
 				e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
 					<<AXIOM_E: : e = #CTCS_Property::EB_Rate>> 
-				ma ~ movementAuthority -- current movement authority
-				next_ma ~ movementAuthority  --next movement authority (valid only on last segment)
+				ma ~ movementAuthorization -- current movement authority
+				next_ma ~ movementAuthorization  --next movement authority (valid only on last segment)
 				iSeg ~ segment --current segement
 				nSeg ~ segment --next segment
 				SR ~ quantity m -- specific distance from the EoA, to request for new MA

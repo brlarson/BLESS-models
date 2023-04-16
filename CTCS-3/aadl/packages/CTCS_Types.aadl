@@ -16,7 +16,7 @@ annex Typedef
   	  e :  quantity m  -- position of end of this segment
    	  m :  trainModes ) -- train mode
    	  
-  type movementAuthority is record (
+  type movementAuthorization is record (
   	ba : quantity m  --beginning position of this MA
   	num_segments : quantity whole  --number of segments in this MA
   	seg : array[#CTCS_Property::Segments] of segment 
@@ -28,9 +28,9 @@ data Segment
 properties BLESS::Typed => "segment";
 end Segment;
 
-data MovementAuthority
-  properties BLESS::Typed => "movementAuthority";
-end MovementAuthority;
+data movementAuthorization
+  properties BLESS::Typed => "movementAuthorization";
+end movementAuthorization;
 
 data Position
   Properties BLESS::Typed => "quantity m";

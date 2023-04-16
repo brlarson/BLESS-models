@@ -527,7 +527,7 @@
     </element>
     <bo>
       <seg>classifier</seg>
-      <seg>MA.i</seg>
+      <seg>MovementAuthority.i</seg>
     </bo>
     <position/>
     <size width="870.0" height="540.0"/>
@@ -536,7 +536,7 @@
     <enabledAadlProperties/>
     <context>
       <seg>classifier</seg>
-      <seg>CTCS::MA.i</seg>
+      <seg>CTCS::MovementAuthority.i</seg>
     </context>
   </config>
 </diagram:Diagram>

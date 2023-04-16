@@ -9,9 +9,9 @@ annex Assertion
 	ghost variables
 	  def POSITION ~ quantity m    		-- measured position
 	  def VELOCITY ~ quantity kph  		-- measured velocity
-	  def RMA ~ movementAuthority  		-- received movement authority
-	  def CMA ~ movementAuthority  		-- currently active movement authority
-	  def NEXT_MA ~ movementAuthority -- movment authority following IMA if granted
+	  def RMA ~ movementAuthorization  		-- received movement authority
+	  def CMA ~ movementAuthorization  		-- currently active movement authority
+	  def NEXT_MA ~ movementAuthorization -- movment authority following IMA if granted
 	  def OPERATOR_XL ~ quantity mpss	--operator commanded acceleration 
 	
 -- brake intervention
@@ -36,7 +36,7 @@ annex Assertion
  <<AXIOM_V:seg~segment : seg.v_n < seg.v_e >>
 
 -- every Movement Authority will have more than one segment
-<<AXIOM_NUM_SEG: ma~movementAuthority : 1 < ma.num_segments>>
+<<AXIOM_NUM_SEG: ma~movementAuthorization : 1 < ma.num_segments>>
 
 -- next negment when in the last segment of a movement aurthority
 -- but the next movement authority has not been received
