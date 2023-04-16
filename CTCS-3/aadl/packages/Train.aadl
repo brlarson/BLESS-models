@@ -9,8 +9,8 @@ public
 
 system Train
   features
-		r : out event port;	--train requests movement authority
-		ma : in event data port CTCS_Types::movementAuthorization --movement authority granted
+		r : out event port;	--train requests movement authorization
+		ma : in event data port CTCS_Types::movementAuthorization --movement authorization granted
 			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 end Train;
 
@@ -88,7 +88,7 @@ process ControllerProcess
 		v: in event data port CTCS_Types::Velocity  --current velocity 
 			{BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
 		r: out event port;  -- request for new MA
-		m_a: in event data port CTCS_Types::movementAuthorization  -- received movement authority 
+		m_a: in event data port CTCS_Types::movementAuthorization  -- received movement authorization 
 			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 		xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
 			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};

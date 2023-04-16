@@ -14,8 +14,8 @@ public
 			  {BLESS::Assertion => "<<EB()>>";};
 			ca: out data port CTCS_Types:: Acceleration --current acceleration
 			  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
-			r: out event port; -- request new movement authority
-			m_a: in event data port CTCS_Types::movementAuthorization -- received movement authority
+			r: out event port; -- request new movement authorization
+			m_a: in event data port CTCS_Types::movementAuthorization -- received movement authorization
 			  {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 			p: in event data port CTCS_Types::Position -- current measured position
 			  {BLESS::Value => "<<returns quantity m := POSITION>>";};
@@ -44,8 +44,8 @@ public
 				  <<AXIOM_B: : b = #CTCS_Property::SB_Rate>>
 				e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
 					<<AXIOM_E: : e = #CTCS_Property::EB_Rate>> 
-				ma ~ movementAuthorization -- current movement authority
-				next_ma ~ movementAuthorization  --next movement authority (valid only on last segment)
+				ma ~ movementAuthorization -- current movement authorization
+				next_ma ~ movementAuthorization  --next movement authorization (valid only on last segment)
 				iSeg ~ segment --current segement
 				nSeg ~ segment --next segment
 				SR ~ quantity m -- specific distance from the EoA, to request for new MA
@@ -74,24 +74,24 @@ public
 			transitions
 				Go: Start -[]-> GetFirstMA
 					{ 
-						r!  --request movement authority
+						r!  --request movement authorization
 					}
 					
 				GetFirstMA: GetFirstMA -[on dispatch p]-> CheckFirstMA 
 			
-				NotYet: --did not get requested movement authority
+				NotYet: --did not get requested movement authorization
 				  CheckFirstMA -[not m_a'fresh]-> GetFirstMA 
 						
-				GotFirstMA:  --received movement authority
+				GotFirstMA:  --received movement authorization
 				  CheckFirstMA -[m_a'fresh]-> MoveForward
 					{  << AXIOM_CMA_IS_RMA() >> 
-					m_a?(ma)  --save received movement authority in local variable
+					m_a?(ma)  --save received movement authorization in local variable
 					;  << ma=CMA >>
-					i := 1  --first segment of new movement authority
+					i := 1  --first segment of new movement authorization
 					; << i=1 and ma=CMA >>  
-			    iSeg := ma.seg[1] --set current segment of movement authority to first segment
+			    iSeg := ma.seg[1] --set current segment of movement authorization to first segment
 					; << i=1 and ma=CMA and iSeg=CMA.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
-					nSeg := ma.seg[2]  --set next segment of movement authority to second segment
+					nSeg := ma.seg[2]  --set next segment of movement authorization to second segment
 					<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA) >> 		
 					}
 						
@@ -141,7 +141,7 @@ public
 			   IsLastSegment:  --is the last segment
 			    CheckForLastSegment -[i = ma.num_segments]-> MoveForwardLastSegment
 			    { 
-					r!  --request new movement authority
+					r!  --request new movement authorization
 			    ; << i=CMA.num_segments and iSeg=CMA.seg[i] and ma=CMA >>
 			      --set nSeg to stop
 			    nSeg := [ segment :
@@ -206,11 +206,11 @@ public
 			     {  << AXIOM_CMA_IS_NEXT_MA() and next_ma=NEXT_MA >>
 			     ma := next_ma
 			     ;  <<ma=CMA>>
-					 i := 1  --first segment of new movement authority
+					 i := 1  --first segment of new movement authorization
 					 ; << i=1 and ma=CMA >>  
-			     iSeg := ma.seg[1] --set current segment of movement authority to first segment
+			     iSeg := ma.seg[1] --set current segment of movement authorization to first segment
 					 ; << i=1 and ma=CMA and iSeg=CMA.seg[i]>> 
-					 nSeg := ma.seg[2]  --set next segment of movement authority to second segment
+					 nSeg := ma.seg[2]  --set next segment of movement authorization to second segment
 					 << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1]
 					   and AXIOM_NUM_SEG(ma:ma)  >> 		
 			     }            

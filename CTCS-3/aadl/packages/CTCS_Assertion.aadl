@@ -9,8 +9,8 @@ annex Assertion
 	ghost variables
 	  def POSITION ~ quantity m    		-- measured position
 	  def VELOCITY ~ quantity kph  		-- measured velocity
-	  def RMA ~ movementAuthorization  		-- received movement authority
-	  def CMA ~ movementAuthorization  		-- currently active movement authority
+	  def RMA ~ movementAuthorization  		-- received movement authorization
+	  def CMA ~ movementAuthorization  		-- currently active movement authorization
 	  def NEXT_MA ~ movementAuthorization -- movment authority following IMA if granted
 	  def OPERATOR_XL ~ quantity mpss	--operator commanded acceleration 
 	
@@ -39,9 +39,9 @@ annex Assertion
 <<AXIOM_NUM_SEG: ma~movementAuthorization : 1 < ma.num_segments>>
 
 -- next negment when in the last segment of a movement aurthority
--- but the next movement authority has not been received
+-- but the next movement authorization has not been received
 -- this will cause the train to automatically stop at the end of the last segment
--- if a new movement authority is not received
+-- if a new movement authorization is not received
 <<NULL_SEGMENT: returns segment := 
   [ segment :
      v_n => 0 kph 
@@ -49,16 +49,16 @@ annex Assertion
      e => CMA.ea
      m => trainModes'FS ] >>
 
--- when a movement authority is received by the train it is a received movement authority (RMA)
+-- when a movement authorization is received by the train it is a received movement authorization (RMA)
 
--- when the RMA becomes the current movement authority (CMA);
+-- when the RMA becomes the current movement authorization (CMA);
 -- this happens when the train receives its firt MA
 <<AXIOM_CMA_IS_RMA: : CMA = RMA >>
--- when the RMA is saved to be the next movement authority (NEXT_MA);
--- this happens when the train gets a new movement authority before ending the current movement authority
+-- when the RMA is saved to be the next movement authorization (NEXT_MA);
+-- this happens when the train gets a new movement authorization before ending the current movement authorization
 <<AXIOM_NEXT_MA_IS_RMA: : NEXT_MA = RMA >>
 -- when NEXT_MA becomes CMA;
--- this happens when the train crosses into the new movement authority
+-- this happens when the train crosses into the new movement authorization
 <<AXIOM_CMA_IS_NEXT_MA: : CMA = NEXT_MA >>
 	
 **};		
