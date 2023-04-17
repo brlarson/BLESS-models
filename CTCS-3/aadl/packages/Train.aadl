@@ -3,7 +3,7 @@
 
 package Train
 public
-  with BLESS, CTCS_Types, CTCS_Property, Threads, BLESS_Types;	
+  with BLESS, CTCS_Types, Threads, BLESS_Types;	
 
 --flag renames BLESS_Types::Boolean;
 
@@ -27,7 +27,7 @@ device Sensor
     p : out event data port CTCS_Types::Position 
       {BLESS::Value=> "<<returns quantity m := POSITION>>";};
     v : out event data port CTCS_Types::Velocity 
-      {BLESS::Value=> "<<returns quantity kph := VELOCITY>>";};
+      {BLESS::Value=> "<<returns quantity mps := VELOCITY>>";};
   properties
 	  Dispatch_Protocol => Periodic;
 	  Period => 200 ms;

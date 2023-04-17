@@ -20,7 +20,7 @@ public
 			p: in event data port CTCS_Types::Position -- current measured position
 			  {BLESS::Value => "<<returns quantity m := POSITION>>";};
 			v: in event data port CTCS_Types::Velocity -- current measured velocity
-			  {BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
+			  {BLESS::Value => "<<returns quantity mps := VELOCITY>>";};
 			xl: in data port CTCS_Types::Acceleration -- operator chosen acceleration
 			  {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 		properties
@@ -31,19 +31,19 @@ public
 		annex BLESS {**
 			assert
 				<<SB: :  --apply service brake
-				   BRAKE(pos:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, br:#CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
+				   BRAKE(p:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, b:CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
 				<<EB: :  --apply emergency brake
-				   BRAKE(pos:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, br:#CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>	
+				   BRAKE(p:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, b:CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>	
 				   
 			invariant << true >>  --no thread invariant is necessary
 			
 			variables
 					
 				i ~ quantity whole := 0 whole -- segment indexing
-				b ~ quantity mpss constant :=  #CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
-				  <<AXIOM_B: : b = #CTCS_Property::SB_Rate>>
-				e ~ quantity mpss constant := #CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
-					<<AXIOM_E: : e = #CTCS_Property::EB_Rate>> 
+				b ~ quantity mpss constant :=  CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
+				  <<AXIOM_B: : b = CTCS_Property::SB_Rate>>
+				e ~ quantity mpss constant := CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
+					<<AXIOM_E: : e = CTCS_Property::EB_Rate>> 
 				ma ~ movementAuthorization -- current movement authorization
 				next_ma ~ movementAuthorization  --next movement authorization (valid only on last segment)
 				iSeg ~ segment --current segement
@@ -104,19 +104,19 @@ public
 				    (v >= iSeg.v_e  )~> 
 				      { eb!(true) & sb!(false) }  --apply emergency brake
 				  []  --emergency brake for next segment?
-				    (v*v + 2*e*p >= nSeg.v_e*nSeg.v_e + 2*e*iSeg.e )~> 
+				    (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
 				      { eb!(true) & sb!(false) }  --apply emergency brake
 				  []  --exceed service brake velocity?
 				    (v >= iSeg.v_n and v < iSeg.v_e and 
-				    	 v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e)~> 
+				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --service brake for next segment?
-				    (v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e and v < iSeg.v_e
-				    	and v*v + 2*b*p >= nSeg.v_n*nSeg.v_n + 2*b*iSeg.e )~>  
+				    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
+				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --no auto brake needed
-				    ( v < iSeg.v_n and v*v + 2*b*p < nSeg.v_n*nSeg.v_n + 2*b*iSeg.e and 
-				    	 v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e )~>  
+				    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
+				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
 				      { sb!(false) & eb!(false) }  --no brake
 				  fi
 				  }
@@ -145,8 +145,8 @@ public
 			    ; << i=CMA.num_segments and iSeg=CMA.seg[i] and ma=CMA >>
 			      --set nSeg to stop
 			    nSeg := [ segment :
-			    	        v_n => 0 kph 
-			    	        v_e => 0 kph
+			    	        v_n => 0 mps 
+			    	        v_e => 0 mps
 			    	        e => ma.ea
 			    	        m => trainModes'FS ]
 			    }
@@ -163,19 +163,19 @@ public
 				    (v >= iSeg.v_e  )~> 
 				      { eb!(true) & sb!(false) }  --apply emergency brake
 				  []  --emergency brake for next segment?
-				    (v*v + 2*e*p >= nSeg.v_e*nSeg.v_e + 2*e*iSeg.e )~> 
+				    (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
 				      { eb!(true) & sb!(false) }  --apply emergency brake
 				  []  --exceed service brake velocity?
 				    (v >= iSeg.v_n and v < iSeg.v_e and 
-				    	 v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e)~> 
+				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --service brake for next segment?
-				    (v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e and v < iSeg.v_e
-				    	and v*v + 2*b*p >= nSeg.v_n*nSeg.v_n + 2*b*iSeg.e )~>  
+				    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
+				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e=p)*true )~>  
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --no auto brake needed
-				    ( v < iSeg.v_n and v*v + 2*b*p < nSeg.v_n*nSeg.v_n + 2*b*iSeg.e and 
-				    	 v*v + 2*e*p < nSeg.v_e*nSeg.v_e + 2*e*iSeg.e )~>  
+				    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
+				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
 				      { sb!(false) & eb!(false) }  --no brake
 				  fi
 			    }
