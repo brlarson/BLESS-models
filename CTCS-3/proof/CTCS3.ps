@@ -1,5 +1,5 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Sat Apr 15 15:47:27 CDT 2023 by brianlarson
+#  at Wed Apr 19 04:36:52 CDT 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
@@ -136,7 +136,158 @@ axioms
 substitute-both
 substitute-post
 normalize
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
+guided-sub-equals[CTCS_Property::SB_Rate mpss]
+normalize
+axioms
+DeMorgan
+normalize
+DeMorgan
+normalize
+laws
+axioms
+#[serial 1162] <<P>> T <<Q>> in existential lattice quantification for [serial 1157]
+reduce
+atomic
+laws
+load
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
+#Threads::AutoBrake.i
+#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
+make-an
+axioms
+#[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
+axioms
+#[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
+axioms
+#[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
+axioms
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
+normalize
+laws
+axioms
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
+laws
+axioms
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+axioms
+#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for GoStart-[ ]->GetFirstMA{A};
+atomic
+axioms
+#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMAGetFirstMA-[x]->CheckFirstMA{};
+axioms
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYetCheckFirstMA-[x]->GetFirstMA{};
+axioms
+#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
+reduce
+remove-axioms-post
+laws
+normalize
+push
+#Threads::AutoBrake.i
+#[serial 1075]  add user-defined axioms to postconditi
+make-an
+axioms
+#[serial 1081]   normalization of [serial 1070]
+split-post
+axioms
+substitute-pre
+guided-sub-equals[CMA]
+normalize
+guided-sub-equals[i]
+normalize
+guided-sub-equals[ma]
+axioms
+#[serial 1083]   normalization of [serial 1071]
+atomic
+substitute-pre
+normalize
+guided-sub-equals[CMA]
+axioms
+#[serial 1085]   normalization of [serial 1072]
+atomic
+normalize
+laws
+normalize
+axioms
+#[serial 1088]   normalization of [serial 1078]
+atomic
+split-post
+axioms
+guided-sub-equals[CMA]
+guided-sub-equals[i]
+normalize
+laws
+axioms
+#[serial 1090]   normalization of [serial 1079]
+guided-sub-equals[i]
+normalize
+guided-sub-equals[CMA]
+atomic
+laws
+normalize
+guided-sub-equals[ma]
+normalize
+guided-sub-equals[1]
+axioms
+#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeedMoveForward-[x]->CheckMoveForward{A};
+laws
+reduce
+reduce
+reduce
+push
+#Threads::AutoBrake.i
+#[serial 1152] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 115
+make-an
+remove-axioms-post
+laws
+axioms
+#[serial 1154]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1153]
+normalize
+replace<=
+normalize
+cnf
+laws
+normalize
+axioms
+#[serial 1160] <<P>> T <<Q>> in existential lattice quantification for [serial 1155]
+laws
+normalize
+reduce
+atomic
+laws
+axioms
+DeMorgan
+normalize
+substitute-both
+substitute-post
+normalize
+laws
+axioms
+#[serial 1161] <<P>> T <<Q>> in existential lattice quantification for [serial 1156]
+laws
+normalize
+reduce
+atomic
+laws
+axioms
+substitute-both
+substitute-post
+normalize
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 DeMorgan
@@ -153,7 +304,7 @@ normalize
 axioms
 substitute-both
 substitute-post
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 replace<=
 normalize
@@ -173,7 +324,7 @@ normalize
 axioms
 substitute-both
 substitute-post
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 replace<=
 normalize
@@ -184,7 +335,7 @@ laws
 split-post
 normalize
 axioms
-guided-sub-equals[CTCS_Property::SB_Rate]
+guided-sub-equals[CTCS_Property::SB_Rate mpss]
 normalize
 axioms
 #[serial 1164] <<P>> T <<Q>> in existential lattice quantification for [serial 1159]
@@ -204,13 +355,13 @@ replace<=
 normalize
 DeMorgan
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate]
+guided-sub-equals[CTCS_Property::SB_Rate mpss]
 normalize
 axioms
 transitive
 split-post
 axioms
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 #[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegmentCheckMoveForward-[x]->MoveForward{};
@@ -293,7 +444,7 @@ substitute-both
 substitute-post
 normalize
 laws
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 #[serial 1533] Associativity: (b.c).a = a.b.c [serial 1518]
@@ -308,7 +459,7 @@ replace<=
 normalize
 DeMorgan
 normalize
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 laws
@@ -328,14 +479,14 @@ replace<=
 normalize
 DeMorgan
 normalize
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 laws
 split-post
 axioms
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate]
+guided-sub-equals[CTCS_Property::SB_Rate mpss]
 normalize
 axioms
 #[serial 1535] Associativity: (b.c).a = a.b.c [serial 1522]
@@ -353,10 +504,10 @@ normalize
 DeMorgan
 laws
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate]
+guided-sub-equals[CTCS_Property::SB_Rate mpss]
 normalize
 axioms
-guided-sub-equals[CTCS_Property::EB_Rate]
+guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 split-post
 axioms
@@ -467,7 +618,7 @@ axioms
 axioms
 #[serial 1035] Composition of Subcomponents via Directional Connection rbc.ma -> train.controller.control.m_a:
 axioms
-#[serial 1036] Composition of Subcomponents via Directional Connection CTCS::MA.i.ma:
+#[serial 1036] Composition of Subcomponents via Directional Connection CTCS::MovementAuthority.i.ma:
 axioms
 #[serial 1037] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
 axioms
