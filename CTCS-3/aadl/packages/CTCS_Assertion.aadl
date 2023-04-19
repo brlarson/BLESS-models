@@ -17,13 +17,13 @@ annex Assertion
 -- brake intervention
 -- current velocity is at least the current segment velocity limit
 -- or must slow down for next segment
-<<BRAKE: v~quantity mps, -- current velocity
-  v_l~quantity mps,   -- current segment  brake velocity limit
-  next_v_l~quantity mps,  -- next segment brake velocity limit
-  b~quantity mpss,  -- braking acceleration (negative is slowing)
-  p~quantity m,    --current position
-  e~quantity m :     --end of segment
-  v >= v_l or v*v >= next_v_l*next_v_l + 2*b*(e-p) >>
+<<BRAKE: vel~quantity mps, -- current velocity
+  v_lim~quantity mps,   -- current segment  brake velocity limit
+  next_v_lim~quantity mps,  -- next segment brake velocity limit
+  ba~quantity mpss,  -- braking acceleration (negative is slowing)
+  pos~quantity m,    --current position
+  en~quantity m :     --end of segment
+  vel >= v_lim or vel*vel >= next_v_lim*next_v_lim + 2*ba*(en-pos) >>
 
 --train acceleration conditions
 <<TRAIN_XL: returns quantity mpss := [                               			

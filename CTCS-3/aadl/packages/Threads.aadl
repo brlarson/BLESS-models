@@ -31,9 +31,9 @@ public
 		annex BLESS {**
 			assert
 				<<SB: :  --apply service brake
-				   BRAKE(p:p, v_l:iSeg.v_n, next_v_l:nSeg.v_n, b:CTCS_Property::SB_Rate, cv:v, e:iSeg.e) >>
+				   BRAKE(pos:p, v_lim:iSeg.v_n, next_v_lim:nSeg.v_n, ba:CTCS_Property::SB_Rate mpss, vel:v, en:iSeg.e) >>
 				<<EB: :  --apply emergency brake
-				   BRAKE(p:p, v_l:iSeg.v_e, next_v_l:nSeg.v_e, b:CTCS_Property::EB_Rate, cv:v, e:iSeg.e) >>	
+				   BRAKE(pos:p, v_lim:iSeg.v_e, next_v_lim:nSeg.v_e, ba:CTCS_Property::EB_Rate mpss, vel:v, en:iSeg.e) >>	
 				   
 			invariant << true >>  --no thread invariant is necessary
 			
@@ -41,9 +41,9 @@ public
 					
 				i ~ quantity whole := 0 whole -- segment indexing
 				b ~ quantity mpss constant :=  CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
-				  <<AXIOM_B: : b = CTCS_Property::SB_Rate>>
+				  <<AXIOM_B: : b = CTCS_Property::SB_Rate mpss>>
 				e ~ quantity mpss constant := CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
-					<<AXIOM_E: : e = CTCS_Property::EB_Rate>> 
+					<<AXIOM_E: : e = CTCS_Property::EB_Rate mpss>> 
 				ma ~ movementAuthorization -- current movement authorization
 				next_ma ~ movementAuthorization  --next movement authorization (valid only on last segment)
 				iSeg ~ segment --current segement
@@ -171,7 +171,7 @@ public
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --service brake for next segment?
 				    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
-				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e=p)*true )~>  
+				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
 				      { sb!(true) & eb!(false) }  --apply service brake
 				  []  --no auto brake needed
 				    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
