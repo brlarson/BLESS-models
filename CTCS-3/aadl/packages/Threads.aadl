@@ -74,7 +74,7 @@ thread implementation AutoBrake.i
   
  transitions
   Go: --request movement authorization
-  Start -[]-> WaitFirstMA { r! & ca!(0 mpss) } 
+  Start -[]-> WaitFirstMA { r! } 
    
   FirstMA: --dispatch before first MA
   WaitFirstMA -[on dispatch p]-> CheckFirstMA 
@@ -88,8 +88,6 @@ thread implementation AutoBrake.i
    m_a?(ma)  --save received movement authorization
    ;  << ma=CMA >>
    i := 1  --first segment of new movement authorization
-   ;  << ma=CMA >>
-   ca!(xl)  --operator acceleration
    ; << i=1 and ma=CMA >>  
    iSeg := ma.seg[1] --set current segment to first segment
    ; << i=1 and ma=CMA and iSeg=CMA.seg[i] 
