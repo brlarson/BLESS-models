@@ -3,220 +3,221 @@
 package Threads
 public
 
-	with BLESS, BLESS_Types, CTCS_Types;
+ with BLESS, BLESS_Types, CTCS_Types;
 
 --------------AutoBrake Thread----------
-	thread AutoBrake
-		features
-			sb: out event data port BLESS_Types::Boolean -- apply service brake
-			  {BLESS::Assertion => "<<SB() and not EB()>>";};
-			eb: out event data port BLESS_Types::Boolean -- apply emergency brake
-			  {BLESS::Assertion => "<<EB()>>";};
-			ca: out data port CTCS_Types:: Acceleration --current acceleration
-			  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
-			r: out event port; -- request new movement authorization
-			m_a: in event data port CTCS_Types::movementAuthorization -- received movement authorization
-			  {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
-			p: in event data port CTCS_Types::Position -- current measured position
-			  {BLESS::Value => "<<returns quantity m := POSITION>>";};
-			v: in event data port CTCS_Types::Velocity -- current measured velocity
-			  {BLESS::Value => "<<returns quantity mps := VELOCITY>>";};
-			xl: in data port CTCS_Types::Acceleration -- operator chosen acceleration
-			  {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
-		properties
-			Dispatch_Protocol => Sporadic;
-	end AutoBrake;
+thread AutoBrake
+ features
+  sb: out event data port BLESS_Types::Boolean -- apply service brake
+  {BLESS::Assertion => "<<SB() and not EB()>>";};
+  eb: out event data port BLESS_Types::Boolean -- apply emergency brake
+  {BLESS::Assertion => "<<EB()>>";};
+  ca: out data port CTCS_Types:: Acceleration --current acceleration
+  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
+  r: out event port; -- request new movement authorization
+  m_a: in event data port CTCS_Types::movementAuthorization -- received movement authorization
+  {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
+  p: in event data port CTCS_Types::Position -- current measured position
+  {BLESS::Value => "<<returns quantity m := POSITION>>";};
+  v: in event data port CTCS_Types::Velocity -- current measured velocity
+  {BLESS::Value => "<<returns quantity mps := VELOCITY>>";};
+  xl: in data port CTCS_Types::Acceleration -- operator chosen acceleration
+  {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+ properties
+  Dispatch_Protocol => Sporadic;
+end AutoBrake;
 
-	thread implementation AutoBrake.i
-		annex BLESS {**
-			assert
-				<<SB: :  --apply service brake
-				   BRAKE(pos:p, v_lim:iSeg.v_n, next_v_lim:nSeg.v_n, ba:CTCS_Property::SB_Rate mpss, vel:v, en:iSeg.e) >>
-				<<EB: :  --apply emergency brake
-				   BRAKE(pos:p, v_lim:iSeg.v_e, next_v_lim:nSeg.v_e, ba:CTCS_Property::EB_Rate mpss, vel:v, en:iSeg.e) >>	
-				   
-			invariant << true >>  --no thread invariant is necessary
-			
-			variables
-					
-				i ~ quantity whole := 0 whole -- segment indexing
-				b ~ quantity mpss constant :=  CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
-				  <<AXIOM_B: : b = CTCS_Property::SB_Rate mpss>>
-				e ~ quantity mpss constant := CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
-					<<AXIOM_E: : e = CTCS_Property::EB_Rate mpss>> 
-				ma ~ movementAuthorization -- current movement authorization
-				next_ma ~ movementAuthorization  --next movement authorization (valid only on last segment)
-				iSeg ~ segment --current segement
-				nSeg ~ segment --next segment
-				SR ~ quantity m -- specific distance from the EoA, to request for new MA
-				
-			states
-				Start: initial state --train stopped
-				GetFirstMA: complete state  --Get first MA
-				CheckFirstMA: state           -- Check first MA
-				MoveForward: complete state  --Move Forward
-					<< i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and ma=CMA >>
-				CheckMoveForward: state           --Check Move Forward
-					<< i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and ma=CMA >>
-				CheckForLastSegment: state  --check for last segment	
-					<< iSeg = CMA.seg[i] and ma=CMA >>		
-				MoveForwardLastSegment: complete state  --Move Forward Last Segment, no new MA
-					<< i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() and ma=CMA >>		
-				CheckMoveForwardLastSegment: state  --check move forward last segment, no new MA
-					<< i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() and ma=CMA >>		
-				GotNewMA: complete state  --on last segment, got new MA
-					<< i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NEXT_MA.seg[1] and ma=CMA and next_ma=NEXT_MA >>		
-				CheckMATransition: state  --change to new MA?
-					<< i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NEXT_MA.seg[1] and ma=CMA and next_ma=NEXT_MA >>		
-			--		STOP: final state    --a final state
-				FAIL: final state    --failure occurred
-				
-			transitions
-				Go: Start -[]-> GetFirstMA
-					{ 
-						r!  --request movement authorization
-					}
-					
-				GetFirstMA: GetFirstMA -[on dispatch p]-> CheckFirstMA 
-			
-				NotYet: --did not get requested movement authorization
-				  CheckFirstMA -[not m_a'fresh]-> GetFirstMA 
-						
-				GotFirstMA:  --received movement authorization
-				  CheckFirstMA -[m_a'fresh]-> MoveForward
-					{  << AXIOM_CMA_IS_RMA() >> 
-					m_a?(ma)  --save received movement authorization in local variable
-					;  << ma=CMA >>
-					i := 1  --first segment of new movement authorization
-					; << i=1 and ma=CMA >>  
-			    iSeg := ma.seg[1] --set current segment of movement authorization to first segment
-					; << i=1 and ma=CMA and iSeg=CMA.seg[i] and AXIOM_NUM_SEG(ma:ma) >> 
-					nSeg := ma.seg[2]  --set next segment of movement authorization to second segment
-					<< i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA) >> 		
-					}
-						
-				CheckSpeed: 
-				  MoveForward -[on dispatch p]-> CheckMoveForward
-				  { << i<CMA.num_segments and iSeg=CMA.seg[i] and 
-				  	  nSeg=CMA.seg[i + 1] and ma=CMA and
-				  	  AXIOM_B() and AXIOM_E() and AXIOM_V(seg:iSeg) and AXIOM_V(seg:nSeg) >>
-				  if  --exceed emergency brake velocity?
-				    (v >= iSeg.v_e  )~> 
-				      { eb!(true) & sb!(false) }  --apply emergency brake
-				  []  --emergency brake for next segment?
-				    (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-				      { eb!(true) & sb!(false) }  --apply emergency brake
-				  []  --exceed service brake velocity?
-				    (v >= iSeg.v_n and v < iSeg.v_e and 
-				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-				      { sb!(true) & eb!(false) }  --apply service brake
-				  []  --service brake for next segment?
-				    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
-				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
-				      { sb!(true) & eb!(false) }  --apply service brake
-				  []  --no auto brake needed
-				    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
-				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
-				      { sb!(false) & eb!(false) }  --no brake
-				  fi
-				  }
-			
-			  SameSegment:   --not at end of this segment
-			    CheckMoveForward -[p < iSeg.e]-> MoveForward
-			
-			  NextSegment:  --go to next segment
-			    CheckMoveForward -[p >= iSeg.e]-> CheckForLastSegment
-			    {
-			    iSeg := nSeg
-			    ; << iSeg = CMA.seg[i+1] and ma=CMA >>
-			    i := i+1
-			    }
-			   
-			  NotLastSegment:  --not the last segment
-			    CheckForLastSegment -[i < ma.num_segments]-> MoveForward
-			    { 
-			    nSeg := ma.seg[i+1]
-			    }  
-			    
-			   IsLastSegment:  --is the last segment
-			    CheckForLastSegment -[i = ma.num_segments]-> MoveForwardLastSegment
-			    { 
-					r!  --request new movement authorization
-			    ; << i=CMA.num_segments and iSeg=CMA.seg[i] and ma=CMA >>
-			      --set nSeg to stop
-			    nSeg := [ segment :
-			    	        v_n => 0 mps 
-			    	        v_e => 0 mps
-			    	        e => ma.ea
-			    	        m => trainModes'FS ]
-			    }
-			   
-			   PastLastSegment:  --only for Serban's theorem, will never be executed  
-			     CheckForLastSegment -[i > ma.num_segments]-> FAIL
-			     
-			  LastSegment:
-			    MoveForwardLastSegment -[on dispatch p]-> CheckMoveForwardLastSegment
-			    { << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() 
-			     	   and ma=CMA and AXIOM_B() and AXIOM_E() 
-			     	   and AXIOM_V(seg:iSeg) and AXIOM_V(seg:nSeg) >>		
-				  if  --exceed emergency brake velocity?
-				    (v >= iSeg.v_e  )~> 
-				      { eb!(true) & sb!(false) }  --apply emergency brake
-				  []  --emergency brake for next segment?
-				    (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-				      { eb!(true) & sb!(false) }  --apply emergency brake
-				  []  --exceed service brake velocity?
-				    (v >= iSeg.v_n and v < iSeg.v_e and 
-				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-				      { sb!(true) & eb!(false) }  --apply service brake
-				  []  --service brake for next segment?
-				    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
-				    	and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
-				      { sb!(true) & eb!(false) }  --apply service brake
-				  []  --no auto brake needed
-				    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
-				    	 v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
-				      { sb!(false) & eb!(false) }  --no brake
-				  fi
-			    }
-			     
-			   NoMAYet:
-			     CheckMoveForwardLastSegment -[not m_a'fresh]-> MoveForwardLastSegment  
-			     
-			   GetNewMA:
-			     CheckMoveForwardLastSegment -[m_a'fresh]-> GotNewMA
-			     {
-			      << i=CMA.num_segments and iSeg = CMA.seg[i] and ma = CMA and 
-			        AXIOM_NEXT_MA_IS_RMA() >>
-			     m_a?(next_ma)
-			     ;  << i=CMA.num_segments and next_ma = NEXT_MA and iSeg = CMA.seg[CMA.num_segments] and ma = CMA >>
-			     nSeg := next_ma.seg[1]
-			     << i=CMA.num_segments and next_ma = NEXT_MA and iSeg = CMA.seg[CMA.num_segments] and ma = CMA and
-			       nSeg = NEXT_MA.seg[1] >>
-			     }   
-			   
-			   LastBitOfMa:
-			     GotNewMA -[on dispatch p]-> CheckMATransition
-			
-			   NotEndOfMA:
-			     CheckMATransition -[p < ma.ea]-> GotNewMA
-			     
-			   StartNextMa:
-			     CheckMATransition -[p >= ma.ea]-> MoveForward
-			     {  << AXIOM_CMA_IS_NEXT_MA() and next_ma=NEXT_MA >>
-			     ma := next_ma
-			     ;  <<ma=CMA>>
-					 i := 1  --first segment of new movement authorization
-					 ; << i=1 and ma=CMA >>  
-			     iSeg := ma.seg[1] --set current segment of movement authorization to first segment
-					 ; << i=1 and ma=CMA and iSeg=CMA.seg[i]>> 
-					 nSeg := ma.seg[2]  --set next segment of movement authorization to second segment
-					 << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1]
-					   and AXIOM_NUM_SEG(ma:ma)  >> 		
-			     }            
-			      		
-		**};
+thread implementation AutoBrake.i
+ annex BLESS 
+{**
+ assert
+  <<SB: :  --apply service brake
+ BRAKE(pos:p, v_lim:iSeg.v_n, next_v_lim:nSeg.v_n, 
+   ba:CTCS_Property::SB_Rate mpss, vel:v, en:iSeg.e) >>
+  <<EB: :  --apply emergency brake
+ BRAKE(pos:p, v_lim:iSeg.v_e, next_v_lim:nSeg.v_e, 
+ 	ba:CTCS_Property::EB_Rate mpss, vel:v, en:iSeg.e) >> 
+   
+ invariant << true >>  --no thread invariant is necessary
+ 
+ variables
+  i ~ quantity whole := 0 whole -- segment indexing
+  b ~ quantity mpss constant :=  CTCS_Property::SB_Rate mpss -- deceleration rate when service brake is applied
+  <<AXIOM_B: : b = CTCS_Property::SB_Rate mpss>>
+  e ~ quantity mpss constant := CTCS_Property::EB_Rate mpss -- deceleration rate when emergency brake is applied
+   <<AXIOM_E: : e = CTCS_Property::EB_Rate mpss>> 
+  ma ~ movementAuthorization -- current movement authorization
+  next_ma ~ movementAuthorization  --next movement authorization (valid only on last segment)
+  iSeg ~ segment --current segement
+  nSeg ~ segment --next segment
+  SR ~ quantity m -- specific distance from the EoA, to request for new MA
+  
+ states
+  Start: initial state --train stopped
+  WaitFirstMA: complete state  --Wait for first MA
+  CheckFirstMA: state     -- Check first MA
+  MoveForward: complete state  --Move Forward
+   << i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and ma=CMA >>
+  CheckMoveForward: state     --Check Move Forward
+   << i<CMA.num_segments and iSeg=CMA.seg[i] and nSeg=CMA.seg[i + 1] and ma=CMA >>
+  CheckForLastSegment: state  --check for last segment 
+   << iSeg = CMA.seg[i] and ma=CMA >>  
+  MoveForwardLastSegment: complete state  --Move Forward Last Segment, no new MA
+   << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() and ma=CMA >>  
+  CheckMoveForwardLastSegment: state  --check move forward last segment, no new MA
+   << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() and ma=CMA >>  
+  GotNewMA: complete state  --on last segment, got new MA
+   << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NEXT_MA.seg[1] and ma=CMA and next_ma=NEXT_MA >>  
+  CheckMATransition: state  --change to new MA?
+   << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NEXT_MA.seg[1] and ma=CMA and next_ma=NEXT_MA >>  
+  FAIL: final state  --failure occurred
+  
+ transitions
+  Go: --request movement authorization
+  Start -[]-> WaitFirstMA { r! } 
+   
+  FirstMA: --dispatch before first MA
+  WaitFirstMA -[on dispatch p]-> CheckFirstMA 
+ 
+  NotYet: --did not get requested movement authorization
+  CheckFirstMA -[not m_a'fresh]-> WaitFirstMA 
+  
+  GotFirstMA:  --received movement authorization
+  CheckFirstMA -[m_a'fresh]-> MoveForward
+   {  << AXIOM_CMA_IS_RMA() >> 
+   m_a?(ma)  --save received movement authorization
+   ;  << ma=CMA >>
+   i := 1  --first segment of new movement authorization
+   ; << i=1 and ma=CMA >>  
+   iSeg := ma.seg[1] --set current segment to first segment
+   ; << i=1 and ma=CMA and iSeg=CMA.seg[i] 
+       and AXIOM_NUM_SEG(ma:ma) >> 
+   nSeg := ma.seg[2]  --set next segment to second segment
+   << i=1 and ma=CMA and iSeg=CMA.seg[i] 
+      and nSeg=CMA.seg[i+1] and AXIOM_NUM_SEG(ma:CMA) >> 
+   }
+  
+  CheckSpeed: 
+  MoveForward -[on dispatch p]-> CheckMoveForward
+  { << i<CMA.num_segments and iSeg=CMA.seg[i] and 
+   nSeg=CMA.seg[i + 1] and ma=CMA and
+   AXIOM_B() and AXIOM_E() and AXIOM_V(seg:iSeg) and AXIOM_V(seg:nSeg) >>
+  if  --exceed emergency brake velocity?
+    (v >= iSeg.v_e  )~> 
+    { eb!(true) & sb!(false) }  --apply emergency brake
+  []  --emergency brake for next segment?
+    (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
+    { eb!(true) & sb!(false) }  --apply emergency brake
+  []  --exceed service brake velocity?
+    (v >= iSeg.v_n and v < iSeg.v_e and 
+    v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
+    { sb!(true) & eb!(false) }  --apply service brake
+  []  --service brake for next segment?
+    (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
+   and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
+    { sb!(true) & eb!(false) }  --apply service brake
+  []  --no auto brake needed
+    ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
+    v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
+    { sb!(false) & eb!(false) }  --no brake
+  fi
+  }
+ 
+  SameSegment: --not at end of this segment
+  CheckMoveForward -[p < iSeg.e]-> MoveForward
+ 
+  NextSegment:  --go to next segment
+  CheckMoveForward -[p >= iSeg.e]-> CheckForLastSegment
+  {
+  iSeg := nSeg
+  ; << iSeg = CMA.seg[i+1] and ma=CMA >>
+  i := i+1
+  }
+  
+  NotLastSegment:  --not the last segment
+  CheckForLastSegment -[i < ma.num_segments]-> MoveForward
+  { nSeg := ma.seg[i+1] }  
+   
+  IsLastSegment:  --is the last segment
+  CheckForLastSegment -[i = ma.num_segments]-> MoveForwardLastSegment
+  { 
+  r!  --request new movement authorization
+  ; << i=CMA.num_segments and iSeg=CMA.seg[i] and ma=CMA >>
+  --set nSeg to stop
+  nSeg := [ segment :
+      v_n => 0 mps 
+      v_e => 0 mps
+      e => ma.ea
+      m => trainModes'FS ]
+  }
+  
+  PastLastSegment:  --only for Serban's theorem, will never be executed  
+  CheckForLastSegment -[i > ma.num_segments]-> FAIL
+    
+  LastSegment:
+  MoveForwardLastSegment -[on dispatch p]-> CheckMoveForwardLastSegment
+  { << i=CMA.num_segments and iSeg=CMA.seg[i] and nSeg=NULL_SEGMENT() 
+    and ma=CMA and AXIOM_B() and AXIOM_E() 
+    and AXIOM_V(seg:iSeg) and AXIOM_V(seg:nSeg) >>  
+  if  --exceed emergency brake velocity?
+   (v >= iSeg.v_e  )~> 
+    { eb!(true) & sb!(false) }  --apply emergency brake
+  []  --emergency brake for next segment?
+   (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
+    { eb!(true) & sb!(false) }  --apply emergency brake
+  []  --exceed service brake velocity?
+   (v >= iSeg.v_n and v < iSeg.v_e and 
+     v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
+    { sb!(true) & eb!(false) }  --apply service brake
+  []  --service brake for next segment?
+   (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) and v < iSeg.v_e
+     and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
+    { sb!(true) & eb!(false) }  --apply service brake
+  []  --no auto brake needed
+   ( v < iSeg.v_n and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) and 
+      v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
+    { sb!(false) & eb!(false) }  --no brake
+  fi
+  }
+    
+  NoMAYet:
+  CheckMoveForwardLastSegment -[not m_a'fresh]-> MoveForwardLastSegment  
+    
+  GetNewMA:
+  CheckMoveForwardLastSegment -[m_a'fresh]-> GotNewMA
+  { << i=CMA.num_segments and iSeg = CMA.seg[i] and ma = CMA  
+     and AXIOM_NEXT_MA_IS_RMA() >>
+  m_a?(next_ma)
+  ;  << i=CMA.num_segments and next_ma = NEXT_MA 
+      and iSeg = CMA.seg[CMA.num_segments] and ma = CMA >>
+  nSeg := next_ma.seg[1]
+   << i=CMA.num_segments and next_ma = NEXT_MA 
+     and iSeg = CMA.seg[CMA.num_segments] and ma = CMA 
+     and nSeg = NEXT_MA.seg[1] >>
+  } 
+  
+  LastBitOfMa:
+  GotNewMA -[on dispatch p]-> CheckMATransition
+ 
+  NotEndOfMA:
+  CheckMATransition -[p < ma.ea]-> GotNewMA
+    
+  StartNextMa:
+  CheckMATransition -[p >= ma.ea]-> MoveForward
+  {  << AXIOM_CMA_IS_NEXT_MA() and next_ma=NEXT_MA >>
+  ma := next_ma
+  ;  <<ma=CMA>>
+  i := 1  --first segment of new movement authorization
+  ; << i=1 and ma=CMA >>  
+  iSeg := ma.seg[1] --set current segment of movement authorization to first segment
+  ; << i=1 and ma=CMA and iSeg=CMA.seg[i]>> 
+  nSeg := ma.seg[2]  --set next segment of movement authorization to second segment
+  << i=1 and ma=CMA and iSeg=CMA.seg[i] and nSeg=CMA.seg[i+1]
+    and AXIOM_NUM_SEG(ma:ma)  >> 
+  }    
+     
+**};
 
-	end AutoBrake.i;
+end AutoBrake.i;
 
 end Threads;
