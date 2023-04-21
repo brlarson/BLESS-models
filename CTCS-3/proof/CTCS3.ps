@@ -1,11 +1,10 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Wed Apr 19 04:36:52 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
+#  at Fri Apr 21 05:29:13 CDT 2023 by brianlarson
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
 make-an
 axioms
-#[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
+#[serial 1004] <<M(WaitFirstMA)>> -> <<I>> from invariant I when complete state WaitFirstMA has Assertion <<M(WaitFirstMA)>> in its definition.
 axioms
 #[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
 axioms
@@ -33,12 +32,12 @@ normalize
 replace<=
 laws
 axioms
-#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for GoStart-[ ]->GetFirstMA{A};
+#[serial 1013]  <<M(Start)>> A <<M(WaitFirstMA)>> for GoStart-[ ]->WaitFirstMA{A};
 atomic
 axioms
-#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMAGetFirstMA-[x]->CheckFirstMA{};
+#[serial 1014]  <<M(WaitFirstMA) and x>> -> <<M(CheckFirstMA)>> for FirstMAWaitFirstMA-[x]->CheckFirstMA{};
 axioms
-#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYetCheckFirstMA-[x]->GetFirstMA{};
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(WaitFirstMA)>> for NotYetCheckFirstMA-[x]->WaitFirstMA{};
 axioms
 #[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
 reduce
@@ -151,12 +150,10 @@ reduce
 atomic
 laws
 load
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
+#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition.
 #Threads::AutoBrake.i
-#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
+#[serial 1004] <<M(WaitFirstMA)>> -> <<I>> from invariant I when complete state WaitFirstMA has Assertion <<M(WaitFirstMA)>> in its definitio
 make-an
-axioms
-#[serial 1004] <<M(GetFirstMA)>> -> <<I>> from invariant I when complete state GetFirstMA has Assertion <<M(GetFirstMA)>> in its definition.
 axioms
 #[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
 axioms
@@ -184,12 +181,12 @@ normalize
 replace<=
 laws
 axioms
-#[serial 1013]  <<M(Start)>> A <<M(GetFirstMA)>> for GoStart-[ ]->GetFirstMA{A};
+#[serial 1013]  <<M(Start)>> A <<M(WaitFirstMA)>> for GoStart-[ ]->WaitFirstMA{A};
 atomic
 axioms
-#[serial 1014]  <<M(GetFirstMA) and x>> -> <<M(CheckFirstMA)>> for GetFirstMAGetFirstMA-[x]->CheckFirstMA{};
+#[serial 1014]  <<M(WaitFirstMA) and x>> -> <<M(CheckFirstMA)>> for FirstMAWaitFirstMA-[x]->CheckFirstMA{};
 axioms
-#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(GetFirstMA)>> for NotYetCheckFirstMA-[x]->GetFirstMA{};
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(WaitFirstMA)>> for NotYetCheckFirstMA-[x]->WaitFirstMA{};
 axioms
 #[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
 reduce
