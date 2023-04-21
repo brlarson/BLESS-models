@@ -1,5 +1,6 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Fri Apr 21 05:29:13 CDT 2023 by brianlarson
+#  at Fri Apr 21 10:23:36 CDT 2023 by brianlarson
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
 make-an
@@ -9,155 +10,7 @@ axioms
 #[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
 axioms
 #[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
-axioms
-#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
 normalize
-replace<=
-laws
-axioms
-#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
-laws
-axioms
-#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
-normalize
-laws
-axioms
-#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
-laws
-axioms
-#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
-normalize
-replace<=
-laws
-axioms
-#[serial 1013]  <<M(Start)>> A <<M(WaitFirstMA)>> for GoStart-[ ]->WaitFirstMA{A};
-atomic
-axioms
-#[serial 1014]  <<M(WaitFirstMA) and x>> -> <<M(CheckFirstMA)>> for FirstMAWaitFirstMA-[x]->CheckFirstMA{};
-axioms
-#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(WaitFirstMA)>> for NotYetCheckFirstMA-[x]->WaitFirstMA{};
-axioms
-#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
-reduce
-remove-axioms-post
-laws
-normalize
-push
-#Threads::AutoBrake.i
-#[serial 1075]  add user-defined axioms to postconditi
-make-an
-axioms
-#[serial 1081]   normalization of [serial 1070]
-split-post
-axioms
-substitute-pre
-guided-sub-equals[CMA]
-normalize
-guided-sub-equals[i]
-normalize
-guided-sub-equals[ma]
-axioms
-#[serial 1083]   normalization of [serial 1071]
-atomic
-substitute-pre
-normalize
-guided-sub-equals[CMA]
-axioms
-#[serial 1085]   normalization of [serial 1072]
-atomic
-normalize
-laws
-normalize
-axioms
-#[serial 1088]   normalization of [serial 1078]
-atomic
-split-post
-axioms
-guided-sub-equals[CMA]
-guided-sub-equals[i]
-normalize
-laws
-axioms
-#[serial 1090]   normalization of [serial 1079]
-guided-sub-equals[i]
-normalize
-guided-sub-equals[CMA]
-atomic
-laws
-normalize
-guided-sub-equals[ma]
-normalize
-guided-sub-equals[1]
-axioms
-#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeedMoveForward-[x]->CheckMoveForward{A};
-laws
-reduce
-reduce
-reduce
-push
-#Threads::AutoBrake.i
-#[serial 1152] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 115
-make-an
-remove-axioms-post
-laws
-axioms
-#[serial 1154]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1153]
-normalize
-replace<=
-normalize
-cnf
-laws
-normalize
-axioms
-#[serial 1160] <<P>> T <<Q>> in existential lattice quantification for [serial 1155]
-laws
-normalize
-reduce
-atomic
-laws
-axioms
-DeMorgan
-normalize
-substitute-both
-substitute-post
-normalize
-laws
-axioms
-#[serial 1161] <<P>> T <<Q>> in existential lattice quantification for [serial 1156]
-laws
-normalize
-reduce
-atomic
-laws
-axioms
-substitute-both
-substitute-post
-normalize
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
-guided-sub-equals[CTCS_Property::SB_Rate mpss]
-normalize
-axioms
-DeMorgan
-normalize
-DeMorgan
-normalize
-laws
-axioms
-#[serial 1162] <<P>> T <<Q>> in existential lattice quantification for [serial 1157]
-reduce
-atomic
-laws
-load
-#[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definition.
-#Threads::AutoBrake.i
-#[serial 1004] <<M(WaitFirstMA)>> -> <<I>> from invariant I when complete state WaitFirstMA has Assertion <<M(WaitFirstMA)>> in its definitio
-make-an
-axioms
-#[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
-axioms
-#[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
 axioms
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
 normalize
@@ -601,48 +454,42 @@ normalize
 guided-sub-equals[CMA]
 laws
 axioms
-#[serial 1029] Composition of Subcomponents via Directional Connection driver.xl -> controller.control.xl:
+#[serial 1029] Composition of Subcomponents via Directional Connection driver.xl -> motor.xl:
 axioms
 #[serial 1030] Composition of Subcomponents via Directional Connection sensor.p -> controller.control.p:
 axioms
 #[serial 1031] Composition of Subcomponents via Directional Connection sensor.v -> controller.control.v:
 axioms
-#[serial 1032] Composition of Subcomponents via Directional Connection controller.control.ca -> motor.ca:
+#[serial 1032] Composition of Subcomponents via Directional Connection controller.control.sb -> sbrake.brake:
 axioms
-#[serial 1033] Composition of Subcomponents via Directional Connection controller.control.sb -> sbrake.brake:
+#[serial 1033] Composition of Subcomponents via Directional Connection controller.control.eb -> ebrake.brake:
 axioms
-#[serial 1034] Composition of Subcomponents via Directional Connection controller.control.eb -> ebrake.brake:
+#[serial 1034] Composition of Subcomponents via Directional Connection rbc.ma -> train.controller.control.m_a:
 axioms
-#[serial 1035] Composition of Subcomponents via Directional Connection rbc.ma -> train.controller.control.m_a:
+#[serial 1035] Composition of Subcomponents via Directional Connection CTCS::MovementAuthority.i.ma:
 axioms
-#[serial 1036] Composition of Subcomponents via Directional Connection CTCS::MovementAuthority.i.ma:
+#[serial 1036] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
 axioms
-#[serial 1037] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
+#[serial 1037] Composition of Subcomponents via Directional Connection Train::Train.i.pos:
 axioms
-#[serial 1038] Composition of Subcomponents via Directional Connection Train::Train.i.pos:
+#[serial 1038] Composition of Subcomponents via Directional Connection Train::Train.i.vel:
 axioms
-#[serial 1039] Composition of Subcomponents via Directional Connection Train::Train.i.vel:
+#[serial 1039] Composition of Subcomponents via Directional Connection Train::Train.i.dxl:
 axioms
-#[serial 1040] Composition of Subcomponents via Directional Connection Train::Train.i.mxl:
+#[serial 1040] Composition of Subcomponents via Directional Connection Train::Train.i.cpsb:
 axioms
-#[serial 1041] Composition of Subcomponents via Directional Connection Train::Train.i.dxl:
+#[serial 1041] Composition of Subcomponents via Directional Connection Train::Train.i.cpeb:
 axioms
-#[serial 1042] Composition of Subcomponents via Directional Connection Train::Train.i.cpsb:
+#[serial 1042] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_s:
 axioms
-#[serial 1043] Composition of Subcomponents via Directional Connection Train::Train.i.cpeb:
+#[serial 1043] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_v:
 axioms
-#[serial 1044] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_s:
+#[serial 1044] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
 axioms
-#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_v:
+#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_xl:
 axioms
-#[serial 1046] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_a:
+#[serial 1046] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
 axioms
-#[serial 1047] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
-axioms
-#[serial 1048] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_xl:
-axioms
-#[serial 1049] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
-axioms
-#[serial 1050] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
+#[serial 1047] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
 axioms
 #Q.E.D.
