@@ -3,111 +3,111 @@
 
 package Train
 public
-  with BLESS, CTCS_Types, Threads, BLESS_Types;	
+  with BLESS, CTCS_Types, Threads, BLESS_Types; 
 
 --flag renames BLESS_Types::Boolean;
 
 system Train
-  features
-		r : out event port;	--train requests movement authorization
-		ma : in event data port CTCS_Types::movementAuthorization --movement authorization granted
-			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
+ features
+  r : out event port; --train requests MA
+  ma : in event data port  --received MA
+    CTCS_Types::movementAuthorization 
+  {BLESS::Value => 
+  "<<returns movementAuthorization := RMA>>";};
 end Train;
 
 --Motor moves the train
 device Motor
-	features
-		ca : in data port CTCS_Types::Acceleration  --current acceleration     
-			{BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};   
+ features
+  xl : --current acceleration  
+    in data port CTCS_Types::Acceleration     
+  {BLESS::Value => 
+  "<<returns quantity mpss := OPERATOR_XL>>";};   
 end Motor;
 
 --Sensor detects position, velocity, and acceleration
 device Sensor
-	features
+ features
     p : out event data port CTCS_Types::Position 
       {BLESS::Value=> "<<returns quantity m := POSITION>>";};
     v : out event data port CTCS_Types::Velocity 
       {BLESS::Value=> "<<returns quantity mps := VELOCITY>>";};
   properties
-	  Dispatch_Protocol => Periodic;
-	  Period => 200 ms;
+   Dispatch_Protocol => Periodic;
+   Period => 200 ms;
 end Sensor;
 
 --service brake
 device ServiceBrake
   features
-	  brake : in event data port BLESS_Types::Boolean  --apply service brake
-			{BLESS::Assertion => "<<SB() and not EB()>>";};
+   brake : in event data port BLESS_Types::Boolean  --apply service brake
+   {BLESS::Assertion => "<<SB() and not EB()>>";};
 end ServiceBrake;
 
 --emergency brake
 device EmergencyBrake
   features
-	  brake : in event data port BLESS_Types::Boolean  --apply emergency brake
-			{BLESS::Assertion => "<<EB()>>";};	
+   brake : in event data port BLESS_Types::Boolean  --apply emergency brake
+   {BLESS::Assertion => "<<EB()>>";}; 
 end EmergencyBrake;
 
 --Human operator (engineer) of the train
 --Chooses acceleration, except for automatic braking
 abstract Operator
-	features
-		xl : out data port CTCS_Types::Acceleration  --operator chosen acceleration
-			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+ features
+  xl : out data port CTCS_Types::Acceleration  --operator chosen acceleration
+   {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 end Operator;
-	
+ 
 system implementation Train.i
-	subcomponents
-		motor : device Motor;
-		sensor : device Sensor;
-		controller : process ControllerProcess.i;
-		driver: abstract Operator;
-		ebrake: device EmergencyBrake;
-		sbrake: device ServiceBrake;
-	connections
-		ma_request : port controller.r -> r;
-		auth : port ma -> controller.m_a;
-		pos: port sensor.p -> controller.p;
-		vel : port sensor.v -> controller.v;
-		mxl : port controller.ca -> motor.ca;
-		dxl : port driver.xl -> controller.xl;
-		cpsb: port controller.sb -> sbrake.brake;
-		cpeb: port controller.eb -> ebrake.brake;
+ subcomponents
+  motor : device Motor;
+  sensor : device Sensor;
+  controller : process ControllerProcess.i;
+  driver: abstract Operator;
+  ebrake: device EmergencyBrake;
+  sbrake: device ServiceBrake;
+ connections
+  ma_request : port controller.r -> r;
+  auth : port ma -> controller.m_a;
+  pos: port sensor.p -> controller.p;
+  vel : port sensor.v -> controller.v;
+  dxl : port driver.xl -> motor.xl;
+  cpsb: port controller.sb -> sbrake.brake;
+  cpeb: port controller.eb -> ebrake.brake;
 end Train.i;
 
 -----Controller process and thread----
 process ControllerProcess
-  features
-	  sb : out event data port BLESS_Types::Boolean  --apply service brake
-			{BLESS::Assertion => "<<SB() and not EB()>>";};
-	  eb : out event data port BLESS_Types::Boolean  --apply emergency brake
-			{BLESS::Assertion => "<<EB()>>";};
-		ca : out data port  CTCS_Types::Acceleration  --current acceleration     
-			{BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
-		p: in event data port CTCS_Types::Position  --current position 
-			{BLESS::Value => "<<returns quantity m := POSITION>>";};
-		v: in event data port CTCS_Types::Velocity  --current velocity 
-			{BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
-		r: out event port;  -- request for new MA
-		m_a: in event data port CTCS_Types::movementAuthorization  -- received movement authorization 
-			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
-		xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
-			{BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+ features
+  sb : out event data port BLESS_Types::Boolean  --apply service brake
+   {BLESS::Assertion => "<<SB() and not EB()>>";};
+  eb : out event data port BLESS_Types::Boolean  --apply emergency brake
+   {BLESS::Assertion => "<<EB()>>";};
+  p: in event data port CTCS_Types::Position  --current position 
+   {BLESS::Value => "<<returns quantity m := POSITION>>";};
+  v: in event data port CTCS_Types::Velocity  --current velocity 
+   {BLESS::Value => "<<returns quantity kph := VELOCITY>>";};
+  r: out event port;  -- request for new MA
+  m_a: in event data port CTCS_Types::movementAuthorization  -- received movement authorization 
+   {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
+  xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
+   {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
 end ControllerProcess;
 
 process implementation ControllerProcess.i
-	subcomponents
-		control: thread Threads::AutoBrake.i;
-	connections
-		conn_s: port p -> control.p;
-		conn_v: port v -> control.v;
-		conn_a: port control.ca -> ca;
-		conn_req: port control.r -> r;
-		conn_ma: port m_a -> control.m_a;
-		conn_xl: port xl -> control.xl;
-		conn_sb: port control.sb -> sb;
-		conn_eb: port control.eb -> eb;
+ subcomponents
+  control: thread Threads::AutoBrake.i;
+ connections
+  conn_s: port p -> control.p;
+  conn_v: port v -> control.v;
+  conn_req: port control.r -> r;
+  conn_ma: port m_a -> control.m_a;
+  conn_xl: port xl -> control.xl;
+  conn_sb: port control.sb -> sb;
+  conn_eb: port control.eb -> eb;
 end ControllerProcess.i;
 
 
-	
+ 
 end Train;

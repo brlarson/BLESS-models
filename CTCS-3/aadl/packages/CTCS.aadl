@@ -22,7 +22,7 @@ end MovementAuthority.i;
 --Radio Block Center
 system RadioBlockCenter  
 	features
-		r : in event port;	--train requests movement authorization
+		r : in event port;	--MA request
 		ma : out event data port CTCS_Types::movementAuthorization --movement authorization granted
 			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 end RadioBlockCenter;

@@ -2,37 +2,30 @@ package CTCS_Assertion
 public
 
 with
-  CTCS_Types, CTCS_Property;
-	
+  CTCS_Types;
+ 
 annex Assertion
 {**
-	ghost variables
-	  def POSITION ~ quantity m    		-- measured position
-	  def VELOCITY ~ quantity mps  		-- measured velocity
-	  def RMA ~ movementAuthorization  		-- received movement authorization
-	  def CMA ~ movementAuthorization  		-- currently active movement authorization
-	  def NEXT_MA ~ movementAuthorization -- movment authority following IMA if granted
-	  def OPERATOR_XL ~ quantity mpss	--operator commanded acceleration 
-	
+ ghost variables
+  def POSITION ~ quantity m      -- measured position
+  def VELOCITY ~ quantity mps    -- measured velocity
+  def RMA ~ movementAuthorization    -- requested movement authorization
+  def CMA ~ movementAuthorization    -- currently active movement authorization
+  def NEXT_MA ~ movementAuthorization -- movment authority following IMA if granted
+  def OPERATOR_XL ~ quantity mpss --operator commanded acceleration 
+ 
 -- brake intervention
 -- current velocity is at least the current segment velocity limit
 -- or must slow down for next segment
 <<BRAKE: vel~quantity mps, -- current velocity
-  v_lim~quantity mps,   -- current segment  brake velocity limit
-  next_v_lim~quantity mps,  -- next segment brake velocity limit
-  ba~quantity mpss,  -- braking acceleration (negative is slowing)
-  pos~quantity m,    --current position
-  en~quantity m :     --end of segment
-  vel >= v_lim or vel*vel >= next_v_lim*next_v_lim + 2*ba*(en-pos) >>
+ v_lim~quantity mps,   -- current segment  brake velocity limit
+ next_v_lim~quantity mps,  -- next segment brake velocity limit
+ ba~quantity mpss,  -- braking acceleration (negative is slowing)
+ pos~quantity m,    --current position
+ en~quantity m :     --end of segment
+ vel >= v_lim or vel*vel >= next_v_lim*next_v_lim + 2*ba*(en-pos) >>
 
---train acceleration conditions
-<<TRAIN_XL: returns quantity mpss := [                               			
-	(SB() and not EB() )-> CTCS_Property::SB_Rate mpss, -- deceleration rate when service brake is applied 
-	(EB() )-> CTCS_Property::EB_Rate mpss, -- deceleration rate when emergency brake is applied  			
-	(not SB() and not EB()  )-> OPERATOR_XL   --use train operator acceleration
-	] >> 
-
---normal (service) brake velocity < emergency brake velocity	
+--normal (service) brake velocity < emergency brake velocity 
  <<AXIOM_V:seg~segment : seg.v_n < seg.v_e >>
 
 -- every Movement Authority will have more than one segment
@@ -60,7 +53,7 @@ annex Assertion
 -- when NEXT_MA becomes CMA;
 -- this happens when the train crosses into the new movement authorization
 <<AXIOM_CMA_IS_NEXT_MA: : CMA = NEXT_MA >>
-	
-**};		
-	
+ 
+**};  
+ 
 end CTCS_Assertion;
