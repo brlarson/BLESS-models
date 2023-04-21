@@ -28,13 +28,13 @@ end Motor;
 --Sensor detects position, velocity, and acceleration
 device Sensor
  features
-    p : out event data port CTCS_Types::Position 
-      {BLESS::Value=> "<<returns quantity m := POSITION>>";};
-    v : out event data port CTCS_Types::Velocity 
-      {BLESS::Value=> "<<returns quantity mps := VELOCITY>>";};
-  properties
-   Dispatch_Protocol => Periodic;
-   Period => 200 ms;
+  p : out event data port CTCS_Types::Position 
+   {BLESS::Value=> "<<returns quantity m := POSITION>>";};
+  v : out event data port CTCS_Types::Velocity 
+   {BLESS::Value=> "<<returns quantity mps := VELOCITY>>";};
+ properties
+  Dispatch_Protocol => Periodic;
+  Period => 200 ms;
 end Sensor;
 
 --service brake
@@ -55,8 +55,9 @@ end EmergencyBrake;
 --Chooses acceleration, except for automatic braking
 abstract Operator
  features
-  xl : out data port CTCS_Types::Acceleration  --operator chosen acceleration
-   {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+  xl : out data port CTCS_Types::Acceleration  
+   {BLESS::Value => 
+    "<<returns quantity mpss := OPERATOR_XL>>";};
 end Operator;
  
 system implementation Train.i
@@ -91,8 +92,8 @@ process ControllerProcess
   r: out event port;  -- request for new MA
   m_a: in event data port CTCS_Types::movementAuthorization  -- received movement authorization 
    {BLESS::Value => "<<returns movementAuthorization := RMA>>";};
-  xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
-   {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+  xl : in data port CTCS_Types::Acceleration;  --operator chosen acceleration
+  ca : out  data port CTCS_Types::Acceleration;  --acceleration to motor
 end ControllerProcess;
 
 process implementation ControllerProcess.i

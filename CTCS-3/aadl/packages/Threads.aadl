@@ -19,8 +19,10 @@ thread AutoBrake
   {BLESS::Value => "<<returns quantity m := POSITION>>";};
   v: in event data port CTCS_Types::Velocity -- current measured velocity
   {BLESS::Value => "<<returns quantity mps := VELOCITY>>";};
-  xl: in data port CTCS_Types::Acceleration -- operator chosen acceleration
+  xl : in data port CTCS_Types::Acceleration  --operator chosen acceleration
   {BLESS::Value => "<<returns quantity mpss := OPERATOR_XL>>";};
+  ca : out  data port CTCS_Types::Acceleration  --acceleration to motor
+  {BLESS::Value => "<<returns quantity mpss := TRAIN_XL()>>";};
  properties
   Dispatch_Protocol => Sporadic;
 end AutoBrake;
@@ -72,7 +74,7 @@ thread implementation AutoBrake.i
   
  transitions
   Go: --request movement authorization
-  Start -[]-> WaitFirstMA { r! } 
+  Start -[]-> WaitFirstMA { r! & ca!(0 mpss) } 
    
   FirstMA: --dispatch before first MA
   WaitFirstMA -[on dispatch p]-> CheckFirstMA 
@@ -86,6 +88,8 @@ thread implementation AutoBrake.i
    m_a?(ma)  --save received movement authorization
    ;  << ma=CMA >>
    i := 1  --first segment of new movement authorization
+   ;  << ma=CMA >>
+   ca!(xl)  --operator acceleration
    ; << i=1 and ma=CMA >>  
    iSeg := ma.seg[1] --set current segment to first segment
    ; << i=1 and ma=CMA and iSeg=CMA.seg[i] 
@@ -103,24 +107,24 @@ thread implementation AutoBrake.i
   	and AXIOM_V(seg:nSeg) >>
   if  --exceed emergency brake velocity?
     (v >= iSeg.v_e  )~> 
-    { eb!(true) & sb!(false) } 
+    { eb!(true) & sb!(false) & ca!(0 mpss) } 
   []  --emergency brake for next segment?
     (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-    { eb!(true) & sb!(false) }  
+    { eb!(true) & sb!(false) & ca!(0 mpss) }  
   []  --exceed service brake velocity?
     (v >= iSeg.v_n and v < iSeg.v_e and 
     v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-    { sb!(true) & eb!(false) }  
+    { sb!(true) & eb!(false) & ca!(0 mpss) }  
   []  --service brake for next segment?
     (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) 
     	and v < iSeg.v_e
       and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
-    { sb!(true) & eb!(false) }  
+    { sb!(true) & eb!(false) & ca!(0 mpss) }  
   []  --no auto brake needed
     ( v < iSeg.v_n 
     	and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) 
     	and v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
-    { sb!(false) & eb!(false) }  
+    { sb!(false) & eb!(false) & ca!(xl) }  
   fi
   }
  
@@ -162,24 +166,24 @@ thread implementation AutoBrake.i
     and AXIOM_V(seg:iSeg) and AXIOM_V(seg:nSeg) >>  
   if  --exceed emergency brake velocity?
     (v >= iSeg.v_e  )~> 
-    { eb!(true) & sb!(false) } 
+    { eb!(true) & sb!(false) & ca!(0 mpss) } 
   []  --emergency brake for next segment?
     (v*v >= nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-    { eb!(true) & sb!(false) }  
+    { eb!(true) & sb!(false) & ca!(0 mpss) }  
   []  --exceed service brake velocity?
     (v >= iSeg.v_n and v < iSeg.v_e and 
     v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~> 
-    { sb!(true) & eb!(false) }  
+    { sb!(true) & eb!(false) & ca!(0 mpss) }  
   []  --service brake for next segment?
     (v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) 
     	and v < iSeg.v_e
       and v*v >= nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) )~>  
-    { sb!(true) & eb!(false) }  
+    { sb!(true) & eb!(false) & ca!(0 mpss) }  
   []  --no auto brake needed
     ( v < iSeg.v_n 
     	and v*v < nSeg.v_n*nSeg.v_n + 2*b*(iSeg.e-p) 
     	and v*v < nSeg.v_e*nSeg.v_e + 2*e*(iSeg.e-p) )~>  
-    { sb!(false) & eb!(false) }  
+    { sb!(false) & eb!(false) & ca!(xl) }  
   fi
   }
     
