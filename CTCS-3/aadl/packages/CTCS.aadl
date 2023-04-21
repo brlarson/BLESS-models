@@ -2,7 +2,6 @@
 
 --Chinese Train Control System, level 3, Movement Authority Scenario
 
-
 package CTCS
 public
 	with BLESS, CTCS_Types, Train;
@@ -27,8 +26,5 @@ system RadioBlockCenter
 		ma : out event data port CTCS_Types::movementAuthorization --movement authorization granted
 			{BLESS::Value => "<<returns movementAuthorization := RMA>>";};
 end RadioBlockCenter;
-
-
-
 
 end CTCS;
