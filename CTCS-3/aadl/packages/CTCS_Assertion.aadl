@@ -17,13 +17,13 @@ annex Assertion
 -- brake intervention
 -- current velocity is at least the current segment velocity limit
 -- or must slow down for next segment
-<<BRAKE: vel~quantity mps, -- current velocity
- v_lim~quantity mps,   -- current segment  brake velocity limit
- next_v_lim~quantity mps,  -- next segment brake velocity limit
- ba~quantity mpss,  -- braking acceleration (negative is slowing)
- pos~quantity m,    --current position
- en~quantity m :     --end of segment
- vel >= v_lim or vel*vel >= next_v_lim*next_v_lim + 2*ba*(en-pos) >>
+--<<BRAKE: vel~quantity mps, -- current velocity
+-- v_lim~quantity mps,   -- current segment  brake velocity limit
+-- next_v_lim~quantity mps,  -- next segment brake velocity limit
+-- ba~quantity mpss,  -- braking acceleration (negative is slowing)
+-- pos~quantity m,    --current position
+-- en~quantity m :     --end of segment
+-- vel >= v_lim or vel*vel >= next_v_lim*next_v_lim + 2*ba*(en-pos) >>
 
 
 --the train acceleration is chosen by the operator, unless automaticly braking
@@ -42,8 +42,7 @@ annex Assertion
   [ segment :
      v_n => 0 mps 
      v_e => 0 mps
-     e => CMA.ea
-     m => trainModes'FS ] >>
+     e => CMA.ea ] >>
 
 -- when a movement authorization is received by the train it is a received movement authorization (RMA)
 

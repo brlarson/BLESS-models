@@ -7,21 +7,18 @@ public
   with BLESS;
   
 annex Typedef
-	{**
-	type trainModes is enumeration (FS CO)
-	
-	type segment is record (
- 	  v_n :  quantity mps -- velocity for (normal) service brake limit (SBL)
- 	  v_e :  quantity mps -- velocity for emergency brake limit (EBL)
-  	  e :  quantity m  -- position of end of this segment
-   	  m :  trainModes ) -- train mode
+{**
+ type segment is record (
+  v_n :  quantity mps -- velocity for (normal) service brake limit (SBL)
+ 	v_e :  quantity mps -- velocity for emergency brake limit (EBL)
+ 	e :  quantity m)  -- position of end of this segment
    	  
-  type movementAuthorization is record (
-  	ba : quantity m  --beginning position of this MA
-  	num_segments : quantity whole  --number of segments in this MA
-  	seg : array[#CTCS_Property::MaxSegments] of segment 
-  	ea : quantity m )  --ending position of authority
-	**};
+ type movementAuthorization is record (
+  ba : quantity m  --beginning position of this MA
+  num_segments : quantity whole  --number of segments in this MA
+  seg : array[#CTCS_Property::MaxSegments] of segment 
+  ea : quantity m )  --ending position of authority
+**};
 
 
 data Segment
