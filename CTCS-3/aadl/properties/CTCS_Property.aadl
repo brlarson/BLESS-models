@@ -4,8 +4,11 @@
 
 property set CTCS_Property is
 
-Segments : aadlinteger =>3 applies to (all) ;  -- maximum number of segments is Movement Authority
-SB_Rate : aadlreal =>-0.8 applies to (all);-- service brake deceleration rate
-EB_Rate: aadlinteger =>-1 applies to (all); -- emergency brake deceleration rate
+MaxSegments : aadlinteger => 10 applies to (all) ;  -- maximum number of segments in movement authorization
+
+Acceleration_Units : type units (mpss);  -- m/s/s
+Acceleration_Type : type aadlreal units CTCS_Property::Acceleration_Units;
+SB_Rate : constant CTCS_Property::Acceleration_Type => -0.8 mpss;-- service brake deceleration rate
+EB_Rate:  constant CTCS_Property::Acceleration_Type  => -1.0  mpss; -- emergency brake deceleration rate
 	
 end CTCS_Property;
