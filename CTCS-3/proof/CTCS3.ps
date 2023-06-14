@@ -1,5 +1,5 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Fri Apr 21 10:23:36 CDT 2023 by brianlarson
+#  at Wed Jun 14 16:14:36 CDT 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
@@ -124,7 +124,6 @@ axioms
 DeMorgan
 normalize
 substitute-both
-substitute-post
 normalize
 laws
 axioms
@@ -136,9 +135,6 @@ atomic
 laws
 axioms
 substitute-both
-substitute-post
-normalize
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 DeMorgan
@@ -154,8 +150,6 @@ laws
 normalize
 axioms
 substitute-both
-substitute-post
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 replace<=
 normalize
@@ -174,8 +168,6 @@ laws
 normalize
 axioms
 substitute-both
-substitute-post
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 replace<=
 normalize
@@ -186,36 +178,28 @@ laws
 split-post
 normalize
 axioms
-guided-sub-equals[CTCS_Property::SB_Rate mpss]
-normalize
-axioms
 #[serial 1164] <<P>> T <<Q>> in existential lattice quantification for [serial 1159]
+normalize
 reduce
 laws
-normalize
 atomic
 laws
 axioms
 DeMorgan
 normalize
 substitute-both
-substitute-post
 normalize
 laws
 replace<=
 normalize
 DeMorgan
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate mpss]
-normalize
 axioms
 transitive
 split-post
 axioms
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
-normalize
-axioms
 #[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegmentCheckMoveForward-[x]->MoveForward{};
+normalize
 axioms
 #[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegmentCheckMoveForward-[x]->CheckForLastSegment{A};
 reduce
@@ -260,7 +244,7 @@ laws
 axioms
 push
 #Threads::AutoBrake.i
-#[serial 1512]   normalization of [serial 149
+#[serial 1559]   normalization of [serial 154
 make-an
 replace<=
 normalize
@@ -268,13 +252,12 @@ cnf
 laws
 normalize
 axioms
-#[serial 1531] Associativity: (b.c).a = a.b.c [serial 1514]
+#[serial 1578] Associativity: (b.c).a = a.b.c [serial 1561]
 reduce
 atomic
 laws
 axioms
 substitute-both
-substitute-post
 normalize
 axioms
 DeMorgan
@@ -283,7 +266,7 @@ DeMorgan
 normalize
 laws
 axioms
-#[serial 1532] Associativity: (b.c).a = a.b.c [serial 1516]
+#[serial 1579] Associativity: (b.c).a = a.b.c [serial 1563]
 reduce
 atomic
 normalize
@@ -292,25 +275,20 @@ axioms
 DeMorgan
 normalize
 substitute-both
-substitute-post
 normalize
 laws
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
-#[serial 1533] Associativity: (b.c).a = a.b.c [serial 1518]
+#[serial 1580] Associativity: (b.c).a = a.b.c [serial 1565]
 reduce
 atomic
 laws
 axioms
 substitute-both
-substitute-post
 normalize
 replace<=
 normalize
 DeMorgan
-normalize
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 laws
@@ -318,29 +296,24 @@ split-post
 axioms
 normalize
 axioms
-#[serial 1534] Associativity: (b.c).a = a.b.c [serial 1520]
+#[serial 1581] Associativity: (b.c).a = a.b.c [serial 1567]
 reduce
 atomic
 laws
 axioms
 substitute-both
-substitute-post
 normalize
 replace<=
 normalize
 DeMorgan
-normalize
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
 normalize
 axioms
 laws
 split-post
 axioms
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate mpss]
-normalize
 axioms
-#[serial 1535] Associativity: (b.c).a = a.b.c [serial 1522]
+#[serial 1582] Associativity: (b.c).a = a.b.c [serial 1569]
 reduce
 atomic
 laws
@@ -348,18 +321,13 @@ axioms
 DeMorgan
 normalize
 substitute-both
-substitute-post
 normalize
 replace<=
 normalize
 DeMorgan
 laws
 normalize
-guided-sub-equals[CTCS_Property::SB_Rate mpss]
-normalize
 axioms
-guided-sub-equals[CTCS_Property::EB_Rate mpss]
-normalize
 split-post
 axioms
 transitive
@@ -374,13 +342,13 @@ laws
 axioms
 push
 #Threads::AutoBrake.i
-#[serial 1784]   normalization of [serial 177
+#[serial 1857]   normalization of [serial 185
 make-an
 split-post
 axioms
 guided-sub-equals[i]
 axioms
-#[serial 1786]   normalization of [serial 1779]
+#[serial 1859]   normalization of [serial 1852]
 atomic
 normalize
 split-post
@@ -392,7 +360,7 @@ guided-sub-equals[NEXT_MA]
 axioms
 guided-sub-equals[CMA.num_segments]
 axioms
-#[serial 1788]   normalization of [serial 1780]
+#[serial 1861]   normalization of [serial 1853]
 atomic
 split-post
 axioms
@@ -408,13 +376,13 @@ axioms
 reduce
 push
 #Threads::AutoBrake.i
-#[serial 1832] <<P>> -> <<P1>> in sequential composition for [serial 102
+#[serial 1905] <<P>> -> <<P1>> in sequential composition for [serial 102
 make-an
 remove-axioms-post
 laws
 normalize
 axioms
-#[serial 1833] <<Q3>> -> <<Q>> in sequential composition for [serial 1028]
+#[serial 1906] <<Q4>> -> <<Q>> in sequential composition for [serial 1028]
 substitute-pre
 normalize
 split-post
@@ -423,19 +391,19 @@ guided-sub-equals[i]
 guided-sub-equals[CMA]
 normalize
 axioms
-#[serial 1834] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1028]
+#[serial 1907] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
 atomic
 substitute-pre
 normalize
 guided-sub-equals[CMA]
 axioms
-#[serial 1835] <<Q0 and P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
+#[serial 1908] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
 atomic
 normalize
 laws
 normalize
 axioms
-#[serial 1836] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
+#[serial 1909] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1028]
 atomic
 split-post
 axioms
@@ -444,7 +412,7 @@ guided-sub-equals[i]
 normalize
 laws
 axioms
-#[serial 1837] <<Q2 and P3>> S3 <<Q3>> in sequential composition for [serial 1028]
+#[serial 1910] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1028]
 remove-axioms-post
 laws
 atomic
@@ -487,10 +455,8 @@ axioms
 axioms
 #[serial 1044] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
 axioms
-#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_xl:
+#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
 axioms
-#[serial 1046] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
-axioms
-#[serial 1047] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
+#[serial 1046] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
 axioms
 #Q.E.D.
