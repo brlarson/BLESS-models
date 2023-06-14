@@ -65,7 +65,7 @@ variables
  
 states
   power_on : initial state  --powered-up, 
-    <<now=0>>	--start with "sense"
+    <<now = 0 s>>	--start with "sense"
   pace : complete state 
       --a ventricular pace has occured in the 
       --previous LRL-interval milliseconds
@@ -86,7 +86,7 @@ transitions
   T1_POWER_ON:	--initialization
   power_on -[ ]-> sense 
     {
-    	<<now=0>>
+    	<<now = 0s>>
     n! <<n@now>>   --first "sense" at initialization
     & 
     last_beat:=now 
