@@ -19,7 +19,7 @@ public
 			p: out event port --pace ventricle
 			{BLESS::Assertion => "<<VP()>>";};
 			n: out event port --non-refractory ventricular sense
-			{BLESS::Assertion => "<<(now=0) or VS()>>";};
+			{BLESS::Assertion => "<<(now=0 s) or VS()>>";};
 			h: in event port;  --stop thread
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
