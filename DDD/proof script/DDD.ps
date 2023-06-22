@@ -1,8 +1,8 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Mon May 08 12:47:22 EDT 2023 by brianlarson
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
+#  at Thu Jun 15 16:43:26 CDT 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/DDD/proof script/DDD.ps
 #ddd_mode::DDD.i
-#[serial 1003] <<I>> -> BLESS::Invariant of thread DDD.
+#[serial 1003] <<I>> -> BLESS::Invariant of thread DDD
 make-an
 axioms
 #[serial 1004] <<M(pav)>> -> <<I>> from invariant I when complete state pav has Assertion <<M(pav)>> in its definition.
@@ -48,7 +48,7 @@ replace<=
 normalize
 laws
 axioms
-#[serial 1013]  <<M(start)>> A <<M(va)>> for T0_GO:start-[ ]->va{A};
+#[serial 1013]  <<M(start)>> A <<M(va)>> for T0_GO: start-[ ]->va{A};
 reduce
 atomic
 normalize
@@ -56,7 +56,7 @@ laws
 axioms
 push
 #ddd_mode::DDD.i
-#[serial 1101]   normalization of [serial 1087
+#[serial 1099]   normalization of [serial 108
 make-an
 substitute-post
 substitute-post
@@ -68,37 +68,37 @@ split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1137] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1135
+#[serial 1126] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 112
 make-an
 guided-sub-equals[last_ap_or_as]
 laws
 normalize
 axioms
-#[serial 1138] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1135]
+#[serial 1127] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1124]
 guided-sub-equals[last_vp_or_vs]
 laws
 normalize
 axioms
-#[serial 1145]   normalization of [serial 1139]
+#[serial 1134]   normalization of [serial 1128]
 split@
 normalize
 split-quant
 quant
 normalize
 axioms
-#[serial 1147]   normalization of [serial 1140]
+#[serial 1136]   normalization of [serial 1129]
 guided-sub-equals[last_ap_or_as]
 axioms
-#[serial 1149]   normalization of [serial 1141]
+#[serial 1138]   normalization of [serial 1130]
 guided-sub-equals[last_vp_or_vs]
 axioms
-#[serial 1122] Associativity: (b.c).a = a.b.c [serial 1105]
+#[serial 1113] Associativity: (b.c).a = a.b.c [serial 1102]
 replace-port
 axioms
-#[serial 1124] Associativity: (b.c).a = a.b.c [serial 1111]
+#[serial 1114] Associativity: (b.c).a = a.b.c [serial 1106]
 replace-port
 axioms
-#[serial 1014]  <<M(va) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:va-[x]->va{A};
+#[serial 1014]  <<M(va) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL: va-[x]->va{A};
 reduce
 atomic
 remove-axioms-post
@@ -106,7 +106,7 @@ laws
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1190]   normalization of [serial 1177
+#[serial 1181]   normalization of [serial 116
 make-an
 substitute-pre
 substitute-post
@@ -128,13 +128,13 @@ split-quant
 quant
 normalize
 axioms
-#[serial 1192]   normalization of [serial 1180]
+#[serial 1183]   normalization of [serial 1169]
 substitute-post
 split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1251]   normalization of [serial 1248
+#[serial 1242]   normalization of [serial 123
 make-an
 substitute-pre
 normalize
@@ -143,7 +143,7 @@ normalize
 extend-eqr
 replace-qv
 axioms
-#[serial 1253]   normalization of [serial 1249]
+#[serial 1244]   normalization of [serial 1240]
 substitute-pre
 normalize
 laws
@@ -151,7 +151,7 @@ normalize
 substitute-post
 normalize
 axioms
-#[serial 1194]   normalization of [serial 1186]
+#[serial 1185]   normalization of [serial 1177]
 split-post
 substitute-pre
 normalize
@@ -161,23 +161,24 @@ axioms
 substitute-post
 normalize
 split-post
-substitute-pre
-substitute-pre
-normalize
-laws
 normalize
 axioms
-#[serial 1196]   normalization of [serial 1187]
+#[serial 1187]   normalization of [serial 1178]
 split-post
+axioms
+replace-port
+normalize
+substitute-pre
+substitute-pre
 laws
+axioms
+#[serial 1189]   normalization of [serial 1179]
+split-post
 axioms
 replace-port
 normalize
 axioms
-#[serial 1198]   normalization of [serial 1188]
-laws
-axioms
-#[serial 1015]  <<M(sav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL:sav-[x]->va{A};
+#[serial 1015]  <<M(sav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL: sav-[x]->va{A};
 reduce
 atomic
 normalize

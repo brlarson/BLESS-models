@@ -222,7 +222,7 @@ invariant
   and 
   VARS(now)  --variable invariant properties
   >>
-  
+   
   
 variables
   last_vp_or_vs ~ time  --time of last ventricular pace or sense
