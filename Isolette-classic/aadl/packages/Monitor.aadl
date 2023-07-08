@@ -192,18 +192,18 @@ thread implementation manage_monitor_mode.impl
           };  --end of wait_init
     mmm: --timeout on initialization
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout)
+            #Iso_Properties::Initialization_Timeout s)
             and (interface_failure? or internal_failure?
               or not (current_temperature_status = status'Valid))]->failed
           { <<not (not (MONITOR_INTERFACE_FAILURE or INTERNAL_FAILURE)
               and (current_temperature_status = status'Valid) 
-                or (now-start_time) < #Iso_Properties::Initialization_Timeout)
+                or (now-start_time) < #Iso_Properties::Initialization_Timeout s)
                and AXIOM_ST() and AXIOM_CTS() >>
           monitor_mode!(mmode'Failed)
           };  --end of mmm
     mmm2: --transition to normal operation
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout) and
+            #Iso_Properties::Initialization_Timeout s) and
         not ((interface_failure? or internal_failure?)
           or not (current_temperature_status = status'Valid)) ]->normal
           { <<MONITOR_OK() and RUN()>>
@@ -212,7 +212,7 @@ thread implementation manage_monitor_mode.impl
           };  --end of mmm2
     mmm2x:  --too soon, back to init
       check_init-[(now-start_time) < 
-            #Iso_Properties::Initialization_Timeout]->init{};  
+            #Iso_Properties::Initialization_Timeout s]->init{};  
     wait_normal: --check temperature status
       normal-[on dispatch]->check_normal
           {
@@ -234,7 +234,7 @@ thread implementation manage_monitor_mode.impl
       check_normal-[  --((now-start_time) >= #Iso_Properties::Initialization_Timeout) and 
       	(interface_failure? or internal_failure? or
         not (current_temperature_status = status'Valid))]->failed
-          {<<not (MONITOR_OK() or (now-start_time) < #Iso_Properties::Initialization_Timeout) and AXIOM_ST() >> 
+          {<<not (MONITOR_OK() or (now-start_time) < #Iso_Properties::Initialization_Timeout s) and AXIOM_ST() >> 
           monitor_mode!(mmode'Failed)};
 --    mmm3z:  --shouldn't ever be selected; needed for Serban's theorem
 --      check_normal-[((now-start_time) < #Iso_Properties::Initialization_Timeout)]->

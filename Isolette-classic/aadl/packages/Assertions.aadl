@@ -80,9 +80,9 @@ ghost variables
   Failed -> not MONITOR_OK() and RUN() >>
 
 --before timeout, initializing
-<<INI: :(now-START_TIME) < #Iso_Properties::Initialization_Timeout>>
+<<INI: :(now-START_TIME) < #Iso_Properties::Initialization_Timeout s>>
 --after timeout, running
-<<RUN: :(now-START_TIME) >= #Iso_Properties::Initialization_Timeout>>
+<<RUN: :(now-START_TIME) >= #Iso_Properties::Initialization_Timeout s>>
 
 --essential efficacy property
 --heat control is On when temp is at most Lower Desired Temperature

@@ -238,16 +238,16 @@ thread implementation manage_regulator_mode.impl
           };  --end of wait_init
     mrm: --timeout on initialization
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout)
+            #Iso_Properties::Initialization_Timeout s)
             and (interface_failure? or internal_failure?
               or not (current_temperature_status = status'Valid))]->failed
-          { <<not (REGULATOR_OK() or ((now-start_time) < #Iso_Properties::Initialization_Timeout))
+          { <<not (REGULATOR_OK() or ((now-start_time) < #Iso_Properties::Initialization_Timeout s))
           	and AXIOM_STR() and AXIOM_CTSR() >>
           regulator_mode!(mmode'Failed)
           };  --end of mrm
     mrm2: --transition to normal operation
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout) and
+            #Iso_Properties::Initialization_Timeout s) and
         not (interface_failure? or internal_failure?)
         and (current_temperature_status = status'Valid)]->normal
           { <<REGULATOR_OK() and RUN()>>
@@ -256,7 +256,7 @@ thread implementation manage_regulator_mode.impl
           };  --end of mrm2
     mrm2x:  --too soon, back to init
       check_init-[(now-start_time) < 
-            #Iso_Properties::Initialization_Timeout]->init{};  
+            #Iso_Properties::Initialization_Timeout s]->init{};  
     wait_normal: --check temperature status
       normal-[on dispatch]->check_normal
           { <<RUN()>>
@@ -279,7 +279,7 @@ thread implementation manage_regulator_mode.impl
       	(interface_failure? or internal_failure? or
         not (current_temperature_status = status'Valid))]->failed
           {<<(not REGULATOR_OK() or not (current_temperature_status = status'Valid))
-          	and ((now-start_time) >= #Iso_Properties::Initialization_Timeout)
+          	and ((now-start_time) >= #Iso_Properties::Initialization_Timeout s)
           	and AXIOM_STR() and AXIOM_CTSR() >> 
           regulator_mode!(mmode'Failed)};
 --    mrm3err:  --internal error
