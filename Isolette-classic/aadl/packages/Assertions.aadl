@@ -46,21 +46,21 @@ ghost variables
 -- than the Lower Alarm Temperature or greater than the Upper Alarm Temperature, 
 -- the Alarm Control shall be set to On.
   <<REQMA2: :MONITOR_MODE(x:mmode'Normal) and 
-    (CURRENT_TEMP.t < LOWER_ALARM_TEMP or CURRENT_TEMP.t > UPPER_ALARM_TEMP)>>
+    (CURRENT_TEMP.t < LOWER_ALARM_TEMP.t or CURRENT_TEMP.t > UPPER_ALARM_TEMP.t)>>
 --REQ-MA-3: If the Monitor Mode is Normal and the Current Temperature is greater 
 --  than or equal to the Lower Alarm Temperature and less than the Lower Alarm 
 --  Temperature +0.5°, or the Current Temperature is greater than the Upper 
 --  Alarm Temperature -0.5° and less than or equal to the Upper Alarm Temperature, 
 --  the value of the Alarm Control shall not be changed.
   <<REQMA3: :MONITOR_MODE(x:mmode'Normal) and 
-    (CURRENT_TEMP.t in LOWER_ALARM_TEMP ., (LOWER_ALARM_TEMP + 0.5 F) or 
-    	CURRENT_TEMP.t in (UPPER_ALARM_TEMP - 0.5 F) ,. UPPER_ALARM_TEMP)>>
+    (CURRENT_TEMP.t in LOWER_ALARM_TEMP.t ., (LOWER_ALARM_TEMP.t + 0.5 F) or 
+    	CURRENT_TEMP.t in (UPPER_ALARM_TEMP.t - 0.5 F) ,. UPPER_ALARM_TEMP.t)>>
 --REQ-MA-4: If the Monitor Mode is Normal and the value of the Current 
 --  Temperature is greater than or equal to the Lower Alarm Temperature +0.5° 
 --  and less than or equal to the Upper Alarm Temperature -0.5°, the Alarm 
 --  Control shall be set to Off.
   <<REQMA4: :MONITOR_MODE(x:mmode'Normal) and 
-    (CURRENT_TEMP.t in (LOWER_ALARM_TEMP + 0.5 F) .. (UPPER_ALARM_TEMP - 0.5 F))>>
+    (CURRENT_TEMP.t in (LOWER_ALARM_TEMP.t + 0.5 F) .. (UPPER_ALARM_TEMP.t - 0.5 F))>>
 --REQ-MA-5: If the Monitor Mode is Failed, the Alarm Control shall be set to On.
   <<REQMA5: :MONITOR_MODE(x:mmode'Failed)>>
 
@@ -105,16 +105,16 @@ ghost variables
 --• REQ-MHS-2: If the Regulator Mode is Normal and the Current Temperature is 
 --  *at most* the Lower Desired Temperature, the Heat Control shall be set to On.
 --this is different from flawed original requirements that forced the temperature out-or-range to turn On or Off the heat source
-<<REQMHS2: :CURRENT_TEMP.t <= LOWER_DESIRED_TEMP>>
+<<REQMHS2: :CURRENT_TEMP.t <= LOWER_DESIRED_TEMP.t>>
 --• REQ-MHS-3: If the Regulator Mode is Normal and the Current Temperature is 
 --  *at least* the Upper Desired Temperature, the Heat Control shall be set to Off.
 --this is different from flawed original requirements that forced the temperature out-or-range to turn On or Off the heat source
-<<REQMHS3: :CURRENT_TEMP.t >= UPPER_DESIRED_TEMP>>
+<<REQMHS3: :CURRENT_TEMP.t >= UPPER_DESIRED_TEMP.t>>
 --• REQ-MHS-4: If the Regulator Mode is Normal and the Current Temperature is 
 --  greater than the Lower Desired Temperature and less than the Upper Desired Temperature, 
 --  the value of the Heat Control shall not be changed. 
 --this is different from flawed original requirements that forced the temperature out-or-range to turn On or Off the heat source
-<<REQMHS4: :CURRENT_TEMP.t in LOWER_DESIRED_TEMP ,, UPPER_DESIRED_TEMP>> --note open interval ,,
+<<REQMHS4: :CURRENT_TEMP.t in LOWER_DESIRED_TEMP.t ,, UPPER_DESIRED_TEMP.t>> --note open interval ,,
 --• REQ-MHS-5: If the Regulator Mode is Failed, the Heat Control shall be set to Off.
 <<REQMHS5: :REGULATOR_MODE(x:mmode'Failed)>>  
 

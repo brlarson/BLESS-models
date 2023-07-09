@@ -1,27 +1,31 @@
-#proof script for manage_regulator_mode_mrm.impl
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/mrm.ps
 push
 sort-by-component[Regulate::manage_regulator_mode.impl]
-#[serial 1034] <<M(init)>> -> <<I>> from invariant I when complete state init has Assertion <<M(init)>> in its definition
+#Regulate::manage_regulator_mode.impl
+#[serial 1033] <<M(init)>> -> <<I>> from invariant I when complete state init has Assertion <<M(init)>> in its definitio
 make-an
 axioms
-#[serial 1035] <<M(normal)>> -> <<I>> from invariant I when complete state normal has Assertion <<M(normal)>> in its definition.
+#[serial 1034] <<M(normal)>> -> <<I>> from invariant I when complete state normal has Assertion <<M(normal)>> in its definition.
 axioms
-#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state check_init, <<M(check_init)>> -> <<e1 or e2 or . . . en>>
+#[serial 1035] Serban's Theorem:  disjunction of execute conditions leaving execution state check_init, <<M(check_init)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
+normalize
 cnf
 laws
 normalize
 laws
+normalize
+DeMorgan
 normalize
 cnf
 normalize
 laws
 normalize
 axioms
-#[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1038] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
+#[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
 DeMorgan
 normalize
 cnf
@@ -33,7 +37,7 @@ cnf
 laws
 normalize
 axioms
-#[serial 1039]  <<M(start)>> A <<M(init)>> for mrm1:start-[ ]->init{A};
+#[serial 1038]  <<M(start)>> A <<M(init)>> for mrm1: start-[ ]->init{A};
 reduce
 atomic
 remove-axioms-post
@@ -45,8 +49,9 @@ normalize
 guided-sub-equals[START_TIME]
 guided-sub-equals[now]
 normalize
+remove-units
 axioms
-#[serial 1040]  <<M(init) and x>> A <<M(check_init)>> for wait_init:init-[x]->check_init{A};
+#[serial 1039]  <<M(init) and x>> A <<M(check_init)>> for wait_init: init-[x]->check_init{A};
 reduce
 atomic
 laws
@@ -55,7 +60,7 @@ axioms
 remove-axioms-post
 laws
 axioms
-#[serial 1041]  <<M(check_init) and x>> A <<M(failed)>> for mrm:check_init-[x]->failed{A};
+#[serial 1040]  <<M(check_init) and x>> A <<M(failed)>> for mrm: check_init-[x]->failed{A};
 reduce
 atomic
 remove-axioms-post
@@ -77,22 +82,17 @@ normalize
 laws
 now
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
-normalize
 axioms
 guided-sub-equals[START_TIME]
 replace<=
 normalize
-DeMorgan
-normalize
-laws
 axioms
-#[serial 1042]  <<M(check_init) and x>> A <<M(normal)>> for mrm2:check_init-[x]->normal{A};
+#[serial 1041]  <<M(check_init) and x>> A <<M(normal)>> for mrm2: check_init-[x]->normal{A};
 reduce
 atomic
 remove-axioms-post
 laws
 normalize
-laws
 axioms
 substitute-both
 normalize
@@ -105,17 +105,17 @@ axioms
 transitive
 alldist^
 axioms
-#[serial 1043]  <<M(check_init) and x>> -> <<M(init)>> for mrm2x:check_init-[x]->init{};
+#[serial 1042]  <<M(check_init) and x>> -> <<M(init)>> for mrm2x: check_init-[x]->init{};
 normalize
 axioms
-#[serial 1044]  <<M(normal) and x>> A <<M(check_normal)>> for wait_normal:normal-[x]->check_normal{A};
+#[serial 1043]  <<M(normal) and x>> A <<M(check_normal)>> for wait_normal: normal-[x]->check_normal{A};
 reduce
 atomic
 remove-axioms-post
 normalize
 laws
 axioms
-#[serial 1045]  <<M(check_normal) and x>> A <<M(normal)>> for mrm3:check_normal-[x]->normal{A};
+#[serial 1044]  <<M(check_normal) and x>> A <<M(normal)>> for mrm3: check_normal-[x]->normal{A};
 reduce
 atomic
 remove-axioms-post
@@ -133,12 +133,11 @@ axioms
 transitive
 alldist^
 axioms
-#[serial 1046]  <<M(check_normal) and x>> A <<M(failed)>> for mrm3x:check_normal-[x]->failed{A};
+#[serial 1045]  <<M(check_normal) and x>> A <<M(failed)>> for mrm3x: check_normal-[x]->failed{A};
 reduce
 atomic
 normalize
 laws
-normalize
 axioms
 split-post
 normalize
@@ -150,7 +149,6 @@ DeMorgan
 normalize
 laws
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
-normalize
 laws
 now
 axioms

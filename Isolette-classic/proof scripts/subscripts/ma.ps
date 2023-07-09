@@ -1,6 +1,8 @@
-#manage_alarm_ma.impl
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/ma.ps
 push
 sort-by-component[Monitor::manage_alarm.impl]
+#Monitor::manage_alarm.impl
+#[serial 1017] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-both
 normalize
@@ -37,11 +39,11 @@ normalize
 laws
 normalize
 axioms
-#[serial 1022]  <<M(poweron)>> -> <<M(run)>> for maPo:poweron-[ ]->run{};
+#[serial 1022]  <<M(poweron)>> -> <<M(run)>> for maPo: poweron-[ ]->run{};
 axioms
-#[serial 1023]  <<M(run) and x>> -> <<M(check_mode)>> for maRun:run-[x]->check_mode{};
+#[serial 1023]  <<M(run) and x>> -> <<M(check_mode)>> for maRun: run-[x]->check_mode{};
 axioms
-#[serial 1024]  <<M(check_mode) and x>> A <<M(run)>> for maFailed:check_mode-[x]->run{A};
+#[serial 1024]  <<M(check_mode) and x>> A <<M(run)>> for maFailed: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
@@ -54,220 +56,181 @@ dist^
 normalize
 now
 axioms
+substitute-post
+normalize
+axioms
+#[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInit: check_mode-[x]->run{A};
+reduce
+atomic
+normalize
+axioms
+now
+axioms
+substitute-post
+normalize
+alldist^
+substitute-pre
+now
+normalize
+axioms
+substitute-post
+substitute-post
+normalize
+axioms
+#[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormal: check_mode-[x]->check_temp{};
+remove-axioms-post
+laws
+axioms
+#[serial 1027]  <<M(check_temp) and x>> A <<M(run)>> for maOor: check_temp-[x]->run{A};
+normalize
+reduce
+atomic
+normalize
+axioms
+substitute-post
+normalize
+laws
+normalize
+dist^
+normalize
+split-post
+now
+axioms
+push
+#Monitor::manage_alarm.impl
+#[serial 1367] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 135
+make-an
+normalize
+substitute-pre
+normalize
+replace<=
 replace-port-value
 axioms
+#[serial 1368] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1352]
 substitute-post
 normalize
 axioms
-#[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInitcheck_mode-[x]->run{A};
+#[serial 1369] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1352]
+substitute-post
+normalize
+substitute-post
+substitute-pre
+normalize
+replace<=
+normalize
+axioms
+#[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr: check_temp-[x]->run{A};
+reduce
+atomic
+remove-axioms-post
+laws
+normalize
+axioms
+split-post
+axioms
+substitute-post
+dist^
+normalize
+now
+axioms
+split-post
+substitute-post
+normalize
+axioms
+replace-port-value
+range-exp
+normalize
+axioms
+substitute-post
+substitute-pre
+normalize
+replace<=
+axioms
+#[serial 1029]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for maHys: check_temp-[x]->check_hyst{};
+split-post
+axioms
+substitute-post
+replace-port-value
+range-exp
+normalize
+axioms
+#[serial 1030]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOn: check_hyst-[x]->run{A};
 reduce
 atomic
 normalize
 axioms
 now
 axioms
+split-post
+axioms
+remove-axioms-post
+axioms
+push
+#Monitor::manage_alarm.impl
+#[serial 1498]   normalization of [serial 148
+make-an
 substitute-post
-normalize
 alldist^
-substitute-pre
-now
-normalize
-axioms
-substitute-post
-substitute-post
-normalize
-axioms
-#[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormalcheck_mode-[x]->check_temp{};
-remove-axioms-post
-laws
-axioms
-#[serial 1027]  <<M(check_temp) and x>> A <<M(run)>> for maOorcheck_temp-[x]->run{A};
-normalize
-reduce
-atomic
-normalize
-axioms
-substitute-post
-normalize
-laws
-normalize
-dist^
-normalize
-split-post
 now
 axioms
-push
-make-an
-#[serial 1373] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1358]
-substitute-post
-normalize
-axioms
-#[serial 1374] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1358]
-substitute-post
-substitute-post
-substitute-pre
-normalize
-replace<=
-axioms
-stop*****
-#[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr:check_temp-[x]->run{A};
-reduce
-atomic
-normalize
-axioms
-remove-axioms-post
-now
-laws
-axioms
-substitute-post
-normalize
-dist^
-normalize
-now
-axioms
-substitute-pre
-normalize
-laws
-normalize
-split-post
-normalize
-push
-make-an
-#[serial 1381] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1379]
-substitute-post
-substitute-post
-normalize
-laws
-axioms
-#[serial 1382] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1379]
-replace<=
-normalize
-axioms
-#[serial 1387]   normalization of [serial 1383]
-replace-port
-range-exp
-normalize
-axioms
-#[serial 1029]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for maHys:check_temp-[x]->check_hyst{};
-remove-axioms-post
-substitute-both
-normalize
-range-exp
-normalize
-laws
-dist^
-replace-port
-normalize
-now
-axioms
-#[serial 1030]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOn:check_hyst-[x]->run{A};
-reduce
-atomic
-laws
-normalize
-axioms
-dist^
-dist^
-normalize
-axioms
-remove-axioms-post
-substitute-post
-normalize
-dist^
-normalize
-dist^
-now
-normalize
-axioms
-push
-make-an
-#[serial 1466]   normalization of [serial 1462]
-laws
-normalize
+#[serial 1500]   normalization of [serial 1492]
 and-over-or-post
-normalize
-laws
-normalize
 split-post
 normalize
 axioms
+substitute-pre
+guided-sub-equals[cntrl'O_n]
+guided-sub-equals[ALARM_CONTROL^-1]
+axioms
+#[serial 1514] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1496]
+substitute-both
+normalize
+split-post
+axioms
+substitute-post
+normalize
+substitute-post
+normalize
+axioms
+#[serial 1031]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOff: check_hyst-[x]->run{A};
+reduce
+atomic
+normalize
+axioms
+laws
 push
 make-an
-#[serial 1517]   normalization of [serial 1502]
-substitute-pre
-normalize
+#Monitor::manage_alarm.impl
+#[serial 1557]   normalization of [serial 1549] 
+remove-axioms-post
 laws
-normalize
+split-post
 axioms
-#[serial 1519]   normalization of [serial 1503]
-substitute-pre
-normalize
-laws
-normalize
-guided-sub-equals[O_n]
-guided-sub-equals[alarm_previous_period]
-guided-sub-equals[O_n]
-equivalent
-axioms
-#[serial 1533]   normalization of [serial 1510]
-substitute-pre
-normalize
-laws
-axioms
-#[serial 1535]   normalization of [serial 1511]
-substitute-pre
-normalize
-laws
-axioms
-#[serial 1470]   normalization of [serial 1464]
-substitute-pre
-normalize
-laws
+substitute-both
 normalize
 split-post
 normalize
 axioms
 substitute-post
+substitute-post
 normalize
 axioms
-#[serial 1031]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOff:check_hyst-[x]->run{A};
-reduce
-atomic
-normalize
-remove-axioms-post
-now
-laws
-axioms
-split-post
-axioms
-push
-#[serial 1567]   normalization of [serial 1558
-make-an
+#[serial 1559]   normalization of [serial 1550]
 substitute-post
 alldist^
 now
 axioms
-#[serial 1569]   normalization of [serial 1561]
-substitute-post
-normalize
-laws
-normalize
-substitute-both
-normalize
-laws
-normalize
-guided-sub-equals[Off]
-guided-sub-equals[alarm_previous_period]
-equivalent
-normalize
-laws
-equivalent
-normalize
-laws
-axioms
-#[serial 1586] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1581]
-substitute-post
+#[serial 1561]   normalization of [serial 1553]
+and-over-or-post
+split-post
 normalize
 axioms
-#[serial 1032]  <<M(run) and x>> -> <<M(halt)>> for maStop:run-[x]->halt{};
+substitute-pre
+normalize
+guided-sub-equals[cntrl'Off]
+guided-sub-equals[ALARM_CONTROL^-1]
+normalize
+axioms
+#[serial 1571] Associativity: (b.c).a = a.b.c [serial 1563]
+now
 axioms

@@ -329,8 +329,8 @@ end manage_heat_source;
 thread implementation manage_heat_source.impl
 annex BLESS {**
 	assert
-	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP
-    	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP>>    
+	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP.t
+    	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP.t>>    
 	  <<AXIOM_HEAT: : heat_previous_period = cntrl'O_n or heat_previous_period = cntrl'Off >> 
 	  <<AXIOM_HC: : HEAT_CONTROL^-1 = heat_control^-1 >>
 	invariant <<INVMHS: :heat_previous_period = heat_control^-1>>

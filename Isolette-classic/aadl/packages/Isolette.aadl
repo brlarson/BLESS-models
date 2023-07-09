@@ -344,7 +344,7 @@ connections
   trs : port regulate_temperature.regulator_status -> regulator_status;
   tdt : port regulate_temperature.displayed_temp -> display_temperature;
   tms : port monitor_temperature.monitor_status -> monitor_status;
-  ta : port monitor_temperature.alarm -> alarm;
+  ta : port monitor_temperature.alarm_control -> alarm;
   tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
 annex EMV2
   {**
@@ -423,7 +423,7 @@ connections
   trs : port regulate_temperature.regulator_status -> regulator_status;
   tdt : port regulate_temperature.displayed_temp -> display_temperature;
   tms : port monitor_temperature.monitor_status -> monitor_status;
-  ta : port monitor_temperature.alarm -> alarm_control;
+  ta : port monitor_temperature.alarm_control -> alarm_control;
   tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
 annex EMV2
   {**

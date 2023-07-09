@@ -1,25 +1,26 @@
-# manage_heat_source_mhs.impl
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/mhs.ps
 push
 sort-by-component[Regulate::manage_heat_source.impl]
-#[serial 1048] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#Regulate::manage_heat_source.impl
+#[serial 1047] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-both
 normalize
 axioms
-#[serial 1049] Serban's Theorem:  disjunction of execute conditions leaving execution state check_temp, <<M(check_temp)>> -> <<e1 or e2 or . . . en>>
+#[serial 1048] Serban's Theorem:  disjunction of execute conditions leaving execution state check_temp, <<M(check_temp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 cnf
 laws
 normalize
 axioms
-#[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state poweron, <<M(poweron)>> -> <<e1 or e2 or . . . en>>
+#[serial 1049] Serban's Theorem:  disjunction of execute conditions leaving execution state poweron, <<M(poweron)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state check_hyst, <<M(check_hyst)>> -> <<e1 or e2 or . . . en>>
+#[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state check_hyst, <<M(check_hyst)>> -> <<e1 or e2 or . . . en>>
 substitute-pre
 normalize
 axioms
-#[serial 1052] Serban's Theorem:  disjunction of execute conditions leaving execution state check_mode, <<M(check_mode)>> -> <<e1 or e2 or . . . en>>
+#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state check_mode, <<M(check_mode)>> -> <<e1 or e2 or . . . en>>
 normalize
 cnf
 normalize
@@ -32,11 +33,11 @@ replace<=
 laws
 normalize
 axioms
-#[serial 1053]  <<M(poweron)>> -> <<M(run)>> for mhsPo:poweron-[ ]->run{};
+#[serial 1052]  <<M(poweron)>> -> <<M(run)>> for mhsPo: poweron-[ ]->run{};
 axioms
-#[serial 1054]  <<M(run) and x>> -> <<M(check_mode)>> for mhsRun:run-[x]->check_mode{};
+#[serial 1053]  <<M(run) and x>> -> <<M(check_mode)>> for mhsRun: run-[x]->check_mode{};
 axioms
-#[serial 1055]  <<M(check_mode) and x>> A <<M(run)>> for mhsFailed:check_mode-[x]->run{A};
+#[serial 1054]  <<M(check_mode) and x>> A <<M(run)>> for mhsFailed: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
@@ -49,7 +50,10 @@ dist^
 normalize
 now
 axioms
-#[serial 1056]  <<M(check_mode) and x>> A <<M(run)>> for mhsInit:check_mode-[x]->run{A};
+substitute-post
+normalize
+axioms
+#[serial 1055]  <<M(check_mode) and x>> A <<M(run)>> for mhsInit: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
@@ -63,7 +67,10 @@ substitute-both
 now
 normalize
 axioms
-#[serial 1057]  <<M(check_mode) and x>> -> <<M(check_temp)>> for mhsNormal:check_mode-[x]->check_temp{};
+substitute-post
+normalize
+axioms
+#[serial 1056]  <<M(check_mode) and x>> -> <<M(check_temp)>> for mhsNormal: check_mode-[x]->check_temp{};
 normalize
 remove-axioms-post
 laws
@@ -72,7 +79,7 @@ axioms
 substitute-post
 normalize
 axioms
-#[serial 1058]  <<M(check_temp) and x>> A <<M(run)>> for mhsBelow:check_temp-[x]->run{A};
+#[serial 1057]  <<M(check_temp) and x>> A <<M(run)>> for mhsBelow: check_temp-[x]->run{A};
 reduce
 atomic
 dist^
@@ -83,7 +90,7 @@ normalize
 dist^
 normalize
 split-post
-replace-port
+replace-port-value
 substitute-pre
 substitute-pre
 normalize
@@ -92,7 +99,11 @@ normalize
 replace<=
 now
 axioms
-#[serial 1059]  <<M(check_temp) and x>> A <<M(run)>> for mhsAbove:check_temp-[x]->run{A};
+substitute-post
+substitute-post
+normalize
+axioms
+#[serial 1058]  <<M(check_temp) and x>> A <<M(run)>> for mhsAbove: check_temp-[x]->run{A};
 reduce
 atomic
 dist^
@@ -103,7 +114,7 @@ normalize
 dist^
 normalize
 split-post
-replace-port
+replace-port-value
 substitute-both
 substitute-pre
 normalize
@@ -111,15 +122,18 @@ replace<=
 laws
 now
 axioms
-#[serial 1060]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for mhsHys:check_temp-[x]->check_hyst{};
+substitute-post
+normalize
+axioms
+#[serial 1059]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for mhsHys: check_temp-[x]->check_hyst{};
 remove-axioms-post
 substitute-both
 normalize
 laws
-replace-port
-now
+replace-port-value
+normalize
 axioms
-#[serial 1061]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOn:check_hyst-[x]->run{A};
+#[serial 1060]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOn: check_hyst-[x]->run{A};
 reduce
 atomic
 normalize
@@ -155,9 +169,11 @@ laws
 split-post
 normalize
 axioms
-guided-sub-equals[O_n]
+guided-sub-equals[heat_control^-1]
 axioms
-#[serial 1062]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOff:check_hyst-[x]->run{A};
+guided-sub-equals[HEAT_CONTROL^-1]
+axioms
+#[serial 1061]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOff: check_hyst-[x]->run{A};
 reduce
 atomic
 remove-axioms-post
@@ -166,8 +182,7 @@ normalize
 axioms
 dist^
 normalize
-laws
-normalize
+now
 axioms
 substitute-post
 normalize
@@ -184,7 +199,4 @@ equivalent
 equivalent
 normalize
 laws
-normalize
-axioms
-#[serial 1063]  <<M(run) and x>> -> <<M(halt)>> for mhsStop:run-[x]->halt{};
 axioms

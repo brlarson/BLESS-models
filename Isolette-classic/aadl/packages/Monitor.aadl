@@ -11,8 +11,8 @@ features
     {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
     {BLESS::Value => "<<returns upperAlarmRange := UPPER_ALARM_TEMP>>";};
-  alarm : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE( x : alarm)>>";};
+  alarm_control : out data port Iso_Types::on_off
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE( x : alarm_control)>>";};
   monitor_status : out data port Iso_Types::status
     {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   regulator_failure : in data port Base_Types::Boolean
@@ -25,7 +25,7 @@ annex EMV2
   error propagations
   current_temperature: in propagation
     {OutOfRange,UndetectableValueError};
-  alarm: out propagation {AlarmError};
+  alarm_control: out propagation {AlarmError};
   monitor_status: out propagation {MonitorStatusError};
   regulator_failure: in propagation {ItemOmission,ItemCommission};
   end propagations;
@@ -48,7 +48,7 @@ connections
   maul : port upper_alarm_temperature -> manage_alarm.upper_alarm_temperature;
   mall : port lower_alarm_temperature -> manage_alarm.lower_alarm_temperature;
   --alarm out
-  malrm : port manage_alarm.alarm_control -> alarm;
+  malrm : port manage_alarm.alarm_control -> alarm_control;
   --monitor interface
   mms : port manage_monitor_interface.monitor_status -> monitor_status;
   intff : port manage_monitor_interface.interface_failure -> manage_monitor_mode.interface_failure;
@@ -252,9 +252,9 @@ features
   monitor_mode : in data port Iso_Types::monitor_mode  --enumeration type
     {BLESS::Value=>"<< +=> MONITOR_MODE(x:monitor_mode)>>";};  --Assertion-enumeration +=>
   lower_alarm_temperature : in data port Iso_Types::lower_alarm_temperature.i
-    {BLESS::Value => "<<returns lowerAlarmRange := LOWER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns lowerAlarmTemperature := LOWER_ALARM_TEMP>>";};
   upper_alarm_temperature : in data port Iso_Types::upper_alarm_temperature.i
-    {BLESS::Value => "<<returns upperAlarmRange :=UPPER_ALARM_TEMP>>";};
+    {BLESS::Value => "<<returns upperAlarmTemperature := UPPER_ALARM_TEMP>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
 properties
@@ -287,12 +287,19 @@ end manage_alarm;
 thread implementation manage_alarm.impl
 annex BLESS {**
 	assert
-	  <<AXIOM_AR: : (LOWER_ALARM_TEMP <= (0.5 F + LOWER_ALARM_TEMP))
+	  <<AXIOM_AR: : --ordering of temperatures
+	    (LOWER_ALARM_TEMP <= (0.5 F + LOWER_ALARM_TEMP))
 	      and ((UPPER_ALARM_TEMP - 0.5 F) <= UPPER_ALARM_TEMP) >>
-	  <<AXIOM_OFFON: : (alarm_previous_period = cntrl'O_n) or (alarm_previous_period = cntrl'Off)>> 
-	  <<AXIOM_AC: : ALARM_CONTROL^-1 = alarm_control^-1 >>    
-	  <<EDGE_TEMP: :(CURRENT_TEMP.t in LOWER_ALARM_TEMP ., (LOWER_ALARM_TEMP + 0.5 F)) or 
-    	(CURRENT_TEMP.t in (UPPER_ALARM_TEMP - 0.5 F) ,. UPPER_ALARM_TEMP)>>
+	  <<AXIOM_OFFON: : --alarm must be Off or O_n
+	    (alarm_previous_period = cntrl'O_n) or (alarm_previous_period = cntrl'Off)>> 
+	  <<AXIOM_AC: :  --alarm_control is ALARM_CONTROL
+	    ALARM_CONTROL^-1 = alarm_control^-1 >>    
+	  <<EDGE_TEMP: :  --current temperature is withing edge of alarm range
+	    (CURRENT_TEMP.t in LOWER_ALARM_TEMP.t ., (LOWER_ALARM_TEMP.t + 0.5 F)) or 
+    	(CURRENT_TEMP.t in (UPPER_ALARM_TEMP.t - 0.5 F) ,. UPPER_ALARM_TEMP.t)>>
+--    <<AXIOM_MAPORT: : --ports have ghost values (needed because record types)
+--       current_temperature=CURRENT_TEMP and lower_alarm_temperature.t=LOWER_ALARM_TEMP
+--       and upper_alarm_temperature.t=UPPER_ALARM_TEMP >>
 	invariant <<INVMA: :alarm_previous_period = alarm_control^-1>>
 	variables
     start_time ~ time  --record time stamp of power-on
@@ -302,7 +309,7 @@ annex BLESS {**
 	  poweron : initial state <<alarm_previous_period = cntrl'Off and (INVMA())^1>>;
 	  run : complete state <<INVMA()>>;
 	  check_mode : state <<INVMA()>>;  --check alarm mode 
-	  check_temp : state <<INVMA() and MONITOR_OK() and RUN() and AXIOM_OFFON()>>;
+	  check_temp : state <<INVMA() and MONITOR_OK() and RUN() and AXIOM_OFFON() >> -- and AXIOM_MAPORT() >>;
 	  check_hyst : state <<EDGE_TEMP() and MONITOR_OK() and RUN() and INVMA() and AXIOM_OFFON()>>;
 	  halt : final state; 
   transitions
@@ -327,8 +334,8 @@ annex BLESS {**
     maNormal: --monitor mode is normal, check temperature
     check_mode -[monitor_mode? = mmode'Normal]-> check_temp {};
     maOor:  --REQ-MA-2  temp out of range
-    check_temp -[(current_temperature.t < lower_alarm_temperature.t) or 
-    	  (current_temperature.t > upper_alarm_temperature.t)]-> run  
+    check_temp -[(current_temperature.t? < lower_alarm_temperature.t?) or 
+    	  (current_temperature.t? > upper_alarm_temperature.t?)]-> run  
       { <<REQMA2() and not REQMA1()>>
       alarm_control!(cntrl'O_n)  --temp out of range alarm
       ; <<alarm_control=cntrl'O_n>>
@@ -336,8 +343,8 @@ annex BLESS {**
         <<alarm_previous_period' = alarm_control>>
       };  --end of maOor 
     maIr:  --REQ-MA-4  temp in range
-    check_temp -[(current_temperature.t? >= (lower_alarm_temperature.t + 0.5 F)) and 
-    	    (current_temperature.t? <= (upper_alarm_temperature.t - 0.5 F))]-> run
+    check_temp -[(current_temperature.t? >= (lower_alarm_temperature.t? + 0.5 F)) and 
+    	    (current_temperature.t? <= (upper_alarm_temperature.t? - 0.5 F))]-> run
       { <<REQMA4() and not REQMA1() and AXIOM_AR()>>
       alarm_control!(cntrl'Off)  --no alarm
       ; <<REQMA4() and not REQMA1() and AXIOM_AR() and (alarm_control = cntrl'Off)>>
@@ -345,13 +352,13 @@ annex BLESS {**
         <<alarm_previous_period' = alarm_control>>
       };  --end of maIr
     maHys:  --REQ-MA-3 hysteresis at edge of temp range
-    check_temp -[((current_temperature.t? >= lower_alarm_temperature.t) 
-    	  and (current_temperature.t? < (lower_alarm_temperature.t + 0.5 F))) or 
-    	  ((current_temperature.t? > (upper_alarm_temperature.t - 0.5 F)) 
-    	  	and (current_temperature.t? <= upper_alarm_temperature.t))]-> check_hyst{};
+    check_temp -[((current_temperature.t? >= lower_alarm_temperature.t?) 
+    	  and (current_temperature.t? < (lower_alarm_temperature.t? + 0.5 F))) or 
+    	  ((current_temperature.t? > (upper_alarm_temperature.t? - 0.5 F)) 
+    	  	and (current_temperature.t? <= upper_alarm_temperature.t?))]-> check_hyst{};
     maHysOn:	--REQ-MA-3  with alarm on
     check_hyst -[alarm_previous_period = cntrl'O_n]-> run
-      { <<EDGE_TEMP() and MONITOR_MODE(x:mmode'Normal) and AXIOM_AC()
+      { <<REQMA3() and AXIOM_AC()
       	and (alarm_previous_period = cntrl'O_n) and INVMA() >>
       alarm_control!(cntrl'O_n)  
       ;  <<alarm_control = cntrl'O_n>>
@@ -360,7 +367,7 @@ annex BLESS {**
       };  --end of maHysOn
     maHysOff:	--REQ-MA-3  with alarm off
     check_hyst -[alarm_previous_period = cntrl'Off]-> run
-      { <<EDGE_TEMP() and MONITOR_MODE(x:mmode'Normal) and AXIOM_AC() 
+      { <<REQMA3() and AXIOM_AC() 
       	and (alarm_previous_period = cntrl'Off) and INVMA()>>
       alarm_control!(cntrl'Off)  
       ;  <<alarm_control=cntrl'Off>>
