@@ -153,7 +153,7 @@ end temperature_sensor.impl;
 device heat_source
 features
   heat_control : in data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
   heat_out : out data port Nursery::Heat;
 flows
   temp_to_heat_flow: flow path heat_control -> heat_out;

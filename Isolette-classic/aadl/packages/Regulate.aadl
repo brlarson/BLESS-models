@@ -292,7 +292,7 @@ end manage_regulator_mode.impl;
 thread manage_heat_source
 features
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
