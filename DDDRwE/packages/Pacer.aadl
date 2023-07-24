@@ -146,7 +146,7 @@ assert
 <<AXIOM_AT: n~time :AT iff AT_A(n) >>
 
 --initial condition
-<<START : n~time : (n=0) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
+<<START : n~time : (n=0 s) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
 
 --invariant
 <<INV : n~time : 
@@ -183,17 +183,19 @@ variables
   va_interval ~ time  --ventrucular-atrial interval
      <<AXIOM_VA_INTERVAL : : va_interval = VA_INTERVAL_A() >>;
   dur ~ time;
+  dav_savo ~ time
+     <<DAVSAVO: : dav_savo = dav - savo >>
 
 states
   go : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
-    <<(now=0) and (CCI = LRL)>>; --first instant of operation
+    << now = 0 s and CCI = LRL >>; --first instant of operation
   off : final state;
   sav : complete state  --an atrial sense occured 
-    <<SAV(now) and LRL_A(now) and LAST(now) >>;    --  in the previous Sensed AV Delay
+    <<SAV(now) and LRL_A(now) and LAST(now) and DAVSAVO() >>;    --  in the previous Sensed AV Delay
   sav_check_vrp : state  --ventricular sense during sensed AV delay
   	<<V@now and SAV(now) and LRL_A(now) and LAST(now)>>;  --was it in VRP_A? 
   sav_check_url : state  --SAV delay timeout, check for URL before tracking
-    <<AS@(now-(dav+savo)) and SAV(now) and LRL_A(now) and LAST(now) >>;
+    <<AS@(now-dav_savo) and SAV(now) and LRL_A(now) and LAST(now) and DAVSAVO() >>;
   pav : complete state  --an atrial pace occured 
     <<PAV(now) and LRL_A(now)  and LAST(now)>>;       --  in the previous Paced AV Delay
   pav_check_vrp : state  --ventricular sense during paced AV delay
@@ -209,8 +211,8 @@ states
 transitions
   T0_GO :	--start pacing immediately
   go -[ ]-> va 
-    {<<(now=0) and (CCI = LRL)>>
-      { <<now=0 and AXIOM_VS(now) >>
+    {<< now = 0 s and CCI = LRL>>
+      { <<now = 0 s and AXIOM_VS(now) >>
       vs!   --fake, harmless event needed to establish LAST_VP_OR_VS_A
         <<VS@now>> 
       & 
@@ -221,7 +223,7 @@ transitions
       last_vp_or_vs := now
         <<last_vp_or_vs=now>>
       &
-        <<now=0 and AXIOM_AS(now)>> 
+        << now = 0 s and AXIOM_AS(now)>> 
       as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
         <<AS@now>>
       &
@@ -282,7 +284,7 @@ transitions
     };   
 
   T6_EXPIRED_SENSED_AV_DELAY :  --v pace after sensed av delay if no vs
-    sav -[on dispatch timeout (as) (dav+savo)]-> sav_check_url{};
+    sav -[on dispatch timeout (as) dav_savo]-> sav_check_url{};
   
   T7_TRACKED_VP_TOO_SOON_AFTER_PREVIOUS_VS_OR_VP :  --tracked VP_A too close to previous vp or vs
    sav_check_url -[last_vp_or_vs > (now-min_cci)]-> sav{};

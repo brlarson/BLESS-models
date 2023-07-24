@@ -89,12 +89,12 @@ public
 			  {BLESS::Assertion=>"<<AS>>";};
 			at: in event port --non-refractory atrial sense above URL
 			  {BLESS::Assertion=>"<<AT>>";};
-			atr_detect: out event port --ATR detection met
-			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			atr_detect: out data port BLESS_Types::Boolean  --ATR detection met
+			{BLESS::Assertion => "<<:=ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
 			{BLESS::Assertion => "<<FB_START>>";};
-			atr_end: out event port --resume DDD; marker ATR-End
-			{BLESS::Assertion => "<<ATR_END(now)>>";};
+			atr_end: out data port BLESS_Types::Boolean  --resume DDD; marker ATR-End
+			{BLESS::Assertion => "<<:=ATR_END(now)>>";};
 
 	end AtrialTachyResponse;
 
@@ -121,8 +121,8 @@ public
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			as: in event port {BLESS::Assertion => "<<AS>>";};
 			at: in event port {BLESS::Assertion => "<<AT>>";};
-			atr_detect: out data port BLESS_Types::Integer {BLESS::Value => "<<:=ATR_DETECT(now)>>";};
-			atr_end: out data port BLESS_Types::Integer {BLESS::Value => "<<:=ATR_END(now)>>";};
+			atr_detect: out data port BLESS_Types::Boolean {BLESS::Assertion => "<<:=ATR_DETECT(now)>>";};
+			atr_end: out data port BLESS_Types::Boolean {BLESS::Value => "<<:=ATR_END(now)>>";};
 		properties
 			Dispatch_Protocol => Sporadic;
 --    BLESS::Invariant => "<<AS_COUNT(now)>>"; 

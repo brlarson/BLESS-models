@@ -24,7 +24,7 @@ end milliG;
 data ResponseFactor  --to motion
 --integer 1 to 16
   properties
-    BLESS::Typed=>"quantity whole [1 .. 16]";
+    BLESS::Typed=>"quantity rf";
 end ResponseFactor;
 
 data PacingMode  --pacing modes NO TRIGGER PACING
