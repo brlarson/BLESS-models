@@ -103,7 +103,7 @@ transitions
       and Delta' =(ACTUAL_POSITION'-ACTUAL_POSITION)>>    
     };  --end of one4
   --get normal stop event
-  one5stop: Run -[on dispatch stop]-> ShutDown{};
+--  one5stop: Run -[on dispatch stop]-> ShutDown{};
   --already closed?
   one6done: ShutDown -[EstimatedActualPosition=0]-> Done{};
   --still closing?
@@ -246,7 +246,7 @@ transitions
   fraSerban:  Decide -[(DesiredPosition?>(EstimatedActualPosition- 1))
   	    and ((EstimatedActualPosition+1)>DesiredPosition?)]->Error{};
   --get normal stop event
-  fra5stop: Run -[on dispatch stop]-> ShutDown{};
+--  fra5stop: Run -[on dispatch stop]-> ShutDown{};
   --already closed?
   fra6done: ShutDown -[EstimatedActualPosition=0]-> Done{};
   --still closing?
@@ -427,8 +427,8 @@ transitions
         and Delta=(ACTUAL_POSITION'-ACTUAL_POSITION) 
         and ACTUAL_POSITION'>=0 and ACTUAL_POSITION'<=#PCS::MaxPosition>>    
     };  --end of ms6cd
-  ms7stop:   --get normal stop event
-    Run -[on dispatch stop]-> ShutDown{};
+--  ms7stop:   --get normal stop event
+--    Run -[on dispatch stop]-> ShutDown{};
   ms8done: --already closed?
     ShutDown -[EstimatedActualPosition=0]-> Done{};
   ms9sc:  --still closing?
