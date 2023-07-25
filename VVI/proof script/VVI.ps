@@ -1,5 +1,5 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Thu Jun 15 09:37:48 CDT 2023 by brianlarson
+#  at Mon Jul 24 17:30:43 CDT 2023 by brianlarson
 #  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread VVI
@@ -66,7 +66,7 @@ normalize
 axioms
 push
 #vvi_mode::VVI.i
-#[serial 1096]   normalization of [serial 109
+#[serial 1090] <<Q2>> -> <<Q>> in sequential composition for [serial 101
 make-an
 substitute-post
 normalize
@@ -76,29 +76,29 @@ normalize
 axioms
 guided-sub-equals[last_beat]
 axioms
-#[serial 1106] Associativity: (b.c).a = a.b.c [serial 1094]
+#[serial 1108]   normalization of [serial 1100]
+replace-port
+axioms
+#[serial 1110]   normalization of [serial 1103]
 substitute-post
 normalize
 axioms
-#[serial 1111]   normalization of [serial 1104]
-replace-port
-axioms
 #[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP: pace-[x]->check_pace_vrp{};
-normalize
+replace-port
 axioms
 #[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP: check_pace_vrp-[x]->pace{};
 normalize
 axioms
 #[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR: check_pace_vrp-[x]->sense{A};
-reduce
 normalize
+reduce
 atomic
 laws
 normalize
 axioms
 push
 #vvi_mode::VVI.i
-#[serial 1146]   normalization of [serial 114
+#[serial 1140] <<P>> -> <<P1>> in sequential composition for [serial 113
 make-an
 substitute-post
 normalize
@@ -114,7 +114,7 @@ normalize
 axioms
 now
 axioms
-#[serial 1148]   normalization of [serial 1142]
+#[serial 1141] <<Q2>> -> <<Q>> in sequential composition for [serial 1138]
 substitute-post
 normalize
 split-post
@@ -122,7 +122,7 @@ guided-sub-equals[last_beat]
 axioms
 quant
 axioms
-#[serial 1163]   normalization of [serial 1156]
+#[serial 1154]   normalization of [serial 1145]
 replace-port
 normalize
 axioms
@@ -135,9 +135,9 @@ laws
 normalize
 axioms
 push
-make-an
 #vvi_mode::VVI.i
-#[serial 1212]   normalization of [serial 1206] 
+#[serial 1195] <<Q2>> -> <<Q>> in sequential composition for [serial 101
+make-an
 substitute-post
 normalize
 split-post
@@ -146,12 +146,12 @@ axioms
 normalize
 quant
 axioms
-#[serial 1219] Associativity: (b.c).a = a.b.c [serial 1210]
+#[serial 1213]   normalization of [serial 1206]
+replace-port
+axioms
+#[serial 1215]   normalization of [serial 1204]
 substitute-post
 normalize
-axioms
-#[serial 1231]   normalization of [serial 1225]
-replace-port
 axioms
 #[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS: sense-[x]->check_sense_vrp{};
 normalize
@@ -165,33 +165,35 @@ laws
 normalize
 axioms
 push
-make-an
 #vvi_mode::VVI.i
-#[serial 1267]   normalization of [serial 1257] 
+#[serial 1241] <<Q2>> -> <<Q>> in sequential composition for [serial 101
+make-an
+substitute-post
+normalize
+split-post
+normalize
+guided-sub-equals[last_beat]
+axioms
+quant
+axioms
+#[serial 1250]   normalization of [serial 1240]
 substitute-post
 normalize
 split-post
 axioms
-substitute-both
-normalize
-laws
+substitute-post
 normalize
 split-post
+substitute-pre
+normalize
 split@
+normalize
+laws
 normalize
 axioms
 now
 axioms
-#[serial 1269]   normalization of [serial 1258]
-substitute-post
-normalize
-split-post
-guided-sub-equals[last_beat]
-axioms
-normalize
-quant
-axioms
-#[serial 1273]   normalization of [serial 1262]
+#[serial 1255]   normalization of [serial 1245]
 replace-port
 normalize
 axioms
