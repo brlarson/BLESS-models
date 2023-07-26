@@ -13,7 +13,7 @@ with -- Data_Model, Base_Types, ErrorLibrary,
 system PositionControlSystem
 features   --the value arriving on PositionSetpoint is the desired position of the motor
 	PositionSetpoint: in event data port UnitsTypesAssertions::Position
-	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	  {BLESS::Assertion=>"<< returns position :=DESIRED_POSITION>>";};
 properties
   --at desired position, or will be closer to desired position next period
   BLESS::Invariant=>"<<EQUAL_OR_CLOSER()>>";

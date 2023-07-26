@@ -92,7 +92,7 @@ ghost variables
 --   Desired Temperature Range.
 
 --A.5.1.3 Manage Heat Source Function
-<<HEAT_CONTROL:x~cntrl+=>
+<<HEAT_CNTRL:x~cntrl+=>
   O_n ->  REQMHS2() or --below desired range
          (REQMHS4() and (HEAT_CONTROL^-1 = cntrl'O_n)),  --hysteresis, previously alarm
   Off -> REQMHS1() or --initialization

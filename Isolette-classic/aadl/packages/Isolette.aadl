@@ -287,7 +287,7 @@ features
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
@@ -370,7 +370,7 @@ features
   monitor_temp : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i

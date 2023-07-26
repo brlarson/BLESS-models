@@ -7,7 +7,7 @@ thread PositionControlThread
 features
 	ActuatorCommand: requires subprogram access;   
 	DesiredPosition: in data port UnitsTypesAssertions::Position  --polled every 24ms
-	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	  {BLESS::Assertion=>"<< returns position := DESIRED_POSITION>>";};
 properties
 	Dispatch_Protocol => Periodic;
 	Period => PCS::PCSperiod;
@@ -42,10 +42,10 @@ variables
   EstimatedActualPosition ~ position := 0   --estimate of actual valve position
     <<E_SS: :EstimatedActualPosition=ACTUAL_POSITION>>
   Delta ~ singleStep  --change previous period
-    <<D_SS: :Delta=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
-  MinusOne ~  quantity whole := -1  --needed as actual parameter for subprogram call
---    integer:= -1  
-    <<AXIOM_MO: :MinusOne= -1>>;
+    <<D_SS: :Delta=(ACTUAL_POSITION-ACTUAL_POSITION^( - 1))>>
+  MinusOne ~  quantity whole :=  - 1  --needed as actual parameter for subprogram call
+--    integer:=  - 1  
+    <<AXIOM_MO: :MinusOne=  - 1>>;
 states    
   PowerOn : initial state  --power-on initialization
 	  <<ACTUAL_POSITION=0>>;
@@ -56,7 +56,7 @@ states
   ShutDown :  state  --closing before normal termination
 	  <<E_SS()>>;
 	StillClosing : complete state  --still closing
-	  <<E_SS() and (ACTUAL_POSITION^(-1)>0)>>;
+	  <<E_SS() and (ACTUAL_POSITION^( - 1)>0)>>;
 	Done : final state  --normal termination
 	  <<ACTUAL_POSITION=0>>;  --valve closed upon normal termination
 	Error : final state;  --fault-caused termination
@@ -98,7 +98,7 @@ transitions
     <<ACTUAL_POSITION'=(ACTUAL_POSITION+MinusOne) and E_SS()
       and AXIOM_MO() >>	
     ;
-    |EstimatedActualPosition',Delta' := (EstimatedActualPosition- 1),-1|     --set own estimate of position     
+    |EstimatedActualPosition',Delta' := (EstimatedActualPosition- 1), - 1|     --set own estimate of position     
     <<(EstimatedActualPosition' =ACTUAL_POSITION')
       and Delta' =(ACTUAL_POSITION'-ACTUAL_POSITION)>>    
     };  --end of one4
@@ -151,7 +151,7 @@ variables
   EstimatedActualPosition ~ position :=0  --estimate of actual valve position
     <<E: :EstimatedActualPosition=ACTUAL_POSITION>>
   Delta ~ singleStep :=0  --change previous period
-    <<D: :Delta^(-1)=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
+    <<D: :Delta^( - 1)=(ACTUAL_POSITION-ACTUAL_POSITION^( - 1))>>
 states    
   PowerOn : initial state  --power-on initialization
 	  <<ACTUAL_POSITION=0>>;
@@ -227,13 +227,13 @@ transitions
     {  --close
     <<DESIRED_POSITION<=(ACTUAL_POSITION- 1) 
         and E() and ACTUAL_IN_RANGE() and DESIRED_IN_RANGE()>>
-    Delta := -1                       --set the delta
-    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=DESIRED_POSITION 
+    Delta :=  - 1                       --set the delta
+    <<E() and Delta=  - 1 and (ACTUAL_POSITION- 1)>=DESIRED_POSITION 
         and AXIOM_GT(z:ACTUAL_POSITION)
         and DESIRED_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
     ;
     ActuatorCommand(pc:Delta)              --close valve one step
-    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1 
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta=  - 1 
       and (ACTUAL_POSITION+Delta)>=0 and E()
       and (ACTUAL_POSITION+Delta)<=#PCS::MaxPosition>>	
     ;
@@ -252,12 +252,12 @@ transitions
   --still closing?
   fra7sc: ShutDown -[EstimatedActualPosition>0]-> StillClosing
     { <<E() and ACTUAL_POSITION>0 and ACTUAL_IN_RANGE()>>
-    Delta := -1                       --set the delta
-    <<E() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(z:ACTUAL_POSITION)
+    Delta :=  - 1                       --set the delta
+    <<E() and Delta=  - 1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(z:ACTUAL_POSITION)
         and ACTUAL_POSITION<=#PCS::MaxPosition>>	
     ;
      ActuatorCommand(pc:Delta)              --close valve one step
-    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta=  - 1
         and (ACTUAL_POSITION- 1)>=0 and E() and (ACTUAL_POSITION- 1)<=#PCS::MaxPosition>>	
     ;
     EstimatedActualPosition' := (EstimatedActualPosition- 1)     --set own estimate of position     
@@ -286,7 +286,7 @@ variables
   EstimatedActualPosition ~ position := 0  --estimate of actual valve position
     <<E_MS: :EstimatedActualPosition=ACTUAL_POSITION>>
   Delta ~ multiStep := 0 --change in valve position
-    <<D_MS: :Delta^(-1)=(ACTUAL_POSITION-ACTUAL_POSITION^(-1))>>
+    <<D_MS: :Delta^( - 1)=(ACTUAL_POSITION-ACTUAL_POSITION^( - 1))>>
 states    
   PowerOn : initial state  --power-on initialization
 	  <<ACTUAL_POSITION=0>>;
@@ -434,12 +434,12 @@ transitions
   ms9sc:  --still closing?
     ShutDown -[EstimatedActualPosition>0]-> StillClosing
     { <<E_MS() and ACTUAL_POSITION>0 and ACTUAL_IN_RANGE()>>
-    Delta := -1                       --set the delta
-    <<E_MS() and Delta= -1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(ACTUAL_POSITION)
+    Delta :=  - 1                       --set the delta
+    <<E_MS() and Delta=  - 1 and (ACTUAL_POSITION- 1)>=0 and AXIOM_GT(ACTUAL_POSITION)
         and ACTUAL_POSITION<=#PCS::MaxPosition>>	
     ;
      ActuatorCommand(pc:Delta)              --close valve one step
-    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta= -1
+    <<ACTUAL_POSITION'=(ACTUAL_POSITION+Delta) and Delta=  - 1
         and (ACTUAL_POSITION- 1)>=0 and E_MS() and (ACTUAL_POSITION- 1)<=#PCS::MaxPosition>>	
     ;
     EstimatedActualPosition' := (EstimatedActualPosition- 1)     --set own estimate of position     

@@ -11,7 +11,7 @@ prototypes  --configurable for motor and control thread
   ControlThread: thread;
 features
 	PositionSetpoint: in event data port UnitsTypesAssertions::Position
-	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	  {BLESS::Assertion=>"<<returns position:=DESIRED_POSITION>>";};
 	ActuatorCommand: requires subprogram access MotorInterface;   
 end Controller;
 
@@ -39,7 +39,7 @@ end Ram;
 process Fadec
 features
 	PositionSetpoint: in event data port UnitsTypesAssertions::Position
-	  {BLESS::Assertion=>"<<:=DESIRED_POSITION>>";};
+	  {BLESS::Assertion=>"<< returns position:=DESIRED_POSITION>>";};
 	ActuatorCommand: requires subprogram access MI::Fragile;   
 --annex EMV2 {**  --error model for process fadec
 --	use types ErrorLibrary;
