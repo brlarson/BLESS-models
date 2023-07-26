@@ -164,7 +164,7 @@ annex BLESS
          and (num_samples'=#PulseOx_Properties::Num_Trending_Samples)>>   	
 
       };
-    hrtt4: fill,run-[on dispatch stop]->halt{};  
+--    hrtt4: fill,run-[on dispatch stop]->halt{};  
 **};
 end HeartRateTrendThread.imp;
 	

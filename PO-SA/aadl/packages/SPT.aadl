@@ -161,7 +161,7 @@ annex BLESS
       	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 u else SPO2^(1-i)))
          and (num_samples'=#PulseOx_Properties::Num_Trending_Samples)>> 
       };
-    sptt4: loading,run-[on dispatch stop]->halt{};    
+ --   sptt4: loading,run-[on dispatch stop]->halt{};    
 **};
 end SpO2TrendThread.imp;
 

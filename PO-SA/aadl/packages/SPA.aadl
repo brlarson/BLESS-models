@@ -99,10 +99,10 @@ annex BLESS
     	<<FW()>>
     	--store current sample
     	spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-    	  (if SensorConnected and not MotionArtifact then SpO2 else 0)
+    	  (if SensorConnected and not MotionArtifact then SpO2 else 0 percent)
     	  <<WINDOW() and (spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] = SSQ(x:0))>>  --add parameter to SSQ because for some reason it won't substitute with 0
     	&  --update total
-    	totalSpO2 := totalSpO2+(if SensorConnected and not MotionArtifact then SpO2 else 0)
+    	totalSpO2 := totalSpO2+(if SensorConnected and not MotionArtifact then SpO2 else 0 percent)
     	  <<totalSpO2=(SSQ(x:0)+(sum k~quantity whole in lb..(ub - 1) of SSQ(k-ub) ))>>
     	&  --update count of valid SpO2 readings
     	goodCount := (goodCount+(if SensorConnected and not MotionArtifact then 1 else 0))
@@ -161,7 +161,7 @@ annex BLESS
     	    are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-ub)>>	
     	--store current sample
     	spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-    	   (if SensorConnected? and not MotionArtifact? then SpO2? else 0)
+    	   (if SensorConnected? and not MotionArtifact? then SpO2? else 0 percent)
     	  <<(all k~quantity whole in (lb+1) ..(ub - 1) 
     	      are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-ub)) and
     	    (spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] = SSQ(x:0))>>
@@ -169,7 +169,7 @@ annex BLESS
     	  <<(totalSpO2=(SSQ(lb-ub)+(sum k~quantity whole in (lb+1) ..(ub - 1) of SSQ(k-ub)))) and
     	    (spo2_hist[lb mod #PulseOx_Properties::Max_Window_Samples] = SSQ(lb-ub)) and 
     	    ((ub-lb)=window_size)>>
-    	totalSpO2 := (totalSpO2+(if SensorConnected? and not MotionArtifact? then SpO2? else 0))
+    	totalSpO2 := (totalSpO2+(if SensorConnected? and not MotionArtifact? then SpO2? else 0 percent))
     	     -spo2_hist[lb mod #PulseOx_Properties::Max_Window_Samples]
     	  <<(totalSpO2=(SSQ(x:0)+(sum k~quantity whole in (lb+1) ..(ub - 1) of SSQ(k-ub)))) and ((ub-lb)=window_size)>>
     	&  --update count of valid SpO2 readings
@@ -220,7 +220,7 @@ annex BLESS
     	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples]' iff
     	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
       };  --end of SpAt4     
-    SpATstop: fillingWindow,run-[on dispatch stop]->halt{};     
+--    SpATstop: fillingWindow,run-[on dispatch stop]->halt{};     
 **};
 end SpO2AverageThread.imp;
 
