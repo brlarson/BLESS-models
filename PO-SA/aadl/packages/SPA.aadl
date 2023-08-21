@@ -6,15 +6,15 @@ public
 thread SpO2AverageThread
   features
     SpO2 : in data port PulseOx_Types::Percent  --oxygen saturation from pulse oximeter device
-      {BLESS::Value=>"<<:=SPO2>>";}; 
+      {BLESS::Value=>"<< returns quantity percent := SPO2>>";}; 
     SensorConnected : in data port BLESS_Types::Boolean --sensor is attached to patient
       {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";}; 
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
       {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};  
     SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count
-      {BLESS::Value=>"<<:=SPO2_MOVING_AVERAGE_WINDOW_SAMPLES>>";};
+      {BLESS::Value=>"<< returns quantity percent := SPO2_MOVING_AVERAGE_WINDOW_SAMPLES>>";};
     SpO2Avg : out data port PulseOx_Types::Percent  
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";};
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE()>>";};
     Error : out event data port;		--an error occurred  
   properties
     --Thread_Properties::

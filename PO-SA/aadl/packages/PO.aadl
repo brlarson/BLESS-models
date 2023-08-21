@@ -346,7 +346,7 @@ process ICEpoUIprocess
       {BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";}
       ;
     HeartRateTrend : in data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY>>";}
       ;  
     --====================
     --== Average SpO2 reading
@@ -357,7 +357,7 @@ process ICEpoUIprocess
       };
       
     SpO2Avg : in data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE()>>";}
       ;
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -471,7 +471,7 @@ thread ICEpoUI
       {BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";}
       ;
     HeartRateTrend : in data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY>>";}
       ;  
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -486,7 +486,7 @@ thread ICEpoUI
     --====================
     SpO2MovingAvgWindowSamples : out data port PulseOx_Types::Second_Count;
     SpO2Avg : in data port PulseOx_Types::Percent --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE()>>";}
       ;      	
     --====================
     --== App Adult Rapid SpO2 Decline Derived Alarm I/O and configuration
@@ -535,7 +535,7 @@ process ICEpoAppProcess
     --====================
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples  := HEART_RATE_HISTORY>>";}
       ;  
     --====================
     --== Indications of SpO2 measurement anamolies
@@ -623,7 +623,7 @@ thread group ICEpoApp
     --====================
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY>>";}
       ;  
     --====================
     --== Indications of SpO2 measurement anamolies
@@ -638,7 +638,7 @@ thread group ICEpoApp
     --====================
     SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count;  --how many samples in average?
     SpO2Avg : out data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE()>>";}
       ;      	
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration

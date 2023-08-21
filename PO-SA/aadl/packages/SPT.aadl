@@ -6,15 +6,15 @@ public
 thread SpO2TrendThread
   features
     SpO2 : in event data port PulseOx_Types::Percent	--oxygen saturation from pulse oximeter device
-      {BLESS::Value=>"<<:=SPO2>>";}; 
+      {BLESS::Value=>"<< returns quantity percent := SPO2>>";}; 
     SensorConnected : in data port BLESS_Types::Boolean  --sensor is attached to patient
       {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";}; 
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
        {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};  
     SpO2Trend : out data port PulseOx_Types::SpO2Samples  --one SpO2 reading each minute for the past hour
-      {BLESS::Assertion=>"<<:=SPO2_TREND()>>";};  
+      {BLESS::Assertion=>"<< returns quantity percent := SPO2_TREND()>>";};  
     NumSamples : out data port BLESS_Types::Integer
-      {BLESS::Value=>"<<:=NUM_SAMPLES>>";};
+      {BLESS::Value=>"<< returns quantity percent := NUM_SAMPLES>>";};
   properties
     --Thread_Properties::
         Dispatch_Protocol => Periodic;  
