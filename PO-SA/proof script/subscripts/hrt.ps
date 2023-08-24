@@ -1,36 +1,34 @@
-# hrt.ps for HR::HeartRateTrendThread.imp
 push
 sort-by-component HR::HeartRateTrendThread.imp
 #HR::HeartRateTrendThread.imp
-#[serial 1036] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1013] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
 axioms
-#[serial 1037] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+#[serial 1014] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
 substitute-pre
 normalize
 axioms
-#[serial 1038] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1015] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1039] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+#[serial 1016] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
 axioms
-#[serial 1040]  <<M(start)>> A <<M(fill)>> for hrtt0:start-[ ]->fill{A};
+#[serial 1017]  <<M(start)>> A <<M(fill)>> for hrtt0: start-[ ]->fill{A};
 completesub
 alldist^
 atomic
 guided-sub-equals[num_samples]
 laws
-normalize
 split-post
 quant
 normalize
 axioms
 guided-sub-equals[0]
 axioms
-#[serial 1041]  <<M(fill) and x>> A <<M(check)>> for hrtt1:fill-[x]->check{A};
+#[serial 1018]  <<M(fill) and x>> A <<M(check)>> for hrtt1: fill-[x]->check{A};
 normalize
 reduce
 reduce
@@ -39,37 +37,34 @@ normalize
 axioms
 laws
 axioms
-normalize
 remove-axioms-post
 laws
 axioms
 push
 #HR::HeartRateTrendThread.imp
-#[serial 2766] <<Q5>> -> <<Q>> in sequential composition for [serial 2763
+#[serial 2718] <<Q6>> -> <<Q>> in sequential composition for [serial 271
 make-an
 substitute-post
 replace-qv
 axioms
-#[serial 2778]   <<Q0>> -> <<Q>> in alternative  for [serial 2770]
+#[serial 2729]   <<P and B0>> -> <<P0>> in alternative for [serial 2722]
 substitute-both
 split-post
 axioms
 zeroquantlb
-normalize
 laws
 normalize
 elim-subtract
 normalize
 axioms
-#[serial 2790] applied wp for assignment [serial 2780]
+#[serial 2743] applied wp for assignment [serial 2730]
 split-post
 axioms
 ??
-replace-port
 now
 laws
 axioms
-#[serial 2781]   <<Q1>> -> <<Q>> in alternative  for [serial 2770]
+#[serial 2731]   <<Q0>> -> <<Q>> in alternative  for [serial 2722]
 split-post
 axioms
 substitute-pre
@@ -78,59 +73,68 @@ elim-subtract
 normalize
 laws
 normalize
-axioms
-#[serial 2804]   normalization of [serial 2774]
-substitute-pre
 replace-qv
-axioms
-#[serial 2810]   normalization of [serial 2776]
-split-post
 now
-axioms
-substitute-post
+elim-subtract
 normalize
 axioms
-#[serial 2812]   normalization of [serial 2789]
+#[serial 2744] applied wp for assignment [serial 2733]
+??
 split-post
 axioms
-??
+replace-port-value
+now
 laws
 axioms
-#[serial 2815]   normalization of [serial 2779]
+#[serial 2734]   <<Q1>> -> <<Q>> in alternative  for [serial 2722]
+substitute-pre
+normalize
 split-post
-now
 axioms
-substitute-post
+zeroquantlb
+elim-subtract
+normalize
+laws
+normalize
+elim-subtract
 normalize
 axioms
-#[serial 2819]   normalization of [serial 2791]
+#[serial 2745] applied wp for assignment [serial 2723]
 qtiming
 axioms
-#[serial 2852]   normalization of [serial 2837]
-replace-port
+#[serial 2750]   normalization of [serial 2738]
+substitute-pre
 laws
+normalize
 axioms
-#[serial 2854]   normalization of [serial 2839]
-replace-port
+#[serial 2754]   normalization of [serial 2740]
+substitute-pre
 laws
+normalize
 axioms
-#[serial 1042]  <<M(check) and x>> A <<M(fill)>> for hrtt2a:check-[x]->fill{A};
-completesub
+#[serial 2758]   normalization of [serial 2726]
+substitute-pre
+normalize
+replace-qv
+axioms
+#[serial 2767]   normalization of [serial 2732]
+substitute-post
+normalize
+axioms
+#[serial 1019]  <<M(check) and x>> A <<M(fill)>> for hrtt2a: check-[x]->fill{A};
+substitute-both
+normalize
 alldist^
 atomic
-normalize
-elim-subtract
 axioms
-#[serial 1043]  <<M(check) and x>> A <<M(run)>> for hrtt2b:check-[x]->run{A};
+#[serial 1020]  <<M(check) and x>> A <<M(run)>> for hrtt2b: check-[x]->run{A};
 substitute-both
 alldist^
 atomic
-normalize
-elim-subtract
 axioms
-#[serial 1044]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c:check-[x]->fail{};
+#[serial 1021]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c: check-[x]->fail{};
 axioms
-#[serial 1045]  <<M(run) and x>> A <<M(run)>> for hrtt3:run-[x]->run{A};
+#[serial 1022]  <<M(run) and x>> A <<M(run)>> for hrtt3: run-[x]->run{A};
 reduce
 reduce
 normalize
@@ -141,7 +145,7 @@ remove-axioms-post
 laws
 push
 #HR::HeartRateTrendThread.imp
-#[serial 3020]   normalization of [serial 2999
+#[serial 2950]   normalization of [serial 292
 make-an
 substitute-post
 alldist^
@@ -150,25 +154,31 @@ axioms
 replace-qv
 elim-subtract
 axioms
-#[serial 3026]   normalization of [serial 3007]
+#[serial 2956]   normalization of [serial 2935]
 substitute-pre
 zeroquantlb
-normalize
 contract-uqr
 replace-qv
-axioms
-#[serial 3028]   normalization of [serial 3006]
-atomic
+split-quant
+laws
 normalize
 axioms
-#[serial 3034]   normalization of [serial 3010]
+#[serial 2958]   normalization of [serial 2936]
+split-quant
+laws
+normalize
+axioms
+#[serial 2960]   normalization of [serial 2934]
+atomic
+axioms
+#[serial 2966]   normalization of [serial 2939]
 atomic
 split-post
 axioms
 ??
 laws
 axioms
-#[serial 3036]   normalization of [serial 3011]
+#[serial 2968]   normalization of [serial 2940]
 substitute-pre
 normalize
 laws
@@ -176,82 +186,70 @@ normalize
 split-post
 axioms
 zeroquantlb
-normalize
 elim-subtract
 normalize
 laws
 normalize
+elim-subtract
+normalize
 axioms
-#[serial 3040]   normalization of [serial 3013]
+#[serial 2972]   normalization of [serial 2942]
 atomic
-split-post
-axioms
 ??
-replace-port
+replace-port-value
 now
 laws
-axioms
-#[serial 3042]   normalization of [serial 3014]
-substitute-pre
-normalize
-laws
-normalize
-split-post
-axioms
-zeroquantlb
-elim-subtract
-normalize
-laws
 normalize
 axioms
-#[serial 3044]   normalization of [serial 3016]
+#[serial 2974]   normalization of [serial 2943]
 qtiming
+substitute-pre
+laws
+normalize
+split-post
 axioms
-#[serial 3046]   normalization of [serial 3015]
+qtiming
+zeroquantlb
+axioms
+#[serial 2976]   normalization of [serial 2945]
+qtiming
+split-quant
+laws
+axioms
+#[serial 2978]   normalization of [serial 2946]
+split-quant
+laws
+axioms
+#[serial 2980]   normalization of [serial 2944]
+atomic
+axioms
+#[serial 2982]   normalization of [serial 2933]
 atomic
 normalize
 axioms
-#[serial 3048]   normalization of [serial 3005]
-atomic
+#[serial 3003] Associativity: a.(b.c) = a.b.c [serial 2970]
+substitute-post
+laws
 normalize
 axioms
-#[serial 3066] Associativity: (b.c).a = a.b.c [serial 3032]
+#[serial 3021]   normalization of [serial 3002]
 substitute-post
 normalize
 laws
-now
 axioms
-#[serial 3084]   normalization of [serial 3067]
-substitute-post
-normalize
-laws
-normalize
-now
+#[serial 3027] Law of And-Simplification:  P and true is P [serial 3024]
 axioms
-#[serial 3089] Law of And-Simplification:  P and true is P [serial 3086]
-axioms
-#[serial 3090] Law of And-Simplification:  P and true is P [serial 3087]
+#[serial 3028] Law of And-Simplification:  P and true is P [serial 3025]
 atomic
-normalize
-laws
-normalize
-axioms
-substitute-both
-normalize
 laws
 axioms
-#[serial 3091] Law of And-Simplification:  P and true is P [serial 3088]
+substitute-pre
+laws
+axioms
+#[serial 3029] Law of And-Simplification:  P and true is P [serial 3026]
 atomic
-substitute-both
-normalize
 laws
-normalize
 axioms
-now
-guided-sub-equals[NUM_SAMPLES]
-normalize
-axioms
-#[serial 1046]  <<M(fill) and x>> -> <<M(halt)>> for hrtt4:fill-[x]->halt{};
-axioms
-#[serial 1047]  <<M(run) and x>> -> <<M(halt)>> for hrtt4:run-[x]->halt{};
+substitute-pre
+laws
 axioms

@@ -1,23 +1,22 @@
-# rd.ps
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/rd.ps
 push
 sort-by-component[RD::RapidDeclineThread]
 #RD::RapidDeclineThread.imp
-#[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
 axioms
-#[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition
-make-an
+#[serial 1004] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
 substitute-pre
 axioms
-#[serial 1060] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1061] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
 axioms
-#[serial 1062]  <<M(start)>> A <<M(fill)>> for rdt0:start-[ ]->fill{A};
+#[serial 1007]  <<M(start)>> A <<M(fill)>> for rdt0: start-[ ]->fill{A};
 substitute-post
 alldist^
 atomic
@@ -28,7 +27,7 @@ laws
 quant
 normalize
 axioms
-#[serial 1063]  <<M(fill) and x>> A <<M(check)>> for rdt1:fill-[x]->check{A};
+#[serial 1008]  <<M(fill) and x>> A <<M(check)>> for rdt1: fill-[x]->check{A};
 reduce
 reduce
 axioms
@@ -40,49 +39,39 @@ substitute-both
 normalize
 push
 #RD::RapidDeclineThread.imp
-#[serial 3364] applied wp for assignment [serial 3349
+#[serial 1172] applied wp for assignment [serial 116
 make-an
-replace-port
-now
-laws
-normalize
-zeroquantlb
-normalize
-elim-subtract
-normalize
-laws
-normalize
-axioms
-#[serial 3373]   normalization of [serial 3365]
 qtiming
 axioms
-#[serial 3385]   normalization of [serial 3380]
-replace-qv
-axioms
-#[serial 3387]   normalization of [serial 3381]
-replace-qv
-axioms
-#[serial 1064]  <<M(check) and x>> A <<M(fill)>> for chk:check-[x]->fill{A};
-substitute-post
-normalize
-alldist^
-atomic
-split-post
-axioms
-substitute-pre
-normalize
+#[serial 1178]   normalization of [serial 1171]
+replace-port-value
+now
+laws
+zeroquantlb
 elim-subtract
-axioms
-#[serial 1065]  <<M(check) and x>> A <<M(run)>> for chk2:check-[x]->run{A};
-substitute-post
 normalize
-alldist^
-atomic
-split-post
-axioms
-substitute-pre
+laws
+normalize
 elim-subtract
 normalize
 axioms
-#[serial 1066]  <<M(check) and x>> -> <<M(halt)>> for chk3:check-[x]->halt{};
+#[serial 1187]   normalization of [serial 1182]
+replace-qv
+axioms
+#[serial 1189]   normalization of [serial 1183]
+replace-qv
+axioms
+#[serial 1009]  <<M(check) and x>> A <<M(fill)>> for chk: check-[x]->fill{A};
+substitute-both
+normalize
+alldist^
+atomic
+axioms
+#[serial 1010]  <<M(check) and x>> A <<M(run)>> for chk2: check-[x]->run{A};
+substitute-both
+normalize
+alldist^
+atomic
+axioms
+#[serial 1011]  <<M(check) and x>> -> <<M(halt)>> for chk3: check-[x]->halt{};
 axioms
