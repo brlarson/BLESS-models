@@ -36,7 +36,7 @@ system implementation PG.imp
     --telemetry
   	tbus : bus access toDCM <-> telemetry.toDCM;
   	ts : port telemetry.settings <-> DDD.settings;
-  	th : port telemetry.episodes <-> history.episodes;
+--  	th : port telemetry.episodes <-> history.episodes;
     --front end to pg_process
     asig : port front_end.a -> DDD.a;  --atrial signal
     vsig : port front_end.v -> DDD.v;  --ventricular signal
@@ -78,14 +78,18 @@ end front_end;
 system implementation front_end.imp
 end front_end.imp;
 
+-- The Telemetry subsystem communicates with exteral programmer (DCM)
+--  A DCM shows a moving time-line with events the PG sees aligned with real-time ECG
+-- Telemetry received events from mark::Markers, and transmits the value to the DCM
+--  A DCM also change change the values used for therapy delivery
 system Telemetry
   features
     toDCM : requires bus access;
-    mark_A : in data port;
-    mark_V : in data port;
-    mark_X : in data port;
-    episodes : in out data port; --to history
-    settings : in out data port;  --to settings
+    mark_A : in data port;  --atrial markers
+    mark_V : in data port;  --ventricular markers
+    mark_X : in data port;  --eXstraordinary markers
+--    episodes : in out data port; --to history
+    settings : out data port;  --
 end Telemetry;
 
 system implementation Telemetry.imp

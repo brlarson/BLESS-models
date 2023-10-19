@@ -17,20 +17,20 @@ thread RateController  --choose minimum and maximum cardiac cycle intervals
   features
   --outputs
   min_cci: out data port ms  --minimum allowed CCI, like dynamic URLi
-    {BLESS::Value=>"<<:=MIN_CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms :=MIN_CCI>>";};
   max_cci: out data port ms  --maximum allowed CCI, like dynamic LRLi 
-    {BLESS::Value=>"<<:=MAX_CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms :=MAX_CCI>>";};
   atr_max_cci: out data port ms  --maximum allowed CCI, during ATR
-    {BLESS::Value=>"<<:=FB_MaxCCI()>>";};
+    {BLESS::Value=>"<<returns quantity ms :=FB_MaxCCI()>>";};
   dav: out data port ms  --dynamic AV delay
-    {BLESS::Value=>"<<:=DAV_A()>>";};
+    {BLESS::Value=>"<<returns quantity ms :=DAV_A()>>";};
 --inputs
   cci: in event data port ms  --most recent cardiac cycle interval
-    {BLESS::Value=>"<<:=CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms :=CCI>>";};
   xl: in data port milliG  --accelerometer measure of motion
-    {BLESS::Value=>"<<:=XL>>";};
+    {BLESS::Value=>"<<returns quantity milliG :=XL>>";};
   mag: in data port flag  --magnet mode (not used)
-    {BLESS::Value=>"<<:=MAG>>";};
+    {BLESS::Assertion=>"<<MAG>>";};
   -- fb now handled by modes switch from normal to atr_mode
 --  fb: in data port flag  --fall-back to LRL, ignore A-channel
 --    {BLESS::Assertion=>"<<FB(d:detect_time, x:now)>>";};
@@ -40,31 +40,31 @@ thread RateController  --choose minimum and maximum cardiac cycle intervals
   rr: in data port flag
     {BLESS::Assertion=>"<<RR>>";};  --rate responsive
   rf: in data port PACE_Data::ResponseFactor
-    {BLESS::Value=>"<<:=RESPONSE_FACTOR>>";};  --response factor
+    {BLESS::Value=>"<<returns quantity rf :=RESPONSE_FACTOR>>";};  --response factor
   rt: in data port ms
-    {BLESS::Value=>"<<:=REACTION_TIME>>";};  --reaction time
+    {BLESS::Value=>"<<returns quantity ms :=REACTION_TIME>>";};  --reaction time
   at: in data port milliG
-    {BLESS::Value=>"<<:=ACTIVITY_THRESHOLD>>";};  --activity threshold
+    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};  --activity threshold
   ct: in data port ms
-    {BLESS::Value=>"<<:=RECOVERY_TIME>>";};  --recovery time
+    {BLESS::Value=>"<<returns quantity ms :=RECOVERY_TIME>>";};  --recovery time
   lrl: in data port ms
-    {BLESS::Value=>"<<:=LRL>>";};  --lower rate limit interval 
+    {BLESS::Value=>"<<returns quantity ms :=LRL>>";};  --lower rate limit interval 
   url: in data port ms
-    {BLESS::Value=>"<<:=URL>>";};  --upper rate limit interval 
+    {BLESS::Value=>"<<returns quantity ms :=URL>>";};  --upper rate limit interval 
   msr: in data port ms
-    {BLESS::Value=>"<<:=MSR>>";};  --maximum sensor rate interval
+    {BLESS::Value=>"<<returns quantity ms :=MSR>>";};  --maximum sensor rate interval
   av: in data port ms
-    {BLESS::Value=>"<<:=AV>>";};  --AV delay (fixed)
+    {BLESS::Value=>"<<returns quantity ms :=AV>>";};  --AV delay (fixed)
   min_av: in data port ms
-    {BLESS::Value=>"<<:=MIN_AV>>";};  --minimum AV delay
+    {BLESS::Value=>"<<returns quantity ms :=MIN_AV>>";};  --minimum AV delay
   drs: in data port PACE_data::percent
-    {BLESS::Value=>"<<:=DRS>>";};  --down-rate smoothing
+    {BLESS::Value=>"<<returns quantity percent :=DRS>>";};  --down-rate smoothing
   urs: in data port PACE_data::percent
-    {BLESS::Value=>"<<:=URS>>";};  --up-rate smoothing
+    {BLESS::Value=>"<<returns quantity percent :=URS>>";};  --up-rate smoothing
   fb_time : in data port BLESS_Types::Time
-    {BLESS::Value=>"<<:=FBT>>";};  --time to ATR fall back from URL to LRL
+    {BLESS::Value=>"<<returns time:=FBT>>";};  --time to ATR fall back from URL to LRL
   hy: in data port ms
-    {BLESS::Value=>"<<:=HY>>";};  --hysteresis delay, added to max_cci when last v was vs
+    {BLESS::Value=>"<<returns quantity ms :=HY>>";};  --hysteresis delay, added to max_cci when last v was vs
   requires modes normal:mode; atr_mode:mode;
 end RateController;
 

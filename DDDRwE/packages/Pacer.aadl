@@ -45,58 +45,58 @@ thread pacer  --main PACEMAKER behavior thread
     {BLESS::Assertion=>"<<RVS(now)>>";};
   --length of most recent cardiac cycle interval to rate controller
   cci: out event data port ms  --most recent cardiac cycle interval
-    {BLESS::Value=>"<<:=CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms :=CCI>>";};
   --last V-event was ventricular sense, causes hysteresis pace
   last_v_was_vs: out data port flag
     {BLESS::Assertion=>"<<LAST_V_WAS_VS(now)>>";};
   --dynamic parameters from rate controller
   min_cci: in data port ms  --minimum allowed CCI, dynamic URLi
-    {BLESS::Value=>"<<:=MIN_CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms:= MIN_CCI >>";};
   max_cci: in data port ms
-    {BLESS::Value=>"<<:=MAX_CCI>>";};
+    {BLESS::Value=>"<<returns quantity ms := MAX_CCI >>";};
   atr_max_cci: in data port ms  --maximum allowed CCI, during ATR
-    {BLESS::Value=>"<<:=FallBack_MaxCCI(dur_met:dur_met, x:now)>>";};
+    {BLESS::Value=>"<<returns quantity ms := FallBack_MaxCCI(dur_met:dur_met, x:now) >>";};
   dav: in data port ms  --dynamic AV delay
-    {BLESS::Value=>"<<:=DAV_A()>>";};
+    {BLESS::Value=>"<<returns quantity ms := DAV_A() >>";};
   --ATR fallback
   fb: in data port flag  --fall-back to LRL, ignore A-channel, use atr_max_cci
     {BLESS::Assertion=>"<<FB>>";};
   --prescription values
   lrl: in data port ms  --lower rate limit interval 
-    {BLESS::Value=>"<<:=LRL>>";};
+    {BLESS::Value=>"<<returns quantity ms :=LRL>>";};
   url: in data port ms  --upper rate limit interval 
-    {BLESS::Value=>"<<:=URL>>";};
+    {BLESS::Value=>"<<returns quantity ms :=URL>>";};
   av: in data port ms  --AV delay (fixed)
-    {BLESS::Value=>"<<:=AV>>";};
+    {BLESS::Value=>"<<returns quantity ms :=AV>>";};
   savo: in data port ms  --sensed AV delay offset (always negative or zero) 
-    {BLESS::Value=>"<<:=SAVO>>";};
+    {BLESS::Value=>"<<returns quantity ms :=SAVO>>";};
   act: in data port milliG  --activity threshold 
-    {BLESS::Value=>"<<:=ACTIVITY_THRESHOLD>>";};
+    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};
   vrp: in data port ms  --ventricular refractory period
-    {BLESS::Value=>"<<:=VRP>>";};
+    {BLESS::Value=>"<<returns quantity ms :=VRP>>";};
   arp: in data port ms  --atrial refractory period
-    {BLESS::Value=>"<<:=ARP>>";};
+    {BLESS::Value=>"<<returns quantity ms :=ARP>>";};
   pvarp: in data port ms  --post-ventricular atrial refractory period
-    {BLESS::Value=>"<<:=PVARP>>";};
+    {BLESS::Value=>"<<returns quantity ms :=PVARP>>";};
   ex_pvarp: in data port ms  --extended post-ventricular atrial refractory period
-    {BLESS::Value=>"<<:=EX_PVARP>>";};
+    {BLESS::Value=>"<<returns quantity ms :=EX_PVARP>>";};
   hy: in data port ms   --hystersis time
-    {BLESS::Value=>"<<:=HY>>";};
+    {BLESS::Value=>"<<returns quantity ms :=HY>>";};
   min_av: in data port ms  --minimum AV delay
-    {BLESS::Value=>"<<:=MIN_AV>>";};
+    {BLESS::Value=>"<<returns quantity ms :=MIN_AV>>";};
   --pacing mode
   pv: in data port flag  --pace ventricle
-    {BLESS::Value=>"<<:=PV>>";};
+    {BLESS::Value=>"<<returns boolean :=PV>>";};
   sv: in data port flag  --sense ventricle
-    {BLESS::Value=>"<<:=SV>>";};
+    {BLESS::Value=>"<<returns boolean :=SV>>";};
   pa: in data port flag  --pace atrium
-    {BLESS::Value=>"<<:=PA>>";};
+    {BLESS::Value=>"<<returns boolean :=PA>>";};
   sa: in data port flag  --sense atrium
-    {BLESS::Value=>"<<:=SA>>";};
+    {BLESS::Value=>"<<returns boolean :=SA>>";};
   inhibit: in data port flag --senses inhibit paces
-    {BLESS::Value=>"<<:=INHIBIT>>";};
+    {BLESS::Value=>"<<returns boolean :=INHIBIT>>";};
   track: in data port flag  --paces track senses
-    {BLESS::Value=>"<<:=TRACK>>";};
+    {BLESS::Value=>"<<returns boolean :=TRACK>>";};
   properties
   	BLESS::Invariant => "<<LRL_A(now)>>";  -- and (SAV(now) or PAV(now) or VAI(now))>>";
 end pacer;

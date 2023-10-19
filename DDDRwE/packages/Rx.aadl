@@ -14,7 +14,8 @@ CCcount renames data PACE_data::CCcount;
 
 thread Settings
   features
-  settings : in out data port;  --settings from telemetry
+  settings : in data port;  -- Rx settings from telemetry
+  --values in Rx
   lrl: out data port ms;  --lower rate limit interval 
   url: out data port ms;  --upper rate limit interval 
   av: out data port ms;  --AV delay (fixed)
