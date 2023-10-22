@@ -11,6 +11,11 @@ milliG renames data PACE_data::milliG;
 ResponseFactor renames data PACE_data::ResponseFactor;
 CCcount renames data PACE_data::CCcount; 
 
+--  thread Settings receives the patient prescription from telemetry
+--  and then providing each value of the Rx individually
+
+--  this thread has not been implemented because much would involve
+--  the Rx in the format native to telemetry
 
 thread Settings
   features
@@ -48,23 +53,35 @@ thread Settings
   --rate modifiers
   hy: out data port ms  --hysteresis delay, added to l when PVC
     {BLESS::Value=>"<<returns quantity ms :=HY>>";};
-  rr: out data port flag;  --rate responsive
-  rf: out data port ResponseFactor;  --response factor
-  msr: out data port ms;  --maximum sensor rate interval
+  rr: out data port flag  --rate responsive
+    {BLESS::Assertion=>"<<RR>>";};  
+  rf: out data port ResponseFactor  --response factor
+    {BLESS::Value=>"<<returns quantity rf :=RESPONSE_FACTOR>>";};  
+  msr: out data port ms  --maximum sensor rate interval
+    {BLESS::Value=>"<<returns quantity ms :=MSR>>";};  
   min_av: out data port ms  --minimum dynamic AV delay
     {BLESS::Value=>"<<returns quantity ms :=MIN_AV>>";};
   ex_pvarp: out data port ms  --extended post-ventricular atrial refractory period
     {BLESS::Value=>"<<returns quantity ms :=EX_PVARP>>";};
-  rt: out data port ms;  --reaction time
-  at: out data port milliG;  --activity threshold
-  ct: out data port ms;  --recovery time
+  rt: out data port ms   --reaction time
+    {BLESS::Value=>"<<returns quantity ms :=REACTION_TIME>>";}; 
+  at: out data port milliG  --activity threshold
+    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};  
+  ct: out data port ms  --recovery time
+    {BLESS::Value=>"<<returns quantity ms :=RECOVERY_TIME>>";};  
   --atrial tachycardia response
-  atr_enable : out data port flag;
-  atr_duration : out data port CCcount;
-  fb_time : out data port BLESS_Types::Time;  --time to fall back from URL to LRL
+  atr_enable : out data port flag  --is ATR prescribed?
+    {BLESS::Value=>"<<returns boolean :=ATR_ENABLE>>";};
+  atr_duration : out data port CCcount  --number of cci in duration before fallback
+    {BLESS::Value=>"<<returns quantity whole :=ATR_DURATION>>";};
+  
+  fb_time : out data port BLESS_Types::Time  --time to fall back from URL to LRL
+    {BLESS::Value=>"<<returns time :=FBT>>";};
   --rate smoothing
-  drs: out data port PACE_data::percent;  --down-rate smoothing
-  urs: out data port PACE_data::percent;  --up-rate smoothing  
+  drs: out data port PACE_data::percent  --down-rate smoothing
+    {BLESS::Value=>"<<returns quantity percent :=DRS>>";};
+  urs: out data port PACE_data::percent  --up-rate smoothing  
+    {BLESS::Value=>"<<returns quantity percent :=URS>>";};
 end Settings;
 
 thread implementation Settings.imp

@@ -139,11 +139,11 @@ assert
 --cardiac cycle interval is output of cci port
 
 --associate ghost variables with the predicates that make them true
-<<AXIOM_AP: n~time :AP iff (AP_A(n) or n=0.0 ms) >>
-<<AXIOM_VP: n~time :VP iff (VP_A(n) and URL_A(n))  >>
-<<AXIOM_AS: n~time :AS iff (AS_A(n) or n=0.0 ms) >>
-<<AXIOM_VS: n~time :VS iff (VS_A(n) or n=0.0 ms)  >>
-<<AXIOM_AT: n~time :AT iff AT_A(n) >>
+--<<AXIOM_AP: n~time :AP iff (AP_A(n) or n=0.0 ms) >>
+--<<AXIOM_VP: n~time :VP iff (VP_A(n) and URL_A(n))  >>
+--<<AXIOM_AS: n~time :AS iff (AS_A(n) or n=0.0 ms) >>
+--<<AXIOM_VS: n~time :VS iff (VS_A(n) or n=0.0 ms)  >>
+--<<AXIOM_AT: n~time :AT iff AT_A(n) >>
 
 --initial condition
 <<START : n~time : (n=0 s) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl

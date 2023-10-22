@@ -81,8 +81,9 @@ public
 
 	thread group AtrialTachyResponse
 		features
-			atr_enable: in data port flag;
-			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
+			atr_enable: in data port flag --is ATR prescribed?
+        {BLESS::Value=>"<<returns boolean :=ATR_ENABLE>>";};
+	 		dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			{BLESS::Assertion => "<<FB>>";};
 			as: in event port --non-refractory atrial sense
