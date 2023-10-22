@@ -179,7 +179,7 @@ ghost variables
   SV@x   --sense ventricle  XVX or XDX
   and V@x  --v-signal
   and not TNV@x  --not noisy in ventricle
---  and VRP_EXPIRED(x) 
+  and VRP_EXPIRED(x) 
   >>  --not ventricular refractory period
     
 --non-refractory atrial sense occurs, asserted by port as 
@@ -191,11 +191,11 @@ ghost variables
   SA@x   --sense atrium  XAX or XDX
   and A@x   --atrial signal
   and not TNA@x  --no noise
---  and ARP_EXPIRED(x)   --not atrial refractory period
---  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
---  and PAV_EXPIRED(x)    --not paced AV delay
---  and SAV_EXPIRED(x)  --not sensed AV delay
---  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
+  and ARP_EXPIRED(x)   --not atrial refractory period
+  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
+  and PAV_EXPIRED(x)    --not paced AV delay
+  and SAV_EXPIRED(x)  --not sensed AV delay
+  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
   and not FB@x  -- =FB(x)  --not in ATR fallback
    >>
 
