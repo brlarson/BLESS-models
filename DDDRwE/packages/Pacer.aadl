@@ -98,7 +98,7 @@ thread pacer  --main PACEMAKER behavior thread
   track: in data port flag  --paces track senses
     {BLESS::Value=>"<<returns boolean :=TRACK>>";};
   properties
-  	BLESS::Invariant => "<<LRL_A(now)>>";  -- and (SAV(now) or PAV(now) or VAI(now))>>";
+  	BLESS::Invariant => "<<LRL_A(now)>>";  
 end pacer;
 
 thread implementation pacer.imp

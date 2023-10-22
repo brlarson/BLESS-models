@@ -208,10 +208,10 @@ ghost variables
 --    occurred in the previous upper rate limit interval
 <<VP_A: x~time :
 	PACE_ON_MaxCCI(x)  -- (vp or vs) occurred maximum cardiac cycle interval ago
-    or  --ap occurred paced AV delay ago
-    PACE_ON_FIXED_AV_DELAY(x)  
-    or  --as occurred sensed AV delay ago, but not too fast
-    PACE_ON_SAV_DELAY(x) >>    
+  or  --ap occurred paced AV delay ago
+  PACE_ON_FIXED_AV_DELAY(x)  
+  or  --as occurred sensed AV delay ago, but not too fast
+  PACE_ON_SAV_DELAY(x) >>    
     
 <<PACE_ON_MaxCCI: x~time :    --no intrinsic activity, pace at LRL
   (VP@(x-MAX_CCI) or VS@(x-MAX_CCI))  
