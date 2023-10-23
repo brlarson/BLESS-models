@@ -138,7 +138,7 @@ public
     asTimestamp ~ array [1 .. 7] of time
       <<AS_TIMESTAMP: : all i ~ quantity whole in 1 .. 7 are AS@asTimestamp[i] >>
     --history whether the previous 7 atrial senses was faster than upper rate limit
-    atHistory ~ array [1 .. 7] of boolean := false
+    atHistory ~ array [1 .. 7] of boolean
       <<AT_HISTORY: : all i ~ quantity whole in 1 .. 7 are atHistory[i] iff AT@asTimestamp[i] >>
     --count of how many of the previous seven AS were also AT
     c ~ quantity whole:=0  --count of AT for last seven AS
