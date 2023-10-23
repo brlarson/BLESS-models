@@ -27,7 +27,8 @@ public
 	end VVI;
 
 	thread implementation VVI.i
-		annex BLESS {**
+annex BLESS 
+{**
 assert	     
   << notVRP: : --Ventricular Refractory Period
     (n or p)@last_beat --last beat before now,
@@ -147,7 +148,7 @@ transitions
     last_beat:=now 
     <<last_beat=now and n@now>>
     }  
-**}; --end of annex subclause 
+**}; --end of BLESS annex subclause 
 
 	end VVI.i; --end thread 
 
