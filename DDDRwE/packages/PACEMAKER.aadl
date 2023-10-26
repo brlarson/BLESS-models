@@ -23,7 +23,7 @@ system implementation PG.imp
 --full model will have (physical) processor, memory, and buses 
 --just logical (software) architecture for now.
   subcomponents
-    front_end : system front_end.imp;
+    front_end : device front_end.imp;
     telemetry : system Telemetry.imp;
     history : system History.imp;
     DDD : process PGprocess::pg_process.imp;
@@ -61,7 +61,7 @@ system implementation PG.imp
 end PG.imp;
 
 --analog front end connects to leads, filters heart signals, delivers paces, and detects noise
-system front_end
+device front_end
   features
 	A_lead : requires bus access;
 	V_lead : requires bus access;
@@ -75,7 +75,7 @@ system front_end
       {BLESS::Assertion=>"<<VP>>";};
 end front_end;
 
-system implementation front_end.imp
+device implementation front_end.imp
 end front_end.imp;
 
 -- The Telemetry subsystem communicates with exteral programmer (DCM)
