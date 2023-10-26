@@ -121,7 +121,7 @@ RC3_nonzero : check_zero_division -[
       and siri=SIRi_A() and dn_siri=DN_SIRi_A() and up_siri=UP_SIRi_A()
       and down=DOWN_A() and up=UP_A() and hylrl=HyLRL(now)
       and AXIOM_MAX_CCI(now) and AXIOM_MIN_CCI() >>	
-  dav!((cci? *((av?-min_av? )/(LRL-url? ))) + min_av? )
+  dav!((cci? *((av?-min_av? )/(lrl-url? ))) + min_av? )
   &
 --  min_cci!((if url >(if up_siri > up then up_siri else up) then url else (if up_siri > up then up_siri else up)))  --(maximum3($url,up_siri,up))
 --  min_cci!(MinMax::maximum3( a:url, b:up_siri, c:up))
