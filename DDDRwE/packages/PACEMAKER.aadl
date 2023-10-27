@@ -3,7 +3,7 @@
 package PACEMAKER
 public
 	with BLESS, BLESS_Types, Devices, --Base_Types, sw, 
-	PACE_data, PGprocess, mark, Telemetry, History;
+	PACE_data, PGprocess, Telemetry, History;
 	T renames data BLESS_Types::Time;
 	flag renames data BLESS_Types::flag;
 	milliG renames data PACE_data::milliG;

@@ -10,11 +10,57 @@ annex Unit {**
 	s s s / m [response factor] ssspm, <ms per milliG> rf / 9.8 ;
 **};
 
+annex Typedef {**
+  type pacingMode is enumeration(Off DD VDD DDI DOO AOO AAI VOO VVI DDDR VDDR DDIR DOOR AOOR AAIR VOOR VVIR)
+  type rx is record (
+    lrl : quantity ms
+    url : quantity ms
+    av : quantity ms
+    savo : quantity ms
+    act : quantity milliG  --activity threshold
+    vrp : quantity ms
+    arp : quantity ms
+    pvarp : quantity ms
+    pv : boolean
+    sv :boolean
+    pa : boolean
+    sa :boolean
+    inhibit : boolean
+    track :boolean
+    hy : quantity ms
+    rr : boolean  --rate response enable
+    rf : quantity rf  --response factor
+    msr : quantity ms
+    min_av : quantity ms
+    ex_pvarp : quantity ms
+    rt : quantity s  --reaction time in seconds
+    ct : quantity s  --recovery time in seconds
+    at : quantity milliG  --activity threshold
+    atr_enable : boolean
+    atr_duration : quantity whole
+    fb_time : quantity s
+    drs : quantity scalar  --down rate smoothing, scalar percent
+    urs : quantity scalar  --up rate smoothing, scalar percent
+    
+    
+--     : quantity ms
+--     : quantity ms
+--     : quantity ms
+--     : quantity ms
+--     : quantity ms
+  )
+**};
+
 -------DATA------------
 data ms  --millisecond 
   properties
   BLESS::Typed=>"quantity ms";
 end ms;
+
+data second  --a second 
+  properties
+  BLESS::Typed=>"quantity s";
+end second;
 
 data milliG  --thousandth of Earth's gravity 
 properties
@@ -29,8 +75,7 @@ end ResponseFactor;
 
 data PacingMode  --pacing modes NO TRIGGER PACING
   properties
-    BLESS::Typed=>
-  "enumeration(Off DD VDD DDI DOO AOO AAI VOO VVI DDDR VDDR DDIR DOOR AOOR AAIR VOOR VVIR) ";
+    BLESS::Typed=> "pacingMode ";
 end PacingMode;
 
 data CCcount
@@ -40,11 +85,12 @@ end CCcount;
 
 data percent
   properties
-  BLESS::Typed=>"quantity scalar";
+    BLESS::Typed=>"quantity scalar";
 end percent;
 
 data Rx
-  
+  properties
+    BLESS::Typed=>"rx";  
 end Rx;
 
 end PACE_data;

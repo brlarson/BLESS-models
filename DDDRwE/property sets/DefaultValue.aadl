@@ -1,0 +1,39 @@
+property set DefaultValue is
+
+Lower_Rate_Limit : constant aadlinteger => 1000;  --ms or 60bpm
+Upper_Rate_Limit : constant aadlinteger => 500;  --ms or 120bpm
+AV_Delay : constant aadlinteger => 150;  --ms
+Sensed_AV_Delay_Offset  : constant aadlinteger => 20;  --ms
+Activity_Threshold  : constant aadlinteger => 25;  --milliG
+Ventricular_Refractory_Period  : constant aadlinteger => 200;  --ms
+Atrial_Refractory_Period  : constant aadlinteger => 80;  --ms
+Post_Ventricular_Atrial_Refractory_Period  : constant aadlinteger => 200;  --ms
+
+Pace_Ventricle : constant aadlboolean => true;
+Sense_Ventricle : constant aadlboolean => true;
+Pace_Atrium : constant aadlboolean => true;
+Sense_Atrium : constant aadlboolean => true;
+Inhibit : constant aadlboolean => true;
+Track : constant aadlboolean => true;
+-- no trigger modes!
+
+Hysteresis_Delay  : constant aadlinteger => 10;  --ms
+Rate_Responsive : constant aadlboolean => true;
+Response_Factor  : constant aadlinteger => 10;  --rf
+
+Maximum_Sensor_Rate_Interval : constant aadlinteger => 600;  --ms  max XL pacing is 100bpm
+Minimum_AV_Delay : constant aadlinteger => 100;  --ms
+Extended_PVARP : constant aadlinteger => 250;  --ms
+Reaction_Time : constant aadlinteger => 12;  --s
+Recovery_Time : constant aadlinteger => 60;  --s
+
+ATR_Enable : constant aadlboolean => false;
+ATR_Duration : constant aadlinteger => 30;  --s
+Fallback_Time : constant aadlinteger => 60;  --s
+
+Down_Smoothing_Rate : constant aadlinteger => 10;   --percent
+Up_Smoothing_Rate : constant aadlinteger => 10;   --percent
+ 
+
+	
+end DefaultValue;

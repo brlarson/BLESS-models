@@ -2,11 +2,12 @@
 
 package Rx
 public
-with PACE_data, BLESS_Types, BLESS;
+with PACE_data, BLESS_Types, BLESS, DefaultValue;
 
 
 flag renames data BLESS_Types::flag;
 ms renames data PACE_data::ms;
+second renames data PACE_data::second;
 milliG renames data PACE_data::milliG;
 ResponseFactor renames data PACE_data::ResponseFactor;
 CCcount renames data PACE_data::CCcount; 
@@ -63,30 +64,68 @@ thread Settings
     {BLESS::Value=>"<<returns quantity ms :=MIN_AV>>";};
   ex_pvarp: out data port ms  --extended post-ventricular atrial refractory period
     {BLESS::Value=>"<<returns quantity ms :=EX_PVARP>>";};
-  rt: out data port ms   --reaction time
-    {BLESS::Value=>"<<returns quantity ms :=REACTION_TIME>>";}; 
-  at: out data port milliG  --activity threshold
-    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};  
-  ct: out data port ms  --recovery time
-    {BLESS::Value=>"<<returns quantity ms :=RECOVERY_TIME>>";};  
+  rt: out data port second   --reaction time
+    {BLESS::Value=>"<<returns quantity s :=REACTION_TIME>>";}; 
+--  at: out data port milliG  --activity threshold
+--    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};  
+  ct: out data port second  --recovery time
+    {BLESS::Value=>"<<returns quantity s :=RECOVERY_TIME>>";};  
   --atrial tachycardia response
   atr_enable : out data port flag  --is ATR prescribed?
     {BLESS::Value=>"<<returns boolean :=ATR_ENABLE>>";};
   atr_duration : out data port CCcount  --number of cci in duration before fallback
     {BLESS::Value=>"<<returns quantity whole :=ATR_DURATION>>";};
   
-  fb_time : out data port BLESS_Types::Time  --time to fall back from URL to LRL
-    {BLESS::Value=>"<<returns time :=FBT>>";};
+  fb_time : out data port second  --time to fall back from URL to LRL
+    {BLESS::Value=>"<<returns quantity s :=FBT>>";};
   --rate smoothing
   drs: out data port PACE_data::percent  --down-rate smoothing
-    {BLESS::Value=>"<<returns quantity percent :=DRS>>";};
+    {BLESS::Value=>"<<returns percent :=DRS>>";};
   urs: out data port PACE_data::percent  --up-rate smoothing  
-    {BLESS::Value=>"<<returns quantity percent :=URS>>";};
+    {BLESS::Value=>"<<returns percent :=URS>>";};
 end Settings;
 
 thread implementation Settings.imp
   annex BLESS {** 
-    states init : initial state
+    states 
+      init : initial state
+      run : complete state
+    transitions
+      go: init -[]-> run
+        {  --initialze with property constants DefaultValue
+        lrl!(DefaultValue::Lower_Rate_Limit ms)  &
+        url!(DefaultValue::Upper_Rate_Limit ms)  &
+        av!(DefaultValue::AV_Delay ms)  &
+        savo!(DefaultValue::Sensed_AV_Delay_Offset ms)  &
+        act!(DefaultValue::Activity_Threshold milliG)  &
+        vrp!(DefaultValue::Ventricular_Refractory_Period ms)  
+        & arp!(DefaultValue::Atrial_Refractory_Period ms)  
+        & pvarp!(DefaultValue::Post_Ventricular_Atrial_Refractory_Period ms)  
+        & pv!([DefaultValue::Pace_Ventricle]-> boolean)  
+        & sv!([DefaultValue::Sense_Ventricle]-> boolean)  
+        & pa!([DefaultValue::Pace_Atrium]-> boolean)  
+        & sa!([DefaultValue::Pace_Ventricle]-> boolean)  
+        & inhibit!([DefaultValue::Inhibit]-> boolean)  
+        & track!([DefaultValue::Track]-> boolean)  
+        & hy!(DefaultValue::Hysteresis_Delay ms)  
+        & rr!([DefaultValue::Rate_Responsive]-> boolean)  
+        & rf!(DefaultValue::Response_Factor whole)  
+        & msr!(DefaultValue::Maximum_Sensor_Rate_Interval ms)  
+        & min_av!(DefaultValue::Minimum_AV_Delay ms)  
+        & ex_pvarp!(DefaultValue::Extended_PVARP ms)  
+        & rt!(DefaultValue::Reaction_Time s)  
+        & ct!(DefaultValue::Recovery_Time s)  
+        & atr_enable!([DefaultValue::ATR_Enable]-> boolean)  
+        & atr_duration!(DefaultValue::ATR_Duration whole)  
+        & fb_time!(DefaultValue::Fallback_Time s)  
+        & drs!([DefaultValue::Down_Smoothing_Rate]->percent)  
+        & urs!([DefaultValue::Up_Smoothing_Rate]->percent)  
+ 
+        } 
+      operate: run -[on dispatch settings]-> run
+        {
+          
+        }
     **};
 end Settings.imp;
  

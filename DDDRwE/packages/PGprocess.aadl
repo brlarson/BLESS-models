@@ -84,7 +84,7 @@ process implementation pg_process.imp
 		fsrc: port stg.rf -> rc.rf in modes (normal); --
 		mssrc: port stg.msr -> rc.msr in modes (normal); --
 		rtsrc: port stg.rt -> rc.rt in modes (normal); --
-		atsrc: port stg.at -> rc.at in modes (normal); --
+		atsrc: port stg.act -> rc.at in modes (normal); --
 		ctsrc: port stg.ct -> rc.ct in modes (normal); --
 		mdavsrc: port stg.min_av -> rc.min_av in modes (normal); --
 		--settings to ATR mode rate controller
@@ -97,7 +97,7 @@ process implementation pg_process.imp
 		fsatr_rc: port stg.rf -> atr_rc.rf in modes (atr_mode); --
 		mssatr_rc: port stg.msr -> atr_rc.msr in modes (atr_mode); --
 		rtsatr_rc: port stg.rt -> atr_rc.rt in modes (atr_mode); --
-		atsatr_rc: port stg.at -> atr_rc.at in modes (atr_mode); --
+		atsatr_rc: port stg.act -> atr_rc.at in modes (atr_mode); --
 		ctsatr_rc: port stg.ct -> atr_rc.ct in modes (atr_mode); --
 		mdavsatr_rc: port stg.min_av -> atr_rc.min_av in modes (atr_mode); --
 		--settings to ATR
