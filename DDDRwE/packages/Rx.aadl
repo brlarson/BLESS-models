@@ -19,7 +19,7 @@ CCcount renames data PACE_data::CCcount;
 
 thread Settings
   features
-  settings : in event data port;  -- Rx settings from telemetry
+  settings : in event data port PACE_data::Rx;  -- Rx settings from telemetry
   --values in Rx
   lrl: out data port ms  --lower rate limit interval 
     {BLESS::Value=>"<<returns quantity ms :=LRL>>";};
@@ -85,6 +85,10 @@ thread Settings
 end Settings;
 
 thread implementation Settings.imp
+  annex BLESS {** 
+    states init : initial state
+    **};
 end Settings.imp;
+ 
 
 end Rx;

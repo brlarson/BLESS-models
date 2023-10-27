@@ -43,4 +43,8 @@ data percent
   BLESS::Typed=>"quantity scalar";
 end percent;
 
+data Rx
+  
+end Rx;
+
 end PACE_data;

@@ -1,0 +1,50 @@
+--Devices.aadl
+
+
+
+package Devices
+public
+  with BLESS_Types, BLESS, PACE_data;
+
+	flag renames data BLESS_Types::flag;
+  milliG renames data PACE_data::milliG;
+
+--analog front end connects to leads, filters heart signals, delivers paces, and detects noise
+	device front_end
+		features
+			A_lead: requires bus access;
+			V_lead: requires bus access;
+			tna: out data port flag; --noise A-channel
+			tnv: out data port flag; --noise V-channel
+			a: out event port; --atrial signal
+			v: out event port; --ventricular signal
+			ap: in event port --pace atrium 
+			{BLESS::Assertion => "<<AP>>";};
+			vp: in event port --pace ventricle, but not too soon 
+			{BLESS::Assertion => "<<VP>>";};
+		properties
+			Dispatch_Protocol => Sporadic;
+	end front_end;
+
+	device implementation front_end.imp
+	end front_end.imp;
+
+	device accelerometer
+		features
+			xl: out data port milliG; --measure current motion
+	end accelerometer;
+
+	device implementation accelerometer.imp
+	end accelerometer.imp;
+
+--Hall-effect switch detects doughnut magnet
+	device HallEffect
+		features
+			magnet: out data port flag; --magnet mode
+	end HallEffect;
+
+	device implementation HallEffect.imp
+	end HallEffect.imp;
+
+	
+end Devices;

@@ -1,0 +1,20 @@
+--History.aadl
+
+
+
+package History
+public
+	with mark;
+
+	system History
+		features
+			episodes: in out data port; --to telemetry
+			mark_A: in event data port mark::AtrialMarker;
+			mark_V: in event data port mark::VentricularlMarker;
+			mark_X: in event data port mark::ExtraordinaryMarker;
+	end History;
+
+	system implementation History.imp
+	end History.imp;
+	
+end History;

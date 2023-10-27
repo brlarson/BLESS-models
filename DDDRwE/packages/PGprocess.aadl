@@ -20,16 +20,16 @@ process pg_process
     {BLESS::Assertion=>"<<AP>>";};
   vp: out event port	--pace ventricle, but not too soon 
     {BLESS::Assertion=>"<<VP>>";};
-  --to telemetry
-  settings : in out data port; 
+  --from telemetry
+  settings : in event data port PACE_Data::Rx; 
   --from accelerometer
   xl : in data port milliG;
   --from hall-effect switch
   magnet : in data port flag;
   --markers
-  mark_A: out data port;	--atrial marker to telemetry and history
-  mark_V: out data port;	--ventricular marker to telemetry and history
-  mark_X: out data port;	--extra-line marker to telemetry and history
+  mark_A: out event data port mark::AtrialMarker;	--atrial marker to telemetry and history
+  mark_V: out event data port mark::VentricularlMarker;	--ventricular marker to telemetry and history
+  mark_X: out event data port mark::ExtraordinaryMarker;	--extra-line marker to telemetry and history
   properties
     	BLESS::Invariant => "<<LRL_A(now)>>";  
 end pg_process;
@@ -51,7 +51,7 @@ process implementation pg_process.imp
 		dap: port ddd.ap -> ap; --pace atrium 
 		dvp: port ddd.vp -> vp; --pace ventricle
 		--telemetry
-		tel: port settings <-> stg.settings; --telemetry
+--		tel: port settings <-> stg.settings; --prescriptions
 		--sensors
 		xlrc: port xl -> rc.xl;
 		magrc: port magnet -> rc.mag;
@@ -109,7 +109,6 @@ process implementation pg_process.imp
 		---DDD to ATR mode Rate Controller
 		ccidatr_rc: port ddd.cci -> atr_rc.cci;
 		lvwvsatr_rc: port ddd.last_v_was_vs -> atr_rc.last_v_was_vs;
-
 		--ATR rate controller to DDD
 		mxatr: port atr_rc.max_cci -> ddd.max_cci in modes (atr_mode);
 		--Rate Controller to DDD
@@ -150,6 +149,8 @@ process implementation pg_process.imp
 		urssd: port stg.urs -> rc.urs; --up-rate smoothing
 		drsatr: port stg.drs -> atr_rc.drs;
 		ursatr: port stg.urs -> atr_rc.urs;
+		--settings
+		stngs: port settings -> stg.settings;
 	modes
 		normal: initial mode;
 		atr_mode: mode;
