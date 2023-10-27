@@ -87,6 +87,7 @@ end Settings;
 
 thread implementation Settings.imp
   annex BLESS {** 
+      DO_NOT_PROVE
     states 
       init : initial state
       run : complete state
@@ -120,11 +121,36 @@ thread implementation Settings.imp
         & fb_time!(DefaultValue::Fallback_Time s)  
         & drs!([DefaultValue::Down_Smoothing_Rate]->percent)  
         & urs!([DefaultValue::Up_Smoothing_Rate]->percent)  
- 
         } 
       operate: run -[on dispatch settings]-> run
-        {
-          
+        {  --send out newly received Rx
+        lrl!(settings.lrl) 
+        & url!(settings.url) 
+        & av!(settings.av) 
+        & savo!(settings.savo) 
+        & act!(settings.act) 
+        & vrp!(settings.vrp) 
+        & arp!(settings.arp) 
+        & pvarp!(settings.pvarp) 
+        & pv!(settings.pv) 
+        & sv!(settings.sv) 
+        & pa!(settings.pa) 
+        & sa!(settings.sa) 
+        & inhibit!(settings.inhibit) 
+        & track!(settings.track) 
+        & hy!(settings.hy) 
+        & rr!(settings.rr) 
+        & rf!(settings.rf) 
+        & msr!(settings.msr) 
+        & min_av!(settings.min_av) 
+        & ex_pvarp!(settings.ex_pvarp) 
+        & rt!(settings.rt) 
+        & ct!(settings.ct) 
+        & atr_enable!(settings.atr_enable) 
+        & atr_duration!(settings.atr_duration) 
+        & fb_time!(settings.fb_time) 
+        & drs!(settings.drs) 
+        & urs!(settings.urs) 
         }
     **};
 end Settings.imp;

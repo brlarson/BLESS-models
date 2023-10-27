@@ -31,8 +31,8 @@ ATR_Enable : constant aadlboolean => false;
 ATR_Duration : constant aadlinteger => 30;  --s
 Fallback_Time : constant aadlinteger => 60;  --s
 
-Down_Smoothing_Rate : constant aadlinteger => 10;   --percent
-Up_Smoothing_Rate : constant aadlinteger => 10;   --percent
+Down_Smoothing_Rate : constant aadlinteger => 20;   --percent
+Up_Smoothing_Rate : constant aadlinteger => 30;   --percent
  
 
 	

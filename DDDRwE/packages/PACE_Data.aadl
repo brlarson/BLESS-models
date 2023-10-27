@@ -41,13 +41,6 @@ annex Typedef {**
     fb_time : quantity s
     drs : quantity scalar  --down rate smoothing, scalar percent
     urs : quantity scalar  --up rate smoothing, scalar percent
-    
-    
---     : quantity ms
---     : quantity ms
---     : quantity ms
---     : quantity ms
---     : quantity ms
   )
 **};
 
