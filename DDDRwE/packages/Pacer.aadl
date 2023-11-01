@@ -8,7 +8,7 @@ with BLESS, BLESS_Types, PACE_Data; -- Base_Types, PACEMAKER, , Assertion;
 flag renames data BLESS_Types::flag;
 ms renames data PACE_Data::ms;
 milliG renames data PACE_Data::milliG;
-ResponseFactor renames data PACE_Data::ResponseFactor;
+ResponseFactor renames data PACE_Data::rf;
 CCcount renames data PACE_Data::CCcount; 
 
 

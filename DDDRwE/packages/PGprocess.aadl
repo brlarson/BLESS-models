@@ -96,7 +96,7 @@ process implementation pg_process.imp
 		rsatr_rc: port stg.rr -> atr_rc.rr in modes (atr_mode); --
 		fsatr_rc: port stg.rf -> atr_rc.rf in modes (atr_mode); --
 		mssatr_rc: port stg.msr -> atr_rc.msr in modes (atr_mode); --
-		rtsatr_rc: port stg.rt -> atr_rc.rt in modes (atr_mode); --
+		rtsatr_rc: port stg.rt -> atr_rc.rt;   -- in modes (atr_mode); --
 		atsatr_rc: port stg.act -> atr_rc.at in modes (atr_mode); --
 		ctsatr_rc: port stg.ct -> atr_rc.ct in modes (atr_mode); --
 		mdavsatr_rc: port stg.min_av -> atr_rc.min_av in modes (atr_mode); --

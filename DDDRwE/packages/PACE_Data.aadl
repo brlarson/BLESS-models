@@ -45,12 +45,13 @@ annex Typedef {**
 **};
 
 -------DATA------------
+-----  make data component name match unit, if quantity
 data ms  --millisecond 
   properties
   BLESS::Typed=>"quantity ms";
 end ms;
 
-data second  --a second 
+data second  --a second, use same name as unit 
   properties
   BLESS::Typed=>"quantity s";
 end second;
@@ -60,16 +61,16 @@ properties
     BLESS::Typed=>"quantity milliG";
 end milliG;
 
-data ResponseFactor  --to motion
+data rf  --ResponseFactor--to motion
 --integer 1 to 16
   properties
     BLESS::Typed=>"quantity rf";
-end ResponseFactor;
+end rf;
 
-data PacingMode  --pacing modes NO TRIGGER PACING
+data pacingMode  --pacing modes NO TRIGGER PACING
   properties
-    BLESS::Typed=> "pacingMode ";
-end PacingMode;
+    BLESS::Typed=> "pacingMode";
+end pacingMode;
 
 data CCcount
   properties

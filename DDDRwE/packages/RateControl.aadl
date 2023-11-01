@@ -40,7 +40,7 @@ thread RateController  --choose minimum and maximum cardiac cycle intervals
 --parameters  
   rr: in data port flag
     {BLESS::Assertion=>"<<RR>>";};  --rate responsive
-  rf: in data port PACE_Data::ResponseFactor
+  rf: in data port PACE_Data::rf
     {BLESS::Value=>"<<returns quantity rf :=RESPONSE_FACTOR>>";};  --response factor
   rt: in data port second
     {BLESS::Value=>"<<returns quantity s :=REACTION_TIME>>";};  --reaction time

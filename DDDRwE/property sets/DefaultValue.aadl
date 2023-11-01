@@ -19,7 +19,7 @@ Track : constant aadlboolean => true;
 
 Hysteresis_Delay  : constant aadlinteger => 10;  --ms
 Rate_Responsive : constant aadlboolean => true;
-Response_Factor  : constant aadlinteger => 10;  --rf
+Response_Factor  : constant aadlreal => 10.0;  --rf
 
 Maximum_Sensor_Rate_Interval : constant aadlinteger => 600;  --ms  max XL pacing is 100bpm
 Minimum_AV_Delay : constant aadlinteger => 100;  --ms
