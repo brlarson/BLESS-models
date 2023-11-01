@@ -37,8 +37,8 @@ end pg_process;
 process implementation pg_process.imp
 	subcomponents
 		ddd: thread sw::pacer.imp;
-		rc: thread rc::RateController.normal in modes (normal);
-		atr_rc: thread rc::RateController.atr in modes (atr_mode);
+		rc: thread rc::RateController.normal;   -- in modes (normal);
+		atr_rc: thread rc::RateController.atr;   -- in modes (atr_mode);
 		atr: thread group ATR::AtrialTachyResponse.imp;
 		mkr: thread mark::Markers.imp;
 		stg: thread Rx::Settings.imp;
