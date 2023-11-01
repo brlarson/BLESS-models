@@ -110,7 +110,7 @@ thread implementation Settings.imp
         & track!([DefaultValue::Track]-> boolean)  
         & hy!(DefaultValue::Hysteresis_Delay ms)  
         & rr!([DefaultValue::Rate_Responsive]-> boolean)  
-        & rf!(DefaultValue::Response_Factor whole)  
+        & rf!(DefaultValue::Response_Factor rf)  
         & msr!(DefaultValue::Maximum_Sensor_Rate_Interval ms)  
         & min_av!(DefaultValue::Minimum_AV_Delay ms)  
         & ex_pvarp!(DefaultValue::Extended_PVARP ms)  
