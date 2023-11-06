@@ -182,7 +182,7 @@ variables
     <<LVVS : n~time : lastVwasVS iff LAST_V_WAS_VS(n)>>;
   va_interval ~ time  --ventrucular-atrial interval
      <<AXIOM_VA_INTERVAL : : va_interval = VA_INTERVAL_A() >>;
-  dur ~ time;
+--  dur ~ time;
   dav_savo ~ time
      <<DAVSAVO: : dav_savo = dav - savo >>
 
@@ -217,7 +217,10 @@ transitions
         <<VS@now>> 
       & 
         <<CCI=LRL >>
-      cci!(lrl?)  --set first cardiac cycle interval to lrl
+--use default value to avoid using in port value (lrl);  
+--send out data to initialize the infrastructure               
+      cci!(DefaultValue::Lower_Rate_Limit ms)  
+--      cci!(lrl?)  --set first cardiac cycle interval to lrl
         <<CCI=LRL>>
       &
       last_vp_or_vs := now
@@ -227,10 +230,10 @@ transitions
       as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
         <<AS@now>>
       &
-       last_ap_or_as := now
-        <<last_ap_or_as=now>>
+       |last_ap_or_as, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+        <<last_ap_or_as=now and DAVSAVO() and va_interval = VA_INTERVAL_A() >>
       }  --end of existential lattice quantification
-    <<LAST(now) and LRL_A(now) and last_ap_or_as<=last_vp_or_vs>>
+    <<LAST(now) and LRL_A(now) and last_ap_or_as<=last_vp_or_vs and DAVSAVO() and va_interval = VA_INTERVAL_A() >>
     }; 
 
   T1_PACE_AFTER_LRL :	--fundamental lower-rate pacing; keeps patients "pink"
@@ -255,7 +258,7 @@ transitions
          and (VP or VS)@(now-max_cci)
          and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        ;	--note seqential composition
-         last_vp_or_vs := now
+         |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
            <<VP@last_vp_or_vs and VP@now and AXIOM_LAST_AS_LE_TOPS()  
            and (last_vp_or_vs=now) and LAST_AP_OR_AS_A(now)>>
        };
@@ -279,7 +282,7 @@ transitions
     cci!(now-last_vp_or_vs)
       <<VS@now and LAST_AP_OR_AS_A(now)>>
     ; 
-    last_vp_or_vs := now 
+    |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
       <<VS@now and LAST_AP_OR_AS_A(now) and last_vp_or_vs=now and AXIOM_LAST_AS_LE_TOPS()>>
     };   
 
@@ -300,7 +303,7 @@ transitions
      cci!(now-last_vp_or_vs)
        <<VP@now and LAST(now)>>
      ;
-     last_vp_or_vs := now 
+     |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
        <<last_vp_or_vs=now and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
      };
    
@@ -323,7 +326,7 @@ transitions
       cci!(now-last_vp_or_vs)
         <<VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       ; 
-      last_vp_or_vs := now 
+      |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
         <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       }
       <<VS@now and (last_vp_or_vs=now) and 
@@ -350,7 +353,7 @@ transitions
      <<AS@now and LRL_A(now) and LAST_VP_OR_VS_A(now) 
        and AXIOM_LRLi_gt_URLi_LIMIT(now) >>
     &
-    last_ap_or_as := now 
+    |last_ap_or_as, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
      <<(last_ap_or_as=now)  and LAST_AP_OR_AS_A(now)>>};
   
   T14_AS_AT :  --non-refractory atrial sense, above URL
@@ -375,7 +378,7 @@ transitions
     at!
       <<AT@now and AS@now and LRL_A(now) and LAST(now)>>
     ;
-    last_ap_or_as := now 
+    |last_ap_or_as, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
       <<(last_ap_or_as=now)  and LAST(now) and
        AT@now and AS@now and LRL_A(now) 
        and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
@@ -409,7 +412,7 @@ transitions
     cci!(now-last_vp_or_vs)
         <<VS@now and LAST(now) and cci=(now-last_vp_or_vs)>>
     ;
-    last_vp_or_vs := now 
+    |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
       <<(last_vp_or_vs=now) and VS@now and LAST(now)>>
     };  
     
@@ -435,7 +438,7 @@ transitions
             that (VP or VS)@tap )>>
     &
       <<LRL_A(now) >>
-    last_ap_or_as := now
+    |last_ap_or_as, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
       <<(last_ap_or_as=now) and LRL_A(now) >> 
     }
     <<(last_ap_or_as=now) and LAST(now) and
