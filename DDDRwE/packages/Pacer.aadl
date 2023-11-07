@@ -166,24 +166,26 @@ invariant    --to prove this is always true at complete states, only externally-
   <<INV(now)>>
   
 variables
-  last_vp_or_vs ~ time  --time of last ventricular pace or sense
+  last_vp_or_vs ~ time := now --time of last ventricular pace or sense
     <<LAST_VP_OR_VS_A : x~time : --Assertions of state variables must also be invariant
       (VP@last_vp_or_vs or VS@last_vp_or_vs) and  --a V-event occurred at last_vp_or_vs time
       not (exists t~time  --and not since
        in last_vp_or_vs,,x   --note open interval
        that (VS or VP)@t) >>;
-  last_ap_or_as ~ time   --time of last atrial pace or sense
+  last_ap_or_as ~ time := now   --time of last atrial pace or sense
     <<LAST_AP_OR_AS_A:x~time : 
       (AP@last_ap_or_as or AS@last_ap_or_as) and -- A-event occurred at last_ap_or_as
       not (exists t~time  --and not since
        in last_ap_or_as,,x   
        that (AS or AP)@t) >>;
-  lastVwasVS ~ boolean  --most recent V-event was vs
+  lastVwasVS ~ boolean := true  --most recent V-event was vs
     <<LVVS : n~time : lastVwasVS iff LAST_V_WAS_VS(n)>>;
   va_interval ~ time  --ventrucular-atrial interval
+       := DefaultValue::Lower_Rate_Limit ms - DefaultValue::AV_Delay ms 
      <<AXIOM_VA_INTERVAL : : va_interval = VA_INTERVAL_A() >>;
 --  dur ~ time;
   dav_savo ~ time
+    := DefaultValue::AV_Delay ms - DefaultValue::Sensed_AV_Delay_Offset ms 
      <<DAVSAVO: : dav_savo = dav - savo >>
 
 states
