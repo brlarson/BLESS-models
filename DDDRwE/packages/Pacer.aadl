@@ -146,7 +146,7 @@ assert
 --<<AXIOM_AT: n~time :AT iff AT_A(n) >>
 
 --initial condition
-<<START : n~time : (n=0 s) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
+<<START : n~time : (n=0.0 s) and (CCI=LRL)>>  --set first cardiac cycle interval to lrl
 
 --invariant
 <<INV : n~time : 
@@ -166,13 +166,13 @@ invariant    --to prove this is always true at complete states, only externally-
   <<INV(now)>>
   
 variables
-  last_vp_or_vs ~ time := now --time of last ventricular pace or sense
+  last_vp_or_vs ~ time := 0.0 ms --time of last ventricular pace or sense
     <<LAST_VP_OR_VS_A : x~time : --Assertions of state variables must also be invariant
       (VP@last_vp_or_vs or VS@last_vp_or_vs) and  --a V-event occurred at last_vp_or_vs time
       not (exists t~time  --and not since
        in last_vp_or_vs,,x   --note open interval
        that (VS or VP)@t) >>;
-  last_ap_or_as ~ time := now   --time of last atrial pace or sense
+  last_ap_or_as ~ time := 0.0 ms   --time of last atrial pace or sense
     <<LAST_AP_OR_AS_A:x~time : 
       (AP@last_ap_or_as or AS@last_ap_or_as) and -- A-event occurred at last_ap_or_as
       not (exists t~time  --and not since
@@ -190,7 +190,7 @@ variables
 
 states
   go : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
-    << now = 0 s and CCI = LRL >>; --first instant of operation
+    << now = 0.0 s and CCI = LRL >>; --first instant of operation
   off : final state;
   sav : complete state  --an atrial sense occured 
     <<SAV(now) and LRL_A(now) and LAST(now) and DAVSAVO() >>;    --  in the previous Sensed AV Delay
@@ -213,8 +213,8 @@ states
 transitions
   T0_GO :	--start pacing immediately
   go -[ ]-> va 
-    {<< now = 0 s and CCI = LRL>>
-      { <<now = 0 s and AXIOM_VS(now) >>
+    {<< now = 0.0 s and CCI = LRL>>
+      { <<now = 0.0 s and AXIOM_VS(now) >>
       vs!   --fake, harmless event needed to establish LAST_VP_OR_VS_A
         <<VS@now>> 
       & 
@@ -228,7 +228,7 @@ transitions
       last_vp_or_vs := now
         <<last_vp_or_vs=now>>
       &
-        << now = 0 s and AXIOM_AS(now)>> 
+        << now = 0.0 s and AXIOM_AS(now)>> 
       as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
         <<AS@now>>
       &

@@ -79,7 +79,7 @@ annex BLESS
 invariant <<true>>
 
 variables
-  dur_met ~ time;  --ATR duration met, start of ATR fallback
+  dur_met ~ time := 0.0 s  --ATR duration met, start of ATR fallback
 
 states
 first_rate : initial state;
@@ -106,7 +106,7 @@ RC3_nonzero : check_zero_division -[
  ]-> wait
 {
   <<((2.0 scalar *(REACTION_TIME - LRL)) <> 0.0 s) and ((2.0 scalar *(RECOVERY_TIME - LRL)) <> 0.0 s) 
-    and ((LRL - URL) <> 0 s) >>
+    and ((LRL - URL) <> 0.0 s) >>
   declare  --transient, local variables
     siri  ~ time := (if msr? >= (lrl? - (rf? *(xl? - at? ))) 
     	then msr? else lrl? - (rf? *(xl? - at?)))  --sensor indicated rate interval
@@ -155,14 +155,14 @@ thread implementation RateController.atr
 annex BLESS 
 {**
 	assert
-	<<AXIOM_FB_NONZERO: :FBT <> 0 s>>  --needed for fall_back rate division
+	<<AXIOM_FB_NONZERO: :FBT <> 0.0 s>>  --needed for fall_back rate division
 --Must slow pacing from URL to LRL over fallback time,  LRL until mode switch ends
   <<FallBack_MaxCCI: dur_met~time, n~time returns time :=( if ((n-dur_met)>FBT) then LRL 
 	  else URL+(((n-dur_met)*(LRL-URL))/FBT))>>  --duration met at time dur_met
   <<FB_MaxCCI: n~time returns time :=FallBack_MaxCCI(dur_met:dur_met, n:n)>>
 invariant <<true>>	
 variables
-  dur_met ~ time;  --ATR duration met, start of ATR fallback
+  dur_met ~ time := 0.0 s;  --ATR duration met, start of ATR fallback
 states
   start_atr : initial state;
   atr_fallback : complete state;
