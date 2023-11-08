@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="com.fasterxml.jackson.core.jackson-databind">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

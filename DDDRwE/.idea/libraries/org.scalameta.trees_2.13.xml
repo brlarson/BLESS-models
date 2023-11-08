@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="org.scalameta.trees_2.13">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/trees_2.13/4.8.10/trees_2.13-4.8.10.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/trees_2.13/4.8.10/trees_2.13-4.8.10-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/trees_2.13/4.8.10/trees_2.13-4.8.10-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

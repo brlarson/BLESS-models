@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="org.scalameta.scalafmt-interfaces">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/scalafmt-interfaces/3.7.14/scalafmt-interfaces-3.7.14.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/scalafmt-interfaces/3.7.14/scalafmt-interfaces-3.7.14-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/org/scalameta/scalafmt-interfaces/3.7.14/scalafmt-interfaces-3.7.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

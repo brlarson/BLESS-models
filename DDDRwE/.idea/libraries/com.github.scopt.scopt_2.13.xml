@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="com.github.scopt.scopt_2.13">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/com/github/scopt/scopt_2.13/4.1.0/scopt_2.13-4.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

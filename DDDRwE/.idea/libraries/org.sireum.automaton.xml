@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.sireum.automaton">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/jitpack.io/org/sireum/automaton/4.20220102.836f80d/automaton-4.20220102.836f80d.jar!/" />
+    </CLASSES>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/jitpack.io/org/sireum/automaton/4.20220102.836f80d/automaton-4.20220102.836f80d-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

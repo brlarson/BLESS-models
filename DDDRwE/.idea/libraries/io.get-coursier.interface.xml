@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="io.get-coursier.interface">
+    <CLASSES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/io/get-coursier/interface/0.0.17/interface-0.0.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/io/get-coursier/interface/0.0.17/interface-0.0.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Users/brianlarson/git3/Sireum/lib/cache/https/repo1.maven.org/maven2/io/get-coursier/interface/0.0.17/interface-0.0.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
