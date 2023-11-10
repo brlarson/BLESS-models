@@ -158,6 +158,9 @@ public
     err : final state  --error occurred
   transitions
     atc_init: start -[ ]-> fill
+      {
+       atr_detect!(false) & atr_end!(false) 
+      } 
     atc_fill: fill -[on dispatch as]-> check_fill
     atc_full: check_fill -[ fill_count = 7 ]-> run
     atc_serb: check_fill -[ fill_count > 7 ]-> err  --for Serban's Theorem
@@ -279,7 +282,7 @@ states
 
 transitions
   atrd_go: --transition out of initial state
-    start -[ ]-> normal
+    start -[ ]-> normal { fb!(false) }
 
   norm_as: --check each atrial sense
     normal -[on dispatch as]-> check_normal

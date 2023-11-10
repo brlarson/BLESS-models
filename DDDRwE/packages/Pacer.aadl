@@ -187,6 +187,10 @@ variables
   dav_savo ~ time
     := DefaultValue::AV_Delay ms - DefaultValue::Sensed_AV_Delay_Offset ms 
      <<DAVSAVO: : dav_savo = dav - savo >>
+--introduce a max_CCI variable solely so codegen can initialize the timer during Initialize_Entrypoint
+--before max_cci has been received
+  max_CCI ~ time := DefaultValue::Lower_Rate_Limit ms
+      <<AXIOM_MCCI: :  max_CCI = max_cci>>    
 
 states
   go : initial state  --first state, start pacing as if no sense or pace in previous LRL interval
@@ -211,7 +215,7 @@ states
     <<V@now and LRL_A(now) and LAST(now) and VAI(now) >>;
 
 transitions
-  T0_GO :	--start pacing immediately
+  T0_GO :	--start (fake) sensing immediately
   go -[ ]-> va 
     {<< now = 0.0 s and CCI = LRL>>
       { <<now = 0.0 s and AXIOM_VS(now) >>
@@ -232,14 +236,18 @@ transitions
       as!  --fake, harmless event needed to establish LAST_AP_OR_AS_A
         <<AS@now>>
       &
-       |last_ap_or_as, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+      last_v_was_vs!(true)
+      &
+       |last_ap_or_as, dav_savo, va_interval := now, 
+          DefaultValue::AV_Delay ms - DefaultValue::Sensed_AV_Delay_Offset ms, 
+          DefaultValue::Lower_Rate_Limit ms - DefaultValue::AV_Delay ms|
         <<last_ap_or_as=now and DAVSAVO() and va_interval = VA_INTERVAL_A() >>
       }  --end of existential lattice quantification
     <<LAST(now) and LRL_A(now) and last_ap_or_as<=last_vp_or_vs and DAVSAVO() and va_interval = VA_INTERVAL_A() >>
     }; 
 
   T1_PACE_AFTER_LRL :	--fundamental lower-rate pacing; keeps patients "pink"
-  va,sav,pav -[on dispatch timeout (vp vs) max_cci]->va
+  va,sav,pav -[on dispatch timeout (vp vs) max_CCI]->va
       { <<(vp or vs)@(now-max_cci)
           and not (exists t~time 
            in (now-max_cci),,now
@@ -260,7 +268,9 @@ transitions
          and (VP or VS)@(now-max_cci)
          and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
        ;	--note seqential composition
-         |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+         |last_vp_or_vs, dav_savo, va_interval, max_CCI 
+           := 
+           now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?, max_cci?|
            <<VP@last_vp_or_vs and VP@now and AXIOM_LAST_AS_LE_TOPS()  
            and (last_vp_or_vs=now) and LAST_AP_OR_AS_A(now)>>
        };
@@ -284,7 +294,9 @@ transitions
     cci!(now-last_vp_or_vs)
       <<VS@now and LAST_AP_OR_AS_A(now)>>
     ; 
-    |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+    |last_vp_or_vs, dav_savo, va_interval, max_CCI 
+      := 
+      now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?, max_cci?|
       <<VS@now and LAST_AP_OR_AS_A(now) and last_vp_or_vs=now and AXIOM_LAST_AS_LE_TOPS()>>
     };   
 
@@ -305,7 +317,9 @@ transitions
      cci!(now-last_vp_or_vs)
        <<VP@now and LAST(now)>>
      ;
-     |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+    |last_vp_or_vs, dav_savo, va_interval, max_CCI 
+      := 
+      now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?, max_cci?|
        <<last_vp_or_vs=now and VP@now and LAST(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
      };
    
@@ -328,7 +342,9 @@ transitions
       cci!(now-last_vp_or_vs)
         <<VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       ; 
-      |last_vp_or_vs, dav_savo, va_interval := now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?|
+      |last_vp_or_vs, dav_savo, va_interval, max_CCI 
+        := 
+        now, dav?-savo?, DefaultValue::Lower_Rate_Limit ms-dav?, max_cci?|
         <<(last_vp_or_vs=now) and VS@now and LAST_AP_OR_AS_A(now) and AXIOM_LRLi_gt_URLi_LIMIT(now)>>
       }
       <<VS@now and (last_vp_or_vs=now) and 

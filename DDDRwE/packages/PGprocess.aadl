@@ -38,7 +38,7 @@ process implementation pg_process.imp
 	subcomponents
 		ddd: thread sw::pacer.imp;
 		rc: thread rc::RateController.normal;   -- in modes (normal);
---with "in modes" turned off, remove ATR components
+-- ATR components
 --		atr_rc: thread rc::RateController.atr;   -- in modes (atr_mode);
 --		atr: thread group ATR::AtrialTachyResponse.imp;
 		mkr: thread mark::Markers.imp;
@@ -110,15 +110,15 @@ process implementation pg_process.imp
 		---DDD to ATR mode Rate Controller
 --		ccidatr_rc: port ddd.cci -> atr_rc.cci;
 --		lvwvsatr_rc: port ddd.last_v_was_vs -> atr_rc.last_v_was_vs;
-		--ATR rate controller to DDD
---		mxatr: port atr_rc.max_cci -> ddd.max_cci;   -- in modes (atr_mode);
 		--Rate Controller to DDD
 		mnrcd: port rc.min_cci -> ddd.min_cci;   -- in modes (normal);
 		mxrcd: port rc.max_cci -> ddd.max_cci;   -- in modes (normal);
 		davrcd: port rc.dav -> ddd.dav;   -- in modes (normal);
 		--ATR rate controller to DDD
+--    atr_mxrcd: port atr_rc.atr_max_cci -> ddd.atr_max_cci;
+--MODE CONFLICTS SENDING ON EVENT DATA PORTS
 --		atr_mnrcd: port atr_rc.min_cci -> ddd.min_cci;   -- in modes (atr_mode);
---		atr_mxrcd: port atr_rc.atr_max_cci -> ddd.atr_max_cci;
+--    mxatr: port atr_rc.max_cci -> ddd.max_cci;   -- in modes (atr_mode);
 --		atr_davrcd: port atr_rc.dav -> ddd.dav;   -- in modes (atr_mode);
 		--DDD to Markers
 		apdm: port ddd.ap -> mkr.ap;

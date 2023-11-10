@@ -122,6 +122,7 @@ thread implementation Settings.imp
         & drs!([DefaultValue::Down_Smoothing_Rate]->percent)  
         & urs!([DefaultValue::Up_Smoothing_Rate]->percent)  
         } 
+        
       operate: run -[on dispatch settings]-> run
         {  --send out newly received Rx
 --NOT USED YET--NO Rx FROM TELEMTRY; HAVING PROBLEMS GENERATING SLANG NAMES:
