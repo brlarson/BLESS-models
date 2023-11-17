@@ -1,0 +1,12 @@
+base.package.name=bless
+bit.width=32
+c.aux.src.directory=
+c.output.directory=
+camkes.aux.src.dir=
+camkes.output.directory=
+eclipse.preferences.version=1
+exclude.slang.impl=false
+max.sequence.size=16
+max.string.size=256
+platform=JVM
+slang.output.directory=/Users/brianlarson/git/BLESS2Slang/DDDRwE-Slang

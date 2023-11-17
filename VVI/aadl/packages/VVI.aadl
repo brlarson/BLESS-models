@@ -19,7 +19,7 @@ public
 			p: out event port --pace ventricle
 			{BLESS::Assertion => "<<VP()>>";};
 			n: out event port --non-refractory ventricular sense
-			{BLESS::Assertion => "<<(now=0 s) or VS()>>";};
+			{BLESS::Assertion => "<<(now=0.0 s) or VS()>>";};
 			h: in event port;  --stop thread
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
@@ -66,7 +66,7 @@ variables
  
 states
   power_on : initial state  --powered-up, 
-    <<now = 0 s>>	--start with "sense"
+    <<now = 0.0 s>>	--start with "sense"
   pace : complete state 
       --a ventricular pace has occured in the 
       --previous LRL-interval milliseconds
@@ -87,7 +87,7 @@ transitions
   T1_POWER_ON:	--initialization
   power_on -[ ]-> sense 
     {
-    	<<now = 0s>>
+    	<<now = 0.0 s>>
     n! <<n@now>>   --first "sense" at initialization
     & 
     last_beat:=now 
@@ -168,7 +168,7 @@ transitions
 		transitions
 		  go: start -[ ]-> run
 		    {
-		    lrl!(1000 ms) & vrp!(150 ms)
+		    lrl!(1000.0 ms) & vrp!(150.0 ms)
 		    }
 		**};		
 	end RateControl;
