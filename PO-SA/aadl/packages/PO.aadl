@@ -57,7 +57,7 @@ ghost variables
   <<SPO2_AVERAGE: returns quantity percent :=
      --the sum of good SpO2 measurements
       (sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 of 
-      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0 percent))
+      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0.0 percent))
       /  --divided by the number of good SpO2 measurements
       (numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 
       	that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i)))>>
@@ -67,9 +67,9 @@ ghost variables
   <<MOTION_ARTIFACT_ALARM: :all j~quantity whole 
         in 0 .. #PulseOx_Properties::Motion_Artifact_Sample_Limit are (MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j))>>      
   <<SPO2_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 percent else SPO2^(-s))>>
+         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 percent else SPO2^(-s))>>
   <<HR_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 Hz else HEART_RATE^(-s))>>
+         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 Hz else HEART_RATE^(-s))>>
 **};
 
 system ICEpoSystem
