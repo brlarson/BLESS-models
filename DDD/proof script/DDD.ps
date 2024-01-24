@@ -1,33 +1,33 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Tue Jul 25 15:20:58 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/DDD/proof script/DDD.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.1
+#  at Mon Jan 22 17:01:13 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/DDD/proof script/DDD.ps
 #ddd_mode::DDD.i
 #[serial 1003] <<I>> -> BLESS::Invariant of thread DDD
 make-an
-axioms
+tautologies
 #[serial 1004] <<M(pav)>> -> <<I>> from invariant I when complete state pav has Assertion <<M(pav)>> in its definition.
 substitute-pre
-axioms
+tautologies
 #[serial 1005] <<M(sav)>> -> <<I>> from invariant I when complete state sav has Assertion <<M(sav)>> in its definition.
 substitute-pre
-axioms
+tautologies
 #[serial 1006] <<M(va)>> -> <<I>> from invariant I when complete state va has Assertion <<M(va)>> in its definition.
 substitute-pre
 normalize
-axioms
+tautologies
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state pav_check_vrp, <<M(pav_check_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 normalize
 laws
-axioms
+tautologies
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_vrp, <<M(sav_check_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
+tautologies
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atrial_refractories, <<M(check_atrial_refractories)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
@@ -35,78 +35,141 @@ normalize
 and-over-or-post
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state check_vrp, <<M(check_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 normalize
 laws
-axioms
+tautologies
 #[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_url, <<M(sav_check_url)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 normalize
 laws
-axioms
+tautologies
 #[serial 1013]  <<M(start)>> A <<M(va)>> for T0_GO: start-[ ]->va{A};
 reduce
 atomic
 normalize
 laws
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1099]   normalization of [serial 108
+#[serial 1088]   normalization of [serial 107
+make-an
+replace-port
+load
+#[serial 1003] <<I>> -> BLESS::Invariant of thread DDD.i
+#ddd_mode::DDD.i
+#[serial 1004] <<M(pav)>> -> <<I>> from invariant I when complete state pav has Assertion <<M(pav)>> in its definitio
+make-an
+tautologies
+substitute-pre
+tautologies
+#[serial 1005] <<M(sav)>> -> <<I>> from invariant I when complete state sav has Assertion <<M(sav)>> in its definition.
+substitute-pre
+tautologies
+#[serial 1006] <<M(va)>> -> <<I>> from invariant I when complete state va has Assertion <<M(va)>> in its definition.
+substitute-pre
+normalize
+tautologies
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state pav_check_vrp, <<M(pav_check_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+laws
+tautologies
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_vrp, <<M(sav_check_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state check_atrial_refractories, <<M(check_atrial_refractories)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+and-over-or-post
+laws
+normalize
+laws
+tautologies
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state check_vrp, <<M(check_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+laws
+tautologies
+#[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state sav_check_url, <<M(sav_check_url)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+normalize
+laws
+tautologies
+#[serial 1013]  <<M(start)>> A <<M(va)>> for T0_GO: start-[ ]->va{A};
+reduce
+atomic
+normalize
+laws
+tautologies
+push
+#ddd_mode::DDD.i
+#[serial 1088]   normalization of [serial 107
 make-an
 substitute-post
 substitute-post
 substitute-post
 normalize
+laws
 laws
 normalize
 split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1125] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 112
+#[serial 1111] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 110
 make-an
 guided-sub-equals[last_ap_or_as]
 laws
 normalize
-axioms
-#[serial 1126] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1120]
+tautologies
+#[serial 1112] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1107]
 guided-sub-equals[last_vp_or_vs]
 laws
 normalize
-axioms
-#[serial 1128]   normalization of [serial 1122]
+tautologies
+#[serial 1114]   normalization of [serial 1108]
 split@
-normalize
 split-quant
 quant
 normalize
-axioms
-#[serial 1130]   normalization of [serial 1123]
+tautologies
+#[serial 1116]   normalization of [serial 1109]
 guided-sub-equals[last_ap_or_as]
-axioms
-#[serial 1132]   normalization of [serial 1124]
+tautologies
+#[serial 1118]   normalization of [serial 1110]
 guided-sub-equals[last_vp_or_vs]
-axioms
-#[serial 1107] Associativity: (b.c).a = a.b.c [serial 1092]
+tautologies
+#[serial 1095] laws applied to [serial 1081]
 replace-port
-axioms
-#[serial 1109] Associativity: (b.c).a = a.b.c [serial 1095]
+tautologies
+#[serial 1097] laws applied to [serial 1084]
 replace-port
-axioms
+tautologies
 #[serial 1014]  <<M(va) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL: va-[x]->va{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
+laws
+normalize
 laws
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1177]   normalization of [serial 116
+#[serial 1151]   normalization of [serial 113
 make-an
 substitute-pre
 substitute-post
@@ -115,81 +178,84 @@ substitute-post
 normalize
 laws
 normalize
+laws
+normalize
 split-post
 normalize
-axioms
+tautologies
 guided-sub-equals[last_vp_or_vs]
 laws
 normalize
-axioms
+tautologies
 split@
 normalize
 split-quant
 quant
 normalize
-axioms
-#[serial 1179]   normalization of [serial 1165]
+tautologies
+#[serial 1153]   normalization of [serial 1142]
 substitute-post
 split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1238]   normalization of [serial 123
+#[serial 1211]   normalization of [serial 120
 make-an
 substitute-pre
 normalize
 laws
 normalize
-extend-eqr
 replace-qv
-axioms
-#[serial 1240]   normalization of [serial 1236]
+extend-eqr
+tautologies
+#[serial 1213]   normalization of [serial 1209]
 substitute-pre
 normalize
 laws
 normalize
 substitute-post
 normalize
-axioms
-#[serial 1181]   normalization of [serial 1173]
+tautologies
+#[serial 1160] laws applied to [serial 1155]
 split-post
 substitute-pre
 normalize
 laws
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 split-post
 normalize
-axioms
-#[serial 1183]   normalization of [serial 1174]
+tautologies
+#[serial 1167]   normalization of [serial 1161]
 split-post
-axioms
-replace-port
+tautologies
+substitute-pre
+substitute-pre
 normalize
-substitute-pre
-substitute-pre
 laws
-axioms
-#[serial 1185]   normalization of [serial 1175]
+laws
+tautologies
+#[serial 1169]   normalization of [serial 1162]
 split-post
-axioms
+tautologies
 replace-port
 normalize
-axioms
+tautologies
 #[serial 1015]  <<M(sav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL: sav-[x]->va{A};
 reduce
 atomic
 normalize
 laws
-axioms
-remove-axioms-post
-laws
 normalize
+laws
+tautologies
+remove-givens-post
+laws
 push
 #ddd_mode::DDD.i
-#[serial 1331]   normalization of [serial 132
+#[serial 1279]   normalization of [serial 127
 make-an
 substitute-post
 substitute-post
@@ -197,63 +263,64 @@ normalize
 laws
 split-post
 normalize
-axioms
+tautologies
 split@
 split-quant
 quant
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 split-post
 normalize
-axioms
+tautologies
 guided-sub-equals[last_vp_or_vs]
 laws
 normalize
-axioms
-#[serial 1333]   normalization of [serial 1325]
+tautologies
+#[serial 1281]   normalization of [serial 1273]
 substitute-post
 normalize
 split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1400] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 139
+#[serial 1336] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 133
 make-an
 substitute-pre
 normalize
 extend-eqr
 replace-qv
-axioms
-#[serial 1402]   normalization of [serial 1399]
+tautologies
+#[serial 1338]   normalization of [serial 1335]
 substitute-post
 normalize
-axioms
-#[serial 1354]   normalization of [serial 1349]
+tautologies
+#[serial 1300] laws applied to [serial 1298]
 split-post
-axioms
+tautologies
 substitute-pre
 substitute-pre
 normalize
 laws
-axioms
-#[serial 1356]   normalization of [serial 1350]
+laws
+tautologies
+#[serial 1301] laws applied to [serial 1299]
 split-post
-axioms
+tautologies
 replace-port
 normalize
-axioms
+tautologies
 #[serial 1016]  <<M(pav) and x>> A <<M(va)>> for T1_PACE_AFTER_LRL: pav-[x]->va{A};
 reduce
 atomic
 laws
 normalize
 laws
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1445]   normalization of [serial 143
+#[serial 1375]   normalization of [serial 136
 make-an
 substitute-post
 substitute-post
@@ -261,30 +328,30 @@ normalize
 laws
 split-post
 normalize
-axioms
+tautologies
 split@
 normalize
 split-quant
 quant
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 split-post
 normalize
-axioms
+tautologies
 guided-sub-equals[last_vp_or_vs]
 laws
 normalize
-axioms
-#[serial 1447]   normalization of [serial 1437]
+tautologies
+#[serial 1377]   normalization of [serial 1368]
 substitute-post
 normalize
 split-post
 normalize
 push
 #ddd_mode::DDD.i
-#[serial 1505] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 150
+#[serial 1422] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 142
 make-an
 substitute-pre
 normalize
@@ -292,58 +359,60 @@ laws
 normalize
 extend-eqr
 replace-qv
-axioms
-#[serial 1507]   normalization of [serial 1504]
+tautologies
+#[serial 1424]   normalization of [serial 1421]
 substitute-post
 normalize
-axioms
-#[serial 1449]   normalization of [serial 1440]
-remove-axioms-post
+tautologies
+#[serial 1379]   normalization of [serial 1371]
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 substitute-pre
 substitute-pre
 normalize
 laws
-axioms
-#[serial 1451]   normalization of [serial 1441]
+laws
+tautologies
+#[serial 1381]   normalization of [serial 1372]
 split-post
-axioms
+remove-axioms-post
+tautologies
 replace-port
 normalize
-axioms
+tautologies
 #[serial 1017]  <<M(sav) and x>> -> <<M(sav_check_vrp)>> for T2_VS_AFTER_AS: sav-[x]->sav_check_vrp{};
 normalize
 laws
-axioms
+tautologies
 #[serial 1018]  <<M(sav_check_vrp) and x>> -> <<M(sav)>> for T3_VS_AFTER_AS_IN_VRP: sav_check_vrp-[x]->sav{};
 normalize
-axioms
+tautologies
 #[serial 1019]  <<M(sav_check_vrp) and x>> A <<M(va)>> for T4_VS_AFTER_AS_AFTER_VRP: sav_check_vrp-[x]->va{A};
 reduce
 atomic
 laws
-axioms
+tautologies
 normalize
 split-post
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1564]   normalization of [serial 155
+#[serial 1474]   normalization of [serial 146
 make-an
 substitute-post
 substitute-post
 normalize
 laws
 split-post
-axioms
+tautologies
 split@
 normalize
 split-quant
 quant
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 guided-sub-equals[last_vp_or_vs]
@@ -351,18 +420,19 @@ laws
 normalize
 laws
 normalize
-axioms
-#[serial 1570] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1562]
+tautologies
+#[serial 1477] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1472]
 substitute-pre
 substitute-pre
 normalize
 laws
-axioms
-#[serial 1571] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1562]
+laws
+tautologies
+#[serial 1478] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1472]
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 substitute-post
 substitute-pre
 substitute-pre
@@ -372,34 +442,35 @@ laws
 normalize
 extend-eqr
 replace-qv
-axioms
-#[serial 1572] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1566]
+laws
+tautologies
+#[serial 1479] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1476]
 replace-port
-axioms
+tautologies
 #[serial 1020]  <<M(sav) and x>> -> <<M(sav_check_url)>> for T5a_EXPIRED_SENSED_AV_DELAY: sav-[x]->sav_check_url{};
 laws
-axioms
+tautologies
 #[serial 1021]  <<M(sav_check_url) and x>> -> <<M(sav)>> for T5b_TRACKED_VP_TOO_SOON_AFTER_PREVIOUS_VS_OR_VP: sav_check_url-[x]->sav{};
 normalize
-axioms
+tautologies
 #[serial 1022]  <<M(sav_check_url) and x>> A <<M(va)>> for T5c_TRACKED_VP_AFTER_AS: sav_check_url-[x]->va{A};
 reduce
 atomic
 laws
 normalize
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1651]   normalization of [serial 164
+#[serial 1547]   normalization of [serial 153
 make-an
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 substitute-post
 normalize
 split@
@@ -407,8 +478,8 @@ normalize
 split-quant
 quant
 normalize
-axioms
-#[serial 1666] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1649]
+tautologies
+#[serial 1557] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1545]
 substitute-post
 normalize
 substitute-pre
@@ -422,11 +493,11 @@ substitute-pre
 laws
 normalize
 split-post
-axioms
+tautologies
 extend-eqr
 replace-qv
-axioms
-#[serial 1667] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1649]
+tautologies
+#[serial 1558] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1545]
 substitute-both
 normalize
 laws
@@ -438,32 +509,32 @@ normalize
 substitute-pre
 laws
 normalize
-axioms
-#[serial 1668] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1653]
+tautologies
+#[serial 1559] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1549]
 substitute-post
 substitute-pre
 normalize
 laws
-axioms
-#[serial 1669] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1653]
+tautologies
+#[serial 1560] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1549]
 substitute-post
 normalize
-axioms
-#[serial 1670] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1664]
+tautologies
+#[serial 1561] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1555]
 dist^
 laws
 normalize
 replace-port
 dist^
 normalize
-axioms
+tautologies
 #[serial 1023]  <<M(pav) and x>> -> <<M(pav_check_vrp)>> for T6_VS_AFTER_AP: pav-[x]->pav_check_vrp{};
 normalize
 laws
-axioms
+tautologies
 #[serial 1024]  <<M(pav_check_vrp) and x>> -> <<M(pav)>> for T7_VS_AFTER_AP_IN_VRP: pav_check_vrp-[x]->pav{};
 normalize
-axioms
+tautologies
 #[serial 1025]  <<M(pav_check_vrp) and x>> A <<M(va)>> for T8_VS_AFTER_AP_AFTER_VRP: pav_check_vrp-[x]->va{A};
 normalize
 reduce
@@ -471,35 +542,35 @@ reduce
 reduce
 atomic
 laws
-axioms
+tautologies
 normalize
-remove-axioms-post
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1767] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 176
+#[serial 1638] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 163
 make-an
 substitute-post
 substitute-post
 normalize
 laws
 split-post
-axioms
+tautologies
 normalize
 split@
 normalize
 split-quant
 quant
 normalize
-axioms
-#[serial 1790] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
+tautologies
+#[serial 1659] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1637]
 substitute-pre
 normalize
 laws
-axioms
-#[serial 1791] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
+tautologies
+#[serial 1660] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1637]
 substitute-pre
 normalize
 laws
@@ -509,15 +580,15 @@ laws
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 substitute-both
 normalize
 extend-eqr
 laws
 normalize
 replace-qv
-axioms
-#[serial 1792] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1770]
+tautologies
+#[serial 1661] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1641]
 substitute-both
 normalize
 laws
@@ -528,134 +599,126 @@ substitute-pre
 normalize
 laws
 normalize
-axioms
-#[serial 1797] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1783]
+tautologies
+#[serial 1666] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1654]
 substitute-post
 guided-sub-equals[last_vp_or_vs]
 normalize
 split-post
 quant
 normalize
-axioms
-#[serial 1798] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1789]
+tautologies
+#[serial 1667] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1658]
 replace-port
-axioms
+tautologies
 #[serial 1026]  <<M(va) and x>> -> <<M(check_atrial_refractories)>> for T10_AS_AFTER_VS_OR_VP: va-[x]->check_atrial_refractories{};
 normalize
-axioms
+tautologies
 #[serial 1027]  <<M(check_atrial_refractories) and x>> A <<M(sav)>> for T11_PVARP_EXPIRED: check_atrial_refractories-[x]->sav{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 normalize
 laws
 normalize
-axioms
+tautologies
 split-post
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 1935]   normalization of [serial 192
+#[serial 1775] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 175
 make-an
 substitute-post
 normalize
 split-post
-substitute-pre
-substitute-pre
-normalize
-laws
-substitute-pre
-normalize
-laws
-axioms
-#[serial 1938] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1911]
+tautologies
 substitute-post
 normalize
-split-post
-axioms
-substitute-both
-normalize
-laws
-normalize
-replace-qv
+tautologies
+#[serial 1776] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1759]
 substitute-post
-normalize
-laws
-normalize
-split-post
-axioms
-replace-qv
-axioms
-#[serial 1939] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1911]
 substitute-pre
-normalize
-laws
-substitute-post
 normalize
 quant
-axioms
-#[serial 1940] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1923]
+tautologies
+#[serial 1777] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 substitute-both
 substitute-pre
 substitute-pre
 normalize
 laws
 normalize
+laws
 extend-eqr
 replace-qv
-axioms
-#[serial 1941] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1923]
+tautologies
+#[serial 1778] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
 substitute-pre
 substitute-pre
 laws
-axioms
-#[serial 1942] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1923]
+laws
+tautologies
+#[serial 1779] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
 substitute-pre
 substitute-pre
 laws
-axioms
-#[serial 1943] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1923]
+laws
+tautologies
+#[serial 1780] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1766]
 substitute-pre
 laws
-axioms
-#[serial 1944] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1933]
+tautologies
+#[serial 1781] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1768]
 replace-port
-axioms
+tautologies
+#[serial 1782] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1768]
+laws
+tautologies
+#[serial 1783] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1768]
+laws
+tautologies
+#[serial 1784] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1773]
+substitute-pre
+substitute-pre
+laws
+laws
+tautologies
 #[serial 1028]  <<M(check_atrial_refractories) and x>> -> <<M(va)>> for T12_STILL_IN_PVARP: check_atrial_refractories-[x]->va{};
-axioms
+tautologies
 #[serial 1029]  <<M(va) and x>> -> <<M(check_vrp)>> for T13_VS_AFTER_VS_OR_VP: va-[x]->check_vrp{};
 normalize
-axioms
+tautologies
 #[serial 1030]  <<M(check_vrp) and x>> -> <<M(va)>> for T14_STILL_IN_VRP: check_vrp-[x]->va{};
-axioms
+tautologies
 #[serial 1031]  <<M(check_vrp) and x>> A <<M(va)>> for T15_VRP_EXPIRED: check_vrp-[x]->va{A};
 reduce
 push
 #ddd_mode::DDD.i
-#[serial 2063] P -> P1 in concurrent composition for [serial 103
+#[serial 1846] P -> P1 in concurrent composition for [serial 103
 make-an
 substitute-pre
 substitute-pre
 normalize
 laws
 split-post
-axioms
+laws
+tautologies
 substitute-post
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 substitute-pre
 normalize
 extend-eqr
 laws
 replace-qv
-axioms
-#[serial 2064] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1031]
+tautologies
+#[serial 1847] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1031]
 substitute-both
 normalize
 laws
@@ -663,23 +726,24 @@ substitute-post
 substitute-post
 normalize
 laws
+laws
 normalize
 split-post
-axioms
+tautologies
 split@
 split-quant
 normalize
 quant
 normalize
-axioms
-#[serial 2065] <<P1>> S1 <<Q1>> in concurrent composition for [serial 1031]
+tautologies
+#[serial 1848] <<P1>> S1 <<Q1>> in concurrent composition for [serial 1031]
 atomic
-axioms
+tautologies
 normalize
 laws
 replace-port
-axioms
-#[serial 2066] <<P>> S2 <<Q2>> in concurrent composition for [serial 1031]
+tautologies
+#[serial 1849] <<P>> S2 <<Q2>> in concurrent composition for [serial 1031]
 atomic
 laws
 normalize
@@ -689,7 +753,8 @@ substitute-pre
 substitute-pre
 normalize
 laws
-axioms
+laws
+tautologies
 #[serial 1032]  <<M(va) and x>> A <<M(pav)>> for T16_AP_AFTER_TIMEOUT_VS_OR_VP: va-[x]->pav{A};
 reduce
 reduce
@@ -699,26 +764,26 @@ laws
 normalize
 laws
 normalize
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 push
 #ddd_mode::DDD.i
-#[serial 2163]   normalization of [serial 215
+#[serial 1936]   normalization of [serial 192
 make-an
 substitute-post
 normalize
 split-post
-axioms
+tautologies
 split@
 split-quant
 DeMorgan
 laws
 normalize
 split-post
-axioms
+tautologies
 substitute-pre
 normalize
 extend-eqr
@@ -733,59 +798,55 @@ laws
 replace-qv
 DeMorgan
 normalize
-axioms
-#[serial 2167]   normalization of [serial 2155]
+tautologies
+#[serial 1940]   normalization of [serial 1928]
 substitute-pre
 normalize
 laws
-axioms
-#[serial 2191] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2159]
-substitute-post
+tautologies
+#[serial 1962] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1932]
 substitute-post
 normalize
-laws
 split-post
-axioms
-substitute-pre
+tautologies
+substitute-post
 normalize
-laws
-normalize
-axioms
-#[serial 2192] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2159]
+tautologies
+#[serial 1963] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1932]
 substitute-post
 normalize
 quant
-axioms
-#[serial 2198] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2161]
+tautologies
+#[serial 1969] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1934]
 replace-qv
-axioms
-#[serial 2199] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2169]
+tautologies
+#[serial 1970] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1942]
 replace-port
-axioms
-#[serial 2202] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2169]
+tautologies
+#[serial 1973] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1942]
 replace-qv
-axioms
-#[serial 2204] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2190]
-substitute-post
-normalize
-substitute-pre
-#ddd_mode::DDD.i
-#[serial 2205] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 219
-make-an
+tautologies
+#[serial 1975] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1955]
 substitute-pre
 substitute-pre
-normalize
 laws
-axioms
-#[serial 2206] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 2190]
+laws
+tautologies
+#[serial 1976] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1955]
+substitute-pre
+substitute-pre
+laws
+laws
+tautologies
+#[serial 1977] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1955]
 replace-qv
-axioms
+tautologies
 #[serial 1033] Composition of Subcomponents via Directional Connection PG::DDDprocess.imp.cap:
-axioms
+tautologies
 #[serial 1034] Composition of Subcomponents via Directional Connection PG::DDDprocess.imp.cvp:
-axioms
+tautologies
 #[serial 1035] Composition of Subcomponents via Directional Connection PG::DDDprocess.imp.cvs:
-axioms
+tautologies
 #[serial 1036] Composition of Subcomponents via Directional Connection PG::DDDprocess.imp.cas:
-axioms
+tautologies
 #Q.E.D.

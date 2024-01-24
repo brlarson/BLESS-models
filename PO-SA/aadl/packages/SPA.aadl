@@ -78,7 +78,7 @@ annex BLESS
     chooseToRun : state 
       <<CTR: :(all k~quantity whole in lb..(ub - 1) 
     	  are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-(ub - 1))) and
-    	(totalSpO2=(sum k~quantity whole in lb..(ub - 2) of SSQ(k-(ub- 1)))) and
+    	(totalSpO2=(sum k~quantity whole in lb..(ub - 1) of SSQ(k-(ub- 1)))) and
     	(goodCount=(numberof k~quantity whole in lb..(ub - 1) 
       	  that (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))) and
       	(all k~quantity whole in lb..(ub - 1) 

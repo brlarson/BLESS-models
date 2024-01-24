@@ -32,7 +32,12 @@ annex BLESS
 assert	     
   << notVRP: : --Ventricular Refractory Period
     (n or p)@last_beat --last beat before now,
-    and ((now-last_beat)>=vrp)>>  --older than VRP
+    and ((now-last_beat)>=vrp) >> --older than VRP
+--     and --not since then
+--      not (exists t~time  --there is no time  
+--        in (now-last_beat),,now  --since then, ",," means open interval
+--        that (n or p)@t) >>  --with a beat
+    
   << VS: : --ventricular sense detected, not in VRP
     s@now and notVRP() >>
   << VP: : --cause ventricular pace
