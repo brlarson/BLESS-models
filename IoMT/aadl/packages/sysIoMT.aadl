@@ -20,6 +20,8 @@ annex Assertion
 		  def SQUARE_BOLUS_RATE ~ quantity mlph
 		  def BASAL_RATE ~ quantity mlph
 		  def LAST_ACTION_A ~ last_action 
+		  def KVO_RATE_property ~ quantity mlph 
+		    << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >>
 		  
 		  <<PO_ALARM: : HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 >>
 		  <<RM_ALARM: : RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
@@ -46,7 +48,7 @@ annex Assertion
 		 <<IS_SAFE: : (HEART_RATE < MINIMUM_HEART_RATE
 						or SpO2 < PROGRAMMED_SpO2 
 						or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE)
-			implies (PUMP_RATE() = #IoMT_Properties::KVO_Rate mlph) >>
+			implies (PUMP_RATE() = KVO_RATE_property) >>
 **};
 
 	system SysIoMT
@@ -80,13 +82,13 @@ annex Assertion
 		features
 			Pause_infusion: in data port BLESS_Types::Boolean;
 			Infused_Drug: out data port Physical_Types::Fluid_Flow
-			{BLESS::Assertion=> "<< :=PUMP_RATE() >>";};
+			{BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 			
 		properties
 			BLESS::Invariant =>
-				"<< (Pause_Infusion) 
-					implies ( PUMP_RATE() = #IoMT_Properties::KVO_Rate or HALT() )>>";
+				"<< Pause_Infusion 
+					iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
 			end PCA_Pump;
 	
 -- Pulse Oximeter
@@ -108,7 +110,7 @@ annex Assertion
 	abstract Patient
 		features
 			Infused_Drug: in data port Physical_Types::Fluid_Flow
-			{BLESS::Assertion=> "PUMP_RATE()>>";};
+			{BLESS::Assertion=> "<< PUMP_RATE() >>";};
 
 	end Patient;
 
