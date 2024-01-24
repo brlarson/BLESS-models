@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="1846c6da-cbc2-46c8-8900-d0603bdb3f4d" manual="true">
+    <element uuid="e7058490-6621-4492-9907-687215a5a137" manual="true">
+      <bo>
+        <seg>connection</seg>
+        <seg>ca2network</seg>
+      </bo>
+      <bendpoints>
+        <point x="119.875" y="101.0"/>
+        <point x="135.875" y="101.0"/>
+        <point x="135.875" y="58.0"/>
+        <point x="493.50909423828125" y="58.0"/>
+        <point x="493.50909423828125" y="91.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="08ac613e-c89b-466f-b818-8131ac235e4b" manual="true">
+      <bo>
+        <seg>connection</seg>
+        <seg>network2pca</seg>
+      </bo>
+      <bendpoints>
+        <point x="119.875" y="91.0"/>
+        <point x="125.875" y="91.0"/>
+        <point x="125.875" y="38.0"/>
+        <point x="848.2200317382812" y="38.0"/>
+        <point x="848.2200317382812" y="91.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="2355e719-173d-4012-8a1a-06b06c2bdbcb" manual="true">
+      <element uuid="d280aa44-6249-486b-ad99-7d8d2afef0ef" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>pause_infusion</seg>
+      </bo>
+    </element>
+    <element uuid="1195e60e-47fa-4a47-a1f1-1ac395e73245" manual="true">
+      <bo>
+        <seg>connection</seg>
+        <seg>po2network</seg>
+      </bo>
+      <bendpoints>
+        <point x="115.875" y="111.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="0a17a2ee-1c4a-44ba-91c8-ce6c62aaeb91" manual="true">
+      <element uuid="5b8b7b88-25f3-422e-bb11-5eddb20f0258" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>resp_alarm</seg>
+      </bo>
+    </element>
+    <element uuid="f9d8e403-fe04-45eb-a5fc-49b397bca1b8" manual="true">
+      <bo>
+        <seg>connection</seg>
+        <seg>rm2network</seg>
+      </bo>
+      <bendpoints>
+        <point x="119.875" y="121.0"/>
+        <point x="125.875" y="121.0"/>
+        <point x="125.875" y="191.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="392f8d00-a240-4c58-920f-c00a9b87d3dc" manual="true">
+      <element uuid="b6f5e826-9906-4dea-89d3-24ed6acccc7e" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>set_infusion</seg>
+      </bo>
+    </element>
+    <element uuid="745448e0-ae27-4041-97f3-e017a17f3759" manual="true">
+      <element uuid="94d73631-0e4a-456b-b9b5-590bc190a930" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>spo2_alarm</seg>
+      </bo>
+      <bendpoints>
+        <point x="493.5091247558594" y="111.0"/>
+        <point x="493.5091247558594" y="141.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="64a30453-d95e-4ef6-a5c8-edff4fa72b79" manual="true">
+      <element uuid="2afcb3fb-a1da-4227-b587-439701d48049" manual="true" primaryLabelVisible="true">
+        <element uuid="e09b69cd-f97c-45dc-868d-c9faf60ccd57" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pi</seg>
+        </bo>
+      </element>
+      <element uuid="01148b66-02fb-48c3-9c60-20c46f972629" manual="true" primaryLabelVisible="true">
+        <element uuid="8983b32d-bf81-452f-a101-7a99fb00a990" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>poa</seg>
+        </bo>
+      </element>
+      <element uuid="961d18bb-aa09-4e3e-a69b-7e5c4a33729d" manual="true" primaryLabelVisible="true">
+        <element uuid="ff5d323e-f46c-41e3-bef5-4bcbfe0d0a86" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rma</seg>
+        </bo>
+      </element>
+      <element uuid="c5b3fa32-3b07-49b0-a79b-b72c741781e2" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>network_conn</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="83643cbd-6b9b-4571-8a81-7b2e42fefd62" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>Pause_Infusion</seg>
+        </bo>
+        <position x="816.0794296264648" y="60.0"/>
+      </element>
+      <element uuid="1e155ec1-bab2-48c4-a2f9-120e81c63b33" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>PO_alarm</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="923e1ceb-b122-4bc6-96b3-877c52167cbc" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>RM_alarm</seg>
+        </bo>
+        <position y="110.0"/>
+      </element>
+      <element uuid="f0585635-4622-49cb-8a80-6be849638387" manual="true">
+        <element uuid="e967d605-0eec-4df8-9460-3aed66102353" manual="true">
+          <element uuid="f0abb3b9-6ab2-4000-95c6-74693845cb67" manual="true">
+            <bo>
+              <seg>tag</seg>
+              <seg>unidirectional</seg>
+            </bo>
+          </element>
+          <bo>
+            <seg>connection</seg>
+            <seg>pi</seg>
+          </bo>
+        </element>
+        <element uuid="c4153ac6-6ddc-4335-bd3d-5254efb636bb" manual="true">
+          <element uuid="cbd1f8b8-dc2f-4d2d-940b-c266ed2ba542" manual="true">
+            <bo>
+              <seg>tag</seg>
+              <seg>unidirectional</seg>
+            </bo>
+          </element>
+          <bo>
+            <seg>connection</seg>
+            <seg>poa</seg>
+          </bo>
+        </element>
+        <element uuid="c10b4a72-3673-46dc-ba92-773b3791704e" manual="true">
+          <element uuid="f48c2c89-fef1-40b8-a2a6-5c7fca6201ed" manual="true">
+            <bo>
+              <seg>tag</seg>
+              <seg>unidirectional</seg>
+            </bo>
+          </element>
+          <bo>
+            <seg>connection</seg>
+            <seg>rma</seg>
+          </bo>
+        </element>
+        <element uuid="e13d4989-b845-4feb-bdf6-046ff2f08e9a" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>Pause_Infusion</seg>
+          </bo>
+          <position x="406.07942962646484" y="100.0"/>
+        </element>
+        <element uuid="5af08114-eb18-47fc-90d0-478a7f1cff01" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>PO_alarm</seg>
+          </bo>
+          <position y="10.0"/>
+        </element>
+        <element uuid="e10b59ab-343e-4ef2-9bc4-9a9de5a38944" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>RM_alarm</seg>
+          </bo>
+          <position y="60.0"/>
+        </element>
+        <element uuid="cd066111-fa64-420d-bae3-95b8bb4533e5" manual="true">
+          <element uuid="9052e86f-d0f6-45ff-82d8-686cc6ec9923" manual="true" dockArea="right">
+            <bo>
+              <seg>feature</seg>
+              <seg>Pause_Infusion</seg>
+            </bo>
+            <position x="116.07942962646484" y="100.0"/>
+          </element>
+          <element uuid="8858a1fb-1a7d-46aa-8f2f-5212145d7713" manual="true" dockArea="left">
+            <bo>
+              <seg>feature</seg>
+              <seg>PO_alarm</seg>
+            </bo>
+            <position/>
+          </element>
+          <element uuid="ad6d941c-bcc1-44eb-b180-cbe96ca032e4" manual="true" dockArea="left">
+            <bo>
+              <seg>feature</seg>
+              <seg>RM_alarm</seg>
+            </bo>
+            <position y="50.0"/>
+          </element>
+          <bo>
+            <seg>subcomponent</seg>
+            <seg>cc_app</seg>
+          </bo>
+          <position x="170.0" y="20.0"/>
+          <size width="220.0" height="150.0"/>
+        </element>
+        <element uuid="9d35170b-5934-4c21-a605-a7f7cfe5c50a" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>cc_proc</seg>
+        </bo>
+        <position x="250.0" y="30.0"/>
+        <size width="510.0" height="210.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>control_app</seg>
+      </bo>
+      <position x="400.0" y="270.0"/>
+      <size width="920.0" height="260.0"/>
+    </element>
+    <element uuid="d4540eaf-2dae-4a12-a9cc-3cffb8197bb4" manual="true">
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>network</seg>
+      </bo>
+      <position x="12.0" y="81.0"/>
+      <size width="103.875" height="50.0"/>
+    </element>
+    <element uuid="4494feb7-22e9-4585-a8ee-38d9812cdaea" manual="true">
+      <element uuid="c26286f7-d465-4252-b963-9bbb8b382a73" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>Infused_Drug</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>patient</seg>
+      </bo>
+      <position x="1204.03125" y="74.0"/>
+      <size width="281.32552337646484" height="60.0"/>
+    </element>
+    <element uuid="d877e48a-d622-42f0-b0ea-b288b1409610" manual="true">
+      <element uuid="3f881495-3875-4001-a993-fae90be4804e" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>Infused_Drug</seg>
+        </bo>
+        <position x="233.75910186767578" y="35.0"/>
+      </element>
+      <element uuid="d6126b7a-04e8-46bd-beb8-40d2a5971bf5" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>network_conn</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="087ddf91-c8a2-4bb7-b54f-57ec4cc1edb3" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>Pause_infusion</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>pca_pump</seg>
+      </bo>
+      <position x="858.2200317382812" y="49.0"/>
+      <size width="325.8111877441406" height="110.0"/>
+    </element>
+    <element uuid="7f7e943d-d241-49e5-899e-cac86aeb9cc6" manual="true">
+      <element uuid="2d443a90-89a2-4289-be5c-1c484d2db195" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>network_conn</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="990ece8c-b3b2-48a1-9880-e6a483b0ebb3" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>PO_alarm</seg>
+        </bo>
+        <position x="265.6146049499512" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>pulse_oximeter</seg>
+      </bo>
+      <position x="145.875" y="69.0"/>
+      <size width="337.6341323852539" height="60.0"/>
+    </element>
+    <element uuid="f1eccf35-ab06-4fac-b5c6-8ad49fd2c3cb" manual="true">
+      <element uuid="604ea42a-a2c6-473b-beb2-bc73822a384f" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>network_conn</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="a61c7ce4-0b1a-4a1a-8f40-bf8d9f50c06d" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>RM_alarm</seg>
+        </bo>
+        <position x="251.5390739440918" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>resp_monitor</seg>
+      </bo>
+      <position x="152.1770896911621" y="149.0"/>
+      <size width="325.0299530029297" height="60.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>SysIoMT.impl</seg>
+    </bo>
+    <position/>
+    <size width="1497.3568115234375" height="590.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMT::SysIoMT.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>

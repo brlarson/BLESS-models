@@ -1,0 +1,13 @@
+package IoMT_Units
+public
+	annex Unit{**
+		extension Hz, <beats per minute> bpm / 60; 
+		extension Hz, <breaths per minute> brpm / 60;
+		base [ unitless ] u , < ratio times one hundred > percent * 100 ;
+	**};
+end IoMT_Units;
+
+--annex Unit {**
+--	extension mpss, <gravity> G / 9.8, <milliG> milliG / 9.8e-3 ;
+--	s s s / m [response factor] ssspm, <ms per milliG> rf / 9.8 ;
+--**};

@@ -1,0 +1,9 @@
+
+property set IoMT_Properties is
+	with Physical_Properties;
+	
+	KVO_Rate_Constant : constant  Physical_Properties::Fluid_Flow_Rate=> 1 mlPerHour;  
+ 	KVO_Rate : Physical_Properties::Fluid_Flow_Rate=> IoMT_Properties::KVO_Rate_Constant applies to (all);
+	Prime_Rate: Physical_Properties::Fluid_Flow_Rate => IoMT_Properties::Max_Rate applies to (all);
+	Max_Rate: constant Physical_Properties::Fluid_Flow_Rate => 10 mlPerMinute;
+end IoMT_Properties;

@@ -1,0 +1,200 @@
+package IoMT
+public
+	with BLESS, 
+	BLESS_Types,
+	IoMT_Properties,
+	Physical_Types;
+
+
+	
+annex Assertion
+		{**
+		 ghost variables
+		  def HEART_RATE ~ quantity bpm -- bpm beats per minute
+		  def MINIMUM_HEART_RATE ~ quantity bpm
+		  def SpO2 ~ quantity percent
+		  def PROGRAMMED_SpO2 ~ quantity percent
+		  def RESPIRATION_RATE ~ quantity brpm --brpm breaths per minute
+		  def MINIMUM_RESPIRATION_RATE ~ quantity brpm 
+		  def PATIENT_BOLUS_RATE ~ quantity mlph
+		  def SQUARE_BOLUS_RATE ~ quantity mlph
+		  def BASAL_RATE ~ quantity mlph
+		  def LAST_ACTION_A ~ last_action 
+		  
+		  <<PO_ALARM: : HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 >>
+		  <<RM_ALARM: : RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+		  <<HALT : :(LAST_ACTION_A = last_action'SafetyStopPump) or (LAST_ACTION_A = last_action'StopButton) or (LAST_ACTION_A = last_action'EndPriming)>>  --pump at 0 if stop button, or safety architecture says, or done priming
+		  <<PB_RATE: :LAST_ACTION_A = last_action'PatientButton >>  --patient button pressed, and allowed
+		  <<CCB_RATE: :(LAST_ACTION_A = last_action'StartSquareBolus) or (LAST_ACTION_A = last_action'ResumeSquareBolus)>>  --clinician-commanded bolus start or resumption after patient bolus
+		  <<PRIME_RATE: :LAST_ACTION_A = last_action'StartPriming>>  --priming pump
+		  <<BASAL_RATE_A: :(LAST_ACTION_A = last_action'StartButton) or (LAST_ACTION_A = last_action'ResumeBasal) or (LAST_ACTION_A = last_action'SquareBolusDone)>>  --regular infusion
+		  
+		 -- <<PCA_KVO_FAULT: : BASAL_OVERINFUSION or BOLUS_OVERINFUSION or SQUARE_OVERINFUSION or MAX_DOSE_WARNING or LOW_BATTERY>>
+		  <<KVO_RATE: : not HALT() and (PO_ALARM() or RM_ALARM()) >> 
+		
+		  <<PUMP_RATE : returns quantity mlph := 
+  			[
+  			( HALT() )-> 0.0 mlph,                                 			--no flow
+  			( KVO_RATE() )-> #IoMT_Properties::KVO_Rate,      			--KVO rate
+ 			( PB_RATE() )-> PATIENT_BOLUS_RATE,							--maximum infusion upon patient request
+ 		 	( CCB_RATE() )-> SQUARE_BOLUS_RATE,             			--square bolus rate=vtbi/duration, from data port
+ 	 		( PRIME_RATE() )-> #IoMT_Properties::Prime_Rate,  			--pump priming
+  			( BASAL_RATE_A() )-> BASAL_RATE                   			--basal rate, from data port
+  			]
+  			>>
+		 
+		 <<IS_SAFE: : (HEART_RATE < MINIMUM_HEART_RATE
+						or SpO2 < PROGRAMMED_SpO2 
+						or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE)
+			implies (PUMP_RATE() = #IoMT_Properties::KVO_Rate mlph) >>
+**};
+
+	system SysIoMT
+		properties
+			BLESS::Invariant => "<< IS_SAFE() >>";
+	end SysIoMT;
+
+	system implementation SysIoMT.impl
+		subcomponents
+			pca_pump: system PCA_Pump;
+			pulse_oximeter: system Pulse_Oximeter;
+			resp_monitor: system Respiration_Monitor;
+			control_app: system Control_Application.impl;
+			network: virtual bus Network_Bus;
+			patient: abstract Patient;
+
+		connections
+			pause_infusion: port control_app.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (reference(network));};
+			spo2_alarm: port pulse_oximeter.PO_alarm -> control_app.PO_alarm {Actual_Connection_Binding => (reference(network));};
+			resp_alarm: port resp_monitor.RM_alarm -> control_app.RM_alarm {Actual_Connection_Binding => (reference(network));};
+			set_infusion: port pca_pump.Infused_Drug -> patient.Infused_Drug; --patient is getting opioid directly from the PCA pump 
+			
+			network2pca: virtual bus access network <-> pca_pump.network_conn;
+			po2network: virtual bus access network <-> pulse_oximeter.network_conn;
+			rm2network: virtual bus access network <-> resp_monitor.network_conn;
+			ca2network: virtual bus access network <-> control_app.network_conn; 
+		end SysIoMT.impl;
+		
+-- PCA Pump
+	system PCA_Pump
+		features
+			Pause_infusion: in data port BLESS_Types::Boolean;
+			Infused_Drug: out data port Physical_Types::Fluid_Flow
+			{BLESS::Assertion=> "<< :=PUMP_RATE() >>";};
+			network_conn: requires virtual bus access Network_Bus;
+			
+		properties
+			BLESS::Invariant =>
+				"<< (Pause_Infusion) 
+					implies ( PUMP_RATE() = #IoMT_Properties::KVO_Rate or HALT() )>>";
+			end PCA_Pump;
+	
+-- Pulse Oximeter
+	system Pulse_Oximeter
+		features
+			PO_alarm: out data port BLESS_Types::Boolean
+			{BLESS::Assertion=>"<< PO_ALARM() >>";};
+			network_conn: requires virtual bus access Network_Bus;
+	end Pulse_Oximeter;
+
+-- Respiration Monitor
+	system Respiration_Monitor
+		features
+			RM_alarm: out data port BLESS_Types::Boolean
+			{BLESS::Assertion=>"<< RM_ALARM() >>";};
+			network_conn: requires virtual bus access Network_Bus;
+	end Respiration_Monitor;
+
+	abstract Patient
+		features
+			Infused_Drug: in data port Physical_Types::Fluid_Flow
+			{BLESS::Assertion=> "PUMP_RATE()>>";};
+
+	end Patient;
+
+-- control application is a system
+
+	system Control_application
+		features
+			PO_alarm: in data port BLESS_Types::Boolean;
+			RM_alarm: in data port BLESS_Types::Boolean;
+			Pause_Infusion: out data port BLESS_Types::Boolean;
+			network_conn: requires virtual bus access Network_Bus;
+	end Control_application;
+	
+	system implementation Control_Application.impl
+	subcomponents
+		cc_proc: process Controlling_Process.impl;
+
+	connections
+		poa: port PO_alarm -> cc_proc.PO_alarm;
+		rma: port RM_alarm -> cc_proc.RM_alarm;
+		pi: port cc_proc.Pause_Infusion -> Pause_Infusion;
+end Control_Application.impl;
+	
+	process Controlling_Process
+		features
+			PO_alarm: in data port BLESS_Types::Boolean;
+			RM_alarm: in data port BLESS_Types::Boolean;
+			Pause_Infusion: out data port BLESS_Types::Boolean;
+		--	bus_access: requires bus access Network_bus;
+	end Controlling_Process;
+	
+	process implementation Controlling_Process.impl
+	subcomponents
+		cc_app: thread cc_app.impl;
+	connections
+		poa: port PO_alarm -> cc_app.PO_alarm;
+		rma: port RM_alarm -> cc_app.RM_alarm;
+		pi: port cc_app.Pause_Infusion -> Pause_Infusion;
+end Controlling_Process.impl;
+
+	thread cc_app
+	 features
+		Pause_Infusion : out data port BLESS_Types::Boolean
+			{BLESS::Assertion=>"<< (PO_ALARM() or RM_ALARM())>>";}; 
+			
+		PO_alarm : in data port BLESS_Types::Boolean
+			{BLESS::Assertion=>"<<PO_ALARM()>>";};
+			
+		RM_alarm : in data port BLESS_Types::Boolean
+			{BLESS::Assertion=>"<<RM_ALARM()>>";};
+		
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 500 ms;
+			
+			BLESS::Invariant =>
+				"<<Pause_Infusion iff (PO_ALARM() or RM_ALARM())>>";
+			
+	end cc_app;
+	
+	thread implementation cc_app.impl
+		annex BLESS
+			{**
+				invariant 
+					<<INV: :Pause_Infusion iff (PO_ALARM() or RM_ALARM()) >>
+				
+				states
+					start: initial state;
+					run: complete state <<INV() >>;
+					check: state;
+					done: final state;
+					
+				transitions
+					go: start -[ ]-> check{};
+					op: run -[on dispatch]-> check{};
+					alarm: check -[PO_alarm? or RM_alarm?]-> run
+						{Pause_Infusion!(true)};
+					ok: check -[not PO_alarm? and not RM_alarm?]-> run
+					 	{Pause_Infusion !(false)};
+			**};
+	end cc_app.impl;
+		
+	
+	virtual bus Network_bus -- network can be any network, Ethernet, WLAN etc
+		
+	end Network_bus;
+		
+	
+end IoMT;

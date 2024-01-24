@@ -1,0 +1,30 @@
+package IoMT_Types
+public
+	with BLESS;
+	
+annex Typedef
+{**
+type last_action is enumeration 
+  (	
+    SafetyStopPump		--safety architecture found a problem
+    StopButton				--clinician pressed stop button
+    KVOcommand				--alarm causes Keep-vein-open rate
+    KVOalarm					--some alarms should pump at KVO rate
+    TooMuchJuice     --exceeded max drug per hour pump at KVO until prescription and patient are re-authenticated
+    PatientButton		--patient requested drug
+    ResumeSquareBolus  --infusion of vtbi finished resume clinician-commanded bolus
+    ResumeBasal			--infusion of vtbi finished resume basal-rate
+    StartSquareBolus	--begin clinician-commanded bolus
+    SquareBolusDone  --infusion of vtbi finished
+    StartPriming			--begin pump/line priming pressed "prime" button
+    EndPriming    		--end priming, pressed "prime" button again, or time-out 
+    StartButton				--start pumping at basal rate
+    )
+   
+ **};
+ 
+ data KVO_RATE
+  Properties BLESS::Typed => "quantity mlph"; --ml/h
+end KVO_RATE;
+
+end IoMT_Types;
