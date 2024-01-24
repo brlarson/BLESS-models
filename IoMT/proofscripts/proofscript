@@ -1,0 +1,37 @@
+#IoMT::cc_app.impl
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
+make-an
+axioms
+#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+laws
+and-over-or-post
+laws
+normalize
+axioms
+#[serial 1006]  <<M(start)>> -> <<M(check)>> for gostart-[ ]->check{};
+axioms
+#[serial 1007]  <<M(run) and x>> -> <<M(check)>> for oprun-[x]->check{};
+axioms
+#[serial 1008]  <<M(check) and x>> A <<M(run)>> for alarmcheck-[x]->run{A};
+completesub
+alldist^
+atomic
+substitute-post
+now
+axioms
+laws
+normalize
+axioms
+stop ****
+#[serial 1009]  <<M(check) and x>> A <<M(run)>> for okcheck-[x]->run{A};
+atomic
+completesub
+axioms
+now
+laws
+normalize
+DeMorgan
+normalize
+laws

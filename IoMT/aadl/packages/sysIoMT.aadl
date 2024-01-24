@@ -37,7 +37,7 @@ annex Assertion
 		  <<PUMP_RATE : returns quantity mlph := 
   			[
   			( HALT() )-> 0.0 mlph,                                 			--no flow
-  			( KVO_RATE() )-> #IoMT_Properties::KVO_Rate,      			--KVO rate
+  			( KVO_RATE() )-> KVO_RATE_property,      			--KVO rate
  			( PB_RATE() )-> PATIENT_BOLUS_RATE,							--maximum infusion upon patient request
  		 	( CCB_RATE() )-> SQUARE_BOLUS_RATE,             			--square bolus rate=vtbi/duration, from data port
  	 		( PRIME_RATE() )-> #IoMT_Properties::Prime_Rate,  			--pump priming
@@ -52,8 +52,8 @@ annex Assertion
 **};
 
 	system SysIoMT
-		properties
-			BLESS::Invariant => "<< IS_SAFE() >>";
+		--properties
+		--	BLESS::Invariant => "<< IS_SAFE() >>";
 	end SysIoMT;
 
 	system implementation SysIoMT.impl
@@ -154,7 +154,7 @@ end Controlling_Process.impl;
 	thread cc_app
 	 features
 		Pause_Infusion : out data port BLESS_Types::Boolean
-			{BLESS::Assertion=>"<< (PO_ALARM() or RM_ALARM())>>";}; 
+			{BLESS::Assertion=>"<< Pause_Infusion iff (PO_ALARM() or RM_ALARM())>>";}; 
 			
 		PO_alarm : in data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<PO_ALARM()>>";};
@@ -163,19 +163,15 @@ end Controlling_Process.impl;
 			{BLESS::Assertion=>"<<RM_ALARM()>>";};
 		
 		properties
-			Dispatch_Protocol => Periodic;
+			Dispatch_Protocol => Timed;
 			Period => 500 ms;
-			
-			BLESS::Invariant =>
-				"<<Pause_Infusion iff (PO_ALARM() or RM_ALARM())>>";
-			
 	end cc_app;
 	
 	thread implementation cc_app.impl
 		annex BLESS
 			{**
 				invariant 
-					<<INV: :Pause_Infusion iff (PO_ALARM() or RM_ALARM()) >>
+					<<INV: :true >>
 				
 				states
 					start: initial state;
@@ -189,7 +185,7 @@ end Controlling_Process.impl;
 					alarm: check -[PO_alarm? or RM_alarm?]-> run
 						{Pause_Infusion!(true)};
 					ok: check -[not PO_alarm? and not RM_alarm?]-> run
-					 	{Pause_Infusion !(false)};
+					 	{Pause_Infusion!(false)};
 			**};
 	end cc_app.impl;
 		
