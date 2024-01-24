@@ -15,7 +15,7 @@ annex Assertion
 {**
 ghost variables 
   def ACTUAL_POSITION ~ position		
-  def DESIRED_POSITION ~ position		
+  def DESIRED_POSITION ~ position	
   
 --desired position in 0..250
   <<DESIRED_IN_RANGE:  : 
@@ -23,6 +23,8 @@ ghost variables
 --actual position in 0..250
   <<ACTUAL_IN_RANGE:  :
     ACTUAL_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+  
+  <<MAX_POSITION: returns position := #PCS::MaxPosition>>
     
   <<AXIOM_MPGT0: :0<=#PCS::MaxPosition>>
 

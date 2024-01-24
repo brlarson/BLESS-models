@@ -6,15 +6,15 @@ public
 thread SpO2AverageThread
   features
     SpO2 : in data port PulseOx_Types::Percent  --oxygen saturation from pulse oximeter device
-      {BLESS::Value=>"<<:=SPO2>>";}; 
+      {BLESS::Value=>"<< returns quantity percent := SPO2 >>";}; 
     SensorConnected : in data port BLESS_Types::Boolean --sensor is attached to patient
-      {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";}; 
+      {BLESS::Assertion=>"<<SENSOR_CONNECTED >>";}; 
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
-      {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};  
+      {BLESS::Assertion=>"<<MOTION_ARTIFACT >>";};  
     SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count
-      {BLESS::Value=>"<<:=SPO2_MOVING_AVERAGE_WINDOW_SAMPLES>>";};
+      {BLESS::Value=>"<< returns quantity percent := SPO2_MOVING_AVERAGE_WINDOW_SAMPLES >>";};
     SpO2Avg : out data port PulseOx_Types::Percent  
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";};
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE() >>";};
     Error : out event data port;		--an error occurred  
   properties
     --Thread_Properties::
@@ -34,17 +34,17 @@ annex BLESS
   assert
     --shorthand used for conditional expression of SpO2 sample quality used often
     <<SSQ:x~quantity whole returns quantity percent := (if SENSOR_CONNECTED^(x) and 
-    	not MOTION_ARTIFACT^(x) then SPO2^(x) else 0 u)>>
+    	not MOTION_ARTIFACT^(x) then SPO2^(x) else 0.0 percent)>>
     <<AXIOM_LB: :lb<(lb+1)>>  --used to contract universal quantification
 ----    <<AXIOM_UB: :ub=(lb+SPO2_MOVING_AVERAGE_WINDOW_SAMPLES)>>	
 	<<AXIOM_K2I: :
 	  ((sum k~quantity whole in lb .. (ub - 1) 
-	  	  of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0 u))/
+	  	  of (if SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub) then SPO2^(k-ub) else 0.0 percent))/
 		(numberof k~quantity whole in lb .. (ub - 1) 
 			  that (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))))
 	  = 
 	  ((sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 
-	  	  of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0 u))/
+	  	  of (if SENSOR_CONNECTED^i and not MOTION_ARTIFACT^i then SPO2^i else 0.0 percent))/
 		(numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES .. -1 
 			  that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i)))) >> 
    invariant
@@ -62,7 +62,7 @@ annex BLESS
     	   (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub))>>;
     ub~quantity whole :=0;  --location of most recent SpO2 reading, upper bound of range of average and storage
     lb~quantity whole :=0;  --location of oldest sample in window
-    totalSpO2~quantity percent := 0 percent  --running total
+    totalSpO2~quantity percent := 0.0 percent  --running total
       <<TOTAL_SPO2: :totalSpO2=(sum k~quantity whole in lb .. (ub - 1) of SSQ(k - ub))>>;
     goodCount~quantity whole :=0  --count of good SpO2 in the window
       <<GOOD: :goodCount=(numberof k~quantity whole in lb .. (ub - 1) 
@@ -72,7 +72,7 @@ annex BLESS
   states
     start : initial state
       <<(numSamplesInWindow=0) and (ub=0) and (oldestSample=0) 
-       and (totalSpO2 = 0 percent) and (lb=0) and (goodCount=0)>>;
+       and (totalSpO2 = 0.0 percent) and (lb=0) and (goodCount=0)>>;
     fillingWindow : complete state 
       <<FW: :((ub-lb)<window_size) and INV_AV() >>;
     chooseToRun : state 
@@ -99,10 +99,10 @@ annex BLESS
     	<<FW()>>
     	--store current sample
     	spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-    	  (if SensorConnected and not MotionArtifact then SpO2 else 0)
+    	  (if SensorConnected and not MotionArtifact then SpO2 else 0.0 percent)
     	  <<WINDOW() and (spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] = SSQ(x:0))>>  --add parameter to SSQ because for some reason it won't substitute with 0
     	&  --update total
-    	totalSpO2 := totalSpO2+(if SensorConnected and not MotionArtifact then SpO2 else 0)
+    	totalSpO2 := totalSpO2+(if SensorConnected and not MotionArtifact then SpO2 else 0.0 percent)
     	  <<totalSpO2=(SSQ(x:0)+(sum k~quantity whole in lb..(ub - 1) of SSQ(k-ub) ))>>
     	&  --update count of valid SpO2 readings
     	goodCount := (goodCount+(if SensorConnected and not MotionArtifact then 1 else 0))
@@ -161,7 +161,7 @@ annex BLESS
     	    are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-ub)>>	
     	--store current sample
     	spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] := 
-    	   (if SensorConnected? and not MotionArtifact? then SpO2? else 0)
+    	   (if SensorConnected? and not MotionArtifact? then SpO2? else 0.0 percent)
     	  <<(all k~quantity whole in (lb+1) ..(ub - 1) 
     	      are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-ub)) and
     	    (spo2_hist[ub mod #PulseOx_Properties::Max_Window_Samples] = SSQ(x:0))>>
@@ -169,7 +169,7 @@ annex BLESS
     	  <<(totalSpO2=(SSQ(lb-ub)+(sum k~quantity whole in (lb+1) ..(ub - 1) of SSQ(k-ub)))) and
     	    (spo2_hist[lb mod #PulseOx_Properties::Max_Window_Samples] = SSQ(lb-ub)) and 
     	    ((ub-lb)=window_size)>>
-    	totalSpO2 := (totalSpO2+(if SensorConnected? and not MotionArtifact? then SpO2? else 0))
+    	totalSpO2 := (totalSpO2+(if SensorConnected? and not MotionArtifact? then SpO2? else 0.0 percent))
     	     -spo2_hist[lb mod #PulseOx_Properties::Max_Window_Samples]
     	  <<(totalSpO2=(SSQ(x:0)+(sum k~quantity whole in (lb+1) ..(ub - 1) of SSQ(k-ub)))) and ((ub-lb)=window_size)>>
     	&  --update count of valid SpO2 readings
@@ -220,7 +220,7 @@ annex BLESS
     	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples]' iff
     	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
       };  --end of SpAt4     
-    SpATstop: fillingWindow,run-[on dispatch stop]->halt{};     
+--    SpATstop: fillingWindow,run-[on dispatch stop]->halt{};     
 **};
 end SpO2AverageThread.imp;
 

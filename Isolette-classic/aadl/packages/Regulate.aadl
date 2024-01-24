@@ -18,7 +18,7 @@ features
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
 annex EMV2 
   {** 
   use types ErrorLibrary, KSU_Isolette;
@@ -238,16 +238,16 @@ thread implementation manage_regulator_mode.impl
           };  --end of wait_init
     mrm: --timeout on initialization
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout)
+            #Iso_Properties::Initialization_Timeout s)
             and (interface_failure? or internal_failure?
               or not (current_temperature_status = status'Valid))]->failed
-          { <<not (REGULATOR_OK() or ((now-start_time) < #Iso_Properties::Initialization_Timeout))
+          { <<not (REGULATOR_OK() or ((now-start_time) < #Iso_Properties::Initialization_Timeout s))
           	and AXIOM_STR() and AXIOM_CTSR() >>
           regulator_mode!(mmode'Failed)
           };  --end of mrm
     mrm2: --transition to normal operation
       check_init-[((now-start_time) >= 
-            #Iso_Properties::Initialization_Timeout) and
+            #Iso_Properties::Initialization_Timeout s) and
         not (interface_failure? or internal_failure?)
         and (current_temperature_status = status'Valid)]->normal
           { <<REGULATOR_OK() and RUN()>>
@@ -256,7 +256,7 @@ thread implementation manage_regulator_mode.impl
           };  --end of mrm2
     mrm2x:  --too soon, back to init
       check_init-[(now-start_time) < 
-            #Iso_Properties::Initialization_Timeout]->init{};  
+            #Iso_Properties::Initialization_Timeout s]->init{};  
     wait_normal: --check temperature status
       normal-[on dispatch]->check_normal
           { <<RUN()>>
@@ -279,7 +279,7 @@ thread implementation manage_regulator_mode.impl
       	(interface_failure? or internal_failure? or
         not (current_temperature_status = status'Valid))]->failed
           {<<(not REGULATOR_OK() or not (current_temperature_status = status'Valid))
-          	and ((now-start_time) >= #Iso_Properties::Initialization_Timeout)
+          	and ((now-start_time) >= #Iso_Properties::Initialization_Timeout s)
           	and AXIOM_STR() and AXIOM_CTSR() >> 
           regulator_mode!(mmode'Failed)};
 --    mrm3err:  --internal error
@@ -292,7 +292,7 @@ end manage_regulator_mode.impl;
 thread manage_heat_source
 features
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
@@ -329,8 +329,8 @@ end manage_heat_source;
 thread implementation manage_heat_source.impl
 annex BLESS {**
 	assert
-	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP
-    	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP>>    
+	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP.t
+    	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP.t>>    
 	  <<AXIOM_HEAT: : heat_previous_period = cntrl'O_n or heat_previous_period = cntrl'Off >> 
 	  <<AXIOM_HC: : HEAT_CONTROL^-1 = heat_control^-1 >>
 	invariant <<INVMHS: :heat_previous_period = heat_control^-1>>

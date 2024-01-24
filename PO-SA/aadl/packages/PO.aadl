@@ -57,19 +57,19 @@ ghost variables
   <<SPO2_AVERAGE: returns quantity percent :=
      --the sum of good SpO2 measurements
       (sum i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 of 
-      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0 u))
+      	 (if SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i) then  SPO2^(i) else 0.0 percent))
       /  --divided by the number of good SpO2 measurements
       (numberof i~quantity whole in -SPO2_MOVING_AVERAGE_WINDOW_SAMPLES..-1 
       	that (SENSOR_CONNECTED^(i) and not MOTION_ARTIFACT^(i)))>>
   <<SUPPL_O2_ALARM: :SUPPL_OXY_ALARM_ENABLED^0 and (SPO2_AVERAGE())^0 < (SPO2_LOWER_LIMIT^0+SPO2_LOWER_LIMIT_ADJ^0)>>
-  <<RAPID_DECLINE_ALARM: :ADULT_RAPID_DECLINE_ALARM_ENABLED  and
-      (exists j~quantity whole in 1 .. #PulseOx_Properties::Max_Window_Samples that (SPO2 <= (SPO2^(-j) - MAX_SPO2_DECLINE)))>>
+  <<RAPID_DECLINE_ALARM: :ADULT_RAPID_DECLINE_ALARM_ENABLED  and SPO2 + MAX_SPO2_DECLINE < SPO2_AVERAGE() 
+    and SENSOR_CONNECTED and not MOTION_ARTIFACT >>
   <<MOTION_ARTIFACT_ALARM: :all j~quantity whole 
         in 0 .. #PulseOx_Properties::Motion_Artifact_Sample_Limit are (MOTION_ARTIFACT^(-j) or not SENSOR_CONNECTED^(-j))>>      
   <<SPO2_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 u else SPO2^(-s))>>
+         are SPO2_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 percent else SPO2^(-s))>>
   <<HR_TREND: : all s~quantity whole in 1 ..NUM_SAMPLES 
-         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 Hz else HEART_RATE^(-s))>>
+         are HEART_RATE_HISTORY[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 Hz else HEART_RATE^(-s))>>
 **};
 
 system ICEpoSystem
@@ -182,8 +182,8 @@ device ICEpoInterface
     --== SpO2 Sensor
     --====================
     -- SpO2 sensor metric
-    SpO2 : out event data port PulseOx_Types::Percent {
-        --Communication_Properties::
+    SpO2 : out event data port PulseOx_Types::Percent 
+      { --Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         --Communication_Properties::
         Output_Rate => [
@@ -195,23 +195,26 @@ device ICEpoInterface
           -- sensor is unspecified
       };
     -- SpO2 sensor lower limit alarm
-    SpO2LowerLimit : in out event data port PulseOx_Types::Percent { -- lower limit attribute can be both read and written by clients
+    SpO2LowerLimit : in out event data port PulseOx_Types::Percent 
+      { -- lower limit attribute can be both read and written by clients
         --Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         -- the default output rate of 1.0 per dispatch is suffcient
       };	
-    SpO2LowerLimitViolated : out event port { -- alarm event published when patient SpO2 below lower limit
+    SpO2LowerLimitViolated : out event port 
+      { -- alarm event published when patient SpO2 below lower limit
 --      BLESS::Assertion=>"<<SPO2_LOWER_LIMIT_ALARM()>>";
       --Communication_Properties::
         Fan_Out_Policy => Broadcast;
       --Communication_Properties::
         Latency => 0 ms .. 5 ms;
-    };
+      };
     --====================
     --== Heart Rate Sensor
     --====================
     -- Heart Rate sensor metric
-    HeartRate : out data port PulseOx_Types::Heart_Rate {  -- periodic publishing of heart rate from pulse oximeter
+    HeartRate : out data port PulseOx_Types::Heart_Rate 
+      {  -- periodic publishing of heart rate from pulse oximeter
         --Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         --Communication_Properties::
@@ -222,35 +225,40 @@ device ICEpoInterface
         ];
       };	
     -- Heart Rate sensor lower limit alarm
-    HeartRateLowerLimit : in out event data port PulseOx_Types::Heart_Rate { -- minimum heart rate
+    HeartRateLowerLimit : in out event data port PulseOx_Types::Heart_Rate 
+      { -- minimum heart rate
     	--Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         -- the default output rate of 1.0 per dispatch is suffcient
       };
-    HeartRateLowerLimitViolated : out event port {  -- alarm event published when patient HR below lower limit
-      BLESS::Assertion=>"<<HEART_RATE_LOWER_LIMIT_ALARM()>>";
+    HeartRateLowerLimitViolated : out event port 
+      {  -- alarm event published when patient HR below lower limit
+      BLESS::Assertion=>"<< HEART_RATE_LOWER_LIMIT_ALARM() >>";
       --Communication_Properties::
         Fan_Out_Policy => Broadcast;
       --Communication_Properties::
         Latency => 0 ms .. 5 ms;
-    };
+      };
     -- Heart Rate sensor upper limit alarm
-    HeartRateUpperLimit : in out event data port PulseOx_Types::Heart_Rate {   -- maximum heart rate
+    HeartRateUpperLimit : in out event data port PulseOx_Types::Heart_Rate 
+      {   -- maximum heart rate
     	--Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         -- the default output rate of 1.0 per dispatch is suffcient
-    };
-    HeartRateUpperLimitViolated : out event port { -- alarm event published when patient HR above upper limit
-      BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";
+      };
+    HeartRateUpperLimitViolated : out event port 
+      { -- alarm event published when patient HR above upper limit
+      BLESS::Assertion=>"<< HEART_RATE_UPPER_LIMIT_ALARM() >>";
       --Communication_Properties::
         Fan_Out_Policy => Broadcast;
       --Communication_Properties::
         Latency => 0 ms .. 5 ms;
-    };
+      };
     --====================
     --== Probe Sensor
     --====================
-    SensorConnected : out data port BLESS_Types::Boolean {  --sensor is attached to patient
+    SensorConnected : out data port BLESS_Types::Boolean 
+      {  --sensor is attached to patient
         --Communication_Properties::
         Fan_Out_Policy=>Broadcast;
         --Communication_Properties::
@@ -315,7 +323,7 @@ process ICEpoUIprocess
         Fan_Out_Policy=>Broadcast;    	
     };
     SpO2LowerLimitViolated : in event port
-          {BLESS::Assertion=>"<<SPO2_LOWER_LIMIT_ALARM()>>";}
+          {BLESS::Assertion=>"<< SPO2_LOWER_LIMIT_ALARM() >>";}
     ;  --patient SpO2 below lower limit
 
     --====================
@@ -336,17 +344,17 @@ process ICEpoUIprocess
         Fan_Out_Policy=>Broadcast;    	
       };
     HeartRateLowerLimitViolated : in event port  -- heart too slow
-      {BLESS::Assertion=>"<<HEART_RATE_LOWER_LIMIT_ALARM()>>";}
+      {BLESS::Assertion=>"<< HEART_RATE_LOWER_LIMIT_ALARM() >>";}
       ;
     HeartRateUpperLimit : in out event data port PulseOx_Types::Heart_Rate { -- maximum heart rate
         --Communication_Properties::
         Fan_Out_Policy=>Broadcast;
       };
     HeartRateUpperLimitViolated : in event port  -- heart too fast
-      {BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";}
+      {BLESS::Assertion=>"<< HEART_RATE_UPPER_LIMIT_ALARM() >>";}
       ;
     HeartRateTrend : in data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY >>";}
       ;  
     --====================
     --== Average SpO2 reading
@@ -357,7 +365,7 @@ process ICEpoUIprocess
       };
       
     SpO2Avg : in data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE() >>";}
       ;
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -371,7 +379,7 @@ process ICEpoUIprocess
         Fan_Out_Policy=>Broadcast;
     };
     SpO2DerivedLowerLimitAlarm : in event port  -- alarm triggered when patient SpO2  is below average level by SpO2LevelAdj
-      {BLESS::Assertion=>"<<SUPPL_O2_ALARM()>>";}
+      {BLESS::Assertion=>"<< SUPPL_O2_ALARM() >>";}
       ;
     --====================
     --== App Adult Rapid SpO2 Decline Derived Alarm I/O and configuration
@@ -387,20 +395,20 @@ process ICEpoUIprocess
     };
     
     RapidSpO2DeclineAlarm : in event port	-- decreasing SpO2 in adult alarm
-      {BLESS::Assertion=>"<<RAPID_DECLINE_ALARM()>>";}
+      {BLESS::Assertion=>"<< RAPID_DECLINE_ALARM() >>";}
       ; --that had higher SpO2	than the rapid decline %
     --====================
     --== Indications of SpO2 measurement anamolies
     --====================
     ProbeOff : in event port;  -- alarm indicating sensor is not connected to patient
     MotionArtifactAlarm : in event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
-      {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
+      {BLESS::Assertion=>"<< MOTION_ARTIFACT_ALARM() >>";}
       ;
     --====================
     --== Data for SpO2 trending display
     --====================
     SpO2Trend : in data port PulseOx_Types::SpO2Samples
-      {BLESS::Assertion=>"<<SPO2_TREND()>>";}
+      {BLESS::Assertion=>"<< SPO2_TREND() >>";}
       ;
       
       
@@ -456,7 +464,7 @@ thread ICEpoUI
     SpO2 : in event data port PulseOx_Types::Percent;	--oxygen saturation from pulse oximater
     SpO2LowerLimit : out event data port PulseOx_Types::Percent;  --minimum allowed SpO2
     SpO2LowerLimitViolated : in event port  --patient SpO2 below lower limit
-      {BLESS::Assertion=>"<<SPO2_LOWER_LIMIT_ALARM()>>";}
+      {BLESS::Assertion=>"<< SPO2_LOWER_LIMIT_ALARM() >>";}
       ;
     --====================
     --== Heart Rate Sensor inputs and alarm configuration
@@ -464,14 +472,14 @@ thread ICEpoUI
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
     HeartRateLowerLimit : out event data port PulseOx_Types::Heart_Rate;  -- minimum heart rate
     HeartRateLowerLimitViolated : in event port  -- heart too slow
-      {BLESS::Assertion=>"<<HEART_RATE_LOWER_LIMIT_ALARM()>>";}
+      {BLESS::Assertion=>"<< HEART_RATE_LOWER_LIMIT_ALARM() >>";}
       ;
     HeartRateUpperLimit : out event data port PulseOx_Types::Heart_Rate;  -- maximum heart rate
     HeartRateUpperLimitViolated : in event port  -- heart too fast
-      {BLESS::Assertion=>"<<HEART_RATE_UPPER_LIMIT_ALARM()>>";}
+      {BLESS::Assertion=>"<< HEART_RATE_UPPER_LIMIT_ALARM() >>";}
       ;
     HeartRateTrend : in data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY >>";}
       ;  
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -479,14 +487,14 @@ thread ICEpoUI
     SupplOxyAlarmEnabled : out data port BLESS_Types::Boolean;  --patient is using bottled oxygen
     SpO2LevelAdj : out data port PulseOx_Types::Percent;  -- value used to decrease SpO2 level to obtain "derived" parameter
     SpO2DerivedLowerLimitAlarm : in event port  -- alarm triggered when derived patient SpO2 average level is below SpO2LowerLimit
-      {BLESS::Assertion=>"<<SUPPL_O2_ALARM()>>";}
+      {BLESS::Assertion=>"<< SUPPL_O2_ALARM() >>";}
       ;
     --====================
     --== Average SpO2 reading
     --====================
     SpO2MovingAvgWindowSamples : out data port PulseOx_Types::Second_Count;
     SpO2Avg : in data port PulseOx_Types::Percent --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE() >>";}
       ;      	
     --====================
     --== App Adult Rapid SpO2 Decline Derived Alarm I/O and configuration
@@ -494,20 +502,20 @@ thread ICEpoUI
     AdultRapidDeclineAlarmEnabled : out data port BLESS_Types::Boolean;  --patient is an adult
     MaxSpO2Decline : out data port PulseOx_Types::Percent;
     RapidSpO2DeclineAlarm : in event port	-- decreasing SpO2 in adult alarm
-      {BLESS::Assertion=>"<<RAPID_DECLINE_ALARM()>>";}
+      {BLESS::Assertion=>"<< RAPID_DECLINE_ALARM() >>";}
       ; --that had higher SpO2	than the rapid decline %
     --====================
     --== Indications of SpO2 measurement anamolies
     --====================
     ProbeOff : in event port;  -- alarm indicating sensor is not connected to patient
     MotionArtifactAlarm : in event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
-      {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
+      {BLESS::Assertion=>"<< MOTION_ARTIFACT_ALARM() >>";}
       ;
     --====================
     --== Data for SpO2 trending display
     --====================
     SpO2Trend : in data port PulseOx_Types::SpO2Samples
-      {BLESS::Assertion=>"<<SPO2_TREND()>>";}
+      {BLESS::Assertion=>"<< SPO2_TREND() >>";}
       ;  --for which sample s was the patient's SpO2
   properties
     --Thread_Properties::
@@ -535,7 +543,7 @@ process ICEpoAppProcess
     --====================
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples  := HEART_RATE_HISTORY>>";}
       ;  
     --====================
     --== Indications of SpO2 measurement anamolies
@@ -550,7 +558,7 @@ process ICEpoAppProcess
     --====================
     SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count; --how many samples in moving average?
     SpO2Avg : out data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Assertion=>"<<SPO2_AVERAGE()>>";}
+      {BLESS::Assertion=>"<< returns quantity percent := SPO2_AVERAGE() >>";}
       ;      	
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -623,7 +631,7 @@ thread group ICEpoApp
     --====================
     HeartRate : in data port PulseOx_Types::Heart_Rate;  -- patient's heart rate
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";}
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY >>";}
       ;  
     --====================
     --== Indications of SpO2 measurement anamolies
@@ -631,14 +639,14 @@ thread group ICEpoApp
     SensorConnected : in data port BLESS_Types::Boolean;  --sensor is attached to patient
     MotionArtifact : in data port BLESS_Types::Boolean;  -- indication of motion noise in sensor reading
     MotionArtifactAlarm : out event port  --motion artifact longer than PulseOx_Properties::Motion_Artifact_Duration_Limit
-      {BLESS::Assertion=>"<<MOTION_ARTIFACT_ALARM()>>";}
+      {BLESS::Assertion=>"<< MOTION_ARTIFACT_ALARM() >>";}
       ;
     --====================
     --== Average SpO2 reading
     --====================
     SpO2MovingAvgWindowSamples : in data port PulseOx_Types::Second_Count;  --how many samples in average?
     SpO2Avg : out data port PulseOx_Types::Percent  --PulseOx_Properties::SpO2_Averaging_Duration average, not including current measurment
-      {BLESS::Value=>"<<:=SPO2_AVERAGE()>>";}
+      {BLESS::Value=>"<< returns quantity percent := SPO2_AVERAGE() >>";}
       ;      	
     --====================
     --== App Suppl Oxygen Derived Alarm I/O and configuration
@@ -646,7 +654,7 @@ thread group ICEpoApp
     SupplOxyAlarmEnabled : in data port BLESS_Types::Boolean;   -- enable derived alarm for patient using supplementary oxygen
     SpO2LevelAdj : in data port PulseOx_Types::Percent;  -- value used to decrease SpO2 level to obtain "derived" parameter
     SpO2DerivedLowerLimitAlarm : out event port  -- alarm triggered when derived patient SpO2 average level is below SpO2LowerLimit
-      {BLESS::Assertion=>"<<SUPPL_O2_ALARM()>>";}
+      {BLESS::Assertion=>"<< SUPPL_O2_ALARM() >>";}
       ;
     --====================
     --== App Adult Rapid SpO2 Decline Derived Alarm I/O and configuration
@@ -654,13 +662,13 @@ thread group ICEpoApp
     AdultRapidDeclineAlarmEnabled : in data port BLESS_Types::Boolean;  -- enabled derived alarm for rapid SpO2 decline in adult patient 
     MaxSpO2Decline : in data port PulseOx_Types::Percent;
     RapidSpO2DeclineAlarm : out event port	-- decreasing SpO2 in adult alarm
-      {BLESS::Assertion=>"<<RAPID_DECLINE_ALARM()>>";}
+      {BLESS::Assertion=>"<< RAPID_DECLINE_ALARM() >>";}
       ; 
     --====================
     --== Data for SpO2 trending display
     --====================
     SpO2Trend : out data port PulseOx_Types::SpO2Samples  --one SpO2 reading each minute for the past hour
-      {BLESS::Assertion=>"<<SPO2_TREND()>>";}
+      {BLESS::Assertion=>"<< SPO2_TREND() >>";}
       ;  
 end ICEpoApp;
 

@@ -1,88 +1,24 @@
-# rd.ps
+#rd.ps
 push
 sort-by-component[RD::RapidDeclineThread]
 #RD::RapidDeclineThread.imp
-#[serial 1058] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
-substitute-pre
+axioms
+#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+axioms
+#[serial 1005]  <<M(start)>> -> <<M(run)>> for rdt0: start-[ ]->run{};
 normalize
 axioms
-#[serial 1059] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition
-make-an
-substitute-pre
-axioms
-#[serial 1060] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1061] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+#[serial 1006]  <<M(run) and x>> A <<M(run)>> for rdt1: run-[x]->run{A};
+reduce
+reduce
 normalize
 laws
 axioms
-#[serial 1062]  <<M(start)>> A <<M(fill)>> for rdt0:start-[ ]->fill{A};
-substitute-post
-alldist^
 atomic
-split-post
 axioms
-guided-sub-equals[num_samples]
-laws
-quant
-normalize
-axioms
-#[serial 1063]  <<M(fill) and x>> A <<M(check)>> for rdt1:fill-[x]->check{A};
-reduce
-reduce
-axioms
-normalize
-atomic
-normalize
-axioms
-substitute-both
-normalize
-push
-#RD::RapidDeclineThread.imp
-#[serial 3364] applied wp for assignment [serial 3349
-make-an
-replace-port
 now
-laws
-normalize
-zeroquantlb
-normalize
-elim-subtract
-normalize
-laws
-normalize
-axioms
-#[serial 3373]   normalization of [serial 3365]
-qtiming
-axioms
-#[serial 3385]   normalization of [serial 3380]
-replace-qv
-axioms
-#[serial 3387]   normalization of [serial 3381]
-replace-qv
-axioms
-#[serial 1064]  <<M(check) and x>> A <<M(fill)>> for chk:check-[x]->fill{A};
 substitute-post
 normalize
-alldist^
-atomic
-split-post
-axioms
-substitute-pre
-normalize
-elim-subtract
-axioms
-#[serial 1065]  <<M(check) and x>> A <<M(run)>> for chk2:check-[x]->run{A};
-substitute-post
-normalize
-alldist^
-atomic
-split-post
-axioms
-substitute-pre
-elim-subtract
-normalize
-axioms
-#[serial 1066]  <<M(check) and x>> -> <<M(halt)>> for chk3:check-[x]->halt{};
 axioms

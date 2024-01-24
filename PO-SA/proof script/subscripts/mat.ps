@@ -1,15 +1,17 @@
-# mat.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
+#  at Mon Aug 21 10:15:40 CDT 2023 by brianlarson
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/mat.ps
 push
 sort-by-component MA::MotionArtifactThread.imp
 #MA::MotionArtifactThread.imp
-#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1035] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
 axioms
-#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1005]  <<M(start)>> -> <<M(run)>> for mat0:start-[ ]->run{};
+#[serial 1037]  <<M(start)>> -> <<M(run)>> for mat0: start-[ ]->run{};
 substitute-post
 normalize
 sub-equals
@@ -17,7 +19,7 @@ laws
 alldist^
 quant
 axioms
-#[serial 1006]  <<M(run) and x>> A <<M(run)>> for mat1:run-[x]->run{A};
+#[serial 1038]  <<M(run) and x>> A <<M(run)>> for mat1: run-[x]->run{A};
 reduce
 reduce
 normalize
@@ -28,7 +30,6 @@ substitute-post
 atomic
 normalize
 laws
-normalize
 quant
 axioms
 substitute-both
@@ -36,26 +37,24 @@ normalize
 axioms
 push
 #MA::MotionArtifactThread.imp
-#[serial 1226]   normalization of [serial 1218
+#[serial 1243]   normalization of [serial 123
 make-an
 qtiming
 axioms
-#[serial 1228]   normalization of [serial 1219]
+#[serial 1245]   normalization of [serial 1236]
 replace<=
 laws
 axioms
-#[serial 1230]   normalization of [serial 1220]
+#[serial 1247]   normalization of [serial 1237]
 and-over-or-post
 laws
 normalize
 axioms
-#[serial 1232]   normalization of [serial 1221]
-contract-uqr
-axioms
-#[serial 1236]   normalization of [serial 1223]
+#[serial 1249]   normalization of [serial 1238]
 alldist^
 zeroquantlb
-normalize
 axioms
-#[serial 1007]  <<M(run) and x>> -> <<M(halt)>> for mat2:run-[x]->halt{};
+#[serial 1251]   normalization of [serial 1239]
+contract-uqr
+normalize
 axioms

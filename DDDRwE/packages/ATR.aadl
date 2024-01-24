@@ -81,19 +81,20 @@ public
 
 	thread group AtrialTachyResponse
 		features
-			atr_enable: in data port flag;
-			dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
+			atr_enable: in data port flag --is ATR prescribed?
+        {BLESS::Value=>"<<returns boolean :=ATR_ENABLE>>";};
+	 		dur: in data port PACE_Data::CCcount; --number of cci in duration before fallback
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			{BLESS::Assertion => "<<FB>>";};
 			as: in event port --non-refractory atrial sense
 			  {BLESS::Assertion=>"<<AS>>";};
 			at: in event port --non-refractory atrial sense above URL
 			  {BLESS::Assertion=>"<<AT>>";};
-			atr_detect: out event port --ATR detection met
+			atr_detect: out data port flag  --ATR detection met
 			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
 			{BLESS::Assertion => "<<FB_START>>";};
-			atr_end: out event port --resume DDD; marker ATR-End
+			atr_end: out data port flag  --resume DDD; marker ATR-End
 			{BLESS::Assertion => "<<ATR_END(now)>>";};
 
 	end AtrialTachyResponse;
@@ -121,8 +122,8 @@ public
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			as: in event port {BLESS::Assertion => "<<AS>>";};
 			at: in event port {BLESS::Assertion => "<<AT>>";};
-			atr_detect: out data port BLESS_Types::Integer {BLESS::Value => "<<:=ATR_DETECT(now)>>";};
-			atr_end: out data port BLESS_Types::Integer {BLESS::Value => "<<:=ATR_END(now)>>";};
+			atr_detect: out data port flag {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			atr_end: out data port flag {BLESS::Assertion => "<<ATR_END(now)>>";};
 		properties
 			Dispatch_Protocol => Sporadic;
 --    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
@@ -137,7 +138,7 @@ public
     asTimestamp ~ array [1 .. 7] of time
       <<AS_TIMESTAMP: : all i ~ quantity whole in 1 .. 7 are AS@asTimestamp[i] >>
     --history whether the previous 7 atrial senses was faster than upper rate limit
-    atHistory ~ array [1 .. 7] of boolean := false
+    atHistory ~ array [1 .. 7] of boolean
       <<AT_HISTORY: : all i ~ quantity whole in 1 .. 7 are atHistory[i] iff AT@asTimestamp[i] >>
     --count of how many of the previous seven AS were also AT
     c ~ quantity whole:=0  --count of AT for last seven AS
@@ -157,6 +158,9 @@ public
     err : final state  --error occurred
   transitions
     atc_init: start -[ ]-> fill
+      {
+       atr_detect!(false) & atr_end!(false) 
+      } 
     atc_fill: fill -[on dispatch as]-> check_fill
     atc_full: check_fill -[ fill_count = 7 ]-> run
     atc_serb: check_fill -[ fill_count > 7 ]-> err  --for Serban's Theorem
@@ -201,12 +205,12 @@ public
 			atr_enable: in data port flag 
 			  {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			dur: in data port PACE_Data::CCcount --number of cci in duration before fallback
-			  {BLESS::Value => "<<:=DUR>>";}; 
+			  {BLESS::Value => "<<returns quantity whole := DUR >>";}; 
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			  {BLESS::Assertion => "<<FB>>";};
-			atr_detect: in event port --ATR detection met
+			atr_detect: in event data port flag --ATR detection met
 			  {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
-			atr_end : in event port
+			atr_end : in event  data port flag 
 			  {BLESS::Assertion => "<<ATR_END(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
 			  {BLESS::Assertion => "<<FB_START>>";};
@@ -278,7 +282,7 @@ states
 
 transitions
   atrd_go: --transition out of initial state
-    start -[ ]-> normal
+    start -[ ]-> normal { fb!(false) }
 
   norm_as: --check each atrial sense
     normal -[on dispatch as]-> check_normal

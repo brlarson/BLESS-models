@@ -19,7 +19,7 @@ public
 			p: out event port --pace ventricle
 			{BLESS::Assertion => "<<VP()>>";};
 			n: out event port --non-refractory ventricular sense
-			{BLESS::Assertion => "<<(now=0) or VS()>>";};
+			{BLESS::Assertion => "<<(now=0.0 s) or VS()>>";};
 			h: in event port;  --stop thread
 		properties
 			Thread_Properties::Dispatch_Protocol => Sporadic;
@@ -27,11 +27,17 @@ public
 	end VVI;
 
 	thread implementation VVI.i
-		annex BLESS {**
+annex BLESS 
+{**
 assert	     
   << notVRP: : --Ventricular Refractory Period
     (n or p)@last_beat --last beat before now,
-    and ((now-last_beat)>=vrp)>>  --older than VRP
+    and ((now-last_beat)>=vrp) >> --older than VRP
+--     and --not since then
+--      not (exists t~time  --there is no time  
+--        in (now-last_beat),,now  --since then, ",," means open interval
+--        that (n or p)@t) >>  --with a beat
+    
   << VS: : --ventricular sense detected, not in VRP
     s@now and notVRP() >>
   << VP: : --cause ventricular pace
@@ -65,7 +71,7 @@ variables
  
 states
   power_on : initial state  --powered-up, 
-    <<now=0>>	--start with "sense"
+    <<now = 0.0 s>>	--start with "sense"
   pace : complete state 
       --a ventricular pace has occured in the 
       --previous LRL-interval milliseconds
@@ -86,7 +92,7 @@ transitions
   T1_POWER_ON:	--initialization
   power_on -[ ]-> sense 
     {
-    	<<now=0>>
+    	<<now = 0.0 s>>
     n! <<n@now>>   --first "sense" at initialization
     & 
     last_beat:=now 
@@ -147,7 +153,7 @@ transitions
     last_beat:=now 
     <<last_beat=now and n@now>>
     }  
-**}; --end of annex subclause 
+**}; --end of BLESS annex subclause 
 
 	end VVI.i; --end thread 
 
@@ -167,7 +173,7 @@ transitions
 		transitions
 		  go: start -[ ]-> run
 		    {
-		    lrl!(1000 ms) & vrp!(150 ms)
+		    lrl!(1000.0 ms) & vrp!(150.0 ms)
 		    }
 		**};		
 	end RateControl;

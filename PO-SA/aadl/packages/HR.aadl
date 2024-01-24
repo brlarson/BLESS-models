@@ -6,15 +6,15 @@ with PulseOx_Types, BLESS_Types, BLESS;
 thread HeartRateTrendThread
   features
     HeartRate : in data port PulseOx_Types::Heart_Rate	--oxygen saturation from pulse oximater device
-      {BLESS::Value=>"<<:=HEART_RATE>>";};
+      {BLESS::Value=>"<< returns quantity Hz := HEART_RATE >>";};
     SensorConnected : in data port BLESS_Types::Boolean  --sensor is attached to patient
-      {BLESS::Assertion=>"<<SENSOR_CONNECTED>>";};
+      {BLESS::Assertion=>"<< SENSOR_CONNECTED >>";};
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
-      {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};
+      {BLESS::Assertion=>"<< MOTION_ARTIFACT >>";};
     HeartRateTrend : out data port PulseOx_Types::HeartRateSamples  --one HeartRate reading each minute for the past half-hour
-      {BLESS::Value=>"<<:=HEART_RATE_HISTORY>>";};  
+      {BLESS::Value=>"<< returns heartrate_samples := HEART_RATE_HISTORY >>";};  
     NumSamples : out data port BLESS_Types::Integer
-      {BLESS::Value=>"<<:= NUM_SAMPLES>>";};
+      {BLESS::Value=>"<< returns quantity whole:= NUM_SAMPLES >>";};
   properties
     --Thread_Properties::
         Dispatch_Protocol => Periodic;
@@ -27,14 +27,14 @@ annex BLESS
 {**
   assert
     <<HOLD_HR:n~quantity whole:all s~quantity whole in 1 ..n --holds current values for HeartRate; heart_rate_store[1]=HEART_RATE^0
-         are heart_rate_store[s]=(if MOTION_ARTIFACT^(1-s) or not SENSOR_CONNECTED^(1-s) then 0 Hz else HEART_RATE^(1-s))>>
+         are heart_rate_store[s]=(if MOTION_ARTIFACT^(1-s) or not SENSOR_CONNECTED^(1-s) then 0.0 Hz else HEART_RATE^(1-s))>>
     <<AXIOM_HRT: :num_samples = NUM_SAMPLES and heart_rate_store = HEART_RATE_HISTORY
       and HEART_RATE_HISTORY = HeartRateTrend >>
-    <<AXIOM_CR: : (num_samples - 2) < (num_samples - 1)>>
+    <<AXIOM_CR: : num_samples - 2 < num_samples - 1>>
 
   invariant 
     <<INV_HR: :all s~quantity whole in 1 ..num_samples 
-         are heart_rate_store[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0 Hz else HEART_RATE^(-s))>>  
+         are heart_rate_store[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 Hz else HEART_RATE^(-s))>>  
   variables
     nts~quantity whole:=#PulseOx_Properties::Num_Trending_Samples;
     heart_rate_store ~ heartrate_samples  --holds HeartRate history
@@ -42,15 +42,15 @@ annex BLESS
     num_samples ~quantity whole:=0;  --counts samples while filling
   states
     start : initial state
-      <<(num_samples<#PulseOx_Properties::Num_Trending_Samples) and (num_samples=0) and
+      <<num_samples<#PulseOx_Properties::Num_Trending_Samples and num_samples=0 and
         (all s~quantity whole in (num_samples+1) .. #PulseOx_Properties::Num_Trending_Samples
          	are not SENSOR_CONNECTED^(-s))>>;
     fill : complete state  --loading heart_rate_store
-      <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples)>>;    
+      <<INV_HR() and num_samples<#PulseOx_Properties::Num_Trending_Samples >>;    
     check : state  --check if full
       <<HOLD_HR(num_samples)>>;
     run : complete state   --full heart_rate_store
-      <<INV_HR() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)>>;    
+      <<INV_HR() and num_samples=#PulseOx_Properties::Num_Trending_Samples >>;    
     halt : final state;  --normal termination
     fail : final state;  --error termination
   transitions
@@ -59,51 +59,49 @@ annex BLESS
     	        nts,heart_rate_store,hr_nxt,num_samples|};
     hrtt1: fill-[on dispatch]->check
       {
-        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_HRT()>>
+        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples) and AXIOM_HRT() >>
       HeartRateTrend!(heart_rate_store)  --put out new HeartRate trend for ui
       ;
-        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_HRT()>>
+        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples) and AXIOM_HRT() >>
       NumSamples!(num_samples)
       ;
-        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples)>>
+        <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples) >>
       forall i in 1 ..num_samples
         {
-          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i))>>
+          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i)) >>
         hr_nxt[i+1]:=heart_rate_store[i] --shift old samples
-          <<hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i))>>
+          <<hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i)) >>
         }
         <<SHFT_HR: :all i~quantity whole in 1 ..num_samples 
-         are hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i))>>
+         are hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i)) >>
       ;  
       if
         (MotionArtifact? or not SensorConnected?)~>
             <<SHFT_HR() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          hr_nxt[1] := 0 Hz  --bad sample
-            <<SHFT_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
+          hr_nxt[1] := 0.0 Hz  --bad sample
+            <<SHFT_HR() and hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0) >>
       []
         (not (MotionArtifact? or not SensorConnected?))~>
              <<SHFT_HR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
           hr_nxt[1] := HeartRate  --add current sample
-            <<SHFT_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
+            <<SHFT_HR() and hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0) >>
       fi    
-        <<(hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0)) and
+        <<hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0) and
           (all i~quantity whole in 2 .. (num_samples+1) 
-          	are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i)))>>
+          	are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i))) >>
       ;    
       num_samples:=num_samples+1  --increment count of samples
       <<all i~quantity whole in 1 ..num_samples 
-        are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+        are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i))>>
       ;
       forall i in 1 ..num_samples
         {
-          <<hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+          <<hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) >>
         heart_rate_store[i]:=hr_nxt[i] --copy back
-          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) >>
         }
       <<all i~quantity whole in 1 ..num_samples 
-        are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+        are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) >>
       };
     hrtt2a: check-[num_samples<#PulseOx_Properties::Num_Trending_Samples]->fill
        {|nts',heart_rate_store',hr_nxt',num_samples':=nts,heart_rate_store,hr_nxt,num_samples|};
@@ -112,59 +110,60 @@ annex BLESS
     hrtt2c: check-[num_samples>#PulseOx_Properties::Num_Trending_Samples]->fail{};
     hrtt3: run-[on dispatch]->run
       {
-        <<INV_HR() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_HRT()>>
+        <<INV_HR() and num_samples=#PulseOx_Properties::Num_Trending_Samples and AXIOM_HRT() >>
       HeartRateTrend!(heart_rate_store)  --put out new HeartRate trend for ui
       ;
-        <<INV_HR() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_HRT()>>
+        <<INV_HR() and num_samples=#PulseOx_Properties::Num_Trending_Samples and AXIOM_HRT() >>
       NumSamples!(num_samples)
       ;
-        <<INV_HR() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_CR()>>
+        <<INV_HR() and num_samples=#PulseOx_Properties::Num_Trending_Samples and AXIOM_CR() >>
       forall i in 1 .. (num_samples - 1)
         {
-          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i))>>
+          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i))
+             and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
         hr_nxt[i+1]:=heart_rate_store[i] --shift old samples
-          <<hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i))>>
+          <<hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i))
+             and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
         }
         <<SHFTR_HR: :(all i~quantity whole in 1 .. (num_samples - 1) 
-        	are hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0 Hz else HEART_RATE^(-i)))
-          and (num_samples= #PulseOx_Properties::Num_Trending_Samples)>>
+        	are hr_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 Hz else HEART_RATE^(-i)))
+          and num_samples= #PulseOx_Properties::Num_Trending_Samples >>
       ;  
       if
         (MotionArtifact? or not SensorConnected?)~>
-            <<SHFTR_HR() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          hr_nxt[1] := 0 Hz  --bad sample
-            <<SHFTR_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
+            <<SHFTR_HR() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0) >>
+          hr_nxt[1] := 0.0 Hz  --bad sample
+            <<SHFTR_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0)) >>
       []
         (not (MotionArtifact? or not SensorConnected?))~>
-             <<SHFTR_HR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
+             <<SHFTR_HR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0) >>
           hr_nxt[1] := HeartRate  --add current sample
-            <<SHFTR_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0))>>
+            <<SHFTR_HR() and (hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0))>>
       fi    
-        <<(hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0 Hz else HEART_RATE^0)) and 
-          (num_samples=#PulseOx_Properties::Num_Trending_Samples) and
+        <<hr_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 Hz else HEART_RATE^0) and 
+          num_samples=#PulseOx_Properties::Num_Trending_Samples and
           (all i~quantity whole in 2 .. num_samples 
-          	are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i)))>>
+          	are hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))>>
       ;
       forall i in 1 ..num_samples
         {
-          <<hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+          <<hr_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) and 
+          num_samples=#PulseOx_Properties::Num_Trending_Samples >>
         heart_rate_store[i]:=hr_nxt[i] --copy back
-          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i))>>
+          <<heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) and 
+          num_samples=#PulseOx_Properties::Num_Trending_Samples >>
         }
       <<(all i~quantity whole in 1 ..num_samples 
-      	  are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i)))
-         and (num_samples=#PulseOx_Properties::Num_Trending_Samples)>>   	
+      	  are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))
+         and num_samples=#PulseOx_Properties::Num_Trending_Samples >>   	
       ;
       |heart_rate_store',num_samples':=heart_rate_store,num_samples|
       <<(all i~quantity whole in 1 ..num_samples 
-      	  are heart_rate_store[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0 Hz else HEART_RATE^(1-i)))
-         and (num_samples'=#PulseOx_Properties::Num_Trending_Samples)>>   	
+      	  are heart_rate_store[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))
+         and num_samples'=#PulseOx_Properties::Num_Trending_Samples >>   	
 
       };
-    hrtt4: fill,run-[on dispatch stop]->halt{};  
+--    hrtt4: fill,run-[on dispatch stop]->halt{};  
 **};
 end HeartRateTrendThread.imp;
 	

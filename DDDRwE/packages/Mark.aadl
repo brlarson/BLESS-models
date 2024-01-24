@@ -8,16 +8,25 @@ with BLESS, BLESS_Types, PACE_data;
 flag renames data BLESS_Types::flag;
 ms renames data PACE_data::ms;
 
+annex Typedef
+  {**
+  -- marker enumerations
+  type atrialMarker is enumeration (ap as at ras) 
+  type ventricularMarker is enumeration (vp vs pvc rvs)
+  type extraordinaryMarker is enumeration (atr_dct atr_fb atr_end)  
+  **};
+
+
 thread Markers
   features
 		tna: in data port flag;  --A-channel noise
   tnv: in data port flag;  --V-channel noise
   cci: in data port ms  --most recent cardiac cycle interval
-    {BLESS::Value=>"<<:=CCI>>";};
-  mark_A: out data port;	--atrial marker to telemetry and history
-  mark_V: out data port;	--ventricular marker to telemetry and history
-  mark_X: out data port;	--extra-line marker to telemetry and history
---  telem: in out data port;
+    {BLESS::Value=>"<<returns quantity ms :=CCI>>";};
+  mark_A: out event data port AtrialMarker;	--atrial marker to telemetry and history
+  mark_V: out event data port VentricularlMarker;	--ventricular marker to telemetry and history
+  mark_X: out event data port ExtraordinaryMarker;	--ATR
+--  pace markers
   ap: in event port	--pace atrium 
     {BLESS::Assertion=>"<<AP>>";};
   vp: in event port	--pace ventricle, but not too soon 
@@ -36,15 +45,36 @@ thread Markers
     {BLESS::Assertion=>"<<RAS(now)>>";};
   rvs: in event port	--refractory ventricular sense
     {BLESS::Assertion=>"<<RVS(now)>>";};
-	atr_dct: in event port  --ATR detection met
+	atr_dct: in event data port flag --ATR detection met
     {BLESS::Assertion=>"<<ATR_DETECT(now)>>";};
   atr_fb: in event port   --start fall-back to VVI; marker ATR-FB
     {BLESS::Assertion=>"<<FB_START>>";};
-  atr_end: in event port  --resume DDD; marker ATR-End
+  atr_end: in event data port flag  --resume DDD; marker ATR-End
     {BLESS::Assertion=>"<<ATR_END(now)>>";};
 	end Markers;
 
 thread implementation Markers.imp
 end Markers.imp;
+
+
+--types for marker ports
+data AtrialMarker
+  properties
+    BLESS::Typed => "atrialMarker";
+end AtrialMarker;
+
+data VentricularlMarker
+  properties
+    BLESS::Typed => "ventricularMarker";
+end VentricularlMarker;
+
+data ExtraordinaryMarker
+  properties
+    BLESS::Typed => "extraordinaryMarker";
+end ExtraordinaryMarker;
+
+
+
+
 
 end mark;

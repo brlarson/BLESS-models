@@ -9,4 +9,4 @@ exclude.slang.impl=false
 max.sequence.size=16
 max.string.size=256
 platform=JVM
-slang.output.directory=/Users/brianlarson/git/BLESS2Slang/DDD-Slang
+slang.output.directory=/Users/brianlarson/git/BLESS2Slang/DDDRwE-Slang

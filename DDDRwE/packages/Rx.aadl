@@ -2,54 +2,164 @@
 
 package Rx
 public
-with PACE_data, BLESS_Types;
+with PACE_data, BLESS_Types, BLESS, DefaultValue;
 
 
 flag renames data BLESS_Types::flag;
 ms renames data PACE_data::ms;
+second renames data PACE_data::second;
 milliG renames data PACE_data::milliG;
-ResponseFactor renames data PACE_data::ResponseFactor;
+ResponseFactor renames data PACE_Data::rf;
 CCcount renames data PACE_data::CCcount; 
 
+--  thread Settings receives the patient prescription from telemetry
+--  and then providing each value of the Rx individually
+
+--  this thread has not been implemented because much would involve
+--  the Rx in the format native to telemetry
 
 thread Settings
   features
-  settings : in out data port;  --settings from telemetry
-  lrl: out data port ms;  --lower rate limit interval 
-  url: out data port ms;  --upper rate limit interval 
-  av: out data port ms;  --AV delay (fixed)
-  savo: out data port ms;   --sensed AV delay offset
-  act: out data port milliG;  --activity threshold 
-  vrp: out data port ms;  --ventricular refractory period
-  arp: out data port ms;  --atrial refractory period
-  pvarp: out data port ms;  --post-ventricular atrial refractory period
+  settings : in event data port PACE_data::Rx;  -- Rx settings from telemetry
+  --values in Rx
+  lrl: out data port ms  --lower rate limit interval 
+    {BLESS::Value=>"<<returns quantity ms :=LRL>>";};
+  url: out data port ms  --upper rate limit interval 
+    {BLESS::Value=>"<<returns quantity ms :=URL>>";};
+  av: out data port ms  --AV delay (fixed)
+    {BLESS::Value=>"<<returns quantity ms :=AV>>";};
+  savo: out data port ms   --sensed AV delay offset
+    {BLESS::Value=>"<<returns quantity ms :=SAVO>>";};
+  act: out data port milliG  --activity threshold 
+    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};
+  vrp: out data port ms  --ventricular refractory period
+    {BLESS::Value=>"<<returns quantity ms :=VRP>>";};
+  arp: out data port ms  --atrial refractory period
+    {BLESS::Value=>"<<returns quantity ms :=ARP>>";};
+  pvarp: out data port ms  --post-ventricular atrial refractory period
+    {BLESS::Value=>"<<returns quantity ms :=PVARP>>";};
   --pacing mode
-  pv: out data port flag;  --pace ventricle
-  sv: out data port flag;  --sense ventricle
-  pa: out data port flag;  --pace atrium
-  sa: out data port flag;  --sense atrium
-  inhibit: out data port flag; --senses inhibit paces
-  track: out data port flag;  --tracking
+  pv: out data port flag  --pace ventricle
+    {BLESS::Value=>"<<returns boolean :=PV>>";};
+  sv: out data port flag  --sense ventricle
+    {BLESS::Value=>"<<returns boolean :=SV>>";};
+  pa: out data port flag  --pace atrium
+    {BLESS::Value=>"<<returns boolean :=PA>>";};
+  sa: out data port flag  --sense atrium
+    {BLESS::Value=>"<<returns boolean :=SA>>";};
+  inhibit: out data port flag -- inhibit mode:  senses inhibit paces
+    {BLESS::Value=>"<<returns boolean :=INHIBIT>>";};
+  track: out data port flag  --tracking mode:  atrial paces follow vetricular sense or pace
+    {BLESS::Value=>"<<returns boolean :=TRACK>>";};
   --rate modifiers
-  hy: out data port ms;  --hysteresis delay, added to l when PVC
-  rr: out data port flag;  --rate responsive
-  rf: out data port ResponseFactor;  --response factor
-  msr: out data port ms;  --maximum sensor rate interval
-  min_av: out data port ms;  --minimum dynamic AV delay
-  ex_pvarp: out data port ms;  --extended post-ventricular atrial refractory period
-  rt: out data port ms;  --reaction time
-  at: out data port milliG;  --activity threshold
-  ct: out data port ms;  --recovery time
+  hy: out data port ms  --hysteresis delay, added to l when PVC
+    {BLESS::Value=>"<<returns quantity ms :=HY>>";};
+  rr: out data port flag  --rate responsive
+    {BLESS::Assertion=>"<<RR>>";};  
+  rf: out data port PACE_Data::rf  --response factor
+    {BLESS::Value=>"<<returns quantity rf :=RESPONSE_FACTOR>>";};  
+  msr: out data port ms  --maximum sensor rate interval
+    {BLESS::Value=>"<<returns quantity ms :=MSR>>";};  
+  min_av: out data port ms  --minimum dynamic AV delay
+    {BLESS::Value=>"<<returns quantity ms :=MIN_AV>>";};
+  ex_pvarp: out data port ms  --extended post-ventricular atrial refractory period
+    {BLESS::Value=>"<<returns quantity ms :=EX_PVARP>>";};
+  rt: out data port second   --reaction time
+    {BLESS::Value=>"<<returns quantity s :=REACTION_TIME>>";}; 
+--  at: out data port milliG  --activity threshold
+--    {BLESS::Value=>"<<returns quantity milliG :=ACTIVITY_THRESHOLD>>";};  
+  ct: out data port second  --recovery time
+    {BLESS::Value=>"<<returns quantity s :=RECOVERY_TIME>>";};  
   --atrial tachycardia response
-  atr_enable : out data port flag;
-  atr_duration : out data port CCcount;
-  fb_time : out data port BLESS_Types::Time;  --time to fall back from URL to LRL
+  atr_enable : out data port flag  --is ATR prescribed?
+    {BLESS::Value=>"<<returns boolean :=ATR_ENABLE>>";};
+  atr_duration : out data port CCcount  --number of cci in duration before fallback
+    {BLESS::Value=>"<<returns quantity whole :=ATR_DURATION>>";};
+  
+  fb_time : out data port second  --time to fall back from URL to LRL
+    {BLESS::Value=>"<<returns quantity s :=FBT>>";};
   --rate smoothing
-  drs: out data port PACE_data::percent;  --down-rate smoothing
-  urs: out data port PACE_data::percent;  --up-rate smoothing  
+  drs: out data port PACE_data::percent  --down-rate smoothing
+    {BLESS::Value=>"<<returns percent :=DRS>>";};
+  urs: out data port PACE_data::percent  --up-rate smoothing  
+    {BLESS::Value=>"<<returns percent :=URS>>";};
 end Settings;
 
 thread implementation Settings.imp
+  annex BLESS {** 
+      DO_NOT_PROVE
+    states 
+      init : initial state
+      run : complete state
+    transitions
+      go: init -[]-> run
+        {  --initialze with property constants DefaultValue
+        lrl!(DefaultValue::Lower_Rate_Limit ms)  &
+        url!(DefaultValue::Upper_Rate_Limit ms)  &
+        av!(DefaultValue::AV_Delay ms)  &
+        savo!(DefaultValue::Sensed_AV_Delay_Offset ms)  &
+        act!(DefaultValue::Activity_Threshold milliG)  &
+        vrp!(DefaultValue::Ventricular_Refractory_Period ms)  
+        & arp!(DefaultValue::Atrial_Refractory_Period ms)  
+        & pvarp!(DefaultValue::Post_Ventricular_Atrial_Refractory_Period ms)  
+        & pv!([DefaultValue::Pace_Ventricle]-> boolean)  
+        & sv!([DefaultValue::Sense_Ventricle]-> boolean)  
+        & pa!([DefaultValue::Pace_Atrium]-> boolean)  
+        & sa!([DefaultValue::Pace_Ventricle]-> boolean)  
+        & inhibit!([DefaultValue::Inhibit]-> boolean)  
+        & track!([DefaultValue::Track]-> boolean)  
+        & hy!(DefaultValue::Hysteresis_Delay ms)  
+        & rr!([DefaultValue::Rate_Responsive]-> boolean)  
+        & rf!(DefaultValue::Response_Factor rf)  
+        & msr!(DefaultValue::Maximum_Sensor_Rate_Interval ms)  
+        & min_av!(DefaultValue::Minimum_AV_Delay ms)  
+        & ex_pvarp!(DefaultValue::Extended_PVARP ms)  
+        & rt!(DefaultValue::Reaction_Time s)  
+        & ct!(DefaultValue::Recovery_Time s)  
+        & atr_enable!([DefaultValue::ATR_Enable]-> boolean)  
+        & atr_duration!(DefaultValue::ATR_Duration whole)  
+        & fb_time!(DefaultValue::Fallback_Time s)  
+        & drs!([DefaultValue::Down_Smoothing_Rate]->percent)  
+        & urs!([DefaultValue::Up_Smoothing_Rate]->percent)  
+        } 
+        
+      operate: run -[on dispatch settings]-> run
+        {  --send out newly received Rx
+--NOT USED YET--NO Rx FROM TELEMTRY; HAVING PROBLEMS GENERATING SLANG NAMES:
+--     api.put_act(milliG(api.get_settings().get.value.act_label))
+--  WANT
+--     api.put_act(api.get_settings().get.act_label)
+          
+--        lrl!(settings.lrl) 
+--        & url!(settings.url) 
+--        & av!(settings.av) 
+--        & savo!(settings.savo) 
+--        & act!(settings.act) 
+--        & vrp!(settings.vrp) 
+--        & arp!(settings.arp) 
+--        & pvarp!(settings.pvarp) 
+--        & pv!(settings.pv) 
+--        & sv!(settings.sv) 
+--        & pa!(settings.pa) 
+--        & sa!(settings.sa) 
+--        & inhibit!(settings.inhibit) 
+--        & track!(settings.track) 
+--        & hy!(settings.hy) 
+--        & rr!(settings.rr) 
+--        & rf!(settings.rf) 
+--        & msr!(settings.msr) 
+--        & min_av!(settings.min_av) 
+--        & ex_pvarp!(settings.ex_pvarp) 
+--        & rt!(settings.rt) 
+--        & ct!(settings.ct) 
+--        & atr_enable!(settings.atr_enable) 
+--        & atr_duration!(settings.atr_duration) 
+--        & fb_time!(settings.fb_time) 
+--        & drs!(settings.drs) 
+--        & urs!(settings.urs) 
+        }
+    **};
 end Settings.imp;
+ 
 
 end Rx;

@@ -1,23 +1,23 @@
-#spt.ps
+#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/spt.ps
 push
 sort-by-component SPT::SpO2TrendThread.imp
 #SPT::SpO2TrendThread.imp
-#[serial 1023] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1024] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
 axioms
-#[serial 1024] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
+#[serial 1025] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
 substitute-pre
 normalize
 axioms
-#[serial 1025] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
-#[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+#[serial 1027] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
 axioms
-#[serial 1027]  <<M(start)>> A <<M(loading)>> for sptt0:start-[ ]->loading{A};
+#[serial 1028]  <<M(start)>> A <<M(loading)>> for sptt0: start-[ ]->loading{A};
 substitute-post
 normalize
 alldist^
@@ -29,120 +29,101 @@ guided-sub-equals[num_samples]
 laws
 quant
 axioms
-#[serial 1028]  <<M(loading) and x>> A <<M(check)>> for sptt1:loading-[x]->check{A};
+#[serial 1029]  <<M(loading) and x>> A <<M(check)>> for sptt1: loading-[x]->check{A};
 reduce
 reduce
 remove-axioms-post
 atomic
 normalize
 laws
-normalize
 axioms
 push
 #SPT::SpO2TrendThread.imp
-#[serial 2186]   normalization of [serial 2156
+#[serial 1183]   normalization of [serial 115
 make-an
 substitute-post
 normalize
 replace-qv
 axioms
-#[serial 2192]   normalization of [serial 2164]
+#[serial 1185]   normalization of [serial 1173]
+substitute-pre
+laws
+normalize
+axioms
+#[serial 1189]   normalization of [serial 1159]
+#SPT::SpO2TrendThread.imp
+#[serial 1197]   normalization of [serial 116
+make-an
+substitute-post
+normalize
+axioms
 substitute-pre
 normalize
 replace-qv
 axioms
-#[serial 2198]   normalization of [serial 2166]
-zeroquantlb
-elim-subtract
-normalize
-laws
-normalize
+#[serial 1199]   normalization of [serial 1176]
 split-post
 axioms
-zeroquantlb
-elim-subtract
-normalize
-substitute-both
-zeroquantlb
-elim-subtract
-normalize
-laws
-normalize
-axioms
-#[serial 2200]   normalization of [serial 2179]
-split-post
-axioms
-??
-laws
-axioms
-#[serial 2202]   normalization of [serial 2168]
 substitute-pre
-split-post
+??
+remove-units
+remove-units
+laws
+axioms
+#[serial 1201]   normalization of [serial 1164]
+substitute-pre
 normalize
+split-post
 axioms
 zeroquantlb
+laws
+elim-subtract
 normalize
 elim-subtract
 normalize
-laws
-normalize
 axioms
-#[serial 2204]   normalization of [serial 2169]
+#[serial 1203]   normalization of [serial 1165]
 split-post
 axioms
 substitute-post
 normalize
 axioms
-#[serial 2206]   normalization of [serial 2180]
-??
-replace-port
+#[serial 1205]   normalization of [serial 1177]
 split-post
 axioms
+??
+replace-port-value
 now
 laws
 axioms
-#[serial 2208]   normalization of [serial 2171]
+#[serial 1207]   normalization of [serial 1167]
 qtiming
 substitute-pre
-normalize
+qtiming
+zeroquantlb
+axioms
+#[serial 1209]   normalization of [serial 1178]
 qtiming
 axioms
-#[serial 2210]   normalization of [serial 2181]
-qtiming
-axioms
-#[serial 2218]   normalization of [serial 2183]
-substitute-post
-substitute-pre
-normalize
+#[serial 1219]   normalization of [serial 1180]
+substitute-both
 laws
 guided-sub-equals[NUM_SAMPLES]
 guided-sub-equals[SPO2_HISTORY]
 axioms
-#[serial 2261]   normalization of [serial 2240]
-substitute-pre
-normalize
-laws
-now
-guided-sub-equals[NUM_SAMPLES]
-normalize
-axioms
-#[serial 1029]  <<M(check) and x>> A <<M(loading)>> for sptt2a:check-[x]->loading{A};
+#[serial 1030]  <<M(check) and x>> A <<M(loading)>> for sptt2a: check-[x]->loading{A};
 completesub
 alldist^
 atomic
-normalize
-elim-subtract
 axioms
-#[serial 1030]  <<M(check) and x>> A <<M(run)>> for sptt2b:check-[x]->run{A};
+#[serial 1031]  <<M(check) and x>> A <<M(run)>> for sptt2b: check-[x]->run{A};
 completesub
 alldist^
 atomic
-normalize
-elim-subtract
 axioms
-#[serial 1031]  <<M(check) and x>> -> <<M(fail)>> for sptt2c:check-[x]->fail{};
+#[serial 1032]  <<M(check) and x>> -> <<M(fail)>> for sptt2c: check-[x]->fail{};
 axioms
-#[serial 1032]  <<M(run) and x>> A <<M(run)>> for sptt3:run-[x]->run{A};
+#[serial 1033]  <<M(run) and x>> A <<M(run)>> for sptt3: run-[x]->run{A};
 reduce
 reduce
 remove-axioms-post
@@ -152,14 +133,13 @@ normalize
 axioms
 push
 #SPT::SpO2TrendThread.imp
-#[serial 2470]   normalization of [serial 2448
+#[serial 1399]   normalization of [serial 137
 make-an
 substitute-post
 alldist^
 replace-qv
-elim-subtract
 axioms
-#[serial 2472]   normalization of [serial 2456]
+#[serial 1401]   normalization of [serial 1383]
 substitute-both
 normalize
 zeroquantlb
@@ -167,99 +147,106 @@ elim-subtract
 normalize
 contract-uqr
 replace-qv
-axioms
-#[serial 2474]   normalization of [serial 2455]
-atomic
-normalize
-axioms
-#[serial 2480]   normalization of [serial 2459]
-atomic
+split-quant
 split-post
 axioms
-??
 laws
 axioms
-#[serial 2482]   normalization of [serial 2460]
+#[serial 1403]   normalization of [serial 1384]
+split-quant
+laws
+axioms
+#[serial 1405]   normalization of [serial 1382]
+atomic
+axioms
+#[serial 1411]   normalization of [serial 1387]
+atomic
+??
+split-post
+axioms
+remove-units
+remove-units
+laws
+axioms
+#[serial 1413]   normalization of [serial 1388]
 substitute-pre
 normalize
 split-post
 axioms
+laws
+axioms
 zeroquantlb
-elim-subtract
-normalize
 laws
 normalize
+elim-subtract
+normalize
+elim-subtract
+normalize
 axioms
-#[serial 2486]   normalization of [serial 2462]
+#[serial 1417]   normalization of [serial 1390]
 atomic
+??
 split-post
 axioms
-??
-replace-port
+replace-port-value
 now
 laws
 axioms
-#[serial 2488]   normalization of [serial 2463]
+#[serial 1419]   normalization of [serial 1391]
 substitute-pre
-normalize
 laws
 normalize
 split-post
 axioms
 zeroquantlb
-sub-equals-and
+elim-subtract
+normalize
+elim-subtract
+normalize
 laws
 normalize
-elim-subtract
-normalize
-sub-equals-and
-elim-subtract
-normalize
 axioms
-#[serial 2490]   normalization of [serial 2465]
+#[serial 1421]   normalization of [serial 1393]
 qtiming
+split-quant
+laws
 axioms
-#[serial 2492]   normalization of [serial 2464]
+#[serial 1423]   normalization of [serial 1394]
+split-quant
+laws
+axioms
+#[serial 1425]   normalization of [serial 1392]
 atomic
 normalize
 axioms
-#[serial 2494]   normalization of [serial 2454]
+#[serial 1427]   normalization of [serial 1381]
 atomic
 normalize
 axioms
-#[serial 2518] Associativity: (b.c).a = a.b.c [serial 2478]
-split-post
-axioms
+#[serial 1454] Associativity: a.(b.c) = a.b.c [serial 1415]
 substitute-post
 normalize
-axioms
-#[serial 2521] Law of And-Simplification:  P and true is P [serial 2498]
-atomic
 laws
 axioms
-substitute-both
+#[serial 1456] Law of And-Simplification:  P and true is P [serial 1431]
+atomic
+laws
 normalize
+axioms
+substitute-both
 laws
 guided-sub-equals[NUM_SAMPLES]
 guided-sub-equals[SPO2_HISTORY]
 axioms
-#[serial 2522] Law of And-Simplification:  P and true is P [serial 2500]
+#[serial 1457] Law of And-Simplification:  P and true is P [serial 1433]
 atomic
 laws
 axioms
 substitute-pre
-normalize
-now
-guided-sub-equals[NumSamples]
 laws
-normalize
 axioms
-#[serial 2536]   normalization of [serial 2519]
+#[serial 1472]   normalization of [serial 1453]
 substitute-post
 normalize
 laws
-axioms
-#[serial 1033]  <<M(loading) and x>> -> <<M(halt)>> for sptt4:loading-[x]->halt{};
-axioms
-#[serial 1034]  <<M(run) and x>> -> <<M(halt)>> for sptt4:run-[x]->halt{};
 axioms

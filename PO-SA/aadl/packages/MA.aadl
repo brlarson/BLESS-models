@@ -67,7 +67,7 @@ transitions
     fi  
     <<NUMBAD()>>
     }; 
-  mat2 : run-[on dispatch stop]->halt{};
+--  mat2 : run-[on dispatch stop]->halt{};
 **};
 end MotionArtifactThread.imp;
 

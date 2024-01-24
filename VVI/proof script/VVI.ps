@@ -1,217 +1,392 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.1.5
-#  at Mon May 08 05:23:42 EDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/VVI/proof script/VVI.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.2
+#  at Wed Jan 24 00:55:05 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
-#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI.
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI
 make-an
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
 substitute-pre
 normalize
 split-quant
-axioms
+tautologies
 #[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
 substitute-pre
 normalize
 split-quant
-axioms
+tautologies
 #[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
+tautologies
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
-#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON:power_on-[ ]->sense{A};
+tautologies
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A};
 reduce
 atomic
 laws
-axioms
+tautologies
 push
 #vvi_mode::VVI.i
-#[serial 1045] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1009
+#[serial 1040] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 100
 make-an
 substitute-post
 normalize
 split-post
 normalize
 guided-sub-equals[last_beat]
-axioms
+tautologies
 quant
-axioms
-#[serial 1049] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1046]
+tautologies
+#[serial 1044] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1041]
 alldist^
 replace-port
 normalize
 alldist^
-axioms
-#[serial 1051] Equality Law (idistr):  a=a <-> true [serial 1050]
+tautologies
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace: pace-[x]->off{};
 normalize
-axioms
-#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace:pace-[x]->off{};
-axioms
-#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense:sense-[x]->off{};
-axioms
-#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP:pace-[x]->pace{A};
+tautologies
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense: sense-[x]->off{};
+tautologies
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP: pace-[x]->pace{A};
 reduce
 normalize
 atomic
 laws
 normalize
-axioms
+tautologies
 push
 #vvi_mode::VVI.i
-#[serial 1096]   normalization of [serial 1090
+#[serial 1077] <<Q2>> -> <<Q>> in sequential composition for [serial 101
 make-an
 substitute-post
 normalize
 split-post
 quant
 normalize
-axioms
+tautologies
 guided-sub-equals[last_beat]
-axioms
-#[serial 1111]   normalization of [serial 1104]
+tautologies
+#[serial 1093]   normalization of [serial 1086]
 replace-port
-axioms
-#[serial 1114]   normalization of [serial 1106]
-substitute-post
-normalize
-axioms
-#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP:pace-[x]->check_pace_vrp{};
-normalize
-axioms
-#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP:check_pace_vrp-[x]->pace{};
-normalize
-laws
-axioms
-#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR:check_pace_vrp-[x]->sense{A};
-reduce
-normalize
-atomic
-laws
-normalize
-axioms
-push
+tautologies
+#[serial 1095]   normalization of [serial 1088]
+load
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/VVI/proof script/VVI.ps
 #vvi_mode::VVI.i
-#[serial 1151]   normalization of [serial 1145
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI
 make-an
 substitute-post
 normalize
-split-post
-normalize
-quant
-axioms
-guided-sub-equals[last_beat]
-axioms
-#[serial 1167]   normalization of [serial 1159]
-replace-port
-normalize
-axioms
-#[serial 1170]   normalization of [serial 1161]
-substitute-post
-normalize
-split-post
-axioms
-substitute-post
-normalize
+tautologies
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
 substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A};
+reduce
+atomic
+laws
+tautologies
+substitute-pre
+substitute-post
+load
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/VVI/proof script/VVI.ps
+#vvi_mode::VVI.i
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI
+make-an
+substitute-post
+normalize
+tautologies
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
+substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A};
+reduce
+atomic
+laws
+tautologies
+push
+#vvi_mode::VVI.i
+#[serial 1040] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 100
+make-an
+substitute-post
+normalize
+split-post
+normalize
+guided-sub-equals[last_beat]
+tautologies
+quant
+tautologies
+#[serial 1044] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1041]
+alldist^
+replace-port
+normalize
+alldist^
+tautologies
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace: pace-[x]->off{};
+normalize
+tautologies
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense: sense-[x]->off{};
+tautologies
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP: pace-[x]->pace{A};
+reduce
+normalize
+atomic
+laws
+normalize
+tautologies
+push
+load
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/VVI/proof script/VVI.ps
+#vvi_mode::VVI.i
+#[serial 1003] <<I>> -> BLESS::Invariant of thread VVI
+make-an
+substitute-post
+normalize
+tautologies
+#[serial 1004] <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
+substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1005] <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+substitute-pre
+normalize
+split-quant
+tautologies
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+normalize
+replace<=
+laws
+tautologies
+#[serial 1009]  <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A};
+reduce
+atomic
+laws
+tautologies
+push
+#vvi_mode::VVI.i
+#[serial 1040] Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 100
+make-an
+substitute-post
+normalize
+split-post
+normalize
+guided-sub-equals[last_beat]
+tautologies
+quant
+tautologies
+#[serial 1044] applied port output <<pre and M[n]@now>> -> <<post>> [serial 1041]
+alldist^
+replace-port
+normalize
+alldist^
+tautologies
+#[serial 1010]  <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace: pace-[x]->off{};
+normalize
+tautologies
+#[serial 1011]  <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense: sense-[x]->off{};
+tautologies
+#[serial 1012]  <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP: pace-[x]->pace{A};
+reduce
+normalize
+atomic
+laws
+normalize
+laws
+normalize
+tautologies
+push
+#vvi_mode::VVI.i
+#[serial 1077] <<Q2>> -> <<Q>> in sequential composition for [serial 101
+make-an
+substitute-post
+normalize
+split-post
+quant
+normalize
+tautologies
+guided-sub-equals[last_beat]
+tautologies
+#[serial 1093]   normalization of [serial 1086]
+replace-port
+tautologies
+#[serial 1097]   normalization of [serial 1089]
+substitute-post
+normalize
+tautologies
+#[serial 1013]  <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP: pace-[x]->check_pace_vrp{};
+replace-port
+tautologies
+#[serial 1014]  <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP: check_pace_vrp-[x]->pace{};
+normalize
+tautologies
+#[serial 1015]  <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR: check_pace_vrp-[x]->sense{A};
+normalize
+reduce
+atomic
+laws
+normalize
+laws
+normalize
+tautologies
+push
+#vvi_mode::VVI.i
+#[serial 1124] <<P>> -> <<P1>> in sequential composition for [serial 112
+make-an
+substitute-post
+normalize
+split-post
+tautologies
+substitute-pre
+substitute-post
 normalize
 laws
 split-post
 split@
 normalize
-axioms
+tautologies
 now
-axioms
-#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS:sense-[x]->pace{A};
+tautologies
+#[serial 1125] <<Q2>> -> <<Q>> in sequential composition for [serial 1123]
+substitute-post
+normalize
+split-post
+guided-sub-equals[last_beat]
+tautologies
+quant
+tautologies
+#[serial 1137]   normalization of [serial 1129]
+replace-port
+normalize
+tautologies
+#[serial 1016]  <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS: sense-[x]->pace{A};
 reduce
 normalize
 laws
-normalize
 atomic
 laws
 normalize
-axioms
-zeroquantlb
+tautologies
+laws
+normalize
+tautologies
 push
-make-an
 #vvi_mode::VVI.i
-#[serial 1225]   normalization of [serial 1219]
- 
+#[serial 1176] <<Q2>> -> <<Q>> in sequential composition for [serial 101
+make-an
 substitute-post
+normalize
+split-post
+guided-sub-equals[last_beat]
+tautologies
 normalize
 quant
-split-post
-normalize
-axioms
-guided-sub-equals[last_beat]
-axioms
-#[serial 1246]   normalization of [serial 1240]
+tautologies
+#[serial 1192]   normalization of [serial 1186]
 replace-port
-axioms
-#[serial 1253] Shift Quantification Range so Lower Bound is Zero [serial 1237]
+tautologies
+#[serial 1194]   normalization of [serial 1184]
 substitute-post
 normalize
-split-post
-axioms
-zeroquantlb
+tautologies
+#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS: sense-[x]->check_sense_vrp{};
 normalize
-axioms
-#[serial 1017]  <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS:sense-[x]->check_sense_vrp{};
-normalize
-axioms
-#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP:check_sense_vrp-[x]->sense{};
-normalize
-laws
-axioms
-#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR:check_sense_vrp-[x]->sense{A};
+tautologies
+#[serial 1018]  <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP: check_sense_vrp-[x]->sense{};
+tautologies
+#[serial 1019]  <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR: check_sense_vrp-[x]->sense{A};
 reduce
-normalize
-push
-make-an
-#vvi_mode::VVI.i
-#[serial 1286] <<P0>> S0 <<Q0 and P1>> in sequential composition for [serial 1019]
- 
 atomic
-replace-port
-axioms
-#[serial 1289]   normalization of [serial 1284]
-substitute-post
-normalize
-split-post
-substitute-post
-normalize
-now
 laws
-axioms
+laws
+normalize
+tautologies
+push
+#vvi_mode::VVI.i
+#[serial 1219] <<Q2>> -> <<Q>> in sequential composition for [serial 101
+make-an
+substitute-post
+normalize
 split-post
-axioms
+normalize
+guided-sub-equals[last_beat]
+tautologies
+quant
+tautologies
+#[serial 1228]   normalization of [serial 1218]
+substitute-post
+normalize
+split-post
+tautologies
+substitute-post
+normalize
+split-post
 substitute-pre
 normalize
-laws
 split@
 normalize
-axioms
-#[serial 1291]   normalization of [serial 1285]
-substitute-post
-normalize
-split-post
-quant
-normalize
-axioms
-guided-sub-equals[last_beat]
-axioms
-#[serial 1294]   normalization of [serial 1287]
-atomic
 laws
 normalize
-axioms
+tautologies
+now
+tautologies
+#[serial 1233]   normalization of [serial 1223]
+replace-port
+normalize
+tautologies
 #Q.E.D.

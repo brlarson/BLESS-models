@@ -1,0 +1,2152 @@
+This file, proof.txt, was produced the BLESS Proof Assistant v3.2.2
+  at Wed Jan 24 01:36:11 CST 2024 by brianlarson
+
+Theorem (1)                               [serial 1024] 
+P [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+S [61] ->
+Q [27] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+Why created:    normalization of [serial 1020]
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (2)                               [serial 1020] 
+P [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  >>
+S [61] ->
+Q [27] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1003]
+Solved by: [Add unnecessary parentheses] and theorem 1:
+Theorem (1) [serial 1024] used for:
+    normalization of [serial 1020] 
+
+
+Theorem (3)                               [serial 1003] 
+P [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  >>
+S [61] ->
+Q [27] << LRL() >>
+Why created:  <<I>> -> BLESS::Invariant of thread VVI.i
+Solved by: Predicate Invocation. (PI) and theorem 2:
+Theorem (2) [serial 1020] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1003] 
+
+
+Theorem (4)                               [serial 1028] 
+P [78] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  )
+  and p@last_beat >>
+S [61] ->
+Q [61] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) or ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) >>
+Why created:  Existential quantification over disjunction is disjunction of existential quantification. (r19.43)
+   [serial 1027]
+Solved by: And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+Theorem (5)                               [serial 1027] 
+P [78] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  )
+  and p@last_beat >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+Why created:    normalization of [serial 1025]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Existential quantification over disjunction is disjunction of existential quantification. (r19.43) and theorem 4:
+Theorem (4) [serial 1028] used for:
+  Existential quantification over disjunction is disjunction of existential quantification. (r19.43)
+   [serial 1027] 
+
+
+Theorem (6)                               [serial 1025] 
+P [78] << ( p@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) ) >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1022]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 5:
+Theorem (5) [serial 1027] used for:
+    normalization of [serial 1025] 
+
+
+Theorem (7)                               [serial 1022] 
+P [78] << PACE(now) >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+Why created:    normalization of [serial 1004]
+Solved by: Predicate Invocation. (PI) and theorem 6:
+Theorem (6) [serial 1025] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1022] 
+
+
+Theorem (8)                               [serial 1004] 
+P [78] << PACE(now) >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  >>
+Why created:  <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition.
+Solved by: [Add unnecessary parentheses] and theorem 7:
+Theorem (7) [serial 1022] used for:
+    normalization of [serial 1004] 
+
+
+Theorem (9)                               [serial 1032] 
+P [82] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat >>
+S [61] ->
+Q [61] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) or ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) >>
+Why created:  Existential quantification over disjunction is disjunction of existential quantification. (r19.43)
+   [serial 1031]
+Solved by: And-Elimination/Or-Introduction Schema (ctao): (P and Q)->(P or R)
+
+Theorem (10)                               [serial 1031] 
+P [82] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t or p@t  >>
+Why created:    normalization of [serial 1029]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Existential quantification over disjunction is disjunction of existential quantification. (r19.43) and theorem 9:
+Theorem (9) [serial 1032] used for:
+  Existential quantification over disjunction is disjunction of existential quantification. (r19.43)
+   [serial 1031] 
+
+
+Theorem (11)                               [serial 1029] 
+P [82] << ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1005]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 10:
+Theorem (10) [serial 1031] used for:
+    normalization of [serial 1029] 
+
+
+Theorem (12)                               [serial 1005] 
+P [82] << SENSE(now) >>
+S [61] ->
+Q [61] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that ( n@t or p@t )  >>
+Why created:  <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition.
+Solved by: Predicate Invocation. (PI) and theorem 11:
+Theorem (11) [serial 1029] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1005] 
+
+
+Theorem (13)                               [serial 1006] 
+P [74] << now = 0.0 s >>
+S [74] ->
+Q [74] << true >>
+Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>>
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (14)                               [serial 1035] 
+P [85] << s@now
+  and PACE(now) >>
+S [85] ->
+Q [85] << now - last_beat < vrp@now or ( not ( now - last_beat < vrp@now ) ) >>
+Why created:  Replacing <= with not < of [serial 1034]
+Solved by: Law of Excluded middle. (exmid)
+
+Theorem (15)                               [serial 1034] 
+P [85] << s@now
+  and PACE(now) >>
+S [85] ->
+Q [85] << now - last_beat < vrp@now or vrp@now <= now - last_beat >>
+Why created:    normalization of [serial 1007]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost 
+Solved by: 'Less than' expressed in terms of 'less than or equal to'. (ltnle) and theorem 14:
+Theorem (14) [serial 1035] used for:
+  Replacing <= with not < of [serial 1034] 
+
+
+Theorem (16)                               [serial 1007] 
+P [85] << s@now
+  and PACE(now) >>
+S [85] ->
+Q [85] << ( now - last_beat < vrp@now ) or ( now - last_beat >= vrp@now ) >>
+Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>>
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] and theorem 15:
+Theorem (15) [serial 1034] used for:
+    normalization of [serial 1007] 
+
+
+Theorem (17)                               [serial 1039] 
+P [88] << s@now
+  and SENSE(now) >>
+S [88] ->
+Q [88] << now - last_beat < vrp@now or ( not ( now - last_beat < vrp@now ) ) >>
+Why created:  Replacing <= with not < of [serial 1038]
+Solved by: Law of Excluded middle. (exmid)
+
+Theorem (18)                               [serial 1038] 
+P [88] << s@now
+  and SENSE(now) >>
+S [88] ->
+Q [88] << now - last_beat < vrp@now or vrp@now <= now - last_beat >>
+Why created:    normalization of [serial 1008]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost 
+Solved by: 'Less than' expressed in terms of 'less than or equal to'. (ltnle) and theorem 17:
+Theorem (17) [serial 1039] used for:
+  Replacing <= with not < of [serial 1038] 
+
+
+Theorem (19)                               [serial 1008] 
+P [88] << s@now
+  and SENSE(now) >>
+S [88] ->
+Q [88] << ( now - last_beat < vrp@now ) or ( now - last_beat >= vrp@now ) >>
+Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>>
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] and theorem 18:
+Theorem (18) [serial 1038] used for:
+    normalization of [serial 1008] 
+
+
+Theorem (20)                               [serial 1041] 
+P [74] << now = 0.0 s >>
+S [95] ->
+Q [95] << now = 0.0 s >>
+Why created:  P -> P1 in concurrent composition for [serial 1009]
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (21)                               [serial 1058] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [56] << n@now >>
+Why created:  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1055]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (22)                               [serial 1055] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [56] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  >>
+Why created:    normalization of [serial 1052]
+Solved by:  Guided Substitution of Equals
+ Introduce existential quantification over range, ubcc. (bl.iexubcc) and theorem 21:
+Theorem (21) [serial 1058] used for:
+  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1055] 
+
+
+Theorem (23)                               [serial 1052] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [56] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1051]
+Solved by: [Add unnecessary parentheses] and theorem 22:
+Theorem (22) [serial 1055] used for:
+    normalization of [serial 1052] 
+
+
+Theorem (24)                               [serial 1057] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [55] << n@now >>
+Why created:  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1053]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (25)                               [serial 1053] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [55] << n@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1051]
+Solved by:  Guided Substitution of Equals
+ and theorem 24:
+Theorem (24) [serial 1057] used for:
+  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1053] 
+
+
+Theorem (26)                               [serial 1051] 
+P [95] << last_beat = now
+  and n@now >>
+S [96] ->
+Q [82] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat >>
+Why created:    normalization of [serial 1049]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 23 25:
+Theorem (23) [serial 1052] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1051] 
+Theorem (25) [serial 1053] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1051] 
+
+
+Theorem (27)                               [serial 1049] 
+P [95] << n@now
+  and ( last_beat = now ) >>
+S [96] ->
+Q [82] << ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1042]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 26:
+Theorem (26) [serial 1051] used for:
+    normalization of [serial 1049] 
+
+
+Theorem (28)                               [serial 1042] 
+P [95] << n@now
+  and ( last_beat = now ) >>
+S [96] ->
+Q [82] << SENSE(now) >>
+Why created:  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1009]
+Solved by: Predicate Invocation. (PI) and theorem 27:
+Theorem (27) [serial 1049] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1042] 
+
+
+Theorem (29)                               [serial 1045] 
+P [95] << now = 0.0 s >>
+S [96] ->
+Q [22] << ( now = 0.0 s ) or VS() >>
+Why created:  applied port output <<pre>> -> <<M[n]>> [serial 1043]
+Solved by: Or Introduction Schema (bl.orcwl)(bl.orcwll):  X->(X or Y)
+
+Theorem (30)                               [serial 1074] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << 0.0 s = now or VS()@now >>
+Why created:    normalization of [serial 1072]
+  Using: (bl.atintro) ADD_UNNECESSARY_PARETHESES 
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (31)                               [serial 1072] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << ( ( 0.0 s )@now = ( now )@now ) or VS()@now >>
+Why created:  Distribute @ over relation. (bl.atrel)
+   [serial 1071]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  [Add unnecessary parentheses] and theorem 30:
+Theorem (30) [serial 1074] used for:
+    normalization of [serial 1072] 
+
+
+Theorem (32)                               [serial 1071] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << ( 0.0 s = now )@now or VS()@now >>
+Why created:    normalization of [serial 1069]
+Solved by: Distribute @ over relation. (bl.atrel) and theorem 31:
+Theorem (31) [serial 1072] used for:
+  Distribute @ over relation. (bl.atrel)
+   [serial 1071] 
+
+
+Theorem (33)                               [serial 1069] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << ( ( 0.0 s = now )@now or ( VS() )@now ) >>
+Why created:  Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3)
+   [serial 1068]
+Solved by: [Add unnecessary parentheses] and theorem 32:
+Theorem (32) [serial 1071] used for:
+    normalization of [serial 1069] 
+
+
+Theorem (34)                               [serial 1068] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << ( 0.0 s = now or VS() )@now >>
+Why created:    normalization of [serial 1066]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES 
+Solved by: Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3) and theorem 33:
+Theorem (33) [serial 1069] used for:
+  Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3)
+   [serial 1068] 
+
+
+Theorem (35)                               [serial 1066] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << ( ( now = 0.0 s ) or VS() )@now >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1064]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] and theorem 34:
+Theorem (34) [serial 1068] used for:
+    normalization of [serial 1066] 
+
+
+Theorem (36)                               [serial 1064] 
+P [96] << ( 0.0 s = now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << n@now >>
+Why created:    normalization of [serial 1062]
+  Using: (bl.atintro) ADD_UNNECESSARY_PARETHESES 
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 35:
+Theorem (35) [serial 1066] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1064] 
+
+
+Theorem (37)                               [serial 1062] 
+P [96] << ( ( ( 0.0 s )@now = ( now )@now ) or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << n@now >>
+Why created:  Distribute @ over relation. (bl.atrel)
+   [serial 1061]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  [Add unnecessary parentheses] and theorem 36:
+Theorem (36) [serial 1064] used for:
+    normalization of [serial 1062] 
+
+
+Theorem (38)                               [serial 1061] 
+P [96] << ( ( 0.0 s = now )@now or VS()@now )
+  and 0.0 s = now >>
+S [96] ->
+Q [96] << n@now >>
+Why created:    normalization of [serial 1059]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Distribute @ over relation. (bl.atrel) and theorem 37:
+Theorem (37) [serial 1062] used for:
+  Distribute @ over relation. (bl.atrel)
+   [serial 1061] 
+
+
+Theorem (39)                               [serial 1059] 
+P [96] << ( now = 0.0 s )
+  and ( ( now = 0.0 s )@now or ( VS() )@now ) >>
+S [96] ->
+Q [96] << n@now >>
+Why created:  Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3)
+   [serial 1046]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 38:
+Theorem (38) [serial 1061] used for:
+    normalization of [serial 1059] 
+
+
+Theorem (40)                               [serial 1046] 
+P [96] << ( now = 0.0 s )
+  and ( ( now = 0.0 s ) or VS() )@now >>
+S [96] ->
+Q [96] << n@now >>
+Why created:  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1043]
+Solved by: Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3) and theorem 39:
+Theorem (39) [serial 1059] used for:
+  Distribute @ over disjunction. (bl.ator)(df-bl.ator2)(bl.ator3)
+   [serial 1046] 
+
+
+Theorem (41)                               [serial 1043] 
+P [95] << now = 0.0 s >>
+S [96] n!
+Q [96] << n@now >>
+Why created:  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1009]
+Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+ and theorems 29 40:
+Theorem (29) [serial 1045] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1043] 
+Theorem (40) [serial 1046] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1043] 
+
+
+Theorem (42)                               [serial 1047] 
+P [74] << now = 0.0 s >>
+S [98] ->
+Q [99] << now = now >>
+Why created:  applied wp for assignment [serial 1044]
+Solved by: Law of identity. (eqid)
+
+Theorem (43)                               [serial 1044] 
+P [74] << now = 0.0 s >>
+S [98] last_beat := now
+Q [99] << last_beat = now >>
+Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1009]
+Solved by:  Assignment (asgn)(AA):
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>>
+ and theorem 42:
+Theorem (42) [serial 1047] used for:
+  applied wp for assignment [serial 1044] 
+
+
+Theorem (44)                               [serial 1009] 
+P [74] << now = 0.0 s >>
+S [95]   << now = 0.0 s >>
+  n!
+  << n@now >>
+  &
+  last_beat := now
+  << last_beat = now >> 
+Q [82] << SENSE(now) >>
+Why created:   <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A};
+Solved by:  Concurrent Composition Rule (CCk):
+ <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
+ <<P1>> S1 <<Q1>>, <<P2>> S2 <<Q2>>, . . . , <<Pn>> Sn <<Qn>>
+ <<Q1 and Q2 and  . . . and Qn>> -> <<Q>>
+ -----------------------------------------------
+       <<P>> S <<Q>> where S is
+ <<P1>> S1 <<Q1>> & <<P2>> S2 <<Q2>> & . . . & <<Pn>> Sn <<Qn>>
+ and theorems 20 28 41 43:
+Theorem (20) [serial 1041] used for:
+  P -> P1 in concurrent composition for [serial 1009] 
+Theorem (28) [serial 1042] used for:
+  Q1 and Q2 and  . . . and Qn -> Q in concurrent composition for [serial 1009] 
+Theorem (41) [serial 1043] used for:
+  <<P1>> S1 <<Q1>> in concurrent composition for [serial 1009] 
+Theorem (43) [serial 1044] used for:
+  <<P>> S2 <<Q2>> in concurrent composition for [serial 1009] 
+
+
+Theorem (45)                               [serial 1077] 
+P [103] << h@now
+  and PACE(now)
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  ) >>
+S [102] ->
+Q [89] << true >>
+Why created:    normalization of [serial 1010]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (46)                               [serial 1010] 
+P [103] << ( PACE(now) )
+  and ( h@now )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [102] ->
+Q [89] << true >>
+Why created:   <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace: pace-[x]->off{};
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 45:
+Theorem (45) [serial 1077] used for:
+    normalization of [serial 1010] 
+
+
+Theorem (47)                               [serial 1011] 
+P [106] << ( SENSE(now) )
+  and ( h@now )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [105] ->
+Q [89] << true >>
+Why created:   <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense: sense-[x]->off{};
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (48)                               [serial 1083] 
+P [109] << ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and PACE(now)
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  ) >>
+S [109] ->
+Q [110] << VP() >>
+Why created:    normalization of [serial 1078]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
+
+Theorem (49)                               [serial 1078] 
+P [109] << ( PACE(now) )
+  and ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [109] ->
+Q [110] << VP() >>
+Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1012]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 48:
+Theorem (48) [serial 1083] used for:
+    normalization of [serial 1078] 
+
+
+Theorem (50)                               [serial 1115] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << p@now >>
+Why created:    normalization of [serial 1112]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (51)                               [serial 1112] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << ( p@now ) >>
+Why created:  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+   [serial 1110]
+Solved by: [Add unnecessary parentheses] and theorem 50:
+Theorem (50) [serial 1115] used for:
+    normalization of [serial 1112] 
+
+
+Theorem (52)                               [serial 1110] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1109]
+Solved by: Introduce existential quantification over range, ubcc. (bl.iexubcc) and theorem 51:
+Theorem (51) [serial 1112] used for:
+  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+   [serial 1110] 
+
+
+Theorem (53)                               [serial 1116] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [50] << p@now >>
+Why created:  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1111]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (54)                               [serial 1111] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [50] << p@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1109]
+Solved by:  Guided Substitution of Equals
+ and theorem 53:
+Theorem (53) [serial 1116] used for:
+  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1111] 
+
+
+Theorem (55)                               [serial 1109] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  )
+  and p@last_beat >>
+Why created:    normalization of [serial 1107]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 52 54:
+Theorem (52) [serial 1110] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1109] 
+Theorem (54) [serial 1111] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1109] 
+
+
+Theorem (56)                               [serial 1107] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << ( p@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1079]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 55:
+Theorem (55) [serial 1109] used for:
+    normalization of [serial 1107] 
+
+
+Theorem (57)                               [serial 1079] 
+P [115] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << PACE(now) >>
+Why created:  <<Q2>> -> <<Q>> in sequential composition for [serial 1012]
+Solved by: Predicate Invocation. (PI) and theorem 56:
+Theorem (56) [serial 1107] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1079] 
+
+
+Theorem (58)                               [serial 1087] 
+P [110] << VP() >>
+S [111] ->
+Q [20] << VP() >>
+Why created:  applied port output <<pre>> -> <<M[p]>> [serial 1080]
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (59)                               [serial 1117] 
+P [111] << VP()@now
+  and VP() >>
+S [111] ->
+Q [112] << VP()@now >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1095]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (60)                               [serial 1095] 
+P [111] << VP()@now
+  and VP() >>
+S [111] ->
+Q [112] << p@now >>
+Why created:    normalization of [serial 1088]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 59:
+Theorem (59) [serial 1117] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1095] 
+
+
+Theorem (61)                               [serial 1088] 
+P [111] << ( VP() )
+  and VP()@now >>
+S [111] ->
+Q [112] << p@now >>
+Why created:  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1080]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 60:
+Theorem (60) [serial 1095] used for:
+    normalization of [serial 1088] 
+
+
+Theorem (62)                               [serial 1080] 
+P [110] << VP() >>
+S [111] p!
+Q [112] << p@now >>
+Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1012]
+Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+ and theorems 58 61:
+Theorem (58) [serial 1087] used for:
+  applied port output <<pre>> -> <<M[p]>> [serial 1080] 
+Theorem (61) [serial 1088] used for:
+  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1080] 
+
+
+Theorem (63)                               [serial 1089] 
+P [112] << p@now >>
+S [114] ->
+Q [115] << now = now
+  and p@now >>
+Why created:  applied wp for assignment [serial 1081]
+Solved by: Law of identity. (eqid)
+
+Theorem (64)                               [serial 1081] 
+P [112] << p@now >>
+S [114] last_beat := now
+Q [115] << last_beat = now
+  and p@now >>
+Why created:  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1012]
+Solved by:  Assignment (asgn)(AA):
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>>
+ and theorem 63:
+Theorem (63) [serial 1089] used for:
+  applied wp for assignment [serial 1081] 
+
+
+Theorem (65)                               [serial 1012] 
+P [109] << ( PACE(now) )
+  and ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [110]   << VP() >>
+  p!
+  << p@now >>
+  ;
+  last_beat := now
+  << last_beat = now
+    and p@now >> 
+Q [78] << PACE(now) >>
+Why created:   <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP: pace-[x]->pace{A};
+Solved by:  Sequential Composition Rule (SCk):
+   <<P1>> S1 <<Q1 and P2>>
+   <<Q1 and P2>> S2 <<Q2 and P3>>
+   . . .
+   <<Qk-1 and Pk>> Sk <<Qk>>
+   P=>P1, Qk=>Q
+   _____________________________________________
+   <<P>> S <<Q>>
+   where S is <<P1>> S1 <<Q1>> ; . . . ; <<Pk>> Sk <<Qk>>
+ and theorems 49 57 62 64:
+Theorem (49) [serial 1078] used for:
+  <<P>> -> <<P1>> in sequential composition for [serial 1012] 
+Theorem (57) [serial 1079] used for:
+  <<Q2>> -> <<Q>> in sequential composition for [serial 1012] 
+Theorem (62) [serial 1080] used for:
+  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1012] 
+Theorem (64) [serial 1081] used for:
+  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1012] 
+
+
+Theorem (66)                               [serial 1121] 
+P [118] << ( PACE(now) )
+  and ( s@now )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( ( ( now = 0.0 s ) or VS() ) or VP() )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( ( ( now = 0.0 s ) or VS() ) or VP() )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [117] ->
+Q [85] << s@now
+  and PACE(now) >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1013]
+Solved by: And Introduction Schema (bl.aiswll)(bl.aiswlr):  (X and Y and Z)->(X and Y)
+
+Theorem (67)                               [serial 1013] 
+P [118] << ( PACE(now) )
+  and ( s@now )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [117] ->
+Q [85] << s@now
+  and PACE(now) >>
+Why created:   <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP: pace-[x]->check_pace_vrp{};
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 66:
+Theorem (66) [serial 1121] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1013] 
+
+
+Theorem (68)                               [serial 1123] 
+P [85] << now - last_beat < vrp@now
+  and s@now
+  and PACE(now) >>
+S [120] ->
+Q [78] << PACE(now) >>
+Why created:    normalization of [serial 1014]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (69)                               [serial 1014] 
+P [85] << s@now
+  and PACE(now)
+  and ( now - last_beat < vrp@now ) >>
+S [120] ->
+Q [78] << PACE(now) >>
+Why created:   <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP: check_pace_vrp-[x]->pace{};
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 68:
+Theorem (68) [serial 1123] used for:
+    normalization of [serial 1014] 
+
+
+Theorem (70)                               [serial 1152] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [85] ->
+Q [42] << s@now >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1151]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (71)                               [serial 1157] 
+P [85] << ( ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  )
+  and p@last_beat )
+  and vrp@now <= now - last_beat
+  and s@now >>
+S [85] ->
+Q [42] << vrp <= now - last_beat
+  and ( n or p )@last_beat >>
+Why created:    normalization of [serial 1155]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) 
+Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
+
+Theorem (72)                               [serial 1155] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and ( p@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) ) >>
+S [85] ->
+Q [42] << ( ( n or p )@last_beat
+  and ( ( now - last_beat ) >= vrp ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1154]
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 71:
+Theorem (71) [serial 1157] used for:
+    normalization of [serial 1155] 
+
+
+Theorem (73)                               [serial 1154] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and ( p@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) ) >>
+S [85] ->
+Q [42] << notVRP() >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1153]
+Solved by: Predicate Invocation. (PI) and theorem 72:
+Theorem (72) [serial 1155] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1154] 
+
+
+Theorem (74)                               [serial 1153] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [85] ->
+Q [42] << notVRP() >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1151]
+Solved by: Predicate Invocation. (PI) and theorem 73:
+Theorem (73) [serial 1154] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1153] 
+
+
+Theorem (75)                               [serial 1151] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [85] ->
+Q [125] << s@now
+  and notVRP() >>
+Why created:    normalization of [serial 1149]
+Solved by: Join consequents with conjunction. (3jca) and theorems 70 74:
+Theorem (70) [serial 1152] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1151] 
+Theorem (74) [serial 1153] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1151] 
+
+
+Theorem (76)                               [serial 1149] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [85] ->
+Q [125] << ( s@now
+  and notVRP() ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1126]
+Solved by: [Add unnecessary parentheses] and theorem 75:
+Theorem (75) [serial 1151] used for:
+    normalization of [serial 1149] 
+
+
+Theorem (77)                               [serial 1126] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [85] ->
+Q [125] << VS() >>
+Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1125]
+Solved by: Predicate Invocation. (PI) and theorem 76:
+Theorem (76) [serial 1149] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1126] 
+
+
+Theorem (78)                               [serial 1173] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [56] << ( n@now ) >>
+Why created:  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1170]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (79)                               [serial 1170] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [56] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1169]
+Solved by:  Guided Substitution of Equals
+ Introduce existential quantification over range, ubcc. (bl.iexubcc) and theorem 78:
+Theorem (78) [serial 1173] used for:
+  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1170] 
+
+
+Theorem (80)                               [serial 1172] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [55] << n@now >>
+Why created:  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1171]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (81)                               [serial 1171] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [55] << n@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1169]
+Solved by:  Guided Substitution of Equals
+ and theorem 80:
+Theorem (80) [serial 1172] used for:
+  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1171] 
+
+
+Theorem (82)                               [serial 1169] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat >>
+Why created:    normalization of [serial 1167]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 79 81:
+Theorem (79) [serial 1170] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1169] 
+Theorem (81) [serial 1171] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1169] 
+
+
+Theorem (83)                               [serial 1167] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1127]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 82:
+Theorem (82) [serial 1169] used for:
+    normalization of [serial 1167] 
+
+
+Theorem (84)                               [serial 1127] 
+P [130] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << SENSE(now) >>
+Why created:  <<Q2>> -> <<Q>> in sequential composition for [serial 1125]
+Solved by: Predicate Invocation. (PI) and theorem 83:
+Theorem (83) [serial 1167] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1127] 
+
+
+Theorem (85)                               [serial 1137] 
+P [125] << VS() >>
+S [126] ->
+Q [22] << 0.0 s = now or VS() >>
+Why created:    normalization of [serial 1130]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES 
+Solved by: Or Introduction Schema (bl.orcwl)(bl.orcwll):  X->(X or Y)
+
+Theorem (86)                               [serial 1130] 
+P [125] << VS() >>
+S [126] ->
+Q [22] << ( now = 0.0 s ) or VS() >>
+Why created:  applied port output <<pre>> -> <<M[n]>> [serial 1128]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] and theorem 85:
+Theorem (85) [serial 1137] used for:
+    normalization of [serial 1130] 
+
+
+Theorem (87)                               [serial 1176] 
+P [126] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [126] ->
+Q [127] << ( 0.0 s = now or VS() )@now >>
+Why created:    normalization of [serial 1174]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES 
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (88)                               [serial 1174] 
+P [126] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [126] ->
+Q [127] << ( ( now = 0.0 s ) or VS() )@now >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1139]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] and theorem 87:
+Theorem (87) [serial 1176] used for:
+    normalization of [serial 1174] 
+
+
+Theorem (89)                               [serial 1139] 
+P [126] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [126] ->
+Q [127] << n@now >>
+Why created:    normalization of [serial 1131]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 88:
+Theorem (88) [serial 1174] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1139] 
+
+
+Theorem (90)                               [serial 1131] 
+P [126] << ( VS() )
+  and ( ( now = 0.0 s ) or VS() )@now >>
+S [126] ->
+Q [127] << n@now >>
+Why created:  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1128]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 89:
+Theorem (89) [serial 1139] used for:
+    normalization of [serial 1131] 
+
+
+Theorem (91)                               [serial 1128] 
+P [125] << VS() >>
+S [126] n!
+Q [127] << n@now >>
+Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1125]
+Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+ and theorems 86 90:
+Theorem (86) [serial 1130] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1128] 
+Theorem (90) [serial 1131] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1128] 
+
+
+Theorem (92)                               [serial 1132] 
+P [127] << n@now >>
+S [129] ->
+Q [130] << now = now
+  and n@now >>
+Why created:  applied wp for assignment [serial 1129]
+Solved by: Law of identity. (eqid)
+
+Theorem (93)                               [serial 1129] 
+P [127] << n@now >>
+S [129] last_beat := now
+Q [130] << last_beat = now
+  and n@now >>
+Why created:  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1125]
+Solved by:  Assignment (asgn)(AA):
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>>
+ and theorem 92:
+Theorem (92) [serial 1132] used for:
+  applied wp for assignment [serial 1129] 
+
+
+Theorem (94)                               [serial 1125] 
+P [85] << vrp@now <= now - last_beat
+  and s@now
+  and PACE(now) >>
+S [125]   << VS() >>
+  n!
+  << n@now >>
+  ;
+  last_beat := now
+  << last_beat = now
+    and n@now >> 
+Q [82] << SENSE(now) >>
+Why created:    normalization of [serial 1015]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) 
+Solved by:  Sequential Composition Rule (SCk):
+   <<P1>> S1 <<Q1 and P2>>
+   <<Q1 and P2>> S2 <<Q2 and P3>>
+   . . .
+   <<Qk-1 and Pk>> Sk <<Qk>>
+   P=>P1, Qk=>Q
+   _____________________________________________
+   <<P>> S <<Q>>
+   where S is <<P1>> S1 <<Q1>> ; . . . ; <<Pk>> Sk <<Qk>>
+ and theorems 77 84 91 93:
+Theorem (77) [serial 1126] used for:
+  <<P>> -> <<P1>> in sequential composition for [serial 1125] 
+Theorem (84) [serial 1127] used for:
+  <<Q2>> -> <<Q>> in sequential composition for [serial 1125] 
+Theorem (91) [serial 1128] used for:
+  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1125] 
+Theorem (93) [serial 1129] used for:
+  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1125] 
+
+
+Theorem (95)                               [serial 1015] 
+P [85] << s@now
+  and PACE(now)
+  and ( now - last_beat >= vrp@now ) >>
+S [125]   << VS() >>
+  n!
+  << n@now >>
+  ;
+  last_beat := now
+  << last_beat = now
+    and n@now >> 
+Q [82] << SENSE(now) >>
+Why created:   <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR: check_pace_vrp-[x]->sense{A};
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 94:
+Theorem (94) [serial 1125] used for:
+    normalization of [serial 1015] 
+
+
+Theorem (96)                               [serial 1182] 
+P [133] << ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and SENSE(now)
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  ) >>
+S [133] ->
+Q [134] << VP() >>
+Why created:    normalization of [serial 1177]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
+
+Theorem (97)                               [serial 1177] 
+P [133] << ( SENSE(now) )
+  and ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [133] ->
+Q [134] << VP() >>
+Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1016]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 96:
+Theorem (96) [serial 1182] used for:
+    normalization of [serial 1177] 
+
+
+Theorem (98)                               [serial 1213] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << p@now >>
+Why created:  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+   [serial 1212]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (99)                               [serial 1212] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  >>
+Why created:    normalization of [serial 1208]
+Solved by: Introduce existential quantification over range, ubcc. (bl.iexubcc) and theorem 98:
+Theorem (98) [serial 1213] used for:
+  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+   [serial 1212] 
+
+
+Theorem (100)                               [serial 1208] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [51] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1207]
+Solved by:  Guided Substitution of Equals
+ [Add unnecessary parentheses] and theorem 99:
+Theorem (99) [serial 1212] used for:
+    normalization of [serial 1208] 
+
+
+Theorem (101)                               [serial 1210] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [50] << p@now >>
+Why created:  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1209]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (102)                               [serial 1209] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [50] << p@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1207]
+Solved by:  Guided Substitution of Equals
+ and theorem 101:
+Theorem (101) [serial 1210] used for:
+  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1209] 
+
+
+Theorem (103)                               [serial 1207] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  )
+  and p@last_beat >>
+Why created:    normalization of [serial 1205]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 100 102:
+Theorem (100) [serial 1208] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1207] 
+Theorem (102) [serial 1209] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1207] 
+
+
+Theorem (104)                               [serial 1205] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << ( p@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that p@t  ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1178]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 103:
+Theorem (103) [serial 1207] used for:
+    normalization of [serial 1205] 
+
+
+Theorem (105)                               [serial 1178] 
+P [139] << last_beat = now
+  and p@now >>
+S [78] ->
+Q [78] << PACE(now) >>
+Why created:  <<Q2>> -> <<Q>> in sequential composition for [serial 1016]
+Solved by: Predicate Invocation. (PI) and theorem 104:
+Theorem (104) [serial 1205] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1178] 
+
+
+Theorem (106)                               [serial 1187] 
+P [134] << VP() >>
+S [135] ->
+Q [20] << VP() >>
+Why created:  applied port output <<pre>> -> <<M[p]>> [serial 1179]
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (107)                               [serial 1214] 
+P [135] << VP()@now
+  and VP() >>
+S [135] ->
+Q [136] << VP()@now >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1194]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (108)                               [serial 1194] 
+P [135] << VP()@now
+  and VP() >>
+S [135] ->
+Q [136] << p@now >>
+Why created:    normalization of [serial 1188]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 107:
+Theorem (107) [serial 1214] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1194] 
+
+
+Theorem (109)                               [serial 1188] 
+P [135] << ( VP() )
+  and VP()@now >>
+S [135] ->
+Q [136] << p@now >>
+Why created:  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1179]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 108:
+Theorem (108) [serial 1194] used for:
+    normalization of [serial 1188] 
+
+
+Theorem (110)                               [serial 1179] 
+P [134] << VP() >>
+S [135] p!
+Q [136] << p@now >>
+Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1016]
+Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+ and theorems 106 109:
+Theorem (106) [serial 1187] used for:
+  applied port output <<pre>> -> <<M[p]>> [serial 1179] 
+Theorem (109) [serial 1188] used for:
+  applied port output <<pre and M[p]@now>> -> <<post>> [serial 1179] 
+
+
+Theorem (111)                               [serial 1189] 
+P [136] << p@now >>
+S [138] ->
+Q [139] << now = now
+  and p@now >>
+Why created:  applied wp for assignment [serial 1180]
+Solved by: Law of identity. (eqid)
+
+Theorem (112)                               [serial 1180] 
+P [136] << p@now >>
+S [138] last_beat := now
+Q [139] << last_beat = now
+  and p@now >>
+Why created:  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1016]
+Solved by:  Assignment (asgn)(AA):
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>>
+ and theorem 111:
+Theorem (111) [serial 1189] used for:
+  applied wp for assignment [serial 1180] 
+
+
+Theorem (113)                               [serial 1016] 
+P [133] << ( SENSE(now) )
+  and ( ( n or p )@( now - lrl )
+  and not ( exists t ~ time 
+   in ( now - lrl ) ,, now 
+   that ( n or p )@t  ) )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [134]   << VP() >>
+  p!
+  << p@now >>
+  ;
+  last_beat := now
+  << last_beat = now
+    and p@now >> 
+Q [78] << PACE(now) >>
+Why created:   <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS: sense-[x]->pace{A};
+Solved by:  Sequential Composition Rule (SCk):
+   <<P1>> S1 <<Q1 and P2>>
+   <<Q1 and P2>> S2 <<Q2 and P3>>
+   . . .
+   <<Qk-1 and Pk>> Sk <<Qk>>
+   P=>P1, Qk=>Q
+   _____________________________________________
+   <<P>> S <<Q>>
+   where S is <<P1>> S1 <<Q1>> ; . . . ; <<Pk>> Sk <<Qk>>
+ and theorems 97 105 110 112:
+Theorem (97) [serial 1177] used for:
+  <<P>> -> <<P1>> in sequential composition for [serial 1016] 
+Theorem (105) [serial 1178] used for:
+  <<Q2>> -> <<Q>> in sequential composition for [serial 1016] 
+Theorem (110) [serial 1179] used for:
+  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1016] 
+Theorem (112) [serial 1180] used for:
+  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1016] 
+
+
+Theorem (114)                               [serial 1219] 
+P [142] << s@now
+  and SENSE(now)
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  ) >>
+S [141] ->
+Q [88] << s@now
+  and SENSE(now) >>
+Why created:    normalization of [serial 1017]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: And Introduction Schema (bl.aiswll)(bl.aiswlr):  (X and Y and Z)->(X and Y)
+
+Theorem (115)                               [serial 1017] 
+P [142] << ( SENSE(now) )
+  and ( s@now )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that h@u  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that ( n or p )@( u - lrl )
+  and not ( exists t ~ time 
+   in ( u - lrl ) ,, u 
+   that ( n or p )@t  )  )
+  and not ( exists u ~ time 
+   in tops ,, now 
+   that s@u  ) >>
+S [141] ->
+Q [88] << s@now
+  and SENSE(now) >>
+Why created:   <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS: sense-[x]->check_sense_vrp{};
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 114:
+Theorem (114) [serial 1219] used for:
+    normalization of [serial 1017] 
+
+
+Theorem (116)                               [serial 1018] 
+P [88] << s@now
+  and SENSE(now)
+  and ( now - last_beat < vrp@now ) >>
+S [144] ->
+Q [82] << SENSE(now) >>
+Why created:   <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP: check_sense_vrp-[x]->sense{};
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (117)                               [serial 1251] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [42] << s@now >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1250]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (118)                               [serial 1261] 
+P [88] << ( ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat )
+  and vrp@now <= now - last_beat
+  and s@now >>
+S [88] ->
+Q [1] << vrp <= now - last_beat >>
+Why created:    normalization of [serial 1258]
+Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
+
+Theorem (119)                               [serial 1258] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+S [88] ->
+Q [1] << vrp <= now - last_beat >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1256]
+Solved by: Conjunction Commutes. (bl.ancom) and theorem 118:
+Theorem (118) [serial 1261] used for:
+    normalization of [serial 1258] 
+
+
+Theorem (120)                               [serial 1256] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [1] << vrp <= now - last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1255]
+Solved by: Predicate Invocation. (PI) and theorem 119:
+Theorem (119) [serial 1258] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1256] 
+
+
+Theorem (121)                               [serial 1267] 
+P [88] << ( ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat )
+  and vrp@now <= now - last_beat
+  and s@now >>
+S [88] ->
+Q [34] << n@last_beat or p@last_beat >>
+Why created:    normalization of [serial 1264]
+Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
+
+Theorem (122)                               [serial 1264] 
+P [88] << ( ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat )
+  and vrp@now <= now - last_beat
+  and s@now >>
+S [88] ->
+Q [34] << ( n@last_beat or p@last_beat ) >>
+Why created:  Split @ over disjunction (df-bl.ator2)(bl.ator3)
+   [serial 1263]
+Solved by: [Add unnecessary parentheses] and theorem 121:
+Theorem (121) [serial 1267] used for:
+    normalization of [serial 1264] 
+
+
+Theorem (123)                               [serial 1263] 
+P [88] << ( ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat )
+  and vrp@now <= now - last_beat
+  and s@now >>
+S [88] ->
+Q [34] << ( n or p )@last_beat >>
+Why created:    normalization of [serial 1259]
+Solved by: Split @ over disjunction (df-bl.ator2)(bl.ator3) and theorem 122:
+Theorem (122) [serial 1264] used for:
+  Split @ over disjunction (df-bl.ator2)(bl.ator3)
+   [serial 1263] 
+
+
+Theorem (124)                               [serial 1259] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+S [88] ->
+Q [34] << ( n or p )@last_beat >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1257]
+Solved by: Conjunction Commutes. (bl.ancom) and theorem 123:
+Theorem (123) [serial 1263] used for:
+    normalization of [serial 1259] 
+
+
+Theorem (125)                               [serial 1257] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [34] << ( n or p )@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1255]
+Solved by: Predicate Invocation. (PI) and theorem 124:
+Theorem (124) [serial 1259] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1257] 
+
+
+Theorem (126)                               [serial 1255] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [42] << vrp <= now - last_beat
+  and ( n or p )@last_beat >>
+Why created:    normalization of [serial 1253]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 120 125:
+Theorem (120) [serial 1256] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1255] 
+Theorem (125) [serial 1257] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1255] 
+
+
+Theorem (127)                               [serial 1253] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [42] << ( ( n or p )@last_beat
+  and ( ( now - last_beat ) >= vrp ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1252]
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 126:
+Theorem (126) [serial 1255] used for:
+    normalization of [serial 1253] 
+
+
+Theorem (128)                               [serial 1252] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [42] << notVRP() >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1250]
+Solved by: Predicate Invocation. (PI) and theorem 127:
+Theorem (127) [serial 1253] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1252] 
+
+
+Theorem (129)                               [serial 1250] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [149] << s@now
+  and notVRP() >>
+Why created:    normalization of [serial 1248]
+Solved by: Join consequents with conjunction. (3jca) and theorems 117 128:
+Theorem (117) [serial 1251] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1250] 
+Theorem (128) [serial 1252] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1250] 
+
+
+Theorem (130)                               [serial 1248] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [149] << ( s@now
+  and notVRP() ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1230]
+Solved by: [Add unnecessary parentheses] and theorem 129:
+Theorem (129) [serial 1250] used for:
+    normalization of [serial 1248] 
+
+
+Theorem (131)                               [serial 1230] 
+P [88] << vrp@now <= now - last_beat
+  and s@now
+  and SENSE(now) >>
+S [88] ->
+Q [149] << VS() >>
+Why created:    normalization of [serial 1220]
+  Using: ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) 
+Solved by: Predicate Invocation. (PI) and theorem 130:
+Theorem (130) [serial 1248] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1230] 
+
+
+Theorem (132)                               [serial 1220] 
+P [88] << s@now
+  and SENSE(now)
+  and ( now - last_beat >= vrp@now ) >>
+S [88] ->
+Q [149] << VS() >>
+Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1019]
+Solved by: [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 131:
+Theorem (131) [serial 1230] used for:
+    normalization of [serial 1220] 
+
+
+Theorem (133)                               [serial 1247] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [56] << n@now >>
+Why created:  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1244]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (134)                               [serial 1244] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [56] << exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  >>
+Why created:    normalization of [serial 1241]
+Solved by:  Guided Substitution of Equals
+ Introduce existential quantification over range, ubcc. (bl.iexubcc) and theorem 133:
+Theorem (133) [serial 1247] used for:
+  Introduce existential quantification over range, ubcc. (bl.iexubcc)
+  Guided Substitution of Equals  [serial 1244] 
+
+
+Theorem (135)                               [serial 1241] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [56] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1240]
+Solved by: [Add unnecessary parentheses] and theorem 134:
+Theorem (134) [serial 1244] used for:
+    normalization of [serial 1241] 
+
+
+Theorem (136)                               [serial 1246] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [55] << n@now >>
+Why created:  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1242]
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (137)                               [serial 1242] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [55] << n@last_beat >>
+Why created:  Join consequents with conjunction. (3jca)
+   [serial 1240]
+Solved by:  Guided Substitution of Equals
+ and theorem 136:
+Theorem (136) [serial 1246] used for:
+  Guided Substitution of Equals 
+ replacing "last_beat" with its = "now" in its postcondition [serial 1242] 
+
+
+Theorem (138)                               [serial 1240] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  )
+  and n@last_beat >>
+Why created:    normalization of [serial 1238]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Join consequents with conjunction. (3jca) and theorems 135 137:
+Theorem (135) [serial 1241] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1240] 
+Theorem (137) [serial 1242] used for:
+  Join consequents with conjunction. (3jca)
+   [serial 1240] 
+
+
+Theorem (139)                               [serial 1238] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << ( n@last_beat
+  and ( exists t ~ time 
+   in ( now - lrl ) .. now 
+   that n@t  ) ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1221]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 138:
+Theorem (138) [serial 1240] used for:
+    normalization of [serial 1238] 
+
+
+Theorem (140)                               [serial 1221] 
+P [154] << last_beat = now
+  and n@now >>
+S [82] ->
+Q [82] << SENSE(now) >>
+Why created:  <<Q2>> -> <<Q>> in sequential composition for [serial 1019]
+Solved by: Predicate Invocation. (PI) and theorem 139:
+Theorem (139) [serial 1238] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1221] 
+
+
+Theorem (141)                               [serial 1233] 
+P [149] << VS() >>
+S [150] ->
+Q [22] << 0.0 s = now or VS() >>
+Why created:    normalization of [serial 1224]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES 
+Solved by: Or Introduction Schema (bl.orcwl)(bl.orcwll):  X->(X or Y)
+
+Theorem (142)                               [serial 1224] 
+P [149] << VS() >>
+S [150] ->
+Q [22] << ( now = 0.0 s ) or VS() >>
+Why created:  applied port output <<pre>> -> <<M[n]>> [serial 1222]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] and theorem 141:
+Theorem (141) [serial 1233] used for:
+    normalization of [serial 1224] 
+
+
+Theorem (143)                               [serial 1277] 
+P [150] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [150] ->
+Q [151] << ( 0.0 s = now or VS() )@now >>
+Why created:    normalization of [serial 1275]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES 
+Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
+
+Theorem (144)                               [serial 1275] 
+P [150] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [150] ->
+Q [151] << ( ( now = 0.0 s ) or VS() )@now >>
+Why created:  Replacing port names with BLESS::Assertion properties  [serial 1235]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] and theorem 143:
+Theorem (143) [serial 1277] used for:
+    normalization of [serial 1275] 
+
+
+Theorem (145)                               [serial 1235] 
+P [150] << ( 0.0 s = now or VS() )@now
+  and VS() >>
+S [150] ->
+Q [151] << n@now >>
+Why created:    normalization of [serial 1225]
+  Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by:  Replacing port names with BLESS::Assertion properties
+ and theorem 144:
+Theorem (144) [serial 1275] used for:
+  Replacing port names with BLESS::Assertion properties  [serial 1235] 
+
+
+Theorem (146)                               [serial 1225] 
+P [150] << ( VS() )
+  and ( ( now = 0.0 s ) or VS() )@now >>
+S [150] ->
+Q [151] << n@now >>
+Why created:  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1222]
+Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 145:
+Theorem (145) [serial 1235] used for:
+    normalization of [serial 1225] 
+
+
+Theorem (147)                               [serial 1222] 
+P [149] << VS() >>
+S [150] n!
+Q [151] << n@now >>
+Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1019]
+Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
+ and theorems 142 146:
+Theorem (142) [serial 1224] used for:
+  applied port output <<pre>> -> <<M[n]>> [serial 1222] 
+Theorem (146) [serial 1225] used for:
+  applied port output <<pre and M[n]@now>> -> <<post>> [serial 1222] 
+
+
+Theorem (148)                               [serial 1226] 
+P [151] << n@now >>
+S [153] ->
+Q [154] << now = now
+  and n@now >>
+Why created:  applied wp for assignment [serial 1223]
+Solved by: Law of identity. (eqid)
+
+Theorem (149)                               [serial 1223] 
+P [151] << n@now >>
+S [153] last_beat := now
+Q [154] << last_beat = now
+  and n@now >>
+Why created:  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1019]
+Solved by:  Assignment (asgn)(AA):
+ <<P>> -> <<wp(x:=e,Q)>> which is <<Q[x/e]>>
+ ---------------------------------------
+             <<P>> x:=e <<Q>>
+ and theorem 148:
+Theorem (148) [serial 1226] used for:
+  applied wp for assignment [serial 1223] 
+
+
+Theorem (150)                               [serial 1019] 
+P [88] << s@now
+  and SENSE(now)
+  and ( now - last_beat >= vrp@now ) >>
+S [149]   << VS() >>
+  n!
+  << n@now >>
+  ;
+  last_beat := now
+  << last_beat = now
+    and n@now >> 
+Q [82] << SENSE(now) >>
+Why created:   <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR: check_sense_vrp-[x]->sense{A};
+Solved by:  Sequential Composition Rule (SCk):
+   <<P1>> S1 <<Q1 and P2>>
+   <<Q1 and P2>> S2 <<Q2 and P3>>
+   . . .
+   <<Qk-1 and Pk>> Sk <<Qk>>
+   P=>P1, Qk=>Q
+   _____________________________________________
+   <<P>> S <<Q>>
+   where S is <<P1>> S1 <<Q1>> ; . . . ; <<Pk>> Sk <<Qk>>
+ and theorems 132 140 147 149:
+Theorem (132) [serial 1220] used for:
+  <<P>> -> <<P1>> in sequential composition for [serial 1019] 
+Theorem (140) [serial 1221] used for:
+  <<Q2>> -> <<Q>> in sequential composition for [serial 1019] 
+Theorem (147) [serial 1222] used for:
+  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1019] 
+Theorem (149) [serial 1223] used for:
+  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1019] 
+
+
+Theorem (151)                               [serial 1002] 
+P [32] <<   >>
+S [61] ->
+Q [32] << VVI.i proof obligations >>
+Why created:  Initial proof obligations for VVI.i
+Solved by:  Component verification conditions
+ [Convert asseertion to port value.] and theorems 3 8 12 13 16 19 44 46 47 65 67 69 95 113 115 116 150:
+Theorem (3) [serial 1003] used for:
+  <<I>> -> BLESS::Invariant of thread VVI.i 
+Theorem (8) [serial 1004] used for:
+  <<M(pace)>> -> <<I>> from invariant I when complete state pace has Assertion <<M(pace)>> in its definition. 
+Theorem (12) [serial 1005] used for:
+  <<M(sense)>> -> <<I>> from invariant I when complete state sense has Assertion <<M(sense)>> in its definition. 
+Theorem (13) [serial 1006] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state power_on, <<M(power_on)>> -> <<e1 or e2 or . . . en>> 
+Theorem (16) [serial 1007] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state check_pace_vrp, <<M(check_pace_vrp)>> -> <<e1 or e2 or . . . en>> 
+Theorem (19) [serial 1008] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state check_sense_vrp, <<M(check_sense_vrp)>> -> <<e1 or e2 or . . . en>> 
+Theorem (44) [serial 1009] used for:
+   <<M(power_on)>> A <<M(sense)>> for T1_POWER_ON: power_on-[ ]->sense{A}; 
+Theorem (46) [serial 1010] used for:
+   <<M(pace) and x>> -> <<M(off)>> for T2_STOP_pace: pace-[x]->off{}; 
+Theorem (47) [serial 1011] used for:
+   <<M(sense) and x>> -> <<M(off)>> for T2_STOP_sense: sense-[x]->off{}; 
+Theorem (65) [serial 1012] used for:
+   <<M(pace) and x>> A <<M(pace)>> for T3_PACE_LRL_AFTER_VP: pace-[x]->pace{A}; 
+Theorem (67) [serial 1013] used for:
+   <<M(pace) and x>> -> <<M(check_pace_vrp)>> for T4_VS_AFTER_VP: pace-[x]->check_pace_vrp{}; 
+Theorem (69) [serial 1014] used for:
+   <<M(check_pace_vrp) and x>> -> <<M(pace)>> for T5_VS_AFTER_VP_IN_VRP: check_pace_vrp-[x]->pace{}; 
+Theorem (95) [serial 1015] used for:
+   <<M(check_pace_vrp) and x>> A <<M(sense)>> for T6_VS_AFTER_VP_IS_NR: check_pace_vrp-[x]->sense{A}; 
+Theorem (113) [serial 1016] used for:
+   <<M(sense) and x>> A <<M(pace)>> for T7_PACE_LRL_AFTER_VS: sense-[x]->pace{A}; 
+Theorem (115) [serial 1017] used for:
+   <<M(sense) and x>> -> <<M(check_sense_vrp)>> for T8_VS_AFTER_VS: sense-[x]->check_sense_vrp{}; 
+Theorem (116) [serial 1018] used for:
+   <<M(check_sense_vrp) and x>> -> <<M(sense)>> for T9_VS_AFTER_VS_IN_VRP: check_sense_vrp-[x]->sense{}; 
+Theorem (150) [serial 1019] used for:
+   <<M(check_sense_vrp) and x>> A <<M(sense)>> for T10_VS_AFTER_VS_IS_NR: check_sense_vrp-[x]->sense{A}; 
+
+
+Theorem (152)                               [serial 1001] 
+Why created:  All verification conditions have been proved correct. 
+Solved by:  Component and Connection Proofs
+ and theorem 151:
+Theorem (151) [serial 1002] used for:
+  Initial proof obligations for VVI.i 
+
+
+closing proof file "/Applications/osate2_2023-03-master/Eclipse.app/Contents/MacOS/proof.txt" 

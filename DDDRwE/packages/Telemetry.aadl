@@ -1,0 +1,26 @@
+--Telemetry.aadl
+
+
+package Telemetry
+public
+	with mark;
+	with PACE_Data;
+
+-- The Telemetry subsystem communicates with exteral programmer (DCM)
+--  A DCM shows a moving time-line with events the PG sees aligned with real-time ECG
+-- Telemetry received events from mark::Markers, and transmits the value to the DCM
+--  A DCM also change change the values used for therapy delivery
+	system Telemetry
+		features
+			toDCM: requires bus access;
+			mark_A: in event data port mark::AtrialMarker; --atrial markers
+			mark_V: in event data port mark::VentricularlMarker; --ventricular markers
+			mark_X: in event data port mark::ExtraordinaryMarker; --eXstraordinary markers
+--    episodes : in out data port; --to history
+			settings: out event data port PACE_data::Rx; --to Rx
+	end Telemetry;
+
+	system implementation Telemetry.imp
+	end Telemetry.imp;
+	
+end Telemetry;

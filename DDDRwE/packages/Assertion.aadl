@@ -17,50 +17,73 @@ type percent is quantity scalar
 annex Assertion
 {**
 ghost variables
-  def AS ~ boolean  --atrial sense
-  def AP ~ boolean  --atrial pace
-  def VS ~ boolean  --ventricular sense
-  def VP ~ boolean  --ventricular pace
-  def SV ~ boolean  --sense ventricle in mode XVX or XDX
-  def SA ~ boolean  --sense atrium in mode XAX or XDX
-  def PV ~ boolean  --pace ventricle in mode VXX or DXX
-  def PA ~ boolean  --pace atrium in mode AXX or DXX
-  def INHIBIT ~ boolean  --senses inhibit paces
-  def TRACK ~ boolean  --paces track senses
+--  raw values detected by hardware
   def V  ~ boolean  --signal detected by front end in ventricle
   def A  ~ boolean  --signal detected by front end in atrium
   def TNA ~ boolean --noise detected in atrium
   def TNV ~ boolean --noide detected in ventricle
-  def FB ~ boolean  --in ATR fallback
-  def FB_START ~ boolean  --start of ATR fallback
+  def XL ~ quantity milliG  --accelerometer reading
+  def MAG ~ boolean --magnet mode
+
+-- discerned heart events
+  def AS ~ boolean  --atrial sense
+    : <<AXIOM_AS: n~time :AS@n iff (AS_A(n) or n=0.0 ms) >>
+  def AT ~ boolean  --atrial sense was fast (tachycardia)
+    : <<AXIOM_AT: n~time :AT@n iff AT_A(n) >>
+  def AP ~ boolean  --atrial pace 
+    :  <<AXIOM_AP: n~time :AP@n iff (AP_A(n) or n=0.0 ms) >>
+  def VS ~ boolean  --ventricular sense
+    : <<AXIOM_VS: n~time :VS@n iff (VS_A(n) or n=0.0 ms)  >>
+  def VP ~ boolean  --ventricular pace
+    : <<AXIOM_VP: n~time :VP@n iff (VP_A(n) and URL_A(n))  >>
+
+    
+--  dynamic pacing values calculated by Rate_Control
+  def MAX_CCI~time  --maximum cardiac cycle interval
+    : <<AXIOM_MAX_CCI: n~time :  MAX_CCI = MaxCCI(n) >>
+  def MIN_CCI~time  --minimum cardiac cycle interval
+    : <<AXIOM_MIN_CCI: :  MIN_CCI = MinCCI() >>
+  def CCI ~ time  --time between most recent ventricular sense or pace
+    -- the value of CCI gets updated every VS or VP, subtracting previous time stamp from current timestamp
+--  def VA_INTERVAL ~ time  --ventricular-atrial interval
+
+--  values prescribed by clinician in Rx:  
+  --  pacing modes  
+  def SV ~ boolean  --sense ventricle in mode XVX or XDX
+  def SA ~ boolean  --sense atrium in mode XAX or XDX
+  def PV ~ boolean  --pace ventricle in mode VXX or DXX
+  def PA ~ boolean  --pace atrium in mode AXX or DXX
+  def INHIBIT ~ boolean  --senses inhibit paces XXI or XXD modes
+  def TRACK ~ boolean  --paces track senses XXD
+  def RR ~ boolean  --rate responsive  XXXR modes
+  --  basic pacing parameters
+  def LRL ~ time  --lower rate limit interval 
+  def URL ~ time  --upper rate limit interval 
+  def MSR ~ time  --maximum sensor rate interval
+  def AV ~ time   --AV delay (fixed)
+  def MIN_AV ~ time --minimum AV delay
+  def SAVO ~  time  --sensed A-V delay offset
+  --  refractory (inhibitory) periods
   def ARP ~ time    --atrial refractory period
   def VRP ~ time    --ventricular refractory period
   def PVARP ~ time  --post-ventricular atrial refractory period
-  def SAVO ~  time  --sensed A-V delay offset
-  def MAX_CCI~time  --maximum cardiac cycle interval
-  def MIN_CCI~time  --minimum cardiac cycle interval
-  def CCI ~ time  --current cardiac cycle interval
-  def XL ~ quantity milliG  --accelerometer reading
-  def MAG ~ boolean --magnet mode
-  def RR ~ boolean --rr: in data port flag;  --rate responsive
+  def EX_PVARP ~ time -- extended post-ventricular atrial refractory period
+  --  rate response:  pace faster with measured activity
   def RESPONSE_FACTOR ~ quantity rf --rf: in data port PACE_data::ResponseFactor;  --response factor
   def REACTION_TIME ~ time --rt: in data port ms;  --reaction time
   def ACTIVITY_THRESHOLD ~ quantity milliG --  at: in data port milliG;  --activity threshold
   def RECOVERY_TIME ~ time  --  ct: in data port ms;  --recovery time
-  def LRL ~ time --  lrl: in data port ms;  --lower rate limit interval 
-  def URL ~ time --  url: in data port ms;  --upper rate limit interval 
-  def MSR ~ time --  msr: in data port ms;  --maximum sensor rate interval
-  def AV ~ time  --  av: in data port ms;  --AV delay (fixed)
-  def MIN_AV ~ time --  min_av: in data port ms;  --minimum AV delay
+  --  rate smoothing precentages (when tracking) 
   def DRS ~ percent --  drs: in data port PACE_data::percent;  --down-rate smoothing
   def URS ~ percent  --  urs: in data port PACE_data::percent;  --up-rate smoothing
-  def FBT ~ time  --  fb_time : in data port BLESS_Types::Time;  --time to ATR fall back from URL to LRL
   def HY ~ time  --  hy: in data port ms;  --hysteresis delay, added to max_cci when last v was vs
---  def VA_INTERVAL ~ time  --ventricular-atrial interval
-  def EX_PVARP ~ time -- extended post-ventricular atrial refractory period
+  --atrial tachycrdia response
   def ATR_ET ~ time  --atrial tachycardia response enable time
   def ATR_ENABLE ~ boolean  --atrial tachycardia response enabled
-  def AT ~ boolean  --atrial sense was fast (tachycardia)
+  def ATR_DURATION ~ quantity whole  --number of cci in duration before fallback
+  def FBT ~ time  --  fb_time : in data port BLESS_Types::Time;  --time to ATR fall back from URL to LRL
+  def FB ~ boolean  --in ATR fallback
+  def FB_START ~ boolean  --start of ATR fallback
   
   
   
@@ -179,7 +202,7 @@ ghost variables
   SV@x   --sense ventricle  XVX or XDX
   and V@x  --v-signal
   and not TNV@x  --not noisy in ventricle
---  and VRP_EXPIRED(x) 
+  and VRP_EXPIRED(x) 
   >>  --not ventricular refractory period
     
 --non-refractory atrial sense occurs, asserted by port as 
@@ -191,11 +214,11 @@ ghost variables
   SA@x   --sense atrium  XAX or XDX
   and A@x   --atrial signal
   and not TNA@x  --no noise
---  and ARP_EXPIRED(x)   --not atrial refractory period
---  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
---  and PAV_EXPIRED(x)    --not paced AV delay
---  and SAV_EXPIRED(x)  --not sensed AV delay
---  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
+  and ARP_EXPIRED(x)   --not atrial refractory period
+  and PVARP_EXPIRED(x)  --not post-ventricular atrial refractory period
+  and PAV_EXPIRED(x)    --not paced AV delay
+  and SAV_EXPIRED(x)  --not sensed AV delay
+  and not (UseExPVARP(x) and ExPVARP(x))  --not extended PVARP_A
   and not FB@x  -- =FB(x)  --not in ATR fallback
    >>
 
@@ -208,10 +231,10 @@ ghost variables
 --    occurred in the previous upper rate limit interval
 <<VP_A: x~time :
 	PACE_ON_MaxCCI(x)  -- (vp or vs) occurred maximum cardiac cycle interval ago
-    or  --ap occurred paced AV delay ago
-    PACE_ON_FIXED_AV_DELAY(x)  
-    or  --as occurred sensed AV delay ago, but not too fast
-    PACE_ON_SAV_DELAY(x) >>    
+  or  --ap occurred paced AV delay ago
+  PACE_ON_FIXED_AV_DELAY(x)  
+  or  --as occurred sensed AV delay ago, but not too fast
+  PACE_ON_SAV_DELAY(x) >>    
     
 <<PACE_ON_MaxCCI: x~time :    --no intrinsic activity, pace at LRL
   (VP@(x-MAX_CCI) or VS@(x-MAX_CCI))  
@@ -343,8 +366,6 @@ ghost variables
   (if LAST_V_WAS_VS(x) then LRL+HY else LRL) >>  --use Hysteresis Rate Limit if last V was VS_A.
 
 --equivlances of ghost variables and assertions
-<<AXIOM_MAX_CCI: n~time :  MAX_CCI = MaxCCI(n) >>
-<<AXIOM_MIN_CCI: :  MIN_CCI = MinCCI() >>
   
 **};
 

@@ -194,7 +194,7 @@ connections
   -- thermostat communicates current sensed temperature to display on operator interface
   dt : port thermostat.display_temperature -> operator_interface.display_temperature;
   -- thermostat communicates alarm information to display on operator interface
-  al : port thermostat.alarm -> operator_interface.alarm;
+  al : port thermostat.alarm_control -> operator_interface.alarm;
 flows -- specify information flows through the Isolette
   -- air_temp_to_heat_out
   --   specify the information flows/dependences associated with the main control loop of the
@@ -287,7 +287,7 @@ features
   current_temperature : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
@@ -302,8 +302,8 @@ features
     {BLESS::Value => "<<returns status := MONITOR_STATUS()>>";};
   display_temperature : out data port Iso_Types::measured_temperature_range
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
-  alarm : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm)>>";};
+  alarm_control : out data port Iso_Types::on_off
+    {BLESS::Value => "<< +=> TEMP_OUT_OF_RANGE(x:alarm_control)>>";};
 flows
   temp_to_heat_flow : flow path current_temperature -> heat_control;
 annex EMV2 
@@ -315,7 +315,7 @@ annex EMV2
   display_temperature: out propagation {UndetectableValueError,ItemOmission};
   regulator_status: out propagation {RegulatorStatusError,ItemOmission};
   monitor_status: out propagation {MonitorStatusError};
-  alarm: out propagation {AlarmError};
+  alarm_control: out propagation {AlarmError};
   heat_control: out propagation {HeatControlError};
   flows
     ct_uve_dt: error path current_temperature{UndetectableValueError}
@@ -344,7 +344,7 @@ connections
   trs : port regulate_temperature.regulator_status -> regulator_status;
   tdt : port regulate_temperature.displayed_temp -> display_temperature;
   tms : port monitor_temperature.monitor_status -> monitor_status;
-  ta : port monitor_temperature.alarm -> alarm;
+  ta : port monitor_temperature.alarm_control -> alarm_control;
   tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
 annex EMV2
   {**
@@ -370,7 +370,7 @@ features
   monitor_temp : in data port Iso_Types::current_temperature.i
     {BLESS::Value => "<<returns measuredTemperatureRange := CURRENT_TEMP>>";};
   heat_control : out data port Iso_Types::on_off
-    {BLESS::Value => "<< +=> HEAT_CONTROL_A(x:heat_control)>>";};
+    {BLESS::Value => "<< +=> HEAT_CNTRL(x:heat_control)>>";};
   lower_desired_temperature : in data port Iso_Types::lower_desired_temperature.i
     {BLESS::Value => "<<returns lowerDesiredRange := LOWER_DESIRED_TEMP>>";};
   upper_desired_temperature : in data port Iso_Types::upper_desired_temperature.i
@@ -423,7 +423,7 @@ connections
   trs : port regulate_temperature.regulator_status -> regulator_status;
   tdt : port regulate_temperature.displayed_temp -> display_temperature;
   tms : port monitor_temperature.monitor_status -> monitor_status;
-  ta : port monitor_temperature.alarm -> alarm_control;
+  ta : port monitor_temperature.alarm_control -> alarm_control;
   tf : port detect_regulator_fail.internal_failure -> monitor_temperature.regulator_failure;
 annex EMV2
   {**
