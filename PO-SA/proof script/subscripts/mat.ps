@@ -1,60 +1,62 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Mon Aug 21 10:15:40 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/mat.ps
+# mat.ps
 push
 sort-by-component MA::MotionArtifactThread.imp
 #MA::MotionArtifactThread.imp
-#[serial 1035] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
+#[serial 1030] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
-axioms
-#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1037]  <<M(start)>> -> <<M(run)>> for mat0: start-[ ]->run{};
+tautologies
+#[serial 1031] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1032]  <<M(start)>> -> <<M(run)>> for mat0: start-[ ]->run{};
 substitute-post
 normalize
 sub-equals
 laws
-alldist^
 quant
-axioms
-#[serial 1038]  <<M(run) and x>> A <<M(run)>> for mat1: run-[x]->run{A};
+normalize
+tautologies
+#[serial 1033]  <<M(run) and x>> A <<M(run)>> for mat1: run-[x]->run{A};
 reduce
 reduce
 normalize
 laws
 normalize
-axioms
+tautologies
 substitute-post
 atomic
 normalize
 laws
 quant
-axioms
+tautologies
 substitute-both
 normalize
-axioms
+tautologies
 push
 #MA::MotionArtifactThread.imp
-#[serial 1243]   normalization of [serial 123
+#[serial 2104]   normalization of [serial 209
 make-an
 qtiming
-axioms
-#[serial 1245]   normalization of [serial 1236]
+tautologies
+#[serial 2106]   normalization of [serial 2097]
 replace<=
 laws
-axioms
-#[serial 1247]   normalization of [serial 1237]
+tautologies
+#[serial 2108]   normalization of [serial 2098]
 and-over-or-post
 laws
 normalize
-axioms
-#[serial 1249]   normalization of [serial 1238]
+laws
+tautologies
+#[serial 2110]   normalization of [serial 2099]
 alldist^
 zeroquantlb
-axioms
-#[serial 1251]   normalization of [serial 1239]
-contract-uqr
+elim-subtract
 normalize
-axioms
+laws
+normalize
+tautologies
+#[serial 2112]   normalization of [serial 2100]
+contract-uqr
+tautologies

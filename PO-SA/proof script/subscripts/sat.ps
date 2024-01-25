@@ -1,49 +1,47 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Tue Aug 22 10:37:29 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/sat.ps
+# sat.ps
 push
 sort-by-component SPA::SpO2AverageThread.imp
 #SPA::SpO2AverageThread.imp
-#[serial 1048] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definitio
+#[serial 1043] <<M(fillingWindow)>> -> <<I>> from invariant I when complete state fillingWindow has Assertion <<M(fillingWindow)>> in its definitio
 make-an
 substitute-pre
 normalize
-axioms
-#[serial 1049] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+tautologies
+#[serial 1044] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 substitute-pre
 normalize
-axioms
-#[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1045] Serban's Theorem:  disjunction of execute conditions leaving execution state chooseToRun, <<M(chooseToRun)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
-axioms
-#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1046] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
-#[serial 1052]  <<M(start) and x>> A <<M(fillingWindow)>> for SpAT0: start-[x]->fillingWindow{A};
+tautologies
+#[serial 1047]  <<M(start) and x>> A <<M(fillingWindow)>> for SpAT0: start-[x]->fillingWindow{A};
 completesub
 laws
 alldist^
 atomic
 split-post
-axioms
+tautologies
 normalize
 guided-sub-equals[lb]
 guided-sub-equals[ub]
 normalize
 laws
 quant
-axioms
+tautologies
 normalize
 remove-units
 remove-units
-axioms
-#[serial 1053]  <<M(start) and x>> A <<M(fail)>> for SpAT0a: start-[x]->fail{A};
+tautologies
+#[serial 1048]  <<M(start) and x>> A <<M(fail)>> for SpAT0a: start-[x]->fail{A};
 atomic
-axioms
-#[serial 1054]  <<M(fillingWindow) and x>> A <<M(chooseToRun)>> for SpAT1: fillingWindow-[x]->chooseToRun{A};
+tautologies
+#[serial 1049]  <<M(fillingWindow) and x>> A <<M(chooseToRun)>> for SpAT1: fillingWindow-[x]->chooseToRun{A};
 reduce
 reduce
 reduce
@@ -51,24 +49,25 @@ atomic
 normalize
 laws
 normalize
-axioms
+tautologies
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1273]   normalization of [serial 125
+#[serial 2310]   normalization of [serial 229
 make-an
 substitute-both
 normalize
 split-post
-axioms
+tautologies
 substitute-post
 normalize
 laws
-axioms
-#[serial 1278]   normalization of [serial 1262]
+tautologies
+#[serial 2315]   normalization of [serial 2299]
 split-post
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1320] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 127
+#[serial 2346] Join consequents with conjunction. (3jca)
+   [serial 231
 make-an
 substitute-post
 normalize
@@ -77,15 +76,15 @@ substitute-pre
 substitute-pre
 normalize
 qtiming
-axioms
-#[serial 1321] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1278]
+tautologies
+#[serial 2347] Join consequents with conjunction. (3jca)
 normalize
 substitute-pre
 substitute-pre
 normalize
 qtiming
-axioms
-#[serial 1322] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1278]
+tautologies
+#[serial 2348] Join consequents with conjunction. (3jca)
 substitute-pre
 substitute-pre
 normalize
@@ -93,16 +92,16 @@ qtiming
 remove-units
 remove-units
 qtiming
-axioms
-#[serial 1323] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1278]
+tautologies
+#[serial 2349] Join consequents with conjunction. (3jca)
 substitute-post
 substitute-pre
 substitute-pre
 normalize
 qtiming
 qtiming
-axioms
-#[serial 1280]   normalization of [serial 1267]
+tautologies
+#[serial 2317]   normalization of [serial 2304]
 substitute-both
 substitute-pre
 substitute-pre
@@ -110,15 +109,15 @@ normalize
 laws
 normalize
 split-post
-axioms
+tautologies
 replace-port
 now
 remove-units
 remove-units
 replace-port-value
 laws
-axioms
-#[serial 1282]   normalization of [serial 1268]
+tautologies
+#[serial 2319]   normalization of [serial 2305]
 substitute-post
 normalize
 replace-port
@@ -137,8 +136,8 @@ laws
 normalize
 remove-units
 remove-units
-axioms
-#[serial 1284]   normalization of [serial 1269]
+tautologies
+#[serial 2321]   normalization of [serial 2306]
 replace-port
 now
 laws
@@ -148,8 +147,8 @@ substitute-pre
 substitute-pre
 laws
 normalize
-axioms
-#[serial 1286]   normalization of [serial 1270]
+tautologies
+#[serial 2323]   normalization of [serial 2307]
 replace-port
 now
 laws
@@ -160,39 +159,39 @@ substitute-pre
 substitute-pre
 laws
 normalize
-axioms
-#[serial 1055]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2: chooseToRun-[x]->fillingWindow{A};
+tautologies
+#[serial 1050]  <<M(chooseToRun) and x>> A <<M(fillingWindow)>> for SpAT2: chooseToRun-[x]->fillingWindow{A};
 completesub
 laws
 normalize
 alldist^
 atomic
-axioms
-#[serial 1056]  <<M(chooseToRun) and x>> A <<M(run)>> for SpAT3: chooseToRun-[x]->run{A};
+tautologies
+#[serial 1051]  <<M(chooseToRun) and x>> A <<M(run)>> for SpAT3: chooseToRun-[x]->run{A};
 completesub
 laws
 alldist^
 atomic
-axioms
-#[serial 1057]  <<M(chooseToRun) and x>> A <<M(fail)>> for SpAT3a: chooseToRun-[x]->fail{A};
+tautologies
+#[serial 1052]  <<M(chooseToRun) and x>> A <<M(fail)>> for SpAT3a: chooseToRun-[x]->fail{A};
 atomic
-axioms
-#[serial 1058]  <<M(run) and x>> A <<M(run)>> for SpAt4: run-[x]->run{A};
+tautologies
+#[serial 1053]  <<M(run) and x>> A <<M(run)>> for SpAt4: run-[x]->run{A};
 reduce
 reduce
 reduce
-remove-axioms-post
+remove-givens-post
 normalize
 laws
 normalize
-axioms
+tautologies
 substitute-both
 normalize
 laws
 normalize
 push
 #SPA::SpO2AverageThread.imp
-#[serial 1567]   normalization of [serial 153
+#[serial 2557]   normalization of [serial 252
 make-an
 atomic
 normalize
@@ -203,37 +202,38 @@ sub-equals
 qtiming
 qtiming
 laws
-axioms
-#[serial 1649]   normalization of [serial 1632]
+tautologies
+#[serial 2617]   normalization of [serial 2600]
 atomic
-axioms
-#[serial 1653]   normalization of [serial 1634]
+tautologies
+#[serial 2621]   normalization of [serial 2602]
 replace<=
 normalize
 laws
-axioms
-#[serial 1665]   normalization of [serial 1640]
+tautologies
+#[serial 2633]   normalization of [serial 2608]
 split-post
-axioms
+tautologies
 qtiming
-axioms
+tautologies
 qtiming
-axioms
+tautologies
 qtiming
-axioms
+tautologies
 contract-uqr
-axioms
-#[serial 1667]   normalization of [serial 1641]
+tautologies
+#[serial 2635]   normalization of [serial 2609]
 atomic
 normalize
 laws
+laws
 normalize
-axioms
-#[serial 1669]   normalization of [serial 1642]
+tautologies
+#[serial 2637]   normalization of [serial 2610]
 atomic
 normalize
 split-post
-axioms
+tautologies
 guided-sub-equals[spo2_hist[lb mod #PulseOx_Properties::Max_Window_Samples]]
 normalize
 elim-subtract
@@ -244,51 +244,54 @@ guided-sub-equals[totalSpO2]
 elim-subtract
 normalize
 laws
-axioms
-#[serial 1671]   normalization of [serial 1643]
+normalize
+laws
+tautologies
+#[serial 2639]   normalization of [serial 2611]
 atomic
 normalize
 laws
 normalize
 laws
 normalize
-axioms
-#[serial 1675]   normalization of [serial 1645]
+tautologies
+#[serial 2643]   normalization of [serial 2613]
 atomic
 normalize
 laws
 normalize
-axioms
-#[serial 1677]   normalization of [serial 1646]
+tautologies
+#[serial 2645]   normalization of [serial 2614]
 atomic
 normalize
-axioms
-#[serial 1710]   normalization of [serial 1693]
+tautologies
+#[serial 2663]   normalization of [serial 2646]
 split-post
-axioms
+tautologies
 substitute-post
 normalize
-axioms
-#[serial 1712]   normalization of [serial 1694]
+tautologies
+#[serial 2665]   normalization of [serial 2647]
 atomic
 laws
-axioms
+tautologies
 normalize
 replaceNEwithLTorGT
 normalize
-axioms
+tautologies
 substitute-pre
 substitute-pre
 substitute-pre
 laws
 normalize
 now
+normalize
 guided-sub-equals[SpO2Avg]
 guided-sub-equals[totalSpO2]
 guided-sub-equals[goodCount]
 normalize
-axioms
-#[serial 1714]   normalization of [serial 1695]
+tautologies
+#[serial 2667]   normalization of [serial 2648]
 substitute-pre
 substitute-pre
 substitute-pre
@@ -296,8 +299,8 @@ normalize
 laws
 normalize
 contract-uqr
-axioms
-#[serial 1716]   normalization of [serial 1696]
+tautologies
+#[serial 2669]   normalization of [serial 2649]
 substitute-pre
 substitute-pre
 substitute-pre
@@ -305,10 +308,10 @@ normalize
 laws
 normalize
 split-post
-axioms
+tautologies
 qtiming
-axioms
-#[serial 1718]   normalization of [serial 1697]
+tautologies
+#[serial 2671]   normalization of [serial 2650]
 substitute-pre
 substitute-pre
 substitute-pre
@@ -318,16 +321,16 @@ normalize
 split-post
 normalize
 qtiming
-axioms
-#[serial 1720]   normalization of [serial 1698]
+tautologies
+#[serial 2673]   normalization of [serial 2651]
 substitute-pre
 substitute-pre
 substitute-pre
 normalize
 laws
 normalize
-axioms
-#[serial 1722]   normalization of [serial 1699]
+tautologies
+#[serial 2675]   normalization of [serial 2652]
 completesub
 alldist^
-axioms
+tautologies

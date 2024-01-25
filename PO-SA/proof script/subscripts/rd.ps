@@ -4,21 +4,21 @@ sort-by-component[RD::RapidDeclineThread]
 #RD::RapidDeclineThread.imp
 #[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
-axioms
+tautologies
 #[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1005]  <<M(start)>> -> <<M(run)>> for rdt0: start-[ ]->run{};
 normalize
-axioms
+tautologies
 #[serial 1006]  <<M(run) and x>> A <<M(run)>> for rdt1: run-[x]->run{A};
 reduce
 reduce
 normalize
 laws
-axioms
+tautologies
 atomic
-axioms
+tautologies
 now
 substitute-post
 normalize
-axioms
+tautologies

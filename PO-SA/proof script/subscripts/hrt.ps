@@ -1,22 +1,23 @@
+#hrt.ps
 push
 sort-by-component HR::HeartRateTrendThread.imp
 #HR::HeartRateTrendThread.imp
-#[serial 1013] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
+#[serial 1008] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
-axioms
-#[serial 1014] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+tautologies
+#[serial 1009] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
 substitute-pre
 normalize
-axioms
-#[serial 1015] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1016] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
-axioms
-#[serial 1017]  <<M(start)>> A <<M(fill)>> for hrtt0: start-[ ]->fill{A};
+tautologies
+#[serial 1012]  <<M(start)>> A <<M(fill)>> for hrtt0: start-[ ]->fill{A};
 completesub
 alldist^
 atomic
@@ -25,136 +26,134 @@ laws
 split-post
 quant
 normalize
-axioms
+tautologies
 guided-sub-equals[0]
-axioms
-#[serial 1018]  <<M(fill) and x>> A <<M(check)>> for hrtt1: fill-[x]->check{A};
+tautologies
+#[serial 1013]  <<M(fill) and x>> A <<M(check)>> for hrtt1: fill-[x]->check{A};
 normalize
 reduce
 reduce
 atomic
 normalize
-axioms
+tautologies
 laws
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
-axioms
+tautologies
 push
 #HR::HeartRateTrendThread.imp
-#[serial 2718] <<Q6>> -> <<Q>> in sequential composition for [serial 271
+#[serial 1174] <<Q6>> -> <<Q>> in sequential composition for [serial 117
 make-an
 substitute-post
 replace-qv
-axioms
-#[serial 2729]   <<P and B0>> -> <<P0>> in alternative for [serial 2722]
+tautologies
+#[serial 1185]   <<P and B0>> -> <<P0>> in alternative for [serial 1178]
 substitute-both
 split-post
-axioms
+tautologies
 zeroquantlb
 laws
 normalize
 elim-subtract
 normalize
-axioms
-#[serial 2743] applied wp for assignment [serial 2730]
+tautologies
+#[serial 1199] applied wp for assignment [serial 1186]
 split-post
-axioms
+tautologies
 ??
 now
 laws
-axioms
-#[serial 2731]   <<Q0>> -> <<Q>> in alternative  for [serial 2722]
+tautologies
+#[serial 1187]   <<Q0>> -> <<Q>> in alternative  for [serial 1178]
 split-post
-axioms
+tautologies
 substitute-pre
+normalize
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
-replace-qv
-now
-elim-subtract
-normalize
-axioms
-#[serial 2744] applied wp for assignment [serial 2733]
+tautologies
+#[serial 1200] applied wp for assignment [serial 1189]
 ??
 split-post
-axioms
+tautologies
 replace-port-value
 now
 laws
-axioms
-#[serial 2734]   <<Q1>> -> <<Q>> in alternative  for [serial 2722]
+tautologies
+#[serial 1190]   <<Q1>> -> <<Q>> in alternative  for [serial 1178]
 substitute-pre
 normalize
 split-post
-axioms
+tautologies
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
 elim-subtract
-normalize
-axioms
-#[serial 2745] applied wp for assignment [serial 2723]
+tautologies
+#[serial 1201] applied wp for assignment [serial 1179]
 qtiming
-axioms
-#[serial 2750]   normalization of [serial 2738]
+tautologies
+#[serial 1206]   normalization of [serial 1194]
 substitute-pre
 laws
 normalize
-axioms
-#[serial 2754]   normalization of [serial 2740]
+tautologies
+#[serial 1210]   normalization of [serial 1196]
 substitute-pre
 laws
 normalize
-axioms
-#[serial 2758]   normalization of [serial 2726]
+tautologies
+#[serial 1214]   normalization of [serial 1182]
 substitute-pre
 normalize
 replace-qv
-axioms
-#[serial 2767]   normalization of [serial 2732]
+tautologies
+#[serial 1223]   normalization of [serial 1188]
 substitute-post
 normalize
-axioms
-#[serial 1019]  <<M(check) and x>> A <<M(fill)>> for hrtt2a: check-[x]->fill{A};
+tautologies
+#[serial 1014]  <<M(check) and x>> A <<M(fill)>> for hrtt2a: check-[x]->fill{A};
 substitute-both
 normalize
 alldist^
 atomic
-axioms
-#[serial 1020]  <<M(check) and x>> A <<M(run)>> for hrtt2b: check-[x]->run{A};
+elim-subtract
+tautologies
+#[serial 1015]  <<M(check) and x>> A <<M(run)>> for hrtt2b: check-[x]->run{A};
 substitute-both
 alldist^
 atomic
-axioms
-#[serial 1021]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c: check-[x]->fail{};
-axioms
-#[serial 1022]  <<M(run) and x>> A <<M(run)>> for hrtt3: run-[x]->run{A};
+elim-subtract
+tautologies
+#[serial 1016]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c: check-[x]->fail{};
+tautologies
+#[serial 1017]  <<M(run) and x>> A <<M(run)>> for hrtt3: run-[x]->run{A};
 reduce
 reduce
 normalize
 laws
 normalize
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
 push
 #HR::HeartRateTrendThread.imp
-#[serial 2950]   normalization of [serial 292
+#[serial 1371]   normalization of [serial 134
 make-an
 substitute-post
 alldist^
 split-post
-axioms
+tautologies
 replace-qv
 elim-subtract
-axioms
-#[serial 2956]   normalization of [serial 2935]
+tautologies
+#[serial 1377]   normalization of [serial 1356]
 substitute-pre
 zeroquantlb
 contract-uqr
@@ -162,94 +161,95 @@ replace-qv
 split-quant
 laws
 normalize
-axioms
-#[serial 2958]   normalization of [serial 2936]
+tautologies
+#[serial 1379]   normalization of [serial 1357]
 split-quant
 laws
 normalize
-axioms
-#[serial 2960]   normalization of [serial 2934]
+tautologies
+#[serial 1381]   normalization of [serial 1355]
 atomic
-axioms
-#[serial 2966]   normalization of [serial 2939]
+tautologies
+#[serial 1387]   normalization of [serial 1360]
 atomic
 split-post
-axioms
+tautologies
 ??
 laws
-axioms
-#[serial 2968]   normalization of [serial 2940]
+tautologies
+#[serial 1389]   normalization of [serial 1361]
 substitute-pre
 normalize
 laws
 normalize
 split-post
-axioms
+tautologies
 zeroquantlb
 elim-subtract
 normalize
 laws
 normalize
 elim-subtract
-normalize
-axioms
-#[serial 2972]   normalization of [serial 2942]
+tautologies
+#[serial 1393]   normalization of [serial 1363]
 atomic
 ??
 replace-port-value
 now
 laws
 normalize
-axioms
-#[serial 2974]   normalization of [serial 2943]
+laws
+normalize
+tautologies
+#[serial 1395]   normalization of [serial 1364]
 qtiming
 substitute-pre
 laws
 normalize
 split-post
-axioms
+tautologies
 qtiming
 zeroquantlb
-axioms
-#[serial 2976]   normalization of [serial 2945]
+tautologies
+#[serial 1397]   normalization of [serial 1366]
 qtiming
 split-quant
 laws
-axioms
-#[serial 2978]   normalization of [serial 2946]
+tautologies
+#[serial 1399]   normalization of [serial 1367]
 split-quant
 laws
-axioms
-#[serial 2980]   normalization of [serial 2944]
+tautologies
+#[serial 1401]   normalization of [serial 1365]
 atomic
-axioms
-#[serial 2982]   normalization of [serial 2933]
+tautologies
+#[serial 1403]   normalization of [serial 1354]
 atomic
 normalize
-axioms
-#[serial 3003] Associativity: a.(b.c) = a.b.c [serial 2970]
+tautologies
+#[serial 1406] laws applied to [serial 1391]
 substitute-post
 laws
 normalize
-axioms
-#[serial 3021]   normalization of [serial 3002]
+tautologies
+#[serial 1424]   normalization of [serial 1405]
 substitute-post
 normalize
 laws
-axioms
-#[serial 3027] Law of And-Simplification:  P and true is P [serial 3024]
-axioms
-#[serial 3028] Law of And-Simplification:  P and true is P [serial 3025]
+tautologies
+#[serial 1429] laws applied to [serial 1426]
+tautologies
+#[serial 1430] laws applied to [serial 1427]
 atomic
 laws
-axioms
+tautologies
 substitute-pre
 laws
-axioms
-#[serial 3029] Law of And-Simplification:  P and true is P [serial 3026]
+tautologies
+#[serial 1431] laws applied to [serial 1428]
 atomic
 laws
-axioms
+tautologies
 substitute-pre
 laws
-axioms
+tautologies

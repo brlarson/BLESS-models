@@ -1,33 +1,34 @@
-#sox.ps
+# sox.ps
 push
 sort-by-component SO::SupplemetalOxygenThread.imp
 #SO::SupplemetalOxygenThread.imp
-#[serial 1049] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition
+#[serial 1035] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
-axioms
-#[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 normalize
 and-over-or-post
 laws
 normalize
-axioms
-#[serial 1052]  <<M(start)>> -> <<M(run)>> for so0:start-[ ]->run{};
+laws
+tautologies
+#[serial 1038]  <<M(start)>> -> <<M(run)>> for so0: start-[ ]->run{};
 normalize
-axioms
-#[serial 1053]  <<M(run) and x>> -> <<M(check)>> for so1:run-[x]->check{};
-axioms
-#[serial 1054]  <<M(check) and x>> A <<M(run)>> for so2:check-[x]->run{A};
+tautologies
+#[serial 1039]  <<M(run) and x>> -> <<M(check)>> for so1: run-[x]->check{};
+tautologies
+#[serial 1040]  <<M(check) and x>> A <<M(run)>> for so2: check-[x]->run{A};
 normalize
 reduce
 atomic
-axioms
+tautologies
 substitute-post
 normalize
-axioms
-#[serial 1055]  <<M(check) and x>> -> <<M(run)>> for so3:check-[x]->run{};
+tautologies
+#[serial 1041]  <<M(check) and x>> -> <<M(run)>> for so3: check-[x]->run{};
 normalize
-axioms
+tautologies

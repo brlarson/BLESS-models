@@ -1,145 +1,153 @@
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/PO-SA/proof script/subscripts/spt.ps
+# spt.ps
 push
 sort-by-component SPT::SpO2TrendThread.imp
 #SPT::SpO2TrendThread.imp
-#[serial 1024] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
+#[serial 1019] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
 normalize
-axioms
-#[serial 1025] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
+tautologies
+#[serial 1020] <<M(loading)>> -> <<I>> from invariant I when complete state loading has Assertion <<M(loading)>> in its definition.
 substitute-pre
 normalize
-axioms
-#[serial 1026] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1027] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1021] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1022] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
-axioms
-#[serial 1028]  <<M(start)>> A <<M(loading)>> for sptt0: start-[ ]->loading{A};
+tautologies
+#[serial 1023]  <<M(start)>> A <<M(loading)>> for sptt0: start-[ ]->loading{A};
 substitute-post
 normalize
 alldist^
 atomic
 split-post
-axioms
+tautologies
 normalize
 guided-sub-equals[num_samples]
 laws
 quant
-axioms
-#[serial 1029]  <<M(loading) and x>> A <<M(check)>> for sptt1: loading-[x]->check{A};
+tautologies
+#[serial 1024]  <<M(loading) and x>> A <<M(check)>> for sptt1: loading-[x]->check{A};
 reduce
 reduce
-remove-axioms-post
+remove-givens-post
 atomic
 normalize
 laws
-axioms
+tautologies
 push
 #SPT::SpO2TrendThread.imp
-#[serial 1183]   normalization of [serial 115
+#[serial 1612]   normalization of [serial 158
 make-an
 substitute-post
 normalize
 replace-qv
-axioms
-#[serial 1185]   normalization of [serial 1173]
+tautologies
+#[serial 1614]   normalization of [serial 1602]
 substitute-pre
 laws
 normalize
-axioms
-#[serial 1189]   normalization of [serial 1159]
-#SPT::SpO2TrendThread.imp
-#[serial 1197]   normalization of [serial 116
-make-an
-substitute-post
-normalize
-axioms
+tautologies
+#[serial 1618]   normalization of [serial 1588]
 substitute-pre
 normalize
 replace-qv
-axioms
-#[serial 1199]   normalization of [serial 1176]
+tautologies
+#[serial 1626]   normalization of [serial 1591]
 split-post
-axioms
-substitute-pre
+tautologies
+substitute-post
+normalize
+tautologies
+#[serial 1628]   normalization of [serial 1605]
 ??
-remove-units
-remove-units
 laws
-axioms
-#[serial 1201]   normalization of [serial 1164]
-substitute-pre
 normalize
+laws
+tautologies
+#[serial 1630]   normalization of [serial 1593]
+substitute-pre
 split-post
-axioms
+tautologies
 zeroquantlb
 laws
-elim-subtract
 normalize
 elim-subtract
 normalize
-axioms
-#[serial 1203]   normalization of [serial 1165]
+laws
+normalize
+tautologies
+#[serial 1632]   normalization of [serial 1594]
 split-post
-axioms
+tautologies
 substitute-post
 normalize
-axioms
-#[serial 1205]   normalization of [serial 1177]
+tautologies
+#[serial 1634]   normalization of [serial 1606]
 split-post
-axioms
+tautologies
 ??
 replace-port-value
 now
 laws
-axioms
-#[serial 1207]   normalization of [serial 1167]
+tautologies
+#[serial 1636]   normalization of [serial 1596]
 qtiming
 substitute-pre
 qtiming
 zeroquantlb
-axioms
-#[serial 1209]   normalization of [serial 1178]
+tautologies
+#[serial 1638]   normalization of [serial 1607]
 qtiming
-axioms
-#[serial 1219]   normalization of [serial 1180]
+tautologies
+#[serial 1648]   normalization of [serial 1609]
 substitute-both
 laws
 guided-sub-equals[NUM_SAMPLES]
 guided-sub-equals[SPO2_HISTORY]
-axioms
-#[serial 1030]  <<M(check) and x>> A <<M(loading)>> for sptt2a: check-[x]->loading{A};
+tautologies
+#[serial 1654] laws applied to [serial 1650]
 completesub
 alldist^
-atomic
-axioms
-#[serial 1031]  <<M(check) and x>> A <<M(run)>> for sptt2b: check-[x]->run{A};
-completesub
-alldist^
-atomic
-axioms
-#[serial 1032]  <<M(check) and x>> -> <<M(fail)>> for sptt2c: check-[x]->fail{};
-axioms
-#[serial 1033]  <<M(run) and x>> A <<M(run)>> for sptt3: run-[x]->run{A};
-reduce
-reduce
-remove-axioms-post
+laws
 normalize
 laws
 normalize
-axioms
+tautologies
+#[serial 1025]  <<M(check) and x>> A <<M(loading)>> for sptt2a: check-[x]->loading{A};
+completesub
+alldist^
+atomic
+elim-subtract
+tautologies
+#[serial 1026]  <<M(check) and x>> A <<M(run)>> for sptt2b: check-[x]->run{A};
+completesub
+alldist^
+atomic
+elim-subtract
+tautologies
+#[serial 1027]  <<M(check) and x>> -> <<M(fail)>> for sptt2c: check-[x]->fail{};
+tautologies
+#[serial 1028]  <<M(run) and x>> A <<M(run)>> for sptt3: run-[x]->run{A};
+reduce
+reduce
+remove-givens-post
+normalize
+laws
+normalize
+tautologies
 push
 #SPT::SpO2TrendThread.imp
-#[serial 1399]   normalization of [serial 137
+#[serial 1814]   normalization of [serial 179
 make-an
 substitute-post
 alldist^
 replace-qv
-axioms
-#[serial 1401]   normalization of [serial 1383]
+elim-subtract
+tautologies
+#[serial 1816]   normalization of [serial 1798]
 substitute-both
 normalize
 zeroquantlb
@@ -149,104 +157,105 @@ contract-uqr
 replace-qv
 split-quant
 split-post
-axioms
+tautologies
 laws
-axioms
-#[serial 1403]   normalization of [serial 1384]
+normalize
+tautologies
+#[serial 1818]   normalization of [serial 1799]
 split-quant
 laws
-axioms
-#[serial 1405]   normalization of [serial 1382]
+tautologies
+#[serial 1820]   normalization of [serial 1797]
 atomic
-axioms
-#[serial 1411]   normalization of [serial 1387]
+tautologies
+#[serial 1826]   normalization of [serial 1802]
 atomic
 ??
 split-post
-axioms
+tautologies
 remove-units
 remove-units
 laws
-axioms
-#[serial 1413]   normalization of [serial 1388]
+tautologies
+#[serial 1828]   normalization of [serial 1803]
 substitute-pre
 normalize
 split-post
-axioms
+tautologies
 laws
-axioms
+tautologies
 zeroquantlb
 laws
 normalize
 elim-subtract
 normalize
 elim-subtract
+laws
 normalize
-axioms
-#[serial 1417]   normalization of [serial 1390]
+tautologies
+#[serial 1832]   normalization of [serial 1805]
 atomic
 ??
 split-post
-axioms
+tautologies
 replace-port-value
 now
 laws
-axioms
-#[serial 1419]   normalization of [serial 1391]
+tautologies
+#[serial 1834]   normalization of [serial 1806]
 substitute-pre
 laws
 normalize
 split-post
-axioms
+tautologies
 zeroquantlb
 elim-subtract
 normalize
 elim-subtract
-normalize
 laws
 normalize
-axioms
-#[serial 1421]   normalization of [serial 1393]
+tautologies
+#[serial 1836]   normalization of [serial 1808]
 qtiming
 split-quant
 laws
-axioms
-#[serial 1423]   normalization of [serial 1394]
+tautologies
+#[serial 1838]   normalization of [serial 1809]
 split-quant
 laws
-axioms
-#[serial 1425]   normalization of [serial 1392]
+tautologies
+#[serial 1840]   normalization of [serial 1807]
 atomic
 normalize
-axioms
-#[serial 1427]   normalization of [serial 1381]
+tautologies
+#[serial 1842]   normalization of [serial 1796]
 atomic
 normalize
-axioms
-#[serial 1454] Associativity: a.(b.c) = a.b.c [serial 1415]
+tautologies
+#[serial 1851] laws applied to [serial 1830]
 substitute-post
 normalize
 laws
-axioms
-#[serial 1456] Law of And-Simplification:  P and true is P [serial 1431]
+tautologies
+#[serial 1853] laws applied to [serial 1846]
 atomic
 laws
 normalize
-axioms
+tautologies
 substitute-both
 laws
 guided-sub-equals[NUM_SAMPLES]
 guided-sub-equals[SPO2_HISTORY]
-axioms
-#[serial 1457] Law of And-Simplification:  P and true is P [serial 1433]
+tautologies
+#[serial 1854] laws applied to [serial 1848]
 atomic
 laws
-axioms
+tautologies
 substitute-pre
 laws
-axioms
-#[serial 1472]   normalization of [serial 1453]
+tautologies
+#[serial 1869]   normalization of [serial 1850]
 substitute-post
 normalize
 laws
-axioms
+tautologies
