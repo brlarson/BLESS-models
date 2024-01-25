@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" xmlns:instance="http://aadl.info/AADL/2.0/instance">
+  <instance:SystemInstance name="SysIoMT_impl_Instance" category="system">
+    <componentInstance name="patient">
+      <featureInstance name="Infused_Drug" type="/1">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Value"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; returns quantity mlph := PUMP_RATE() >>"/>
+          </ownedValue>
+          <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.5/@ownedDataPort.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Measurement_Unit"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="ml_per_hr"/>
+          </ownedValue>
+          <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="quantity mlph"/>
+          </ownedValue>
+          <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.1"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.5/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:AbstractSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAbstractSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:AbstractType" href="../sysIoMT.aadl#IoMT.Patient"/>
+    </componentInstance>
+    <componentInstance name="pca_pump" category="system">
+      <featureInstance name="network_conn" category="busAccess" type="/2">
+        <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedBusAccess.0"/>
+      </featureInstance>
+      <featureInstance name="Pause_infusion" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.0"/>
+      </featureInstance>
+      <featureInstance name="Infused_Drug" direction="out" type="/1">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Measurement_Unit"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="ml_per_hr"/>
+          </ownedValue>
+          <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="quantity mlph"/>
+          </ownedValue>
+          <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.1"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; returns quantity mlph:=PUMP_RATE() >>"/>
+          </ownedValue>
+          <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.1"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.PCA_Pump"/>
+    </componentInstance>
+    <componentInstance name="pulse_oximeter" category="system">
+      <featureInstance name="network_conn" category="busAccess" type="/2">
+        <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedBusAccess.0"/>
+      </featureInstance>
+      <featureInstance name="PO_alarm" direction="out" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; PO_ALARM() >>"/>
+          </ownedValue>
+          <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedDataPort.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.1"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.Pulse_Oximeter"/>
+    </componentInstance>
+    <componentInstance name="resp_monitor" category="system">
+      <featureInstance name="network_conn" category="busAccess" type="/2">
+        <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedBusAccess.0"/>
+      </featureInstance>
+      <featureInstance name="RM_alarm" direction="out" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; RM_ALARM() >>"/>
+          </ownedValue>
+          <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedDataPort.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.2"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.Respiration_Monitor"/>
+    </componentInstance>
+    <componentInstance name="control_app" category="system">
+      <featureInstance name="network_conn" category="busAccess" type="/2">
+        <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedBusAccess.0"/>
+      </featureInstance>
+      <featureInstance name="PO_alarm" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.0"/>
+      </featureInstance>
+      <featureInstance name="RM_alarm" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.1"/>
+      </featureInstance>
+      <featureInstance name="Pause_Infusion" direction="out" type="/3">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.2"/>
+      </featureInstance>
+      <componentInstance name="cc_proc" category="process">
+        <featureInstance name="PO_alarm" type="/3">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedDataPort.0"/>
+        </featureInstance>
+        <featureInstance name="RM_alarm" type="/3">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedDataPort.1"/>
+        </featureInstance>
+        <featureInstance name="Pause_Infusion" direction="out" type="/3">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedDataPort.2"/>
+        </featureInstance>
+        <componentInstance name="cc_app" category="thread">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Dispatch_Protocol"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.3/@ownedLiteral.3"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Timing_Properties.aadl#Timing_Properties.Period"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:IntegerLiteral" value="500">
+                <unit href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.16/@ownedLiteral.3"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedPropertyAssociation.1"/>
+          </ownedPropertyAssociation>
+          <featureInstance name="Pause_Infusion" direction="out" type="/3">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt;PO_ALARM() or RM_ALARM()>>"/>
+              </ownedValue>
+              <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.0"/>
+          </featureInstance>
+          <featureInstance name="PO_alarm" type="/3">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt;PO_ALARM()>>"/>
+              </ownedValue>
+              <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.1/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.1"/>
+          </featureInstance>
+          <featureInstance name="RM_alarm" type="/3">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Assertion"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt;RM_ALARM()>>"/>
+              </ownedValue>
+              <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.2/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.2"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:ThreadSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedThreadSubcomponent.0"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:ThreadImplementation" href="../sysIoMT.aadl#IoMT.cc_app.impl"/>
+        </componentInstance>
+        <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedProcessSubcomponent.0"/>
+        <index>0</index>
+        <classifier xsi:type="aadl2:ProcessImplementation" href="../sysIoMT.aadl#IoMT.Controlling_Process.impl"/>
+      </componentInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.3"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemImplementation" href="../sysIoMT.aadl#IoMT.Control_Application.impl"/>
+    </componentInstance>
+    <componentInstance name="network" category="virtual bus">
+      <subcomponent xsi:type="aadl2:VirtualBusSubcomponent" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedVirtualBusSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:VirtualBusType" href="../sysIoMT.aadl#IoMT.Network_bus"/>
+    </componentInstance>
+    <connectionInstance name="pca_pump.network_conn -> network" complete="true" kind="accessConnection" destination="/0/@componentInstance.5" source="/0/@componentInstance.1/@featureInstance.0">
+      <connectionReference context="/0" source="/0/@componentInstance.1/@featureInstance.0" destination="/0/@componentInstance.5" reverse="true">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="pca_pump.Infused_Drug -> patient.Infused_Drug" complete="true" kind="portConnection" destination="/0/@componentInstance.0/@featureInstance.0" source="/0/@componentInstance.1/@featureInstance.2">
+      <connectionReference context="/0" source="/0/@componentInstance.1/@featureInstance.2" destination="/0/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.3"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="pulse_oximeter.network_conn -> network" complete="true" kind="accessConnection" destination="/0/@componentInstance.5" source="/0/@componentInstance.2/@featureInstance.0">
+      <connectionReference context="/0" source="/0/@componentInstance.2/@featureInstance.0" destination="/0/@componentInstance.5" reverse="true">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.1"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm" complete="true" kind="portConnection" destination="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.1" source="/0/@componentInstance.2/@featureInstance.1">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="instance:InstanceReferenceValue" referencedInstanceObject="/0/@componentInstance.5"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.1/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <connectionReference context="/0" source="/0/@componentInstance.2/@featureInstance.1" destination="/0/@componentInstance.4/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.1"/>
+      </connectionReference>
+      <connectionReference context="/0/@componentInstance.4" source="/0/@componentInstance.4/@featureInstance.1" destination="/0/@componentInstance.4/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedPortConnection.0"/>
+      </connectionReference>
+      <connectionReference context="/0/@componentInstance.4/@componentInstance.0" source="/0/@componentInstance.4/@componentInstance.0/@featureInstance.0" destination="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="resp_monitor.network_conn -> network" complete="true" kind="accessConnection" destination="/0/@componentInstance.5" source="/0/@componentInstance.3/@featureInstance.0">
+      <connectionReference context="/0" source="/0/@componentInstance.3/@featureInstance.0" destination="/0/@componentInstance.5" reverse="true">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.2"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm" complete="true" kind="portConnection" destination="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.2" source="/0/@componentInstance.3/@featureInstance.1">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="instance:InstanceReferenceValue" referencedInstanceObject="/0/@componentInstance.5"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <connectionReference context="/0" source="/0/@componentInstance.3/@featureInstance.1" destination="/0/@componentInstance.4/@featureInstance.2">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.2"/>
+      </connectionReference>
+      <connectionReference context="/0/@componentInstance.4" source="/0/@componentInstance.4/@featureInstance.2" destination="/0/@componentInstance.4/@componentInstance.0/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedPortConnection.1"/>
+      </connectionReference>
+      <connectionReference context="/0/@componentInstance.4/@componentInstance.0" source="/0/@componentInstance.4/@componentInstance.0/@featureInstance.1" destination="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.2">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPortConnection.1"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="control_app.network_conn -> network" complete="true" kind="accessConnection" destination="/0/@componentInstance.5" source="/0/@componentInstance.4/@featureInstance.0">
+      <connectionReference context="/0" source="/0/@componentInstance.4/@featureInstance.0" destination="/0/@componentInstance.5" reverse="true">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.3"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="control_app.cc_proc.cc_app.Pause_Infusion -> pca_pump.Pause_infusion" complete="true" kind="portConnection" destination="/0/@componentInstance.1/@featureInstance.1" source="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/org.osate.aadl2.contrib/resources/properties/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Actual_Connection_Binding"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:ListValue">
+            <ownedListElement xsi:type="instance:InstanceReferenceValue" referencedInstanceObject="/0/@componentInstance.5"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <connectionReference context="/0/@componentInstance.4/@componentInstance.0" source="/0/@componentInstance.4/@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="/0/@componentInstance.4/@componentInstance.0/@featureInstance.2">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPortConnection.2"/>
+      </connectionReference>
+      <connectionReference context="/0/@componentInstance.4" source="/0/@componentInstance.4/@componentInstance.0/@featureInstance.2" destination="/0/@componentInstance.4/@featureInstance.3">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedPortConnection.2"/>
+      </connectionReference>
+      <connectionReference context="/0" source="/0/@componentInstance.4/@featureInstance.3" destination="/0/@componentInstance.1/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="network -> pca_pump.network_conn" complete="true" kind="accessConnection" destination="/0/@componentInstance.1/@featureInstance.0" source="/0/@componentInstance.5">
+      <connectionReference context="/0" source="/0/@componentInstance.5" destination="/0/@componentInstance.1/@featureInstance.0">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="network -> pulse_oximeter.network_conn" complete="true" kind="accessConnection" destination="/0/@componentInstance.2/@featureInstance.0" source="/0/@componentInstance.5">
+      <connectionReference context="/0" source="/0/@componentInstance.5" destination="/0/@componentInstance.2/@featureInstance.0">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.1"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="network -> resp_monitor.network_conn" complete="true" kind="accessConnection" destination="/0/@componentInstance.3/@featureInstance.0" source="/0/@componentInstance.5">
+      <connectionReference context="/0" source="/0/@componentInstance.5" destination="/0/@componentInstance.3/@featureInstance.0">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.2"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="network -> control_app.network_conn" complete="true" kind="accessConnection" destination="/0/@componentInstance.4/@featureInstance.0" source="/0/@componentInstance.5">
+      <connectionReference context="/0" source="/0/@componentInstance.5" destination="/0/@componentInstance.4/@featureInstance.0">
+        <connection xsi:type="aadl2:AccessConnection" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAccessConnection.3"/>
+      </connectionReference>
+    </connectionInstance>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../sysIoMT.aadl#IoMT.SysIoMT.impl"/>
+    <systemOperationMode name="No Modes"/>
+    <componentImplementation xsi:type="aadl2:SystemImplementation" href="../sysIoMT.aadl#IoMT.SysIoMT.impl"/>
+  </instance:SystemInstance>
+  <instance:ComponentInstance name="Physical_Types::Fluid_Flow" category="data">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Measurement_Unit"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:StringLiteral" value="ml_per_hr"/>
+      </ownedValue>
+      <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:StringLiteral" value="quantity mlph"/>
+      </ownedValue>
+      <propertyAssociation href="../../../../physical/aadl/packages/Physical_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.1"/>
+    </ownedPropertyAssociation>
+    <classifier xsi:type="aadl2:DataType" href="../../../../physical/aadl/packages/Physical_Types.aadl#Physical_Types.Fluid_Flow"/>
+  </instance:ComponentInstance>
+  <instance:ComponentInstance name="IoMT::Network_bus" category="virtual bus">
+    <classifier xsi:type="aadl2:VirtualBusType" href="../sysIoMT.aadl#IoMT.Network_bus"/>
+  </instance:ComponentInstance>
+  <instance:ComponentInstance name="BLESS_Types::Boolean" category="data">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:StringLiteral" value="boolean"/>
+      </ownedValue>
+      <propertyAssociation href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#Data_Model.Data_Representation"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:NamedValue">
+          <namedValue xsi:type="aadl2:EnumerationLiteral" href="platform:/plugin/org.osate.contribution.sei/resources/properties/Data_Model.aadl#/0/@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+        </ownedValue>
+      </ownedValue>
+      <propertyAssociation href="platform:/plugin/org.osate.contribution.sei/resources/packages/Base_Types.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <classifier xsi:type="aadl2:DataType" href="platform:/plugin/com.multitude.aadl.bless/resources/packages/BLESS_Types.aadl#BLESS_Types.Boolean"/>
+  </instance:ComponentInstance>
+</xmi:XMI>

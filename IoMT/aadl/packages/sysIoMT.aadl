@@ -22,7 +22,7 @@ annex Assertion
 		  def LAST_ACTION_A ~ last_action 
 		  def KVO_RATE_property ~ quantity mlph 
 		    --ANTLR-generated lexer won't handle "::" properly
-		    << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >>
+		  << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >> -- can we use def for consistancy
 		  
 		  <<PO_ALARM: : HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 >>
 		  <<RM_ALARM: : RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
@@ -53,8 +53,8 @@ annex Assertion
 **};
 
 	system SysIoMT
-		--properties
-		--	BLESS::Invariant => "<< IS_SAFE() >>";
+		properties
+			BLESS::Invariant => "<< IS_SAFE() >>";
 	end SysIoMT;
 
 	system implementation SysIoMT.impl
@@ -86,11 +86,11 @@ annex Assertion
 				{BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 			
---		properties
---			BLESS::Invariant =>
---				"<< Pause_Infusion 
---					iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
-			end PCA_Pump;
+		properties
+			BLESS::Invariant =>
+				"<< Pause_Infusion iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
+
+	end PCA_Pump;
 	
 -- Pulse Oximeter
 	system Pulse_Oximeter
@@ -98,6 +98,8 @@ annex Assertion
 			PO_alarm: out data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<< PO_ALARM() >>";};
 			network_conn: requires virtual bus access Network_Bus;
+		properties
+			BLESS::Invariant=> "<< PO_alaram iff PO_ALARM() >>";
 	end Pulse_Oximeter;
 
 -- Respiration Monitor
@@ -106,12 +108,19 @@ annex Assertion
 			RM_alarm: out data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<< RM_ALARM() >>";};
 			network_conn: requires virtual bus access Network_Bus;
+		properties
+			BLESS::Invariant=> "<< RM_alaram iff RM_ALARM() >>";
 	end Respiration_Monitor;
 
+-- Patient	
+	
 	abstract Patient
 		features
 			Infused_Drug: in data port Physical_Types::Fluid_Flow
 			{BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
+		
+		properties
+			BLESS::Invariant=> "<< PUMP_RATE() >>";
 
 	end Patient;
 
@@ -123,6 +132,9 @@ annex Assertion
 			RM_alarm: in data port BLESS_Types::Boolean;
 			Pause_Infusion: out data port BLESS_Types::Boolean;
 			network_conn: requires virtual bus access Network_Bus;
+		properties
+			BLESS::Invariant=> "<< PO_ALARM() or RM_ALARM() implies Pause_Infusion >>";
+			
 	end Control_application;
 	
 	system implementation Control_Application.impl
