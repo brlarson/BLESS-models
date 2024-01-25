@@ -1,0 +1,382 @@
+This file, proof.txt, was produced the BLESS Proof Assistant v3.2.2
+  at Wed Jan 24 21:08:11 CST 2024 by brianlarson
+
+Theorem (1)                               [serial 1003] 
+P [179] << INV() >>
+S [175] ->
+Q [175] << true >>
+Why created:  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (2)                               [serial 1004] 
+P [178] << true >>
+S [178] ->
+Q [178] << true >>
+Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (3)                               [serial 1005] 
+P [180] << true >>
+S [180] ->
+Q [180] << ( PO_ALARM()@now or RM_ALARM()@now ) or ( not PO_ALARM()@now
+  and not RM_ALARM()@now ) >>
+Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+Solved by: Absorb parentheses, middle term in disjunction (bl.orabpm)
+
+Theorem (4)                               [serial 1006] 
+P [178] << true >>
+S [184] ->
+Q [180] << true >>
+Why created:   <<M(start)>> -> <<M(check)>> for go: start-[ ]->check{};
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (5)                               [serial 1007] 
+P [179] << INV() >>
+S [185] ->
+Q [180] << true >>
+Why created:   <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{};
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (6)                               [serial 1032] 
+P [186] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+S [187] ->
+Q [158] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+Why created:    normalization of [serial 1030]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.orcom) 
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (7)                               [serial 1030] 
+P [186] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE ) >>
+S [187] ->
+Q [158] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+Why created:  Substituted assertions' predicates for labels in preconditions [serial 1027]
+Solved by: [Add unnecessary parentheses] Disjunction Commutes. (bl.orcom) and theorem 6:
+Theorem (6) [serial 1032] used for:
+    normalization of [serial 1030] 
+
+
+Theorem (8)                               [serial 1027] 
+P [186] << PO_ALARM() or RM_ALARM() >>
+S [187] ->
+Q [158] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+Why created:    normalization of [serial 1024]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.orcom) 
+Solved by: Predicate Invocation. (PI) and theorem 7:
+Theorem (7) [serial 1030] used for:
+  Substituted assertions' predicates for labels in preconditions [serial 1027] 
+
+
+Theorem (9)                               [serial 1024] 
+P [186] << PO_ALARM() or RM_ALARM() >>
+S [187] ->
+Q [158] << ( HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 ) or ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1022]
+Solved by: [Add unnecessary parentheses] Disjunction Commutes. (bl.orcom) and theorem 8:
+Theorem (8) [serial 1027] used for:
+    normalization of [serial 1024] 
+
+
+Theorem (10)                               [serial 1022] 
+P [186] << PO_ALARM() or RM_ALARM() >>
+S [187] ->
+Q [158] << PO_ALARM() or RM_ALARM() >>
+Why created:  Assume Present:  P = P@now = P^0   [serial 1020]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  Predicate Invocation. (PI) and theorem 9:
+Theorem (9) [serial 1024] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1022] 
+
+
+Theorem (11)                               [serial 1020] 
+P [186] << PO_ALARM()@now or RM_ALARM()@now >>
+S [187] ->
+Q [158] << PO_ALARM() or RM_ALARM() >>
+Why created:  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|true]>> [serial 1008]
+Solved by:  Assume Present:  P = P@now = P^0 
+ and theorem 10:
+Theorem (10) [serial 1022] used for:
+  Assume Present:  P = P@now = P^0   [serial 1020] 
+
+
+Theorem (12)                               [serial 1029] 
+P [187] << ( PO_ALARM() or RM_ALARM() )
+  and ( PO_ALARM() or RM_ALARM() ) >>
+S [187] ->
+Q [179] << true >>
+Why created:    normalization of [serial 1025]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (13)                               [serial 1025] 
+P [187] << ( PO_ALARM() or RM_ALARM() )
+  and ( PO_ALARM() or RM_ALARM() ) >>
+S [187] ->
+Q [179] << ( true ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1023]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 12:
+Theorem (12) [serial 1029] used for:
+    normalization of [serial 1025] 
+
+
+Theorem (14)                               [serial 1023] 
+P [187] << ( PO_ALARM() or RM_ALARM() )
+  and ( PO_ALARM() or RM_ALARM() ) >>
+S [187] ->
+Q [179] << INV() >>
+Why created:  Assume Present:  P = P@now = P^0   [serial 1021]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  Predicate Invocation. (PI) and theorem 13:
+Theorem (13) [serial 1025] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1023] 
+
+
+Theorem (15)                               [serial 1021] 
+P [187] << ( PO_ALARM()@now or RM_ALARM()@now )
+  and ( PO_ALARM() or RM_ALARM() )@now >>
+S [187] ->
+Q [179] << INV() >>
+Why created:  applied port output <<pre and (PO_ALARM() or RM_ALARM())@now>> -> <<post>> [serial 1008]
+Solved by:  Assume Present:  P = P@now = P^0 
+ and theorem 14:
+Theorem (14) [serial 1023] used for:
+  Assume Present:  P = P@now = P^0   [serial 1021] 
+
+
+Theorem (16)                               [serial 1008] 
+P [186] << PO_ALARM()@now or RM_ALARM()@now >>
+S [187] Pause_Infusion!(true)
+Q [179] << INV() >>
+Why created:   <<M(check) and x>> A <<M(run)>> for alarm: check-[x]->run{A};
+Solved by:  Asserted Action:  <<P>> { <<P1>> S1 <<Q1>> } <<Q>> is <<P>> -> <<P1>>, <<Q1>> -> <<Q>>, and <<P1>> S1 <<Q1>>
+  Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+ and theorems 11 15:
+Theorem (11) [serial 1020] used for:
+  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|true]>> [serial 1008] 
+Theorem (15) [serial 1021] used for:
+  applied port output <<pre and (PO_ALARM() or RM_ALARM())@now>> -> <<post>> [serial 1008] 
+
+
+Theorem (17)                               [serial 1040] 
+P [188] << not PO_ALARM()
+  and not RM_ALARM() >>
+S [189] ->
+Q [189] << not PO_ALARM()
+  and not RM_ALARM() >>
+Why created:    normalization of [serial 1037]
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (18)                               [serial 1037] 
+P [188] << not PO_ALARM()
+  and not RM_ALARM() >>
+S [189] ->
+Q [189] << ( not ( PO_ALARM() )
+  and not ( RM_ALARM() ) ) >>
+Why created:  At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc) 
+  Negated disjunction in terms of conjunction (De Morgan's law). (ioran)
+   [serial 1035]
+Solved by: [Add unnecessary parentheses] and theorem 17:
+Theorem (17) [serial 1040] used for:
+    normalization of [serial 1037] 
+
+
+Theorem (19)                               [serial 1035] 
+P [188] << not PO_ALARM()
+  and not RM_ALARM() >>
+S [189] ->
+Q [189] << not ( PO_ALARM() or RM_ALARM() ) >>
+Why created:  Assume Present:  P = P@now = P^0   [serial 1033]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  Negated disjunction in terms of conjunction (De Morgan's law). (ioran) and theorem 18:
+Theorem (18) [serial 1037] used for:
+  At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc) 
+  Negated disjunction in terms of conjunction (De Morgan's law). (ioran)
+   [serial 1035] 
+
+
+Theorem (20)                               [serial 1033] 
+P [188] << not PO_ALARM()@now
+  and not RM_ALARM()@now >>
+S [189] ->
+Q [189] << not ( PO_ALARM() or RM_ALARM() ) >>
+Why created:  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|false]>> [serial 1009]
+Solved by:  Assume Present:  P = P@now = P^0 
+ and theorem 19:
+Theorem (19) [serial 1035] used for:
+  Assume Present:  P = P@now = P^0   [serial 1033] 
+
+
+Theorem (21)                               [serial 1045] 
+P [189] << ( not PO_ALARM()
+  and not RM_ALARM() )
+  and ( not PO_ALARM()
+  and not RM_ALARM() ) >>
+S [189] ->
+Q [179] << true >>
+Why created:    normalization of [serial 1043]
+Solved by: Anything Implies True (a1tru): P->true
+
+Theorem (22)                               [serial 1043] 
+P [189] << ( not PO_ALARM()
+  and not RM_ALARM() )
+  and ( not PO_ALARM()
+  and not RM_ALARM() ) >>
+S [189] ->
+Q [179] << ( true ) >>
+Why created:  Substituted assertions' predicates for labels in postconditions [serial 1042]
+Solved by: [Add unnecessary parentheses] and theorem 21:
+Theorem (21) [serial 1045] used for:
+    normalization of [serial 1043] 
+
+
+Theorem (23)                               [serial 1042] 
+P [189] << ( not PO_ALARM()
+  and not RM_ALARM() )
+  and ( not PO_ALARM()
+  and not RM_ALARM() ) >>
+S [189] ->
+Q [179] << INV() >>
+Why created:    normalization of [serial 1038]
+  Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
+Solved by: Predicate Invocation. (PI) and theorem 22:
+Theorem (22) [serial 1043] used for:
+  Substituted assertions' predicates for labels in postconditions [serial 1042] 
+
+
+Theorem (24)                               [serial 1038] 
+P [189] << ( not PO_ALARM()
+  and not RM_ALARM() )
+  and ( ( not ( PO_ALARM() )
+  and not ( RM_ALARM() ) ) ) >>
+S [189] ->
+Q [179] << INV() >>
+Why created:  At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc) 
+  Negated disjunction in terms of conjunction (De Morgan's law). (ioran)
+   [serial 1036]
+Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 23:
+Theorem (23) [serial 1042] used for:
+    normalization of [serial 1038] 
+
+
+Theorem (25)                               [serial 1036] 
+P [189] << ( not PO_ALARM()
+  and not RM_ALARM() )
+  and ( not ( PO_ALARM() or RM_ALARM() ) ) >>
+S [189] ->
+Q [179] << INV() >>
+Why created:  Assume Present:  P = P@now = P^0   [serial 1034]
+Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc)  Negated disjunction in terms of conjunction (De Morgan's law). (ioran) and theorem 24:
+Theorem (24) [serial 1038] used for:
+  At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
+   or if a value is constant its value at time t is the same (bl.atintroc) 
+  Negated disjunction in terms of conjunction (De Morgan's law). (ioran)
+   [serial 1036] 
+
+
+Theorem (26)                               [serial 1034] 
+P [189] << ( not PO_ALARM()@now
+  and not RM_ALARM()@now )
+  and ( not ( PO_ALARM() or RM_ALARM() ) )@now >>
+S [189] ->
+Q [179] << INV() >>
+Why created:  applied port output <<pre and (not ( PO_ALARM() or RM_ALARM() ))@now>> -> <<post>> [serial 1009]
+Solved by:  Assume Present:  P = P@now = P^0 
+ and theorem 25:
+Theorem (25) [serial 1036] used for:
+  Assume Present:  P = P@now = P^0   [serial 1034] 
+
+
+Theorem (27)                               [serial 1009] 
+P [188] << not PO_ALARM()@now
+  and not RM_ALARM()@now >>
+S [189] Pause_Infusion!(false)
+Q [179] << INV() >>
+Why created:   <<M(check) and x>> A <<M(run)>> for ok: check-[x]->run{A};
+Solved by:  Asserted Action:  <<P>> { <<P1>> S1 <<Q1>> } <<Q>> is <<P>> -> <<P1>>, <<Q1>> -> <<Q>>, and <<P1>> S1 <<Q1>>
+  Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
+ and theorems 20 26:
+Theorem (20) [serial 1033] used for:
+  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|false]>> [serial 1009] 
+Theorem (26) [serial 1034] used for:
+  applied port output <<pre and (not ( PO_ALARM() or RM_ALARM() ))@now>> -> <<post>> [serial 1009] 
+
+
+Theorem (28)                               [serial 1002] 
+P [174] <<   >>
+S [175] ->
+Q [174] << cc_app.impl proof obligations >>
+Why created:  Initial proof obligations for cc_app.impl
+Solved by:  Component verification conditions
+ [Convert asseertion to port value.] and theorems 1 2 3 4 5 16 27:
+Theorem (1) [serial 1003] used for:
+  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition. 
+Theorem (2) [serial 1004] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>> 
+Theorem (3) [serial 1005] used for:
+  Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>> 
+Theorem (4) [serial 1006] used for:
+   <<M(start)>> -> <<M(check)>> for go: start-[ ]->check{}; 
+Theorem (5) [serial 1007] used for:
+   <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{}; 
+Theorem (16) [serial 1008] used for:
+   <<M(check) and x>> A <<M(run)>> for alarm: check-[x]->run{A}; 
+Theorem (27) [serial 1009] used for:
+   <<M(check) and x>> A <<M(run)>> for ok: check-[x]->run{A}; 
+
+
+Theorem (29)                               [serial 1010] 
+P [1] << Infused_Drug = PUMP_RATE() >>
+S [2] ->
+Q [1] << Infused_Drug = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection pca_pump.Infused_Drug -> patient.Infused_Drug:
+ Infused_Drug -> Infused_Drug
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (30)                               [serial 1011] 
+P [1] << PO_ALARM() >>
+S [2] ->
+Q [1] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm:
+ PO_alarm -> PO_alarm
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (31)                               [serial 1012] 
+P [1] << RM_ALARM() >>
+S [2] ->
+Q [1] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm:
+ RM_alarm -> RM_alarm
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (32)                               [serial 1013] 
+P [86] << Infused_Drug = PUMP_RATE() >>
+S [73] ->
+Q [114] << Infused_Drug = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMT::SysIoMT.impl.set_infusion:
+ Infused_Drug -> Infused_Drug
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (33)                               [serial 1001] 
+Why created:  All verification conditions have been proved correct. 
+Solved by:  Component and Connection Proofs
+ and theorems 28 29 30 31 32:
+Theorem (28) [serial 1002] used for:
+  Initial proof obligations for cc_app.impl 
+Theorem (29) [serial 1010] used for:
+  Composition of Subcomponents via Directional Connection pca_pump.Infused_Drug -> patient.Infused_Drug:
+ Infused_Drug -> Infused_Drug 
+Theorem (30) [serial 1011] used for:
+  Composition of Subcomponents via Directional Connection pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm:
+ PO_alarm -> PO_alarm 
+Theorem (31) [serial 1012] used for:
+  Composition of Subcomponents via Directional Connection resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm:
+ RM_alarm -> RM_alarm 
+Theorem (32) [serial 1013] used for:
+  Composition of Subcomponents via Directional Connection IoMT::SysIoMT.impl.set_infusion:
+ Infused_Drug -> Infused_Drug 
+
+
+closing proof file "/Applications/osate2_2023-03-master/Eclipse.app/Contents/MacOS/proof.txt" 

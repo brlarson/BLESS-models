@@ -21,6 +21,7 @@ annex Assertion
 		  def BASAL_RATE ~ quantity mlph
 		  def LAST_ACTION_A ~ last_action 
 		  def KVO_RATE_property ~ quantity mlph 
+		    --ANTLR-generated lexer won't handle "::" properly
 		    << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >>
 		  
 		  <<PO_ALARM: : HEART_RATE < MINIMUM_HEART_RATE or SpO2 < PROGRAMMED_SpO2 >>
@@ -82,13 +83,13 @@ annex Assertion
 		features
 			Pause_infusion: in data port BLESS_Types::Boolean;
 			Infused_Drug: out data port Physical_Types::Fluid_Flow
-			{BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
+				{BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 			
-		properties
-			BLESS::Invariant =>
-				"<< Pause_Infusion 
-					iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
+--		properties
+--			BLESS::Invariant =>
+--				"<< Pause_Infusion 
+--					iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
 			end PCA_Pump;
 	
 -- Pulse Oximeter
@@ -110,7 +111,7 @@ annex Assertion
 	abstract Patient
 		features
 			Infused_Drug: in data port Physical_Types::Fluid_Flow
-			{BLESS::Assertion=> "<< PUMP_RATE() >>";};
+			{BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
 
 	end Patient;
 
@@ -154,7 +155,7 @@ end Controlling_Process.impl;
 	thread cc_app
 	 features
 		Pause_Infusion : out data port BLESS_Types::Boolean
-			{BLESS::Assertion=>"<< Pause_Infusion iff (PO_ALARM() or RM_ALARM())>>";}; 
+			{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";}; 
 			
 		PO_alarm : in data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<PO_ALARM()>>";};
