@@ -158,27 +158,27 @@ thread implementation manage_monitor_mode.impl
   invariant <<true>>
   variables
     start_time ~ time  --record time stamp of power-on
-      <<AXIOM_ST: : start_time = START_TIME >>
+      <<GIVEN_ST: : start_time = START_TIME >>
     temperature ~ currentTemperature;  --get struct from port 
     current_temperature_status ~status  --get status from struct
-      <<AXIOM_CTS: : current_temperature_status = CURRENT_TEMPERATURE_STATUS >>
+      <<GIVEN_CTS: : current_temperature_status = CURRENT_TEMPERATURE_STATUS >>
   states
     start : initial state;     --power up state
     init : complete state;     --wait for valid monitor status
     check_init : state 
       <<current_temperature_status = temperature.status  
-          	  and AXIOM_ST() and AXIOM_CTS() >>;  
+          	  and GIVEN_ST() and GIVEN_CTS() >>;  
     normal : complete state
       <<RUN()>>;   --normal operation
     check_normal : state <<current_temperature_status = temperature.status
-        and RUN() and AXIOM_CTS() and AXIOM_ST() >>;
+        and RUN() and GIVEN_CTS() and GIVEN_ST() >>;
     failed : final state;      --failure detected
     darnit : final state;			 --internal error    
   transitions
     mmm1:  --power on
       start-[ ]->init
           {start_time:=now 
-          <<(start_time=now) and AXIOM_TOGT0() and AXIOM_ST() >>
+          <<(start_time=now) and GIVEN_TOGT0() and GIVEN_ST() >>
           ;
            monitor_mode!(mmode'Init) 
            };  --end of mmm1
@@ -198,7 +198,7 @@ thread implementation manage_monitor_mode.impl
           { <<not (not (MONITOR_INTERFACE_FAILURE or INTERNAL_FAILURE)
               and (current_temperature_status = status'Valid) 
                 or (now-start_time) < #Iso_Properties::Initialization_Timeout s)
-               and AXIOM_ST() and AXIOM_CTS() >>
+               and GIVEN_ST() and GIVEN_CTS() >>
           monitor_mode!(mmode'Failed)
           };  --end of mmm
     mmm2: --transition to normal operation
@@ -208,7 +208,7 @@ thread implementation manage_monitor_mode.impl
           or not (current_temperature_status = status'Valid)) ]->normal
           { <<MONITOR_OK() and RUN()>>
           monitor_mode!(mmode'Normal)
-          <<RUN() and AXIOM_PAST_INIT()>>
+          <<RUN() and GIVEN_PAST_INIT()>>
           };  --end of mmm2
     mmm2x:  --too soon, back to init
       check_init-[(now-start_time) < 
@@ -228,13 +228,13 @@ thread implementation manage_monitor_mode.impl
         and (current_temperature_status = status'Valid)]->normal
           {<<MONITOR_OK() and RUN()>> 
           monitor_mode!(mmode'Normal)
-          <<RUN() and AXIOM_PAST_INIT()>>
+          <<RUN() and GIVEN_PAST_INIT()>>
           };  --end of mmm3
     mmm3x:  --failure or invalid temp after initialization
       check_normal-[  --((now-start_time) >= #Iso_Properties::Initialization_Timeout) and 
       	(interface_failure? or internal_failure? or
         not (current_temperature_status = status'Valid))]->failed
-          {<<not (MONITOR_OK() or (now-start_time) < #Iso_Properties::Initialization_Timeout s) and AXIOM_ST() >> 
+          {<<not (MONITOR_OK() or (now-start_time) < #Iso_Properties::Initialization_Timeout s) and GIVEN_ST() >> 
           monitor_mode!(mmode'Failed)};
 --    mmm3z:  --shouldn't ever be selected; needed for Serban's theorem
 --      check_normal-[((now-start_time) < #Iso_Properties::Initialization_Timeout)]->
@@ -287,17 +287,17 @@ end manage_alarm;
 thread implementation manage_alarm.impl
 annex BLESS {**
 	assert
-	  <<AXIOM_AR: : --ordering of temperatures
+	  <<GIVEN_AR: : --ordering of temperatures
 	    (LOWER_ALARM_TEMP <= (0.5 F + LOWER_ALARM_TEMP))
 	      and ((UPPER_ALARM_TEMP - 0.5 F) <= UPPER_ALARM_TEMP) >>
-	  <<AXIOM_OFFON: : --alarm must be Off or O_n
+	  <<GIVEN_OFFON: : --alarm must be Off or O_n
 	    (alarm_previous_period = cntrl'O_n) or (alarm_previous_period = cntrl'Off)>> 
-	  <<AXIOM_AC: :  --alarm_control is ALARM_CONTROL
+	  <<GIVEN_AC: :  --alarm_control is ALARM_CONTROL
 	    ALARM_CONTROL^-1 = alarm_control^-1 >>    
 	  <<EDGE_TEMP: :  --current temperature is withing edge of alarm range
 	    (CURRENT_TEMP.t in LOWER_ALARM_TEMP.t ., (LOWER_ALARM_TEMP.t + 0.5 F)) or 
     	(CURRENT_TEMP.t in (UPPER_ALARM_TEMP.t - 0.5 F) ,. UPPER_ALARM_TEMP.t)>>
---    <<AXIOM_MAPORT: : --ports have ghost values (needed because record types)
+--    <<GIVEN_MAPORT: : --ports have ghost values (needed because record types)
 --       current_temperature=CURRENT_TEMP and lower_alarm_temperature.t=LOWER_ALARM_TEMP
 --       and upper_alarm_temperature.t=UPPER_ALARM_TEMP >>
 	invariant <<INVMA: :alarm_previous_period = alarm_control^-1>>
@@ -309,8 +309,8 @@ annex BLESS {**
 	  poweron : initial state <<alarm_previous_period = cntrl'Off and (INVMA())^1>>;
 	  run : complete state <<INVMA()>>;
 	  check_mode : state <<INVMA()>>;  --check alarm mode 
-	  check_temp : state <<INVMA() and MONITOR_OK() and RUN() and AXIOM_OFFON() >> -- and AXIOM_MAPORT() >>;
-	  check_hyst : state <<EDGE_TEMP() and MONITOR_OK() and RUN() and INVMA() and AXIOM_OFFON()>>;
+	  check_temp : state <<INVMA() and MONITOR_OK() and RUN() and GIVEN_OFFON() >> -- and GIVEN_MAPORT() >>;
+	  check_hyst : state <<EDGE_TEMP() and MONITOR_OK() and RUN() and INVMA() and GIVEN_OFFON()>>;
 	  halt : final state; 
   transitions
     maPo: poweron -[ ]-> run{};  --start running at power on
@@ -345,9 +345,9 @@ annex BLESS {**
     maIr:  --REQ-MA-4  temp in range
     check_temp -[(current_temperature.t? >= (lower_alarm_temperature.t? + 0.5 F)) and 
     	    (current_temperature.t? <= (upper_alarm_temperature.t? - 0.5 F))]-> run
-      { <<REQMA4() and not REQMA1() and AXIOM_AR()>>
+      { <<REQMA4() and not REQMA1() and GIVEN_AR()>>
       alarm_control!(cntrl'Off)  --no alarm
-      ; <<REQMA4() and not REQMA1() and AXIOM_AR() and (alarm_control = cntrl'Off)>>
+      ; <<REQMA4() and not REQMA1() and GIVEN_AR() and (alarm_control = cntrl'Off)>>
       alarm_previous_period' := cntrl'Off
         <<alarm_previous_period' = alarm_control>>
       };  --end of maIr
@@ -358,7 +358,7 @@ annex BLESS {**
     	  	and (current_temperature.t? <= upper_alarm_temperature.t?))]-> check_hyst{};
     maHysOn:	--REQ-MA-3  with alarm on
     check_hyst -[alarm_previous_period = cntrl'O_n]-> run
-      { <<REQMA3() and AXIOM_AC()
+      { <<REQMA3() and GIVEN_AC()
       	and (alarm_previous_period = cntrl'O_n) and INVMA() >>
       alarm_control!(cntrl'O_n)  
       ;  <<alarm_control = cntrl'O_n>>
@@ -367,7 +367,7 @@ annex BLESS {**
       };  --end of maHysOn
     maHysOff:	--REQ-MA-3  with alarm off
     check_hyst -[alarm_previous_period = cntrl'Off]-> run
-      { <<REQMA3() and AXIOM_AC() 
+      { <<REQMA3() and GIVEN_AC() 
       	and (alarm_previous_period = cntrl'Off) and INVMA()>>
       alarm_control!(cntrl'Off)  
       ;  <<alarm_control=cntrl'Off>>

@@ -204,19 +204,19 @@ thread implementation manage_regulator_mode.impl
   invariant <<true>>
   variables
     start_time ~ time  --record time stamp of power-on
-      <<AXIOM_STR: : start_time = START_TIME >>
+      <<GIVEN_STR: : start_time = START_TIME >>
     temperature ~ currentTemperature  --get struct from port 
     current_temperature_status ~ status  --get status from struct
-       <<AXIOM_CTSR: : current_temperature_status = CURRENT_TEMPERATURE_STATUS >>
+       <<GIVEN_CTSR: : current_temperature_status = CURRENT_TEMPERATURE_STATUS >>
   states
     start : initial state;     --power up state  
     init : complete state;     --wait for valid regulator status
     check_init : state         --execute state determining whether initialization is complete
-      <<current_temperature_status=temperature.status and AXIOM_CTSR() and AXIOM_STR() >>;  
+      <<current_temperature_status=temperature.status and GIVEN_CTSR() and GIVEN_STR() >>;  
     normal : complete state   --normal operation
       <<RUN()>>;
     check_normal : state       --execute state determining post-init regulator_mode
-      <<current_temperature_status=temperature.status and RUN() and AXIOM_CTSR() and AXIOM_STR()  >>;
+      <<current_temperature_status=temperature.status and RUN() and GIVEN_CTSR() and GIVEN_STR()  >>;
     failed : final state;      --regulator failure detected
 --    darnit : final state;			 --internal error
   transitions
@@ -224,7 +224,7 @@ thread implementation manage_regulator_mode.impl
       start-[ ]->init
           {
           start_time:=now 
-          <<(start_time=now) and AXIOM_TOGT0() and AXIOM_STR()>>
+          <<(start_time=now) and GIVEN_TOGT0() and GIVEN_STR()>>
           ;
     --puts out "Init" as third enumeration label
            regulator_mode!(mmode'Init) 
@@ -242,7 +242,7 @@ thread implementation manage_regulator_mode.impl
             and (interface_failure? or internal_failure?
               or not (current_temperature_status = status'Valid))]->failed
           { <<not (REGULATOR_OK() or ((now-start_time) < #Iso_Properties::Initialization_Timeout s))
-          	and AXIOM_STR() and AXIOM_CTSR() >>
+          	and GIVEN_STR() and GIVEN_CTSR() >>
           regulator_mode!(mmode'Failed)
           };  --end of mrm
     mrm2: --transition to normal operation
@@ -252,7 +252,7 @@ thread implementation manage_regulator_mode.impl
         and (current_temperature_status = status'Valid)]->normal
           { <<REGULATOR_OK() and RUN()>>
           regulator_mode!(mmode'Normal)
-          <<RUN() and AXIOM_PAST_INIT()>>
+          <<RUN() and GIVEN_PAST_INIT()>>
           };  --end of mrm2
     mrm2x:  --too soon, back to init
       check_init-[(now-start_time) < 
@@ -272,7 +272,7 @@ thread implementation manage_regulator_mode.impl
         and (current_temperature_status = status'Valid)]->normal
           {<<REGULATOR_OK() and RUN()>> 
           regulator_mode!(mmode'Normal)
-          <<RUN() and AXIOM_PAST_INIT()>>
+          <<RUN() and GIVEN_PAST_INIT()>>
           };  --end of mrm3
     mrm3x:  --failure or invalid temp after initialization
       check_normal-[ --((now-start_time) >= #Iso_Properties::Initialization_Timeout) and 
@@ -280,7 +280,7 @@ thread implementation manage_regulator_mode.impl
         not (current_temperature_status = status'Valid))]->failed
           {<<(not REGULATOR_OK() or not (current_temperature_status = status'Valid))
           	and ((now-start_time) >= #Iso_Properties::Initialization_Timeout s)
-          	and AXIOM_STR() and AXIOM_CTSR() >> 
+          	and GIVEN_STR() and GIVEN_CTSR() >> 
           regulator_mode!(mmode'Failed)};
 --    mrm3err:  --internal error
 --      check_normal-[(now-start_time) < #Iso_Properties::Initialization_Timeout]->
@@ -331,8 +331,8 @@ annex BLESS {**
 	assert
 	  <<TEMP_IN_DESIRED_RANGE: : CURRENT_TEMP.t > LOWER_DESIRED_TEMP.t
     	  and CURRENT_TEMP.t < UPPER_DESIRED_TEMP.t>>    
-	  <<AXIOM_HEAT: : heat_previous_period = cntrl'O_n or heat_previous_period = cntrl'Off >> 
-	  <<AXIOM_HC: : HEAT_CONTROL^-1 = heat_control^-1 >>
+	  <<GIVEN_HEAT: : heat_previous_period = cntrl'O_n or heat_previous_period = cntrl'Off >> 
+	  <<GIVEN_HC: : HEAT_CONTROL^-1 = heat_control^-1 >>
 	invariant <<INVMHS: :heat_previous_period = heat_control^-1>>
 	variables
 	  heat_previous_period ~ cntrl := cntrl'Off;  --hysteresis in desired range
@@ -340,8 +340,8 @@ annex BLESS {**
 	  poweron : initial state << heat_previous_period = cntrl'Off and (INVMHS())^1>>;
 	  run : complete state <<INVMHS()>>;
 	  check_mode : state <<INVMHS()>>;  --check heat mode 
-	  check_temp : state <<INVMHS() and REGULATOR_MODE(x:mmode'Normal) and AXIOM_HEAT()>>;
-	  check_hyst : state <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and INVMHS() and AXIOM_HEAT()>>;
+	  check_temp : state <<INVMHS() and REGULATOR_MODE(x:mmode'Normal) and GIVEN_HEAT()>>;
+	  check_hyst : state <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and INVMHS() and GIVEN_HEAT()>>;
 	  halt : final state; 
   transitions
     mhsPo: poweron -[ ]-> run{};  --start running at power on
@@ -385,7 +385,7 @@ annex BLESS {**
     	  and (current_temperature.t? < upper_desired_temperature.t)]-> check_hyst{};
     mhsHysOn:	--REQ-MHS-4  with heat on
     check_hyst -[ (heat_previous_period=cntrl'O_n) ]-> run
-      { <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and AXIOM_HC()  
+      { <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and GIVEN_HC()  
       	and (heat_previous_period=cntrl'O_n) and INVMHS()>>
       heat_control!(cntrl'O_n)  
       ;  <<heat_control=cntrl'O_n>>
@@ -394,7 +394,7 @@ annex BLESS {**
       };  --end of mhsHysOn
     mhsHysOff:	--REQ-MHS-4  with heat off
     check_hyst -[heat_previous_period=cntrl'Off]-> run
-      { <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and AXIOM_HC() 
+      { <<TEMP_IN_DESIRED_RANGE() and REGULATOR_MODE(x:mmode'Normal) and GIVEN_HC() 
       	and (heat_previous_period=cntrl'Off) and INVMHS()>>
       heat_control!(cntrl'Off)  
       ;  <<heat_control=cntrl'Off>>

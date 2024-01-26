@@ -1,12 +1,12 @@
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/mrm.ps
+# mrm.ps
 push
 sort-by-component[Regulate::manage_regulator_mode.impl]
 #Regulate::manage_regulator_mode.impl
 #[serial 1033] <<M(init)>> -> <<I>> from invariant I when complete state init has Assertion <<M(init)>> in its definitio
 make-an
-axioms
+tautologies
 #[serial 1034] <<M(normal)>> -> <<I>> from invariant I when complete state normal has Assertion <<M(normal)>> in its definition.
-axioms
+tautologies
 #[serial 1035] Serban's Theorem:  disjunction of execute conditions leaving execution state check_init, <<M(check_init)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
@@ -16,15 +16,19 @@ laws
 normalize
 laws
 normalize
+laws
+normalize
+laws
 DeMorgan
 normalize
 cnf
 normalize
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1036] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1037] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
 DeMorgan
 normalize
@@ -36,44 +40,48 @@ normalize
 cnf
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1038]  <<M(start)>> A <<M(init)>> for mrm1: start-[ ]->init{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 substitute-both
 normalize
 guided-sub-equals[START_TIME]
 guided-sub-equals[now]
 normalize
 remove-units
-axioms
+remove-units
+tautologies
+laws
+tautologies
 #[serial 1039]  <<M(init) and x>> A <<M(check_init)>> for wait_init: init-[x]->check_init{A};
 reduce
 atomic
 laws
 normalize
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
-axioms
+tautologies
 #[serial 1040]  <<M(check_init) and x>> A <<M(failed)>> for mrm: check_init-[x]->failed{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 normalize
 laws
 normalize
-axioms
+tautologies
 DeMorgan
 replace<=
 normalize
 laws
 split-post
-axioms
+tautologies
 substitute-both
 DeMorgan
 normalize
@@ -82,18 +90,18 @@ normalize
 laws
 now
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
-axioms
+tautologies
 guided-sub-equals[START_TIME]
 replace<=
 normalize
-axioms
+tautologies
 #[serial 1041]  <<M(check_init) and x>> A <<M(normal)>> for mrm2: check_init-[x]->normal{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 substitute-both
 normalize
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
@@ -101,44 +109,48 @@ laws
 normalize
 now
 guided-sub-equals[START_TIME]
-axioms
+tautologies
 transitive
 alldist^
-axioms
+tautologies
 #[serial 1042]  <<M(check_init) and x>> -> <<M(init)>> for mrm2x: check_init-[x]->init{};
 normalize
-axioms
+tautologies
 #[serial 1043]  <<M(normal) and x>> A <<M(check_normal)>> for wait_normal: normal-[x]->check_normal{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 normalize
 laws
-axioms
+tautologies
+laws
+tautologies
 #[serial 1044]  <<M(check_normal) and x>> A <<M(normal)>> for mrm3: check_normal-[x]->normal{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 normalize
 laws
 normalize
-axioms
+tautologies
 split-post
-axioms
+tautologies
 substitute-both
 normalize
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
 now
-axioms
+tautologies
 transitive
 alldist^
-axioms
+tautologies
+laws
+tautologies
 #[serial 1045]  <<M(check_normal) and x>> A <<M(failed)>> for mrm3x: check_normal-[x]->failed{A};
 reduce
 atomic
 normalize
 laws
-axioms
+tautologies
 split-post
 normalize
 substitute-both
@@ -151,12 +163,14 @@ laws
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
 laws
 now
-axioms
+tautologies
 guided-sub-equals[start_time]
-axioms
+tautologies
 guided-sub-equals[START_TIME]
-axioms
+tautologies
 sub-equals-and
 normalize
 laws
-axioms
+tautologies
+guided-sub-equals[current_temperature_status]
+tautologies

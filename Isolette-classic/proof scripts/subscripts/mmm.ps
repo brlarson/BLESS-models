@@ -1,12 +1,12 @@
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/mmm.ps
+#  mmm.ps
 push
 sort-by-component[Monitor::manage_monitor_mode.impl]
 #Monitor::manage_monitor_mode.impl
 #[serial 1003] <<M(init)>> -> <<I>> from invariant I when complete state init has Assertion <<M(init)>> in its definitio
 make-an
-axioms
+tautologies
 #[serial 1004] <<M(normal)>> -> <<I>> from invariant I when complete state normal has Assertion <<M(normal)>> in its definition.
-axioms
+tautologies
 #[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check_init, <<M(check_init)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
@@ -18,9 +18,10 @@ laws
 cnf
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state check_normal, <<M(check_normal)>> -> <<e1 or e2 or . . . en>>
 normalize
 DeMorgan
@@ -29,58 +30,58 @@ normalize
 cnf
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1008]  <<M(start)>> A <<M(init)>> for mmm1: start-[ ]->init{A};
 reduce
 atomic
 laws
-remove-axioms-post
-normalize
-axioms
-substitute-both
+remove-givens-post
 normalize
 laws
+tautologies
+substitute-both
+normalize
 guided-sub-equals[START_TIME]
 guided-sub-equals[start_time]
 normalize
 remove-units
 remove-units
-axioms
+tautologies
 #[serial 1009]  <<M(init) and x>> A <<M(check_init)>> for wait_init: init-[x]->check_init{A};
 reduce
 atomic
 normalize
-axioms
+tautologies
 laws
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 #[serial 1010]  <<M(check_init) and x>> A <<M(failed)>> for mmm: check_init-[x]->failed{A};
 normalize
 laws
-normalize
 reduce
 atomic
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 now
 laws
 DeMorgan
 normalize
 laws
+normalize
 DeMorgan
 normalize
 split-post
 normalize
 replace<=
 normalize
-axioms
+laws
+tautologies
 substitute-both
 normalize
-laws
-axioms
 replace<=
 DeMorgan
 normalize
@@ -89,13 +90,13 @@ normalize
 laws
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
 guided-sub-equals[START_TIME]
-axioms
+tautologies
 #[serial 1011]  <<M(check_init) and x>> A <<M(normal)>> for mmm2: check_init-[x]->normal{A};
 reduce
 atomic
 push
 #Monitor::manage_monitor_mode.impl
-#[serial 1332] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 101
+#[serial 1293] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 101
 make-an
 substitute-both
 normalize
@@ -107,10 +108,10 @@ laws
 now
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
 split-post
-axioms
+tautologies
 guided-sub-equals[START_TIME]
-axioms
-#[serial 1333] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1011]
+tautologies
+#[serial 1294] as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1011]
 substitute-both
 normalize
 transitive
@@ -118,66 +119,72 @@ dist^
 normalize
 dist^
 normalize
-axioms
-#[serial 1335] applied port output of enumeration type  monitor_mode!(') [serial 1334]
-axioms
-#[serial 1336] applied port output <<pre and (monitor_mode=mmode'Normal)^0>> -> <<post>> [serial 1334]
-remove-axioms-post
+tautologies
+#[serial 1296] applied port output of enumeration type  monitor_mode!(') [serial 1295]
+tautologies
+#[serial 1297] applied port output <<pre and (monitor_mode=mmode'Normal)^0>> -> <<post>> [serial 1295]
+remove-givens-post
 laws
-axioms
+normalize
+laws
+tautologies
 #[serial 1012]  <<M(check_init) and x>> -> <<M(init)>> for mmm2x: check_init-[x]->init{};
 normalize
-axioms
+tautologies
 #[serial 1013]  <<M(normal) and x>> A <<M(check_normal)>> for wait_normal: normal-[x]->check_normal{A};
 reduce
 atomic
 laws
 normalize
-axioms
-remove-axioms-post
+tautologies
+remove-givens-post
 laws
-axioms
+tautologies
 #[serial 1014]  <<M(check_normal) and x>> A <<M(normal)>> for mmm3: check_normal-[x]->normal{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 push
 #Monitor::manage_monitor_mode.impl
-#[serial 1406]   normalization of [serial 139
+#[serial 1358]   normalization of [serial 135
 make-an
 substitute-post
 substitute-pre
 alldist^
 transitive
-axioms
-#[serial 1409]   normalization of [serial 1402]
+tautologies
+#[serial 1361]   normalization of [serial 1355]
 split-post
-axioms
+tautologies
 substitute-post
 normalize
 split-post
 now
-axioms
+tautologies
 substitute-pre
 normalize
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
-axioms
+tautologies
+#[serial 1363]   normalization of [serial 1356]
+laws
+tautologies
 #[serial 1015]  <<M(check_normal) and x>> A <<M(failed)>> for mmm3x: check_normal-[x]->failed{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 normalize
 laws
 normalize
-axioms
+tautologies
 DeMorgan
 normalize
 split-post
 laws
-axioms
+normalize
+tautologies
 substitute-post
 normalize
 replace<=
@@ -185,7 +192,7 @@ normalize
 substitute-pre
 normalize
 guided-sub-equals[START_TIME]
-axioms
+tautologies
 now
 DeMorgan
 normalize
@@ -193,7 +200,7 @@ DeMorgan
 normalize
 laws
 guided-sub-equals[CURRENT_TEMPERATURE_STATUS]
-axioms
+tautologies
 replace<=
 guided-sub-equals[start_time]
-axioms
+tautologies

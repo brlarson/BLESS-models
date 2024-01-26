@@ -1,4 +1,4 @@
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/mhs.ps
+# mhs.ps
 push
 sort-by-component[Regulate::manage_heat_source.impl]
 #Regulate::manage_heat_source.impl
@@ -6,20 +6,23 @@ sort-by-component[Regulate::manage_heat_source.impl]
 make-an
 substitute-both
 normalize
-axioms
+tautologies
 #[serial 1048] Serban's Theorem:  disjunction of execute conditions leaving execution state check_temp, <<M(check_temp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 cnf
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1049] Serban's Theorem:  disjunction of execute conditions leaving execution state poweron, <<M(poweron)>> -> <<e1 or e2 or . . . en>>
-axioms
+substitute-pre
+normalize
+tautologies
 #[serial 1050] Serban's Theorem:  disjunction of execute conditions leaving execution state check_hyst, <<M(check_hyst)>> -> <<e1 or e2 or . . . en>>
 substitute-pre
 normalize
-axioms
+tautologies
 #[serial 1051] Serban's Theorem:  disjunction of execute conditions leaving execution state check_mode, <<M(check_mode)>> -> <<e1 or e2 or . . . en>>
 normalize
 cnf
@@ -32,33 +35,34 @@ normalize
 replace<=
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1052]  <<M(poweron)>> -> <<M(run)>> for mhsPo: poweron-[ ]->run{};
-axioms
+tautologies
 #[serial 1053]  <<M(run) and x>> -> <<M(check_mode)>> for mhsRun: run-[x]->check_mode{};
-axioms
+tautologies
 #[serial 1054]  <<M(check_mode) and x>> A <<M(run)>> for mhsFailed: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 laws
 dist^
 normalize
 now
-axioms
+tautologies
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1055]  <<M(check_mode) and x>> A <<M(run)>> for mhsInit: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 dist^
@@ -66,25 +70,25 @@ normalize
 substitute-both
 now
 normalize
-axioms
+tautologies
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1056]  <<M(check_mode) and x>> -> <<M(check_temp)>> for mhsNormal: check_mode-[x]->check_temp{};
 normalize
-remove-axioms-post
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1057]  <<M(check_temp) and x>> A <<M(run)>> for mhsBelow: check_temp-[x]->run{A};
 reduce
 atomic
 dist^
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 dist^
@@ -98,17 +102,17 @@ laws
 normalize
 replace<=
 now
-axioms
+tautologies
 substitute-post
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1058]  <<M(check_temp) and x>> A <<M(run)>> for mhsAbove: check_temp-[x]->run{A};
 reduce
 atomic
 dist^
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 dist^
@@ -121,24 +125,23 @@ normalize
 replace<=
 laws
 now
-axioms
+tautologies
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1059]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for mhsHys: check_temp-[x]->check_hyst{};
-remove-axioms-post
+remove-givens-post
 substitute-both
 normalize
 laws
 replace-port-value
-normalize
-axioms
+tautologies
 #[serial 1060]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOn: check_hyst-[x]->run{A};
 reduce
 atomic
 normalize
-remove-axioms-post
-axioms
+remove-givens-post
+tautologies
 dist^
 normalize
 laws
@@ -147,7 +150,7 @@ normalize
 dist^
 normalize
 now
-axioms
+tautologies
 laws
 normalize
 substitute-both
@@ -168,28 +171,29 @@ normalize
 laws
 split-post
 normalize
-axioms
+tautologies
 guided-sub-equals[heat_control^-1]
-axioms
+tautologies
 guided-sub-equals[HEAT_CONTROL^-1]
-axioms
+tautologies
 #[serial 1061]  <<M(check_hyst) and x>> A <<M(run)>> for mhsHysOff: check_hyst-[x]->run{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 dist^
 normalize
 now
-axioms
+tautologies
 substitute-post
 normalize
 dist^
 normalize
 now
-axioms
+normalize
+tautologies
 substitute-both
 normalize
 laws
@@ -199,4 +203,6 @@ equivalent
 equivalent
 normalize
 laws
-axioms
+laws
+laws
+tautologies

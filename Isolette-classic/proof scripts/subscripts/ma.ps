@@ -1,4 +1,4 @@
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/Isolette-classic/proof scripts/subscripts/ma.ps
+#  ma.ps
 push
 sort-by-component[Monitor::manage_alarm.impl]
 #Monitor::manage_alarm.impl
@@ -6,7 +6,7 @@ sort-by-component[Monitor::manage_alarm.impl]
 make-an
 substitute-both
 normalize
-axioms
+tautologies
 #[serial 1018] Serban's Theorem:  disjunction of execute conditions leaving execution state check_temp, <<M(check_temp)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
@@ -15,13 +15,14 @@ normalize
 cnf
 laws
 normalize
-axioms
+laws
+tautologies
 #[serial 1019] Serban's Theorem:  disjunction of execute conditions leaving execution state poweron, <<M(poweron)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1020] Serban's Theorem:  disjunction of execute conditions leaving execution state check_hyst, <<M(check_hyst)>> -> <<e1 or e2 or . . . en>>
 substitute-pre
 normalize
-axioms
+tautologies
 #[serial 1021] Serban's Theorem:  disjunction of execute conditions leaving execution state check_mode, <<M(check_mode)>> -> <<e1 or e2 or . . . en>>
 normalize
 substitute-post
@@ -38,55 +39,59 @@ DeMorgan
 normalize
 laws
 normalize
-axioms
+laws
+normalize
+laws
+tautologies
 #[serial 1022]  <<M(poweron)>> -> <<M(run)>> for maPo: poweron-[ ]->run{};
-axioms
+tautologies
 #[serial 1023]  <<M(run) and x>> -> <<M(check_mode)>> for maRun: run-[x]->check_mode{};
-axioms
+tautologies
 #[serial 1024]  <<M(check_mode) and x>> A <<M(run)>> for maFailed: check_mode-[x]->run{A};
 reduce
 atomic
 dist^
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 laws
 dist^
 normalize
 now
-axioms
+tautologies
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1025]  <<M(check_mode) and x>> A <<M(run)>> for maInit: check_mode-[x]->run{A};
 reduce
 atomic
 normalize
-axioms
+tautologies
 now
-axioms
+tautologies
 substitute-post
 normalize
 alldist^
 substitute-pre
 now
 normalize
-axioms
+tautologies
 substitute-post
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1026]  <<M(check_mode) and x>> -> <<M(check_temp)>> for maNormal: check_mode-[x]->check_temp{};
-remove-axioms-post
+remove-givens-post
 laws
-axioms
+laws
+tautologies
 #[serial 1027]  <<M(check_temp) and x>> A <<M(run)>> for maOor: check_temp-[x]->run{A};
 normalize
 reduce
 atomic
 normalize
-axioms
+tautologies
 substitute-post
 normalize
 laws
@@ -95,22 +100,22 @@ dist^
 normalize
 split-post
 now
-axioms
+tautologies
 push
 #Monitor::manage_alarm.impl
-#[serial 1367] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 135
+#[serial 1623] Join consequents with conjunction. (3jca)
 make-an
 normalize
 substitute-pre
 normalize
 replace<=
 replace-port-value
-axioms
-#[serial 1368] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1352]
+tautologies
+#[serial 1624] Join consequents with conjunction. (3jca)
 substitute-post
 normalize
-axioms
-#[serial 1369] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1352]
+tautologies
+#[serial 1625] Join consequents with conjunction. (3jca)
 substitute-post
 normalize
 substitute-post
@@ -118,119 +123,126 @@ substitute-pre
 normalize
 replace<=
 normalize
-axioms
+tautologies
+#[serial 1626] Assume Present:  P = P@now = P^0   [serial 1620]
+normalize
+tautologies
 #[serial 1028]  <<M(check_temp) and x>> A <<M(run)>> for maIr: check_temp-[x]->run{A};
 reduce
 atomic
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
+tautologies
 split-post
-axioms
+laws
+normalize
+tautologies
 substitute-post
 dist^
 normalize
 now
-axioms
+tautologies
 split-post
 substitute-post
 normalize
-axioms
+tautologies
 replace-port-value
 range-exp
 normalize
-axioms
+tautologies
 substitute-post
 substitute-pre
 normalize
 replace<=
-axioms
+tautologies
 #[serial 1029]  <<M(check_temp) and x>> -> <<M(check_hyst)>> for maHys: check_temp-[x]->check_hyst{};
 split-post
-axioms
+tautologies
 substitute-post
 replace-port-value
 range-exp
 normalize
-axioms
+tautologies
 #[serial 1030]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOn: check_hyst-[x]->run{A};
 reduce
 atomic
 normalize
-axioms
+tautologies
 now
-axioms
+tautologies
 split-post
-axioms
-remove-axioms-post
-axioms
+tautologies
+remove-givens-post
+tautologies
 push
 #Monitor::manage_alarm.impl
-#[serial 1498]   normalization of [serial 148
+#[serial 1748]   normalization of [serial 173
 make-an
 substitute-post
 alldist^
 now
-axioms
-#[serial 1500]   normalization of [serial 1492]
+normalize
+tautologies
+#[serial 1750]   normalization of [serial 1742]
 and-over-or-post
 split-post
 normalize
-axioms
+tautologies
 substitute-pre
 guided-sub-equals[cntrl'O_n]
 guided-sub-equals[ALARM_CONTROL^-1]
-axioms
-#[serial 1514] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1496]
+tautologies
+#[serial 1759] Join consequents with conjunction. (3jca)
 substitute-both
 normalize
 split-post
-axioms
+tautologies
 substitute-post
 normalize
 substitute-post
 normalize
-axioms
+tautologies
 #[serial 1031]  <<M(check_hyst) and x>> A <<M(run)>> for maHysOff: check_hyst-[x]->run{A};
 reduce
 atomic
 normalize
-axioms
+tautologies
 laws
 push
-make-an
 #Monitor::manage_alarm.impl
-#[serial 1557]   normalization of [serial 1549] 
-remove-axioms-post
+#[serial 1798]   normalization of [serial 179
+make-an
+remove-givens-post
 laws
 split-post
-axioms
+tautologies
 substitute-both
 normalize
 split-post
 normalize
-axioms
+tautologies
 substitute-post
 substitute-post
 normalize
-axioms
-#[serial 1559]   normalization of [serial 1550]
+tautologies
+#[serial 1800]   normalization of [serial 1791]
 substitute-post
 alldist^
 now
-axioms
-#[serial 1561]   normalization of [serial 1553]
+normalize
+tautologies
+#[serial 1802]   normalization of [serial 1794]
 and-over-or-post
 split-post
 normalize
-axioms
+tautologies
 substitute-pre
 normalize
 guided-sub-equals[cntrl'Off]
 guided-sub-equals[ALARM_CONTROL^-1]
 normalize
-axioms
-#[serial 1571] Associativity: (b.c).a = a.b.c [serial 1563]
+tautologies
+#[serial 1807] laws applied to [serial 1804]
 now
-axioms
+tautologies

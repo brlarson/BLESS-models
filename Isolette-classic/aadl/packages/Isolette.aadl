@@ -42,7 +42,7 @@ package KSU_Isolette
 ----after timeout, running
 --<<RUN: :(now-start_time) >= Iso_Properties::Initialization_Timeout>>
 ----given, initialization timeout parameter is positive
---<<AXIOM_TOGT0: :0 < Iso_Properties::Initialization_Timeout>>
+--<<GIVEN_TOGT0: :0 < Iso_Properties::Initialization_Timeout>>
 --**};
 
 --EMV2 annex library, common reference for all the EMV2 annex subclauses attached to components
