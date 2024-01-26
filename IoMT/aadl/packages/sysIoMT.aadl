@@ -189,10 +189,10 @@ end Controlling_Process.impl;
 				assert 
 					<<GIVEN_PI: : PAUSE_INFUSION iff Pause_Infusion >>
 				invariant 
-					<<INV: :PO_ALARM() or RM_ALARM() implies Pause_Infusion >>
+					<<INV: : (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>
 							
 				states
-					start: initial state <<PAUSE_INFUSION iff true and GIVEN_PI() >>;
+					start: initial state <<INV() >>;
 					run: complete state <<INV() >>;
 					check: state <<INV() >>;
 					done: final state;
