@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" xmlns:instance="http://aadl.info/AADL/2.0/instance">
   <instance:SystemInstance name="SysIoMT_impl_Instance" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; IS_SAFE() >>"/>
+      </ownedValue>
+      <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
     <componentInstance name="patient">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; PUMP_RATE() >>"/>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.5/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
       <featureInstance name="Infused_Drug" type="/1">
         <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
           <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Value"/>
@@ -31,6 +45,13 @@
       <classifier xsi:type="aadl2:AbstractType" href="../sysIoMT.aadl#IoMT.Patient"/>
     </componentInstance>
     <componentInstance name="pca_pump" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; Pause_Infusion iff (PUMP_RATE() = KVO_RATE_property or HALT()) >>"/>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
       <featureInstance name="network_conn" category="busAccess" type="/2">
         <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedBusAccess.0"/>
       </featureInstance>
@@ -82,6 +103,13 @@
       <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.PCA_Pump"/>
     </componentInstance>
     <componentInstance name="pulse_oximeter" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; PO_alaram iff PO_ALARM() >>"/>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
       <featureInstance name="network_conn" category="busAccess" type="/2">
         <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedBusAccess.0"/>
       </featureInstance>
@@ -116,6 +144,13 @@
       <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.Pulse_Oximeter"/>
     </componentInstance>
     <componentInstance name="resp_monitor" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; RM_alaram iff RM_ALARM() >>"/>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
       <featureInstance name="network_conn" category="busAccess" type="/2">
         <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedBusAccess.0"/>
       </featureInstance>
@@ -150,6 +185,13 @@
       <classifier xsi:type="aadl2:SystemType" href="../sysIoMT.aadl#IoMT.Respiration_Monitor"/>
     </componentInstance>
     <componentInstance name="control_app" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; PO_ALARM() or RM_ALARM() implies Pause_Infusion >>"/>
+        </ownedValue>
+        <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
       <featureInstance name="network_conn" category="busAccess" type="/2">
         <feature xsi:type="aadl2:BusAccess" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedBusAccess.0"/>
       </featureInstance>
@@ -211,6 +253,13 @@
         <feature xsi:type="aadl2:DataPort" href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.2"/>
       </featureInstance>
       <componentInstance name="cc_proc" category="process">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Invariant"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:StringLiteral" value="&lt;&lt; PO_ALARM() or RM_ALARM() implies Pause_Infusion >>"/>
+          </ownedValue>
+          <propertyAssociation href="../sysIoMT.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
         <featureInstance name="PO_alarm" type="/3">
           <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
             <property href="platform:/plugin/com.multitude.aadl.bless/resources/properties/BLESS.aadl#BLESS.Typed"/>

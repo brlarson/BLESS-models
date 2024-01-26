@@ -1,40 +1,18 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.2
-#  at Wed Jan 24 21:08:11 CST 2024 by brianlarson
-#  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/proofscript
-#IoMT::cc_app.impl
+
 #[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
+substitute-pre
+normalize
 axioms
 #[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 axioms
 #[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
-laws
 and-over-or-post
 laws
 normalize
-laws
 axioms
-#[serial 1006]  <<M(start)>> -> <<M(check)>> for go: start-[ ]->check{};
-axioms
-#[serial 1007]  <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{};
-axioms
-#[serial 1008]  <<M(check) and x>> A <<M(run)>> for alarm: check-[x]->run{A};
-completesub
-alldist^
-load
-#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
-#IoMT::cc_app.impl
-#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en
-make-an
-axioms
-#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
-laws
-and-over-or-post
-laws
-normalize
-laws
-axioms
-#[serial 1006]  <<M(start)>> -> <<M(check)>> for go: start-[ ]->check{};
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for gostart-[ ]->run{};
+stop***
 axioms
 #[serial 1007]  <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{};
 axioms

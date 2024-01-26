@@ -20,7 +20,8 @@ annex Assertion
 		  def SQUARE_BOLUS_RATE ~ quantity mlph
 		  def BASAL_RATE ~ quantity mlph
 		  def LAST_ACTION_A ~ last_action 
-		  def KVO_RATE_property ~ quantity mlph 
+		  def KVO_RATE_property ~ quantity mlph
+		  def PAUSE_INFUSION ~ boolean 
 		    --ANTLR-generated lexer won't handle "::" properly
 		  << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >> -- can we use def for consistancy
 		  
@@ -88,7 +89,7 @@ annex Assertion
 			
 		properties
 			BLESS::Invariant =>
-				"<< Pause_Infusion iff PUMP_RATE() = KVO_RATE_property or HALT() >>";
+				"<< Pause_Infusion iff (PUMP_RATE() = KVO_RATE_property or HALT()) >>";
 
 	end PCA_Pump;
 	
@@ -153,6 +154,8 @@ end Control_Application.impl;
 			RM_alarm: in data port BLESS_Types::Boolean;
 			Pause_Infusion: out data port BLESS_Types::Boolean;
 		--	bus_access: requires bus access Network_bus;
+		properties
+			BLESS::Invariant=> "<< PO_ALARM() or RM_ALARM() implies Pause_Infusion >>";
 	end Controlling_Process;
 	
 	process implementation Controlling_Process.impl
@@ -183,17 +186,19 @@ end Controlling_Process.impl;
 	thread implementation cc_app.impl
 		annex BLESS
 			{**
+				assert 
+					<<GIVEN_PI: : PAUSE_INFUSION iff Pause_Infusion >>
 				invariant 
-					<<INV: :true >>
-				
+					<<INV: :PO_ALARM() or RM_ALARM() implies Pause_Infusion >>
+							
 				states
-					start: initial state;
+					start: initial state <<PAUSE_INFUSION iff true and GIVEN_PI() >>;
 					run: complete state <<INV() >>;
-					check: state;
+					check: state <<INV() >>;
 					done: final state;
 					
 				transitions
-					go: start -[ ]-> check{};
+					go: start -[ ]-> run{};
 					op: run -[on dispatch]-> check{};
 					alarm: check -[PO_alarm? or RM_alarm?]-> run
 						{Pause_Infusion!(true)};
