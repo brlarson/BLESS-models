@@ -30,7 +30,7 @@ annex Assertion
 --SB() service braking and EB() emergency braking are defined in thread AutoBrake.i
 --because they use values of local variables to determine speed limits based on current segmant
 <<TRAIN_XL: returns quantity mpss :=
-  [ ( SB() or EB() )-> 0 mpss,
+  [ ( SB() or EB() )-> 0.0 mpss,
   	( not SB() and not EB() )-> OPERATOR_XL
   ] >>
 
@@ -40,27 +40,27 @@ annex Assertion
 -- if a new movement authorization is not received
 <<NULL_SEGMENT: returns segment := 
   [ segment :
-     v_n => 0 mps 
-     v_e => 0 mps
+     v_n => 0.0 mps 
+     v_e => 0.0 mps
      e => CMA.ea ] >>
 
 -- when a movement authorization is received by the train it is a received movement authorization (RMA)
 
 -- when the RMA becomes the current movement authorization (CMA);
 -- this happens when the train receives its firt MA
-<<AXIOM_CMA_IS_RMA: : CMA = RMA >>
+<<GIVEN_CMA_IS_RMA: : CMA = RMA >>
 -- when the RMA is saved to be the next movement authorization (NEXT_MA);
 -- this happens when the train gets a new movement authorization before ending the current movement authorization
-<<AXIOM_NEXT_MA_IS_RMA: : NEXT_MA = RMA >>
+<<GIVEN_NEXT_MA_IS_RMA: : NEXT_MA = RMA >>
 -- when NEXT_MA becomes CMA;
 -- this happens when the train crosses into the new movement authorization
-<<AXIOM_CMA_IS_NEXT_MA: : CMA = NEXT_MA >>
+<<GIVEN_CMA_IS_NEXT_MA: : CMA = NEXT_MA >>
 
 --normal (service) brake velocity < emergency brake velocity 
-<<AXIOM_V:seg~segment : seg.v_n < seg.v_e >>
+<<GIVEN_V:seg~segment : seg.v_n < seg.v_e >>
 
 -- every Movement Authority will have more than one segment
-<<AXIOM_NUM_SEG: ma~movementAuthorization : 1 < ma.num_segments>>
+<<GIVEN_NUM_SEG: ma~movementAuthorization : 1 < ma.num_segments>>
  
 **};  
  

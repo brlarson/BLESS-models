@@ -1,89 +1,88 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.0
-#  at Wed Jun 14 16:14:36 CDT 2023 by brianlarson
-#  You chose proof script: /Users/brianlarson/git/BLESS-models/CTCS-3/proof/CTCS3.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.2
+#  at Fri Jan 26 04:52:13 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/CTCS-3/proof/CTCS3.ps
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/CTCS-3/proof/CTCS3.ps
 #Threads::AutoBrake.i
 #[serial 1003] <<M(MoveForwardLastSegment)>> -> <<I>> from invariant I when complete state MoveForwardLastSegment has Assertion <<M(MoveForwardLastSegment)>> in its definitio
 make-an
-axioms
+tautologies
 #[serial 1004] <<M(WaitFirstMA)>> -> <<I>> from invariant I when complete state WaitFirstMA has Assertion <<M(WaitFirstMA)>> in its definition.
-axioms
+tautologies
 #[serial 1005] <<M(MoveForward)>> -> <<I>> from invariant I when complete state MoveForward has Assertion <<M(MoveForward)>> in its definition.
-axioms
+tautologies
 #[serial 1006] <<M(GotNewMA)>> -> <<I>> from invariant I when complete state GotNewMA has Assertion <<M(GotNewMA)>> in its definition.
 normalize
-axioms
+tautologies
 #[serial 1007] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForward, <<M(CheckMoveForward)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
+tautologies
 #[serial 1008] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMoveForwardLastSegment, <<M(CheckMoveForwardLastSegment)>> -> <<e1 or e2 or . . . en>>
 laws
-axioms
+tautologies
 #[serial 1009] Serban's Theorem:  disjunction of execute conditions leaving execution state Start, <<M(Start)>> -> <<e1 or e2 or . . . en>>
-axioms
+tautologies
 #[serial 1010] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckForLastSegment, <<M(CheckForLastSegment)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
-axioms
+tautologies
 #[serial 1011] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckFirstMA, <<M(CheckFirstMA)>> -> <<e1 or e2 or . . . en>>
 laws
-axioms
+tautologies
 #[serial 1012] Serban's Theorem:  disjunction of execute conditions leaving execution state CheckMATransition, <<M(CheckMATransition)>> -> <<e1 or e2 or . . . en>>
 normalize
 replace<=
 laws
-axioms
-#[serial 1013]  <<M(Start)>> A <<M(WaitFirstMA)>> for GoStart-[ ]->WaitFirstMA{A};
+tautologies
+#[serial 1013]  <<M(Start)>> A <<M(WaitFirstMA)>> for Go: Start-[ ]->WaitFirstMA{A};
 reduce
 atomic
-axioms
-#[serial 1014]  <<M(WaitFirstMA) and x>> -> <<M(CheckFirstMA)>> for FirstMAWaitFirstMA-[x]->CheckFirstMA{};
-axioms
-#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(WaitFirstMA)>> for NotYetCheckFirstMA-[x]->WaitFirstMA{};
-axioms
-#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMACheckFirstMA-[x]->MoveForward{A};
+tautologies
+#[serial 1014]  <<M(WaitFirstMA) and x>> -> <<M(CheckFirstMA)>> for FirstMA: WaitFirstMA-[x]->CheckFirstMA{};
+tautologies
+#[serial 1015]  <<M(CheckFirstMA) and x>> -> <<M(WaitFirstMA)>> for NotYet: CheckFirstMA-[x]->WaitFirstMA{};
+tautologies
+#[serial 1016]  <<M(CheckFirstMA) and x>> A <<M(MoveForward)>> for GotFirstMA: CheckFirstMA-[x]->MoveForward{A};
 reduce
-remove-axioms-post
+remove-givens-post
 laws
 normalize
 push
 #Threads::AutoBrake.i
-#[serial 1075]  add user-defined axioms to postconditi
+#[serial 1071]  add user-defined "givens" to postconditi
 make-an
-axioms
-#[serial 1081]   normalization of [serial 1070]
+tautologies
+#[serial 1077]   normalization of [serial 1066]
 split-post
-axioms
+tautologies
 substitute-pre
 guided-sub-equals[CMA]
 normalize
 guided-sub-equals[i]
-normalize
 guided-sub-equals[ma]
-axioms
-#[serial 1083]   normalization of [serial 1071]
+tautologies
+#[serial 1079]   normalization of [serial 1067]
 atomic
 substitute-pre
 normalize
 guided-sub-equals[CMA]
-axioms
-#[serial 1085]   normalization of [serial 1072]
+tautologies
+#[serial 1081]   normalization of [serial 1068]
 atomic
-normalize
+laws
 laws
 normalize
-axioms
-#[serial 1088]   normalization of [serial 1078]
+tautologies
+#[serial 1084]   normalization of [serial 1074]
 atomic
 split-post
-axioms
+tautologies
 guided-sub-equals[CMA]
 guided-sub-equals[i]
-normalize
 laws
-axioms
-#[serial 1090]   normalization of [serial 1079]
+tautologies
+#[serial 1086]   normalization of [serial 1075]
 guided-sub-equals[i]
 normalize
 guided-sub-equals[CMA]
@@ -93,98 +92,99 @@ normalize
 guided-sub-equals[ma]
 normalize
 guided-sub-equals[1]
-axioms
-#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeedMoveForward-[x]->CheckMoveForward{A};
+laws
+tautologies
+#[serial 1017]  <<M(MoveForward) and x>> A <<M(CheckMoveForward)>> for CheckSpeed: MoveForward-[x]->CheckMoveForward{A};
 laws
 reduce
 reduce
 reduce
 push
 #Threads::AutoBrake.i
-#[serial 1152] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 115
+#[serial 1133] as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 113
 make-an
-remove-axioms-post
+remove-givens-post
 laws
-axioms
-#[serial 1154]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1153]
+tautologies
+#[serial 1135]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1134]
 normalize
 replace<=
 normalize
 cnf
 laws
 normalize
-axioms
-#[serial 1160] <<P>> T <<Q>> in existential lattice quantification for [serial 1155]
+laws
+tautologies
+#[serial 1141] <<P>> T <<Q>> in behavior action block for [serial 1136]
 laws
 normalize
 reduce
 atomic
 laws
-axioms
+tautologies
 DeMorgan
 normalize
 substitute-both
 normalize
 laws
-axioms
-#[serial 1161] <<P>> T <<Q>> in existential lattice quantification for [serial 1156]
+tautologies
+#[serial 1142] <<P>> T <<Q>> in behavior action block for [serial 1137]
 laws
 normalize
 reduce
 atomic
 laws
-axioms
+tautologies
 substitute-both
 normalize
-axioms
+tautologies
 DeMorgan
 normalize
 DeMorgan
 normalize
 laws
-axioms
-#[serial 1162] <<P>> T <<Q>> in existential lattice quantification for [serial 1157]
+tautologies
+#[serial 1143] <<P>> T <<Q>> in behavior action block for [serial 1138]
 reduce
 atomic
 laws
 normalize
-axioms
 substitute-both
 normalize
 replace<=
 normalize
 DeMorgan
 normalize
-axioms
+laws
+normalize
+tautologies
+split-post
+tautologies
+normalize
+tautologies
+#[serial 1144] <<P>> T <<Q>> in behavior action block for [serial 1139]
+reduce
+atomic
+laws
+normalize
+substitute-both
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+tautologies
 laws
 split-post
-axioms
 normalize
-axioms
-#[serial 1163] <<P>> T <<Q>> in existential lattice quantification for [serial 1158]
-reduce
-atomic
-laws
-normalize
-axioms
-substitute-both
-normalize
-replace<=
-normalize
-DeMorgan
-normalize
-axioms
-laws
-split-post
-normalize
-axioms
-#[serial 1164] <<P>> T <<Q>> in existential lattice quantification for [serial 1159]
+tautologies
+#[serial 1145] <<P>> T <<Q>> in behavior action block for [serial 1140]
 normalize
 reduce
 laws
 atomic
 laws
-axioms
+tautologies
 DeMorgan
 normalize
 substitute-both
@@ -194,130 +194,131 @@ replace<=
 normalize
 DeMorgan
 normalize
-axioms
+tautologies
 transitive
 split-post
-axioms
-#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegmentCheckMoveForward-[x]->MoveForward{};
+tautologies
+#[serial 1018]  <<M(CheckMoveForward) and x>> -> <<M(MoveForward)>> for SameSegment: CheckMoveForward-[x]->MoveForward{};
 normalize
-axioms
-#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegmentCheckMoveForward-[x]->CheckForLastSegment{A};
+tautologies
+#[serial 1019]  <<M(CheckMoveForward) and x>> A <<M(CheckForLastSegment)>> for NextSegment: CheckMoveForward-[x]->CheckForLastSegment{A};
 reduce
 atomic
 normalize
-axioms
-#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegmentCheckForLastSegment-[x]->MoveForward{A};
+tautologies
+#[serial 1020]  <<M(CheckForLastSegment) and x>> A <<M(MoveForward)>> for NotLastSegment: CheckForLastSegment-[x]->MoveForward{A};
 atomic
 normalize
 split-post
-axioms
+tautologies
 guided-sub-equals[CMA]
-axioms
+tautologies
 laws
-axioms
-#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegmentCheckForLastSegment-[x]->MoveForwardLastSegment{A};
+tautologies
+#[serial 1021]  <<M(CheckForLastSegment) and x>> A <<M(MoveForwardLastSegment)>> for IsLastSegment: CheckForLastSegment-[x]->MoveForwardLastSegment{A};
 reduce
 atomic
 normalize
 laws
 split-post
-axioms
+tautologies
 normalize
-axioms
+tautologies
 guided-sub-equals[CMA]
 normalize
-axioms
+tautologies
 substitute-post
 guided-sub-equals[CMA]
 laws
-axioms
-#[serial 1022]  <<M(CheckForLastSegment) and x>> -> <<M(FAIL)>> for PastLastSegmentCheckForLastSegment-[x]->FAIL{};
-axioms
-#[serial 1023]  <<M(MoveForwardLastSegment) and x>> A <<M(CheckMoveForwardLastSegment)>> for LastSegmentMoveForwardLastSegment-[x]->CheckMoveForwardLastSegment{A};
+tautologies
+#[serial 1022]  <<M(CheckForLastSegment) and x>> -> <<M(FAIL)>> for PastLastSegment: CheckForLastSegment-[x]->FAIL{};
+tautologies
+#[serial 1023]  <<M(MoveForwardLastSegment) and x>> A <<M(CheckMoveForwardLastSegment)>> for LastSegment: MoveForwardLastSegment-[x]->CheckMoveForwardLastSegment{A};
 reduce
 reduce
 reduce
 normalize
 laws
-remove-axioms-post
+remove-givens-post
 laws
-axioms
+tautologies
 push
 #Threads::AutoBrake.i
-#[serial 1559]   normalization of [serial 154
+#[serial 1561]   normalization of [serial 154
 make-an
 replace<=
 normalize
 cnf
 laws
 normalize
-axioms
-#[serial 1578] Associativity: (b.c).a = a.b.c [serial 1561]
+laws
+tautologies
+#[serial 1573] laws applied to [serial 1563]
 reduce
 atomic
 laws
-axioms
+tautologies
 substitute-both
 normalize
-axioms
+tautologies
 DeMorgan
 normalize
 DeMorgan
 normalize
 laws
-axioms
-#[serial 1579] Associativity: (b.c).a = a.b.c [serial 1563]
+tautologies
+#[serial 1574] laws applied to [serial 1565]
 reduce
 atomic
 normalize
 laws
-axioms
+tautologies
 DeMorgan
 normalize
 substitute-both
 normalize
 laws
 normalize
-axioms
-#[serial 1580] Associativity: (b.c).a = a.b.c [serial 1565]
+tautologies
+#[serial 1575] laws applied to [serial 1567]
 reduce
 atomic
 laws
-axioms
-substitute-both
-normalize
-replace<=
-normalize
-DeMorgan
-normalize
-axioms
-laws
-split-post
-axioms
-normalize
-axioms
-#[serial 1581] Associativity: (b.c).a = a.b.c [serial 1567]
-reduce
-atomic
-laws
-axioms
+tautologies
 substitute-both
 normalize
 replace<=
 normalize
 DeMorgan
 normalize
-axioms
+tautologies
 laws
 split-post
-axioms
+tautologies
 normalize
-axioms
-#[serial 1582] Associativity: (b.c).a = a.b.c [serial 1569]
+tautologies
+#[serial 1576] laws applied to [serial 1569]
 reduce
 atomic
 laws
-axioms
+tautologies
+substitute-both
+normalize
+replace<=
+normalize
+DeMorgan
+normalize
+tautologies
+laws
+split-post
+tautologies
+normalize
+tautologies
+#[serial 1577] laws applied to [serial 1571]
+reduce
+atomic
+laws
+tautologies
 DeMorgan
 normalize
 substitute-both
@@ -327,136 +328,136 @@ normalize
 DeMorgan
 laws
 normalize
-axioms
+tautologies
 split-post
-axioms
+tautologies
 transitive
-axioms
-#[serial 1024]  <<M(CheckMoveForwardLastSegment) and x>> -> <<M(MoveForwardLastSegment)>> for NoMAYetCheckMoveForwardLastSegment-[x]->MoveForwardLastSegment{};
-axioms
-#[serial 1025]  <<M(CheckMoveForwardLastSegment) and x>> A <<M(GotNewMA)>> for GetNewMACheckMoveForwardLastSegment-[x]->GotNewMA{A};
+tautologies
+#[serial 1024]  <<M(CheckMoveForwardLastSegment) and x>> -> <<M(MoveForwardLastSegment)>> for NoMAYet: CheckMoveForwardLastSegment-[x]->MoveForwardLastSegment{};
+tautologies
+#[serial 1025]  <<M(CheckMoveForwardLastSegment) and x>> A <<M(GotNewMA)>> for GetNewMA: CheckMoveForwardLastSegment-[x]->GotNewMA{A};
 reduce
 normalize
-remove-axioms-post
+remove-givens-post
 laws
-axioms
+tautologies
 push
 #Threads::AutoBrake.i
-#[serial 1857]   normalization of [serial 185
+#[serial 1795]   normalization of [serial 178
 make-an
 split-post
-axioms
+tautologies
 guided-sub-equals[i]
-axioms
-#[serial 1859]   normalization of [serial 1852]
+tautologies
+#[serial 1797]   normalization of [serial 1790]
 atomic
 normalize
 split-post
 laws
-axioms
+tautologies
 substitute-pre
 normalize
 guided-sub-equals[NEXT_MA]
-axioms
+tautologies
 guided-sub-equals[CMA.num_segments]
-axioms
-#[serial 1861]   normalization of [serial 1853]
+tautologies
+#[serial 1799]   normalization of [serial 1791]
 atomic
 split-post
-axioms
+tautologies
 guided-sub-equals[NEXT_MA]
 laws
-axioms
-#[serial 1026]  <<M(GotNewMA) and x>> -> <<M(CheckMATransition)>> for LastBitOfMaGotNewMA-[x]->CheckMATransition{};
+tautologies
+#[serial 1026]  <<M(GotNewMA) and x>> -> <<M(CheckMATransition)>> for LastBitOfMa: GotNewMA-[x]->CheckMATransition{};
 laws
-axioms
-#[serial 1027]  <<M(CheckMATransition) and x>> -> <<M(GotNewMA)>> for NotEndOfMACheckMATransition-[x]->GotNewMA{};
-axioms
-#[serial 1028]  <<M(CheckMATransition) and x>> A <<M(MoveForward)>> for StartNextMaCheckMATransition-[x]->MoveForward{A};
+tautologies
+#[serial 1027]  <<M(CheckMATransition) and x>> -> <<M(GotNewMA)>> for NotEndOfMA: CheckMATransition-[x]->GotNewMA{};
+tautologies
+#[serial 1028]  <<M(CheckMATransition) and x>> A <<M(MoveForward)>> for StartNextMa: CheckMATransition-[x]->MoveForward{A};
 reduce
 push
 #Threads::AutoBrake.i
-#[serial 1905] <<P>> -> <<P1>> in sequential composition for [serial 102
+#[serial 1836] <<P>> -> <<P1>> in sequential composition for [serial 102
 make-an
-remove-axioms-post
+remove-givens-post
 laws
 normalize
-axioms
-#[serial 1906] <<Q4>> -> <<Q>> in sequential composition for [serial 1028]
+tautologies
+#[serial 1837] <<Q4>> -> <<Q>> in sequential composition for [serial 1028]
 substitute-pre
 normalize
 split-post
-axioms
+tautologies
 guided-sub-equals[i]
 guided-sub-equals[CMA]
-normalize
-axioms
-#[serial 1907] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
+tautologies
+#[serial 1838] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
 atomic
 substitute-pre
 normalize
 guided-sub-equals[CMA]
-axioms
-#[serial 1908] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
+tautologies
+#[serial 1839] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
 atomic
 normalize
 laws
+laws
 normalize
-axioms
-#[serial 1909] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1028]
+tautologies
+#[serial 1840] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1028]
 atomic
 split-post
-axioms
+tautologies
 guided-sub-equals[CMA]
 guided-sub-equals[i]
 normalize
 laws
-axioms
-#[serial 1910] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1028]
-remove-axioms-post
+tautologies
+#[serial 1841] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1028]
+remove-givens-post
 laws
 atomic
 split-post
-axioms
+tautologies
 guided-sub-equals[i]
 normalize
 guided-sub-equals[CMA]
 laws
-axioms
-#[serial 1029] Composition of Subcomponents via Directional Connection driver.xl -> motor.xl:
-axioms
-#[serial 1030] Composition of Subcomponents via Directional Connection sensor.p -> controller.control.p:
-axioms
-#[serial 1031] Composition of Subcomponents via Directional Connection sensor.v -> controller.control.v:
-axioms
-#[serial 1032] Composition of Subcomponents via Directional Connection controller.control.sb -> sbrake.brake:
-axioms
-#[serial 1033] Composition of Subcomponents via Directional Connection controller.control.eb -> ebrake.brake:
-axioms
-#[serial 1034] Composition of Subcomponents via Directional Connection rbc.ma -> train.controller.control.m_a:
-axioms
-#[serial 1035] Composition of Subcomponents via Directional Connection CTCS::MovementAuthority.i.ma:
-axioms
-#[serial 1036] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
-axioms
-#[serial 1037] Composition of Subcomponents via Directional Connection Train::Train.i.pos:
-axioms
-#[serial 1038] Composition of Subcomponents via Directional Connection Train::Train.i.vel:
-axioms
-#[serial 1039] Composition of Subcomponents via Directional Connection Train::Train.i.dxl:
-axioms
-#[serial 1040] Composition of Subcomponents via Directional Connection Train::Train.i.cpsb:
-axioms
-#[serial 1041] Composition of Subcomponents via Directional Connection Train::Train.i.cpeb:
-axioms
-#[serial 1042] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_s:
-axioms
-#[serial 1043] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_v:
-axioms
-#[serial 1044] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
-axioms
-#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
-axioms
-#[serial 1046] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
-axioms
+tautologies
+#[serial 1029] Composition of Subcomponents via Directional Connection ma -> controller.control.m_a:
+tautologies
+#[serial 1030] Composition of Subcomponents via Directional Connection driver.xl -> motor.xl:
+tautologies
+#[serial 1031] Composition of Subcomponents via Directional Connection sensor.p -> controller.control.p:
+tautologies
+#[serial 1032] Composition of Subcomponents via Directional Connection sensor.v -> controller.control.v:
+tautologies
+#[serial 1033] Composition of Subcomponents via Directional Connection controller.control.sb -> sbrake.brake:
+tautologies
+#[serial 1034] Composition of Subcomponents via Directional Connection controller.control.eb -> ebrake.brake:
+tautologies
+#[serial 1035] Composition of Subcomponents via Directional Connection Train::Train.i.auth:
+tautologies
+#[serial 1036] Composition of Subcomponents via Directional Connection Train::Train.i.pos:
+tautologies
+#[serial 1037] Composition of Subcomponents via Directional Connection Train::Train.i.vel:
+tautologies
+#[serial 1038] Composition of Subcomponents via Directional Connection Train::Train.i.dxl:
+tautologies
+#[serial 1039] Composition of Subcomponents via Directional Connection Train::Train.i.cpsb:
+tautologies
+#[serial 1040] Composition of Subcomponents via Directional Connection Train::Train.i.cpeb:
+tautologies
+#[serial 1041] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_s:
+tautologies
+#[serial 1042] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_v:
+tautologies
+#[serial 1043] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_ma:
+tautologies
+#[serial 1044] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_sb:
+tautologies
+#[serial 1045] Composition of Subcomponents via Directional Connection Train::ControllerProcess.i.conn_eb:
+tautologies
+#[serial 1046] Composition of Subcomponents via Directional Connection CTCS::MovementAuthority.i.ma:
+tautologies
 #Q.E.D.
