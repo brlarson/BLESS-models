@@ -50,7 +50,7 @@ annex Assertion
 		 <<IS_SAFE: : (HEART_RATE < MINIMUM_HEART_RATE
 						or SpO2 < PROGRAMMED_SpO2 
 						or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE)
-			implies (PUMP_RATE() = KVO_RATE_property) >>
+			implies (PUMP_RATE$() = KVO_RATE_property or HALT()) >>
 **};
 
 	system SysIoMT
@@ -89,7 +89,7 @@ annex Assertion
 			
 		properties
 			BLESS::Invariant =>
-				"<< Pause_Infusion iff (PUMP_RATE() = KVO_RATE_property or HALT()) >>";
+				"<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
 
 	end PCA_Pump;
 	
@@ -120,8 +120,8 @@ annex Assertion
 			Infused_Drug: in data port Physical_Types::Fluid_Flow
 			{BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
 		
-		properties
-			BLESS::Invariant=> "<< PUMP_RATE() >>";
+--		properties
+--			BLESS::Invariant=> "<< PUMP_RATE() >>";
 
 	end Patient;
 
@@ -134,7 +134,7 @@ annex Assertion
 			Pause_Infusion: out data port BLESS_Types::Boolean;
 			network_conn: requires virtual bus access Network_Bus;
 		properties
-			BLESS::Invariant=> "<< PO_ALARM() or RM_ALARM() implies Pause_Infusion >>";
+			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
 			
 	end Control_application;
 	
@@ -155,7 +155,7 @@ end Control_Application.impl;
 			Pause_Infusion: out data port BLESS_Types::Boolean;
 		--	bus_access: requires bus access Network_bus;
 		properties
-			BLESS::Invariant=> "<< PO_ALARM() or RM_ALARM() implies Pause_Infusion >>";
+			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
 	end Controlling_Process;
 	
 	process implementation Controlling_Process.impl

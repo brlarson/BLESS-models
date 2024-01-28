@@ -1,4 +1,7 @@
-
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.2
+#  at Sat Jan 27 21:39:50 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/proofscript
+#IoMT::cc_app.impl
 #[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
 substitute-pre
@@ -10,36 +13,47 @@ axioms
 and-over-or-post
 laws
 normalize
-axioms
-#[serial 1006]  <<M(start)>> -> <<M(run)>> for gostart-[ ]->run{};
-stop***
-axioms
+laws
+tautologies
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
 #[serial 1007]  <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{};
-axioms
+tautologies
 #[serial 1008]  <<M(check) and x>> A <<M(run)>> for alarm: check-[x]->run{A};
+reduce
 atomic
 now
-substitute-post
+laws
 normalize
-axioms
-substitute-pre
-normalize
-axioms
+laws
+tautologies
 #[serial 1009]  <<M(check) and x>> A <<M(run)>> for ok: check-[x]->run{A};
+reduce
 atomic
-now
+normalize
+laws
+tautologies
 DeMorgan
 normalize
-axioms
+now
+tautologies
+#[serial 1010] Conjunction of Subcomponents' Invariants imply SysIoMT.impl's Invariant
+sub-equals-and
 substitute-post
+substitute-both
 normalize
-axioms
-#[serial 1010] Composition of Subcomponents via Directional Connection pca_pump.Infused_Drug -> patient.Infused_Drug:
-axioms
-#[serial 1011] Composition of Subcomponents via Directional Connection pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm:
-axioms
-#[serial 1012] Composition of Subcomponents via Directional Connection resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm:
-axioms
-#[serial 1013] Composition of Subcomponents via Directional Connection IoMT::SysIoMT.impl.set_infusion:
-axioms
+laws
+normalize
+tautologies
+#[serial 1011] Subcomponent's Invariant implies Control_Application.impl's Invariant
+normalize
+tautologies
+#[serial 1012] Composition of Subcomponents via Directional Connection pca_pump.Infused_Drug -> patient.Infused_Drug:
+tautologies
+#[serial 1013] Composition of Subcomponents via Directional Connection pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm:
+tautologies
+#[serial 1014] Composition of Subcomponents via Directional Connection resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm:
+tautologies
+#[serial 1015] Composition of Subcomponents via Directional Connection IoMT::SysIoMT.impl.set_infusion:
+tautologies
 #Q.E.D.
