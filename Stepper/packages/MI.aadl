@@ -20,7 +20,7 @@ subprogram Robust extends Move
 properties
   BLESS::Precondition => "<<true>>";
 	--then the next position, is the current position plus the position change
-  BLESS::Postcondition => "<<ACTUAL_POSITION'=(ACTUAL_POSITION+pc)>>";  
+  BLESS::Postcondition => "<<ACTUAL_POSITION' = (ACTUAL_POSITION + pc) >>";  
 end Robust;
 
 
@@ -28,9 +28,9 @@ end Robust;
 subprogram Fragile extends Move
 properties 
   --if the position change won't put the actual position out-of-range
-  BLESS::Precondition => "<<(ACTUAL_POSITION+pc)>=0 and (ACTUAL_POSITION+pc) <= MAX_POSITION()>>";  
+  BLESS::Precondition => "<<(ACTUAL_POSITION + pc) >= 0 and (ACTUAL_POSITION + pc) <= MAX_POSITION() >>";  
 	--then the next position, is the current position plus the position change
-  BLESS::Postcondition => "<<ACTUAL_POSITION'=(ACTUAL_POSITION+pc)>>";  
+  BLESS::Postcondition => "<<ACTUAL_POSITION' = (ACTUAL_POSITION + pc) >>";  
 end Fragile;
 
 --@description single step up
@@ -41,10 +41,10 @@ properties
 	Compute_Execution_Time => PCS::StepDuration;
 	--not at maximum
   BLESS::Precondition => 
-    "<<(ACTUAL_POSITION+1) <= MAX_POSITION()>>";  
+    "<<(ACTUAL_POSITION + 1) <= MAX_POSITION() >>";  
 	--next position, is the current position plus one
   BLESS::Postcondition => 
-    "<<ACTUAL_POSITION' = (ACTUAL_POSITION+1)>>";  
+    "<<ACTUAL_POSITION' = (ACTUAL_POSITION+1 )>>";  
 end StepUp;
 
 --@description single step down
@@ -53,10 +53,10 @@ properties
 	Compute_Execution_Time => PCS::StepDuration;
 	--not at minimum
   BLESS::Precondition => 
-    "<<(ACTUAL_POSITION-1) >= 0>>";  
+    "<<(ACTUAL_POSITION - 1) >= 0 >>";  
 	--next position, is the current position minus one
   BLESS::Postcondition => 
-    "<<ACTUAL_POSITION' = (ACTUAL_POSITION-1)>>";  
+    "<<ACTUAL_POSITION' = (ACTUAL_POSITION - 1) >>";  
 end StepDown;
 
 

@@ -19,22 +19,20 @@ ghost variables
   
 --desired position in 0..250
   <<DESIRED_IN_RANGE:  : 
-    DESIRED_POSITION>=0 and DESIRED_POSITION<=#PCS::MaxPosition>>	
+    DESIRED_POSITION >= 0 and DESIRED_POSITION <= #PCS::MaxPosition >>	
 --actual position in 0..250
   <<ACTUAL_IN_RANGE:  :
-    ACTUAL_POSITION>=0 and ACTUAL_POSITION<=#PCS::MaxPosition>>	
+    ACTUAL_POSITION >= 0 and ACTUAL_POSITION <= #PCS::MaxPosition >>	
   
-  <<MAX_POSITION: returns position := #PCS::MaxPosition>>
+  <<MAX_POSITION: returns position := #PCS::MaxPosition >>
     
-  <<AXIOM_MPGT0: :0<=#PCS::MaxPosition>>
+  <<GIVEN_MPGT0: : 0 <= #PCS::MaxPosition >>
 
-  <<AXIOM_LT:z ~ quantity whole:z<(z+1)>>
-  <<AXIOM_GT:z ~ quantity whole:(z- 1)<z>>	
-  <<AXIOM_LTK:z ~ quantity whole, k ~ quantity whole:z<(z+k) and k>0>>  --adding positive numbers makes things bigger
-  <<AXIOM_GTK:z ~ quantity whole, k ~ quantity whole:z>(z-k) and k>0>>	 --subtracting positive numbers makes them smaller
+  <<GIVEN_LT:z ~ quantity whole: z<(z+1) >>
+  <<GIVEN_GT:z ~ quantity whole:(z- 1)<z>>	
+  <<GIVEN_LTK:z ~ quantity whole, k ~ quantity whole: z<(z+k) and k>0 >>  --adding positive numbers makes things bigger
+  <<GIVEN_GTK:z ~ quantity whole, k ~ quantity whole: z>(z-k) and k>0 >>	 --subtracting positive numbers makes them smaller
     
-    
-  
 **};
 
 -----------------data types------------------------------
