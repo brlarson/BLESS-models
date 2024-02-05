@@ -6,4 +6,9 @@ property set IoMT_Properties is
  	KVO_Rate : Physical_Properties::Fluid_Flow_Rate=> IoMT_Properties::KVO_Rate_Constant applies to (all);
 	Prime_Rate: Physical_Properties::Fluid_Flow_Rate => IoMT_Properties::Max_Rate applies to (all);
 	Max_Rate: constant Physical_Properties::Fluid_Flow_Rate => 10 mlPerMinute;
+	Confirmation_Time_Limit: constant Time => 10 sec;
+	
+	PO_Delay_Limit: constant Time => 2 sec;	--pulse oximeter reporting expected every 2 seconds
+	RM_Delay_Limit: constant Time => 120 sec;  --respiration monitor reporting expected every 2 minutes
+	PCA_Echo_Limit: constant Time => 4 sec;	--PCA Pump should respond to pause infusion within 4 seconds
 end IoMT_Properties;

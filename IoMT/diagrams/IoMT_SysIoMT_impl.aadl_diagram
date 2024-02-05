@@ -7,9 +7,9 @@
         <seg>ca2network</seg>
       </bo>
       <bendpoints>
-        <point x="107.875" y="244.0"/>
-        <point x="491.5091552734375" y="244.0"/>
-        <point x="491.5091552734375" y="298.0"/>
+        <point x="108.0" y="244.0"/>
+        <point x="492.0" y="244.0"/>
+        <point x="492.0" y="298.0"/>
       </bendpoints>
     </element>
     <element uuid="08ac613e-c89b-466f-b818-8131ac235e4b" manual="true">
@@ -18,11 +18,11 @@
         <seg>network2pca</seg>
       </bo>
       <bendpoints>
-        <point x="107.875" y="214.0"/>
-        <point x="113.875" y="214.0"/>
-        <point x="113.875" y="16.0"/>
-        <point x="1765.020751953125" y="16.0"/>
-        <point x="1765.020751953125" y="141.0"/>
+        <point x="108.0" y="214.0"/>
+        <point x="114.0" y="214.0"/>
+        <point x="114.0" y="16.0"/>
+        <point x="1765.0" y="16.0"/>
+        <point x="1765.0" y="141.0"/>
       </bendpoints>
     </element>
     <element uuid="2355e719-173d-4012-8a1a-06b06c2bdbcb" manual="true">
@@ -43,9 +43,9 @@
         <seg>po2network</seg>
       </bo>
       <bendpoints>
-        <point x="107.875" y="224.0"/>
-        <point x="123.875" y="224.0"/>
-        <point x="123.875" y="136.0"/>
+        <point x="108.0" y="224.0"/>
+        <point x="124.0" y="224.0"/>
+        <point x="124.0" y="136.0"/>
       </bendpoints>
     </element>
     <element uuid="0a17a2ee-1c4a-44ba-91c8-ce6c62aaeb91" manual="true">
@@ -66,22 +66,10 @@
         <seg>rm2network</seg>
       </bo>
       <bendpoints>
-        <point x="107.875" y="234.0"/>
-        <point x="133.875" y="234.0"/>
-        <point x="133.875" y="216.0"/>
+        <point x="108.0" y="234.0"/>
+        <point x="134.0" y="234.0"/>
+        <point x="134.0" y="216.0"/>
       </bendpoints>
-    </element>
-    <element uuid="392f8d00-a240-4c58-920f-c00a9b87d3dc" manual="true">
-      <element uuid="b6f5e826-9906-4dea-89d3-24ed6acccc7e" manual="true">
-        <bo>
-          <seg>tag</seg>
-          <seg>unidirectional</seg>
-        </bo>
-      </element>
-      <bo>
-        <seg>connection</seg>
-        <seg>set_infusion</seg>
-      </bo>
     </element>
     <element uuid="745448e0-ae27-4041-97f3-e017a17f3759" manual="true">
       <element uuid="94d73631-0e4a-456b-b9b5-590bc190a930" manual="true">
@@ -95,8 +83,8 @@
         <seg>spo2_alarm</seg>
       </bo>
       <bendpoints>
-        <point x="491.5091552734375" y="136.0"/>
-        <point x="491.5091552734375" y="166.0"/>
+        <point x="492.0" y="136.0"/>
+        <point x="492.0" y="166.0"/>
       </bendpoints>
     </element>
     <element uuid="64a30453-d95e-4ef6-a5c8-edff4fa72b79" manual="true">
@@ -148,7 +136,7 @@
           <seg>feature</seg>
           <seg>Pause_Infusion</seg>
         </bo>
-        <position x="1149.5911026000977" y="132.0"/>
+        <position x="1150.0794296264648" y="132.0"/>
       </element>
       <element uuid="1e155ec1-bab2-48c4-a2f9-120e81c63b33" manual="true" dockArea="left">
         <bo>
@@ -206,7 +194,7 @@
             <seg>feature</seg>
             <seg>Pause_Infusion</seg>
           </bo>
-          <position x="676.8476333618164" y="94.0"/>
+          <position x="677.0794296264648" y="94.0"/>
         </element>
         <element uuid="5af08114-eb18-47fc-90d0-478a7f1cff01" manual="true" dockArea="left">
           <bo>
@@ -228,7 +216,7 @@
               <seg>feature</seg>
               <seg>Pause_Infusion</seg>
             </bo>
-            <position x="204.1041603088379" y="35.0"/>
+            <position x="204.07942962646484" y="35.0"/>
           </element>
           <element uuid="8858a1fb-1a7d-46aa-8f2f-5212145d7713" manual="true" dockArea="left">
             <bo>
@@ -242,14 +230,14 @@
               <seg>feature</seg>
               <seg>RM_alarm</seg>
             </bo>
-            <position y="60.0"/>
+            <position y="71.0"/>
           </element>
           <bo>
             <seg>subcomponent</seg>
             <seg>cc_app</seg>
           </bo>
-          <position x="252.9023208618164" y="59.0"/>
-          <size width="308.02473068237305" height="110.0"/>
+          <position x="253.0" y="59.0"/>
+          <size width="308.0" height="151.0"/>
         </element>
         <element uuid="9d35170b-5934-4c21-a605-a7f7cfe5c50a" manual="true">
           <bo>
@@ -261,15 +249,21 @@
           <seg>subcomponent</seg>
           <seg>cc_proc</seg>
         </bo>
-        <position x="252.9023208618164" y="38.0"/>
-        <size width="780.7682037353516" height="181.0"/>
+        <position x="238.0" y="53.0"/>
+        <size width="781.0" height="230.0"/>
+      </element>
+      <element uuid="98245916-56dc-45fd-bcc7-0ac78cb85b41" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
       </element>
       <bo>
         <seg>subcomponent</seg>
-        <seg>control_app</seg>
+        <seg>supervisor</seg>
       </bo>
-      <position x="501.5091247558594" y="37.0"/>
-      <size width="1253.5116729736328" height="291.0"/>
+      <position x="502.0" y="37.0"/>
+      <size width="1254.0" height="373.0"/>
     </element>
     <element uuid="d4540eaf-2dae-4a12-a9cc-3cffb8197bb4" manual="true">
       <bo>
@@ -277,7 +271,7 @@
         <seg>network</seg>
       </bo>
       <position y="214.0"/>
-      <size width="103.875" height="50.0"/>
+      <size width="104.0" height="50.0"/>
     </element>
     <element uuid="4494feb7-22e9-4585-a8ee-38d9812cdaea" manual="true">
       <element uuid="c26286f7-d465-4252-b963-9bbb8b382a73" manual="true" dockArea="left">
@@ -291,8 +285,8 @@
         <seg>subcomponent</seg>
         <seg>patient</seg>
       </bo>
-      <position x="2120.83203125" y="134.0"/>
-      <size width="281.32552337646484" height="60.0"/>
+      <position x="2121.0" y="134.0"/>
+      <size width="281.0" height="60.0"/>
     </element>
     <element uuid="d877e48a-d622-42f0-b0ea-b288b1409610" manual="true">
       <element uuid="3f881495-3875-4001-a993-fae90be4804e" manual="true" dockArea="right">
@@ -300,7 +294,7 @@
           <seg>feature</seg>
           <seg>Infused_Drug</seg>
         </bo>
-        <position x="233.75910186767578" y="35.0"/>
+        <position x="233.94791412353516" y="35.0"/>
       </element>
       <element uuid="d6126b7a-04e8-46bd-beb8-40d2a5971bf5" manual="true" dockArea="left">
         <bo>
@@ -320,8 +314,8 @@
         <seg>subcomponent</seg>
         <seg>pca_pump</seg>
       </bo>
-      <position x="1775.020751953125" y="109.0"/>
-      <size width="325.8111877441406" height="110.0"/>
+      <position x="1775.0" y="109.0"/>
+      <size width="326.0" height="110.0"/>
     </element>
     <element uuid="7f7e943d-d241-49e5-899e-cac86aeb9cc6" manual="true">
       <element uuid="2d443a90-89a2-4289-be5c-1c484d2db195" manual="true" dockArea="left">
@@ -336,14 +330,14 @@
           <seg>feature</seg>
           <seg>PO_alarm</seg>
         </bo>
-        <position x="265.6146049499512" y="10.0"/>
+        <position x="265.98047256469727" y="10.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
         <seg>pulse_oximeter</seg>
       </bo>
-      <position x="143.875" y="104.0"/>
-      <size width="337.6341323852539" height="60.0"/>
+      <position x="144.0" y="104.0"/>
+      <size width="338.0" height="60.0"/>
     </element>
     <element uuid="f1eccf35-ab06-4fac-b5c6-8ad49fd2c3cb" manual="true">
       <element uuid="604ea42a-a2c6-473b-beb2-bc73822a384f" manual="true" dockArea="left">
@@ -358,21 +352,21 @@
           <seg>feature</seg>
           <seg>RM_alarm</seg>
         </bo>
-        <position x="251.5390739440918" y="10.0"/>
+        <position x="251.5091209411621" y="10.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
         <seg>resp_monitor</seg>
       </bo>
-      <position x="150.1770896911621" y="184.0"/>
-      <size width="325.0299530029297" height="60.0"/>
+      <position x="150.0" y="184.0"/>
+      <size width="325.0" height="60.0"/>
     </element>
     <bo>
       <seg>classifier</seg>
       <seg>SysIoMT.impl</seg>
     </bo>
     <position y="-10.0"/>
-    <size width="2402.157554626465" height="590.0"/>
+    <size width="2402.0" height="590.0"/>
   </element>
   <config type="structure" connectionPrimaryLabelsVisible="false">
     <enabledAadlProperties/>

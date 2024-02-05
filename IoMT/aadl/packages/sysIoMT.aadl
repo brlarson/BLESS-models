@@ -8,8 +8,8 @@ public
 
 	
 annex Assertion
-		{**
-		 ghost variables
+{**
+  ghost variables
 		  def HEART_RATE ~ quantity bpm -- bpm beats per minute
 		  def MINIMUM_HEART_RATE ~ quantity bpm
 		  def SpO2 ~ quantity percent
@@ -63,27 +63,28 @@ annex Assertion
 			pca_pump: system PCA_Pump;
 			pulse_oximeter: system Pulse_Oximeter;
 			resp_monitor: system Respiration_Monitor;
-			control_app: system Control_Application.impl;
+			supervisor: system ICE_Supervisor.impl;
 			network: virtual bus Network_Bus;
 			patient: abstract Patient;
 
 		connections
-			pause_infusion: port control_app.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (reference(network));};
-			spo2_alarm: port pulse_oximeter.PO_alarm -> control_app.PO_alarm {Actual_Connection_Binding => (reference(network));};
-			resp_alarm: port resp_monitor.RM_alarm -> control_app.RM_alarm {Actual_Connection_Binding => (reference(network));};
-			set_infusion: port pca_pump.Infused_Drug -> patient.Infused_Drug; --patient is getting opioid directly from the PCA pump 
+			pause_infusion: port supervisor.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (reference(network));};
+			spo2_alarm: port pulse_oximeter.PO_Alarm -> supervisor.PO_Alarm {Actual_Connection_Binding => (reference(network));};
+			resp_alarm: port resp_monitor.RM_Alarm -> supervisor.RM_Alarm {Actual_Connection_Binding => (reference(network));};
+			infusion_set: feature pca_pump.Infused_Drug -> patient.Infused_Drug; --tube and needle between pump and patient
 			
 			network2pca: virtual bus access network <-> pca_pump.network_conn;
 			po2network: virtual bus access network <-> pulse_oximeter.network_conn;
 			rm2network: virtual bus access network <-> resp_monitor.network_conn;
-			ca2network: virtual bus access network <-> control_app.network_conn; 
+			ca2network: virtual bus access network <-> supervisor.network_conn; 
 		end SysIoMT.impl;
 		
 -- PCA Pump
 	system PCA_Pump
 		features
-			Pause_infusion: in data port BLESS_Types::Boolean;
-			Infused_Drug: out data port Physical_Types::Fluid_Flow
+			Pause_infusion: in data port BLESS_Types::Boolean
+		  	{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
+			Infused_Drug: out feature Physical_Types::Fluid_Flow  --abstract AADL feature modeling drug delivery
 				{BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 			
@@ -96,94 +97,94 @@ annex Assertion
 -- Pulse Oximeter
 	system Pulse_Oximeter
 		features
-			PO_alarm: out data port BLESS_Types::Boolean
-			{BLESS::Assertion=>"<< PO_ALARM() >>";};
+			PO_Alarm: out data port BLESS_Types::Boolean
+			  {BLESS::Assertion=>"<< PO_ALARM() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 		properties
-			BLESS::Invariant=> "<< PO_alaram iff PO_ALARM() >>";
+			BLESS::Invariant=> "<< PO_Alarm iff PO_ALARM() >>";
 	end Pulse_Oximeter;
 
 -- Respiration Monitor
 	system Respiration_Monitor
 		features
-			RM_alarm: out data port BLESS_Types::Boolean
-			{BLESS::Assertion=>"<< RM_ALARM() >>";};
+			RM_Alarm: out data port BLESS_Types::Boolean
+			  {BLESS::Assertion=>"<< RM_ALARM() >>";};
 			network_conn: requires virtual bus access Network_Bus;
 		properties
-			BLESS::Invariant=> "<< RM_alaram iff RM_ALARM() >>";
+			BLESS::Invariant=> "<< RM_Alarm iff RM_ALARM() >>";
 	end Respiration_Monitor;
 
 -- Patient	
-	
 	abstract Patient
 		features
-			Infused_Drug: in data port Physical_Types::Fluid_Flow
-			{BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
-		
---		properties
---			BLESS::Invariant=> "<< PUMP_RATE() >>";
-
+			Infused_Drug: in feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+			  {BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
 	end Patient;
 
--- control application is a system
-
-	system Control_application
+	system ICE_Supervisor
 		features
-			PO_alarm: in data port BLESS_Types::Boolean;
-			RM_alarm: in data port BLESS_Types::Boolean;
-			Pause_Infusion: out data port BLESS_Types::Boolean;
+			PO_Alarm: in data port BLESS_Types::Boolean
+		  	{BLESS::Assertion=>"<<PO_ALARM()>>";};
+			RM_Alarm: in data port BLESS_Types::Boolean
+	  		{BLESS::Assertion=>"<<RM_ALARM()>>";};
+			Pause_Infusion: out data port BLESS_Types::Boolean
+		  	{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
 			network_conn: requires virtual bus access Network_Bus;
 		properties
-			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
-			
-	end Control_application;
+			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";		
+	end ICE_Supervisor;
 	
-	system implementation Control_Application.impl
+	system implementation ICE_Supervisor.impl
 	subcomponents
-		cc_proc: process Controlling_Process.impl;
+		cc_proc: process Supervise_PCA_Process.impl;
 
 	connections
-		poa: port PO_alarm -> cc_proc.PO_alarm;
-		rma: port RM_alarm -> cc_proc.RM_alarm;
+		poa: port PO_Alarm -> cc_proc.PO_Alarm;
+		rma: port RM_Alarm -> cc_proc.RM_Alarm;
 		pi: port cc_proc.Pause_Infusion -> Pause_Infusion;
-end Control_Application.impl;
+  end ICE_Supervisor.impl;
 	
-	process Controlling_Process
+	process Supervise_PCA_Process
 		features
-			PO_alarm: in data port BLESS_Types::Boolean;
-			RM_alarm: in data port BLESS_Types::Boolean;
-			Pause_Infusion: out data port BLESS_Types::Boolean;
+			PO_Alarm: in data port BLESS_Types::Boolean
+		  	{BLESS::Assertion=>"<<PO_ALARM()>>";};
+			RM_Alarm: in data port BLESS_Types::Boolean
+	  		{BLESS::Assertion=>"<<RM_ALARM()>>";};
+			Pause_Infusion: out data port BLESS_Types::Boolean
+		  	{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
 		--	bus_access: requires bus access Network_bus;
 		properties
 			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
-	end Controlling_Process;
+	end Supervise_PCA_Process;
 	
-	process implementation Controlling_Process.impl
+	process implementation Supervise_PCA_Process.impl
 	subcomponents
-		cc_app: thread cc_app.impl;
+		cc_app: thread Supervise_PCA_Thread.simple;
 	connections
-		poa: port PO_alarm -> cc_app.PO_alarm;
-		rma: port RM_alarm -> cc_app.RM_alarm;
+		poa: port PO_Alarm -> cc_app.PO_Alarm;
+		rma: port RM_Alarm -> cc_app.RM_Alarm;
 		pi: port cc_app.Pause_Infusion -> Pause_Infusion;
-end Controlling_Process.impl;
+  end Supervise_PCA_Process.impl;
 
-	thread cc_app
+	thread Supervise_PCA_Thread
 	 features
 		Pause_Infusion : out data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";}; 
 			
-		PO_alarm : in data port BLESS_Types::Boolean
+		PO_Alarm : in data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<PO_ALARM()>>";};
 			
-		RM_alarm : in data port BLESS_Types::Boolean
+		RM_Alarm : in data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<RM_ALARM()>>";};
-		
+			
+		Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
 		properties
 			Dispatch_Protocol => Timed;
 			Period => 500 ms;
-	end cc_app;
-	
-	thread implementation cc_app.impl
+	end Supervise_PCA_Thread;
+
+--simple thread implementation without message confirmation	
+	thread implementation Supervise_PCA_Thread.simple
 		annex BLESS
 			{**
 				assert 
@@ -200,12 +201,12 @@ end Controlling_Process.impl;
 				transitions
 					go: start -[ ]-> run{};
 					op: run -[on dispatch]-> check{};
-					alarm: check -[PO_alarm? or RM_alarm?]-> run
+					alarm: check -[PO_Alarm? or RM_Alarm?]-> run
 						{Pause_Infusion!(true)};
-					ok: check -[not PO_alarm? and not RM_alarm?]-> run
+					ok: check -[not PO_Alarm? and not RM_Alarm?]-> run
 					 	{Pause_Infusion!(false)};
 			**};
-	end cc_app.impl;
+	end Supervise_PCA_Thread.simple;
 		
 	
 	virtual bus Network_bus -- network can be any network, Ethernet, WLAN etc
