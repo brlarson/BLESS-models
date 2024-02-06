@@ -1,0 +1,242 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.3
+#  at Tue Feb 06 03:45:34 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/IoMTwin.ps
+push
+sort-by-component[IoMTwin::Supervise_PCA_Thread.echo]
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1003] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
+make-an
+substitute-pre
+normalize
+tautologies
+#[serial 1004] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+substitute-pre
+normalize
+tautologies
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+#[serial 1007]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
+reduce
+normalize
+push
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1059] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 100
+make-an
+atomic
+normalize
+tautologies
+substitute-pre
+substitute-pre
+normalize
+tautologies
+#[serial 1061]   normalization of [serial 1055]
+substitute-pre
+laws
+tautologies
+#[serial 1063]   normalization of [serial 1056]
+atomic
+normalize
+laws
+tautologies
+#[serial 1065]   normalization of [serial 1057]
+atomic
+tautologies
+laws
+split-post
+tautologies
+substitute-post
+normalize
+tautologies
+#[serial 1067]   normalization of [serial 1058]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+split-post
+tautologies
+guided-sub-equals[po_alarm_active]
+guided-sub-equals[rm_alarm_active]
+laws
+normalize
+tautologies
+#[serial 1008]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
+normalize
+reduce
+push
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1110] <<P>> -> <<P1>> in sequential composition for [serial 110
+make-an
+substitute-pre
+laws
+tautologies
+#[serial 1111] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1109]
+atomic
+normalize
+laws
+tautologies
+#[serial 1112] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1109]
+atomic
+tautologies
+split-post
+laws
+tautologies
+substitute-post
+normalize
+tautologies
+#[serial 1113] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1109]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+split-post
+tautologies
+guided-sub-equals[rm_alarm_active]
+guided-sub-equals[po_alarm_active]
+laws
+normalize
+tautologies
+#[serial 1114] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1109]
+atomic
+normalize
+tautologies
+substitute-pre
+substitute-pre
+normalize
+tautologies
+#[serial 1009]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+reduce
+load
+#[serial 1003] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definition.
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1004] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
+make-an
+substitute-pre
+normalize
+tautologies
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+substitute-pre
+normalize
+tautologies
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+#[serial 1007]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
+reduce
+normalize
+push
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1062] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 100
+make-an
+atomic
+normalize
+tautologies
+substitute-pre
+substitute-pre
+normalize
+tautologies
+#[serial 1064]   normalization of [serial 1058]
+substitute-pre
+laws
+tautologies
+#[serial 1066]   normalization of [serial 1059]
+atomic
+normalize
+laws
+tautologies
+#[serial 1068]   normalization of [serial 1060]
+atomic
+tautologies
+laws
+split-post
+tautologies
+substitute-post
+normalize
+tautologies
+#[serial 1070]   normalization of [serial 1061]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+split-post
+tautologies
+guided-sub-equals[po_alarm_active]
+guided-sub-equals[rm_alarm_active]
+laws
+normalize
+tautologies
+#[serial 1008]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
+normalize
+reduce
+push
+#IoMTwin::Supervise_PCA_Thread.echo
+#[serial 1113] <<P>> -> <<P1>> in sequential composition for [serial 111
+make-an
+substitute-pre
+laws
+tautologies
+#[serial 1114] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1112]
+atomic
+normalize
+laws
+tautologies
+#[serial 1115] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1112]
+atomic
+tautologies
+split-post
+laws
+tautologies
+substitute-post
+normalize
+tautologies
+#[serial 1116] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1112]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+split-post
+tautologies
+guided-sub-equals[rm_alarm_active]
+guided-sub-equals[po_alarm_active]
+laws
+normalize
+tautologies
+#[serial 1117] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1112]
+atomic
+normalize
+tautologies
+substitute-pre
+substitute-pre
+normalize
+tautologies
+#[serial 1009]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+reduce
+reduce
+normalize
+now
+tautologies
+laws
+tautologies
+reduce
+tautologies
+reduce
+laws
+replace<>
+normalize
+laws
+tautologies
+atomic
+tautologies
+laws
+tautologies
+#[serial 1010]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
+atomic
+tautologies
+normalize
+laws
+normalize
+tautologies

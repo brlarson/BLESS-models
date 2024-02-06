@@ -12,6 +12,15 @@ public
   IoMT_Properties,
   Physical_Types;
 
+annex Assertion
+{**
+  ghost variables
+    def PAUSE_INFUSION_ECHO ~ boolean  --echo returned from PCA pump
+
+--define and add this to Lost_Confirmation port    
+--  <<LOST_CONFIRMATION: : >>  
+**};
+
   system SysIoMT
     properties
       BLESS::Invariant => "<< IS_SAFE() >>";  
@@ -100,15 +109,18 @@ public
 
   system ICE_Supervisor
     features
-      PO_Alarm: in event data port BLESS_Types::Boolean
+      PO_Alarm : in event data port BLESS_Types::Boolean
         {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm: in event data port BLESS_Types::Boolean
+      RM_Alarm : in event data port BLESS_Types::Boolean
         {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion: out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean;
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean;
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean;
+      Pause_Infusion : out event data port BLESS_Types::Boolean
+        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
+      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
+        {BLESS::Assertion=>"<<PO_ALARM()>>";};
+      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
+        {BLESS::Assertion=>"<<RM_ALARM()>>";};
+      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
+        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
       Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
       network_conn: requires virtual bus access IoMT::Network_Bus;
     properties
@@ -128,17 +140,19 @@ public
 
   process Supervise_PCA_Process
     features
-      PO_Alarm: in event data port BLESS_Types::Boolean
+      PO_Alarm : in event data port BLESS_Types::Boolean
         {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm: in event data port BLESS_Types::Boolean
+      RM_Alarm : in event data port BLESS_Types::Boolean
         {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion: out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean;
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean;
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean;
+      Pause_Infusion : out event data port BLESS_Types::Boolean
+        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
+      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
+        {BLESS::Assertion=>"<<PO_ALARM()>>";};
+      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
+        {BLESS::Assertion=>"<<RM_ALARM()>>";};
+      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
+        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
       Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
-    --  bus_access: requires bus access Network_bus;
     properties
       BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
   end Supervise_PCA_Process;
@@ -162,9 +176,12 @@ public
         {BLESS::Assertion=>"<<RM_ALARM()>>";};
       Pause_Infusion : out event data port BLESS_Types::Boolean
         {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean;
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean;
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean;
+      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
+        {BLESS::Assertion=>"<<PO_ALARM()>>";};
+      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
+        {BLESS::Assertion=>"<<RM_ALARM()>>";};
+      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
+        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
       Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
     properties
       Dispatch_Protocol => Sporadic;
@@ -182,62 +199,66 @@ public
 				  rm_alarm_active~boolean := false
 				    <<RMA: : rm_alarm_active iff RM_ALARM() >>
 				  pause_inf~boolean := false
-				    <<PI: : pause_inf iff PAUSE_INFUSION>>
+				    <<PI: : pause_inf iff (RM_ALARM() or PO_ALARM())>>
 				  last_po_ts~time := 0.0s
 				  last_rm_ts~time := 0.0s
 				  last_pi_ts~time := 0.0s		  
 							
 				states
-					start: initial state << INV_E() >>
-					run: complete state << INV_E() >>
-					check_alarm: state << INV_E() >>
-					check_po_rm_delay: state  << INV_E() >>
+					start: initial state << INV_E() >>	--start here
+					run: complete state << INV_E() >>   --waiting for RM and PO
+--					check_alarm: state << INV() and POA() and RMA() >>    --decide whether to pause infusion
+					check_echo: complete state  << INV_E() >>  --wait for echo form PCA pump
 					done: final state
 					
 				transitions
 					go: start -[ ]-> run
-					got_po: run -[on dispatch PO_Alarm]-> check_alarm
-					  {
+					
+					got_po: run -[on dispatch PO_Alarm]-> check_echo
+					  { 
+					  	<< INV() and RMA() >>  --assume RMA(), to re-establish POA()
 					  	PO_Alarm?(po_alarm_active)  --save value of PO_Alarm
-					  	;  << INV_E() >>
+					  	;  << INV() and RMA() and (po_alarm_active iff PO_ALARM()) >>
 					  	PO_Alarm_Echo!(po_alarm_active)  --echo value back to PO
-					  	;  << INV_E() >>
-					  	last_po_ts := now  --update timestamp of PO
+					  	;  << INV() and RMA() and POA() >>
+					  	pause_inf := po_alarm_active or rm_alarm_active
+					  	; << INV_E() >>
+					  	Pause_Infusion!(pause_inf)
 					  }
-					got_rm: run -[on dispatch RM_Alarm]-> check_alarm
-					  {
+					  
+					got_rm: run -[on dispatch RM_Alarm]-> check_echo
+					  {  << INV() and POA() >>
 					  	RM_Alarm?(rm_alarm_active)  --save value of RM_Alarm
-					  	;   << INV_E() >>
+					  	;   << INV() and POA()  and (rm_alarm_active iff RM_ALARM())  >>
 					  	RM_Alarm_Echo!(rm_alarm_active)  --echo value back to PO
-					  	;  << INV_E() >>
-					  	last_rm_ts := now  --update timestamp of RM
+					  	;  << INV() and RMA() and POA() >>
+					  	pause_inf := po_alarm_active or rm_alarm_active
+					  	; << INV_E() >>
+					  	Pause_Infusion!(pause_inf)
 					  }
-					got_echo: run -[on dispatch Pause_Infusion_Echo]-> run
+					  					 	
+					got_echo: check_echo -[on dispatch Pause_Infusion_Echo]-> run
 					  {
 					  declare echo_val~boolean := Pause_Infusion_Echo?
-					    {
+					    {  << (echo_val iff PAUSE_INFUSION_ECHO) and INV_E() >>
 					    if (echo_val = pause_inf)~> skip  --echo was same
 					    []
 					    (echo_val <> pause_inf)~> Lost_Confirmation!  --echo was different
 					    fi	
+					    << INV_E() >>
 					    }
 					  } 
-					alarm: check_alarm -[po_alarm_active or rm_alarm_active]-> run
-						{ 
-							Pause_Infusion!(true) 
-							& 
-							pause_inf:=true
-							&
-							last_pi_ts:=now
-						}
-					ok: check_alarm -[not po_alarm_active and not rm_alarm_active]-> check_po_rm_delay
-					 	{ Pause_Infusion!(false) & pause_inf:=false}
-					po_late: check_po_rm_delay -[ now - last_po_ts > IoMT_Properties::PO_Delay_Limit s]-> run
-					  { Pause_Infusion!(true) & Lost_Confirmation! }
-					rm_late: check_po_rm_delay -[ now - last_rm_ts > IoMT_Properties::RM_Delay_Limit s]-> run
-					  { Pause_Infusion!(true) & Lost_Confirmation! & pause_inf:=true }
-					not_late: check_po_rm_delay -[ (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s) 
-							and (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s)	]-> run
+					  
+					--start timeout duration upon Pause_Infusion!, expires if Pause_Infusion_Echo not received within time limit
+					late_echo: check_echo -[on dispatch timeout (Pause_Infusion Pause_Infusion_Echo) IoMT_Properties::PCA_Echo_Limit s ]-> run
+					  { Lost_Confirmation! }
+					  
+--					po_late: check_po_rm_delay -[ now - last_po_ts > IoMT_Properties::PO_Delay_Limit s]-> run
+--					  { Pause_Infusion!(true) & Lost_Confirmation! }
+--					rm_late: check_po_rm_delay -[ now - last_rm_ts > IoMT_Properties::RM_Delay_Limit s]-> run
+--					  { Pause_Infusion!(true) & Lost_Confirmation! & pause_inf:=true }
+--					not_late: check_po_rm_delay -[ (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s) 
+--							and (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s)	]-> run
 					
 			**};       
   end Supervise_PCA_Thread.echo;
