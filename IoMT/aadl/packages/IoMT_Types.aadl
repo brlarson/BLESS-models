@@ -27,4 +27,8 @@ type last_action is enumeration
   Properties BLESS::Typed => "quantity mlph"; --ml/h
 end KVO_RATE;
 
+data Respiration_Rate
+	properties 
+		BLESS::Typed => "quantity brpm";
+end Respiration_Rate;
 end IoMT_Types;

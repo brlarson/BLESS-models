@@ -1,195 +1,392 @@
 --IoMTwin.aadl
-
 --Internet of Medical Things with Imperfect Network
-
 package IoMTwin
 public
 
-  with
-  IoMT, 
-  BLESS, 
-  BLESS_Types,
-  IoMT_Properties,
-  Physical_Types;
+	with IoMT, BLESS, BLESS_Types, IoMT_Properties, Physical_Types, IoMT_Types;
 
-annex Assertion
-{**
+	annex Assertion {**
   ghost variables
     def PAUSE_INFUSION_ECHO ~ boolean  --echo returned from PCA pump
-
+    def RM_ALARM_ECHO ~ boolean -- echo returned from ICE Resource
 --define and add this to Lost_Confirmation port    
 --  <<LOST_CONFIRMATION: : >>  
 **};
 
-  system SysIoMT
-    properties
-      BLESS::Invariant => "<< IS_SAFE() >>";  
-  end SysIoMT;
+	system SysIoMT
+		properties
+			BLESS::Invariant => "<< IS_SAFE() >>";
+	end SysIoMT;
 
 	system implementation SysIoMT.impl
-		subcomponents
-			pca_pump: system PCA_Pump;
-			pulse_oximeter: system Pulse_Oximeter;
-			resp_monitor: system Respiration_Monitor;
-			supervisor: system ICE_Supervisor.impl;
-			network: virtual bus IoMT::Network_Bus;
-			patient: abstract IoMT::Patient;
-			station: system Nurse_Station;
+	subcomponents
+		pca_pump: system PCA_Pump;
+		pulse_oximeter: system Pulse_Oximeter.impl;
+		resp_monitor: system Respiration_Monitor.impl;
+		supervisor: system ICE_Supervisor.impl;
+		network: virtual bus IoMT::Network_Bus;
+		patient: abstract IoMT::Patient;
+		nurse_station: system Nurse_Station;
 
-		connections
-			--primary signals
-			pause_infusion: port supervisor.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (reference(network));};
-			po_alarm: port pulse_oximeter.PO_Alarm -> supervisor.PO_Alarm {Actual_Connection_Binding => (reference(network));};
-			rm_alarm: port resp_monitor.RM_Alarm -> supervisor.RM_Alarm {Actual_Connection_Binding => (reference(network));};
-			
-			--confirmation signals
-			pause_infusion_echo:  port pca_pump.Pause_Infusion_Echo -> supervisor.Pause_Infusion_Echo {Actual_Connection_Binding => (reference(network));};
-			po_alarm_echo: port supervisor.PO_Alarm_Echo -> pulse_oximeter.PO_Alarm_Echo {Actual_Connection_Binding => (reference(network));};
-			rm_alarm_echo: port supervisor.RM_Alarm_Echo -> resp_monitor.RM_Alarm_Echo {Actual_Connection_Binding => (reference(network));};
-			
-			--tube and needle between pump and patient
-			infusion_set: feature pca_pump.Infused_Drug -> patient.Infused_Drug; 
-			
-			--alarms to nurse's station
-			poa_ns: port pulse_oximeter.PO_Alarm -> station.Patient_Alarm;
-			rma_ns: port resp_monitor.RM_Alarm -> station.Patient_Alarm;
-			
-			--virtual bus connection
-			network2pca: virtual bus access network <-> pca_pump.network_conn;
-			po2network: virtual bus access network <-> pulse_oximeter.network_conn;
-			rm2network: virtual bus access network <-> resp_monitor.network_conn;
-			ca2network: virtual bus access network <-> supervisor.network_conn; 
-		end SysIoMT.impl;
-    
+	connections
+		--primary signals
+		pause_infusion: port supervisor.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (
+				reference (network));};
+		po_alarm: port pulse_oximeter.PO_Alarm -> supervisor.PO_Alarm {Actual_Connection_Binding => (
+				reference (network));};
+		rm_alarm: port resp_monitor.RM_Alarm -> supervisor.RM_Alarm {Actual_Connection_Binding => (
+				reference (network));};
+
+		--confirmation signals
+		pause_infusion_echo: port pca_pump.Pause_Infusion_Echo -> supervisor.Pause_Infusion_Echo {
+			Actual_Connection_Binding => (reference (network));};
+		po_alarm_echo: port supervisor.PO_Alarm_Echo -> pulse_oximeter.PO_Alarm_Echo {Actual_Connection_Binding => (
+				reference (network));};
+		rm_alarm_echo: port supervisor.RM_Alarm_Echo -> resp_monitor.RM_Alarm_Echo {Actual_Connection_Binding => (
+				reference (network));};
+
+		--tube and needle between pump and patient
+		infusion_set: feature pca_pump.Infused_Drug -> patient.Infused_Drug;
+
+		--alarms to nurse's station
+		poa_ns: port pulse_oximeter.PO_Alarm -> nurse_station.Patient_Alarm;
+		rma_ns: port resp_monitor.RM_Alarm -> nurse_station.Patient_Alarm;
+		lcm: port pulse_oximeter.Lost_confirmation -> nurse_station.Patient_Lost_Confirmation;
+
+		--virtual bus connection
+		network2pca: virtual bus access network <-> pca_pump.network_conn;
+		po2network: virtual bus access network <-> pulse_oximeter.network_conn;
+		rm2network: virtual bus access network <-> resp_monitor.network_conn;
+		ca2network: virtual bus access network <-> supervisor.network_conn;
+		SysIoMT_impl_new_connection: port resp_monitor.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
+		SysIoMT_impl_new_connection2: port supervisor.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
+end SysIoMT.impl;
+
 -- PCA Pump  using event data messages
-  system PCA_Pump
-    features
-      Pause_Infusion: in data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};
-      Infused_Drug: out feature Physical_Types::Fluid_Flow  --abstract AADL feature modeling drug delivery
-        {BLESS::Assertion=> "<< returns quantity mlph:=PUMP_RATE() >>";};
-      Pause_Infusion_Echo: out data port BLESS_Types::Boolean;
-      network_conn: requires virtual bus access IoMT::Network_Bus;    
-    properties
-      BLESS::Invariant =>
-        "<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
-  end PCA_Pump;
+	system PCA_Pump
+		features
+			Pause_Infusion: in data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+			{BLESS::Assertion => "<< returns quantity mlph:=PUMP_RATE() >>";};
+			Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
+			network_conn: requires virtual bus access IoMT::Network_Bus;
+		properties
+			BLESS::Invariant => "<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
+	end PCA_Pump;
+	
+	system implementation PCA_Pump.impl
+		subcomponents
+			pcp: process PCA_Pump_Process.impl;
+			
+		connections
+			pif: port Pause_Infusion -> pcp.Pause_Infusion;
+ 			ifd: feature pcp.Infused_Drug -> Infused_Drug;
+ 			pie: port pcp.Pause_Infusion_Echo -> Pause_Infusion_Echo;
+			
+	end PCA_Pump.impl;
+	
+ process PCA_Pump_Process
+ 	features
+ 		Pause_Infusion: in data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+		Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+		{BLESS::Assertion => "<< returns quantity mlph:=PUMP_RATE() >>";};
+		Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
+ end PCA_Pump_Process;
+ 
+ process implementation PCA_Pump_Process.impl
+ 	subcomponents
+ 		pct: thread PCA_Pump_Thread.impl;
+ 	
+ 	connections
+ 		pif: port Pause_Infusion -> pct.Pause_Infusion;
+ 		ifd: feature pct.Infused_Drug -> Infused_Drug;
+ 		pie: port pct.Pause_Infusion_Echo -> Pause_Infusion_Echo;
+ 		
+ end PCA_Pump_Process.impl;
+ 
+ thread PCA_Pump_Thread
+ 	features
+ 		Pause_Infusion: in data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+		Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+		{BLESS::Assertion => "<< returns quantity mlph:=PUMP_RATE() >>";};
+		Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
+ 		
+ end PCA_Pump_Thread;
+ 
+ thread implementation PCA_PUMP_Thread.impl
+ 	
+ end PCA_PUMP_Thread.impl;
 
 -- Pulse Oximeter using event data messages
-  system Pulse_Oximeter
-    features
-      PO_Alarm: out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<< PO_ALARM() >>";};
-      PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
-      No_Confirm: out event port;  --report to nurse's station that alarm signal to supervisor was not confirmed in time
-      network_conn: requires virtual bus access IoMT::Network_Bus;
-    properties
-      BLESS::Invariant=> "<< PO_Alarm iff PO_ALARM() >>";
-  end Pulse_Oximeter;
+	system Pulse_Oximeter
+		features
+			Lost_Confirmation: out event port; --report to nurse's station that alarm signal to supervisor was not confirmed in time
+			network_conn: requires virtual bus access IoMT::Network_Bus;
+			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
+			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
+		properties
+			BLESS::Invariant => "<< PO_Alarm iff PO_ALARM() >>";
+	end Pulse_Oximeter;
+	
+	system implementation Pulse_Oximeter.impl
+		subcomponents
+			poc: process Pulse_Oximeter_Process.impl;
+			
+		connections
+			lcc: port  poc.Lost_Confirmation -> Lost_Confirmation;
+			poa: port poc.PO_Alarm -> PO_Alarm;
+			poe: port PO_Alarm_Echo -> poc.PO_Alarm_Echo;
+			
+		
+	end Pulse_Oximeter.impl;
+	
+	process Pulse_Oximeter_Process
+		features
+			Lost_Confirmation: out event port;
+			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
+			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
+					 
+	end Pulse_Oximeter_Process;
+
+	process implementation Pulse_Oximeter_Process.impl
+		subcomponents
+			pot: thread Pulse_Oximeter_Thread.impl;
+			
+		connections
+			
+			lcc: port  pot.Lost_Confirmation -> Lost_Confirmation;
+			pol: port  pot.PO_Alarm -> PO_Alarm;
+			poe: port PO_Alarm_Echo -> pot.PO_Alarm_Echo;
+		
+	end Pulse_Oximeter_Process.impl;
+	
+	thread Pulse_Oximeter_Thread
+		features
+			Lost_Confirmation: out event port;
+			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
+			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
+		
+		properties
+			Dispatch_Protocol => Sporadic;
+	end Pulse_Oximeter_Thread;
+	
+	thread implementation Pulse_Oximeter_Thread.impl
+		
+		
+	end Pulse_Oximeter_Thread.impl;
 
 -- Respiration Monitor using event data messages
-  system Respiration_Monitor
-    features
-      RM_Alarm: out data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<< RM_ALARM() >>";};
-      RM_Alarm_Echo: in data port BLESS_Types::Boolean;
-      network_conn: requires virtual bus access IoMT::Network_Bus;
-    properties
-      BLESS::Invariant=> "<< RM_Alarm iff RM_ALARM() >>";
-  end Respiration_Monitor;
+	system Respiration_Monitor
+		features
+			Lost_Confirmation: out event port; --do we have any time limit here
+			RM_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< RM_ALARM() >>";};
+			RM_Alarm_Echo: in event data port BLESS_Types::Boolean;
+			network_conn: requires virtual bus access IoMT::Network_Bus; -- no assertion on the network connection
+		properties
+			
+			BLESS::Invariant => "<< RM_Alarm iff RM_ALARM() >>";
+	end Respiration_Monitor;
 
+	system implementation Respiration_Monitor.impl
+	subcomponents
+		rmp: process Respiration_Monitor_Process.impl;
+		rss: device Respiration_Sensor;
+	connections
+		lsc: port rmp.Lost_Confirmation -> Lost_Confirmation;
+		rma: port rmp.RM_ALARM -> RM_ALARM;
+		rme: port RM_Alarm_Echo -> rmp.RM_Alarm_Echo;
+		rpr: port rss.RP_Rate -> rmp.RP_Rate;
+end Respiration_Monitor.impl;
+	
+	process Respiration_Monitor_Process
+		features
+			
+			Lost_Confirmation: out event port;
+			RM_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< RM_ALARM() >>";};
+			RM_Alarm_Echo: in event data port BLESS_Types::Boolean;
+			RP_Rate: in data port IoMT_Types::Respiration_Rate;
+			
+	end Respiration_Monitor_Process;
+	
+	process implementation Respiration_Monitor_Process.impl
+		subcomponents
+			rmt: thread Respiration_Monitor_Thread.impl;
+			
+		connections
+			lsc: port rmt.Lost_Confirmation -> Lost_Confirmation;
+			rma: port rmt.RM_ALARM -> RM_ALARM;
+			rme: port RM_Alarm_Echo -> rmt.RM_Alarm_Echo;
+			rsr: port RP_Rate -> rmt.RP_Rate;
+			
+	end Respiration_Monitor_Process.impl;
+
+
+	thread Respiration_Monitor_Thread
+		features
+			Lost_Confirmation: out event port;
+			RM_Alarm: out event data port BLESS_Types::Boolean 
+				{BLESS::Assertion => "<< RM_ALARM() >>";};
+			RM_Alarm_Echo: in event data port BLESS_Types::Boolean; 
+			RP_Rate: in data port IoMT_Types::Respiration_Rate 
+				{BLESS::Assertion => "<< returns quantity brpm := RESPIRATION_RATE >>";}; -- respiration rate 
+		properties
+			Dispatch_Protocol => Timed;
+			Period => 200 ms;
+ end Respiration_Monitor_Thread;
+	
+	thread implementation Respiration_Monitor_Thread.impl
+		annex BLESS{**
+			assert
+			<<LOW_RP: : RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>
+			
+			invariant
+			 << RA() and MRP_A()>>
+		--	<<INV: : (LOW_RP() implies RM_Alarm) and LATE_ECHO() implies Lost_Confirmation >>
+			
+			variables
+				rpr~quantity brpm; 
+				mrp~quantity brpm := 2.0 brpm 
+				<< MRP_A: : mrp = MINIMUM_RESPIRATION_RATE >>; -- what is the initial value for resp_rate
+				rma~boolean := false
+				 <<RA: : rma iff LOW_RP()>>;
+				
+			 states
+			   start: initial state << RA() and MRP_A() >>
+			   run: complete state << RA() and MRP_A()>>
+				 check_echo:   complete state << RA() and MRP_A() >>
+			--   check_alarm:  state
+			   
+			  transitions
+			  	go: start -[ ]-> run 
+			  	
+			  	got_rp: run -[ on dispatch ]-> check_echo
+			   	{
+			   	 RP_Rate?(rpr)
+			   	 << rpr = RESPIRATION_RATE and MRP_A() >>
+			   	 ;
+			   	 if(rpr >= mrp)~> { 
+			   	 		<< rpr = RESPIRATION_RATE and rpr >= mrp and MRP_A() >> 
+			   	 		rma:=false & RM_Alarm!(false)
+			   	 		<< RA() and MRP_A() >>
+			   	 } 
+			   	 []
+			   	 (rpr < mrp)~> { 
+			   	 		<< rpr = RESPIRATION_RATE and rpr < mrp and MRP_A() >> 
+			   	 		rma:=true & RM_Alarm!(true) 
+			   	 		<< RA() and MRP_A() >>
+			   	 }
+			   	 fi
+			   	}
+			   	
+			   	got_echo:  check_echo -[ on dispatch  RM_Alarm_Echo]-> run
+			   	{
+			   	declare echo_val~boolean := RM_Alarm_Echo?
+			   		{
+			   		if (echo_val = rma)~> skip  --echo was same
+					  []
+					  (echo_val <> rma)~> Lost_Confirmation!  --echo was different
+					  fi	
+						}
+			   	 }
+			   	 
+			   	 late_echo: check_echo -[on dispatch timeout (RM_Alarm  or RM_Alarm_Echo) IoMT_Properties::RM_Echo_Limit s ]-> run
+			   			{ Lost_Confirmation! }
+			**};
+	end Respiration_Monitor_Thread.impl;
+
+ device Respiration_Sensor
+ 	features
+ 		RP_Rate:out data port IoMT_Types::Respiration_Rate; --IoMT::RESPIRATION_RATE, it should be in the properties not as a ghost variable
+ end Respiration_Sensor;
 
 --Nurse's Station notified if message confirmation is lost
-  system Nurse_Station
-    features
-      Patient_Lost_Confirmation: in event data port;
-      Patient_Alarm: in event data port BLESS_Types::Boolean;
-      --expected to have ports for each patient supervised by the nurse's station
-  end Nurse_Station;
+	system Nurse_Station
+		features
+			Patient_Lost_Confirmation: in event port;
+			Patient_Alarm: in event data port BLESS_Types::Boolean;
+	--expected to have ports for each patient supervised by the nurse's station
+	end Nurse_Station;
 
-  system ICE_Supervisor
-    features
-      PO_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion : out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
-      Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
-      network_conn: requires virtual bus access IoMT::Network_Bus;
-    properties
-      BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";    
-  end ICE_Supervisor;
-  
-  system implementation ICE_Supervisor.impl
-    subcomponents
-      spp: process Supervise_PCA_Process.impl;
-    connections
-      poa: port PO_Alarm -> spp.PO_Alarm;
-      rma: port RM_Alarm -> spp.RM_Alarm;
-      pi: port spp.Pause_Infusion -> Pause_Infusion;
-      pie: port Pause_Infusion_Echo -> spp.Pause_Infusion_Echo;   
-      lc: port spp.Lost_Confirmation -> Lost_Confirmation;
-  end ICE_Supervisor.impl;
+	system ICE_Supervisor
+		features
+			RM_Alarm_Echo: out event data port BLESS_Types::Boolean --send back RM alarm
+			{BLESS::Assertion => "<<RM_ALARM()>>";};
+			Lost_Confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
+			network_conn: requires virtual bus access IoMT::Network_Bus;
+			PO_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM()>>";};
+			RM_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<RM_ALARM()>>";};
+			Pause_Infusion: out event data port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			PO_Alarm_Echo: out event data port BLESS_Types::Boolean --send back PO alarm
+			{BLESS::Assertion => "<<PO_ALARM()>>";};
+			Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PAUSE_INFUSION_ECHO>>";};
+		properties
+			BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
+	end ICE_Supervisor;
 
-  process Supervise_PCA_Process
-    features
-      PO_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion : out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
-      Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
-    properties
-      BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
-  end Supervise_PCA_Process;
-  
-  process implementation Supervise_PCA_Process.impl
-    subcomponents
-      spt: thread Supervise_PCA_Thread.echo;
-    connections
-      poa: port PO_Alarm -> spt.PO_Alarm;
-      rma: port RM_Alarm -> spt.RM_Alarm;
-      pi: port spt.Pause_Infusion -> Pause_Infusion;
-      pie: port Pause_Infusion_Echo -> spt.Pause_Infusion_Echo;
-      lc: port spt.Lost_Confirmation -> Lost_Confirmation;
-    end Supervise_PCA_Process.impl;
+	system implementation ICE_Supervisor.impl
+		subcomponents
+			spp: process Supervise_PCA_Process.impl;
+		connections
+			poa: port PO_Alarm -> spp.PO_Alarm;
+			rma: port RM_Alarm -> spp.RM_Alarm;
+			pi: port spp.Pause_Infusion -> Pause_Infusion;
+			pie: port Pause_Infusion_Echo -> spp.Pause_Infusion_Echo;
+			lc: port spp.Lost_Confirmation -> Lost_Confirmation;
+			icp: port spp.PO_Alarm_Echo -> PO_Alarm_Echo;
+			icr: port spp.RM_Alarm_Echo -> RM_Alarm_Echo;
+	end ICE_Supervisor.impl;
 
-  thread Supervise_PCA_Thread
-    features
-      PO_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm : in event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion : out event data port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";};   
-      PO_Alarm_Echo: out event data port BLESS_Types::Boolean  --send back PO alarm
-        {BLESS::Assertion=>"<<PO_ALARM()>>";};
-      RM_Alarm_Echo: out data port BLESS_Types::Boolean  --send back RM alarm
-        {BLESS::Assertion=>"<<RM_ALARM()>>";};
-      Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean
-        {BLESS::Assertion=>"<<PAUSE_INFUSION_ECHO>>";};
-      Lost_Confirmation: out event port;  --confirmation of Pause_Infusion not arrived in time
-    properties
-      Dispatch_Protocol => Sporadic;
-  end Supervise_PCA_Thread;
+	process Supervise_PCA_Process
+		features
+			RM_Alarm_Echo: out event data port BLESS_Types::Boolean --send back RM alarm
+			{BLESS::Assertion => "<<RM_ALARM()>>";};
+			Lost_Confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
+			PO_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM()>>";};
+			RM_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<RM_ALARM()>>";};
+			Pause_Infusion: out event data port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			PO_Alarm_Echo: out event data port BLESS_Types::Boolean --send back PO alarm
+			{BLESS::Assertion => "<<PO_ALARM()>>";};
+			Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PAUSE_INFUSION_ECHO>>";};
+		properties
+			BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
+	end Supervise_PCA_Process;
 
-  thread implementation Supervise_PCA_Thread.echo
-		annex BLESS
-			{**
+	process implementation Supervise_PCA_Process.impl
+		subcomponents
+			spt: thread Supervise_PCA_Thread.echo;
+		connections
+			poa: port PO_Alarm -> spt.PO_Alarm;
+			rma: port RM_Alarm -> spt.RM_Alarm;
+			pi: port spt.Pause_Infusion -> Pause_Infusion;
+			pie: port Pause_Infusion_Echo -> spt.Pause_Infusion_Echo;
+			lc: port spt.Lost_Confirmation -> Lost_Confirmation;
+			srp: port spt.RM_Alarm_Echo -> RM_Alarm_Echo;
+			spp: port spt.PO_Alarm_Echo -> PO_Alarm_Echo;
+	end Supervise_PCA_Process.impl;
+
+	thread Supervise_PCA_Thread
+		features
+			RM_Alarm_Echo: out event data port BLESS_Types::Boolean --send back RM alarm
+			{BLESS::Assertion => "<<RM_ALARM()>>";};
+			Lost_Confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
+			PO_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM()>>";};
+			RM_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<RM_ALARM()>>";};
+			Pause_Infusion: out event data port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			PO_Alarm_Echo: out event data port BLESS_Types::Boolean --send back PO alarm
+			{BLESS::Assertion => "<<PO_ALARM()>>";};
+			Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean {
+				BLESS::Assertion => "<<PAUSE_INFUSION_ECHO>>";};
+		properties
+			Dispatch_Protocol => Sporadic;
+	end Supervise_PCA_Thread;
+
+	thread implementation Supervise_PCA_Thread.echo
+		annex BLESS {**
 				invariant 
 					<<INV_E: :INV()  --same invariant as IoMT::Supervise_PCA_Thread.simple
 					  and POA() and RMA() and PI() >>
@@ -209,7 +406,7 @@ annex Assertion
 					run: complete state << INV_E() >>   --waiting for RM and PO
 --					check_alarm: state << INV() and POA() and RMA() >>    --decide whether to pause infusion
 					check_echo: complete state  << INV_E() >>  --wait for echo form PCA pump
-					done: final state
+					--done: final state
 					
 				transitions
 					go: start -[ ]-> run
@@ -250,7 +447,7 @@ annex Assertion
 					  } 
 					  
 					--start timeout duration upon Pause_Infusion!, expires if Pause_Infusion_Echo not received within time limit
-					late_echo: check_echo -[on dispatch timeout (Pause_Infusion Pause_Infusion_Echo) IoMT_Properties::PCA_Echo_Limit s ]-> run
+					late_echo: check_echo -[on dispatch timeout (Pause_Infusion  or Pause_Infusion_Echo) IoMT_Properties::PCA_Echo_Limit s ]-> run
 					  { Lost_Confirmation! }
 					  
 --					po_late: check_po_rm_delay -[ now - last_po_ts > IoMT_Properties::PO_Delay_Limit s]-> run
@@ -260,7 +457,7 @@ annex Assertion
 --					not_late: check_po_rm_delay -[ (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s) 
 --							and (now - last_rm_ts <= IoMT_Properties::RM_Delay_Limit s)	]-> run
 					
-			**};       
-  end Supervise_PCA_Thread.echo;
-  
+			**};
+	end Supervise_PCA_Thread.echo;
+
 end IoMTwin;
