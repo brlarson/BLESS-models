@@ -10,9 +10,11 @@ property set IoMT_Properties is
 	
 	Respiration_Rate: Physical_Properties::Fluid_Flow_Rate => IoMT_Properties::Max_Rate applies to (all); -- check this one 
 		
-	PO_Delay_Limit: constant Time => 2 sec;	--pulse oximeter reporting expected every 2 seconds
+	PO_Delay_Limit: constant Time => 2 sec;	--Pulse Oximeter reporting expected every 2 seconds
+	PO_Echo_Limit: constant Time => 4 sec; --ICE Supervisor should respond to Pulse Oximeter within 4 seconds
+	RM_Echo_Limit:  constant Time => 4 sec; --ICE Supervisor should respond to Respiration Monitor within 4 seconds
 	RM_Delay_Limit: constant Time => 120 sec;  --respiration monitor reporting expected every 2 minutes
 	PCA_Echo_Limit: constant Time => 4 sec;	--PCA Pump should respond to pause infusion within 4 seconds
-	RM_Echo_Limit:  constant Time => 4 sec; --ICE Supervisor should respond to Respiration Monitor within 4 seconds
---	ICE_Echo_Limit: constant Time => 4 sec; --
+	
+	
 end IoMT_Properties;

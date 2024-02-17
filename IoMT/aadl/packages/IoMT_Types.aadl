@@ -31,4 +31,15 @@ data Respiration_Rate
 	properties 
 		BLESS::Typed => "quantity brpm";
 end Respiration_Rate;
+
+data SPO2_Rate
+	properties 
+		BLESS::Typed => "quantity percent";
+end SPO2_Rate;
+
+data Heart_Rate
+	properties
+		BLESS::Typed => "quantity bpm";
+end Heart_Rate;
+
 end IoMT_Types;

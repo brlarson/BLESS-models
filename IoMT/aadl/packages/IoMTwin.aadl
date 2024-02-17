@@ -131,17 +131,21 @@ end SysIoMT.impl;
 	system implementation Pulse_Oximeter.impl
 		subcomponents
 			poc: process Pulse_Oximeter_Process.impl;
+			pos: device Pulse_Oximeter_Sensor;
 			
 		connections
 			lcc: port  poc.Lost_Confirmation -> Lost_Confirmation;
 			poa: port poc.PO_Alarm -> PO_Alarm;
 			poe: port PO_Alarm_Echo -> poc.PO_Alarm_Echo;
-			
+			spc: port  pos.spo2 -> poc.spo2;
+			hrr: port  pos.heart_rate -> poc.heart_rate;
 		
 	end Pulse_Oximeter.impl;
 	
 	process Pulse_Oximeter_Process
 		features
+			spo2: in data port IoMT_Types::Spo2_Rate;
+			heart_rate: in data port IoMT_Types::Heart_Rate;
 			Lost_Confirmation: out event port;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
@@ -153,27 +157,65 @@ end SysIoMT.impl;
 			pot: thread Pulse_Oximeter_Thread.impl;
 			
 		connections
-			
 			lcc: port  pot.Lost_Confirmation -> Lost_Confirmation;
 			pol: port  pot.PO_Alarm -> PO_Alarm;
 			poe: port PO_Alarm_Echo -> pot.PO_Alarm_Echo;
+			spc: port spo2 -> pot.spo2;
+			hrr: port  heart_rate -> pot.heart_rate;
 		
 	end Pulse_Oximeter_Process.impl;
 	
 	thread Pulse_Oximeter_Thread
 		features
+			spo2: in data port IoMT_Types::Spo2_Rate;
+			heart_rate: in data port IoMT_Types::Heart_Rate;
 			Lost_Confirmation: out event port;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
-		
+			
 		properties
-			Dispatch_Protocol => Sporadic;
+			Dispatch_Protocol => Timed;
+			Period => 200 ms;
 	end Pulse_Oximeter_Thread;
 	
 	thread implementation Pulse_Oximeter_Thread.impl
-		
-		
+--		annex BLESS{**
+--			--assert
+--		--		<<LOW_SPO2_HR: : HEART_RATE>>
+--			invariant 
+--				<< true >>
+--			variables
+--				hrr~quantity bpm; --heart rate
+--				mhr~quantity bpm := 60.0 bpm -- minimum heart rate
+--				 << MHR_A: : mhr  = MINIMUM_HEART_RATE >> ;
+--				spo2~quantity percent; -- spo2
+--				pspo2~quantity percent -- programmed spo2
+--				 << PSAP_A: : pspo2  = PROGRAMMED_SpO2 >> ;
+--				
+--			states
+--				start: initial state 
+--				run: complete state
+--				check_echo: complete state
+--			transitions
+--				go: start -[ ]-> run
+--				
+--				got_spo2_hr: run -[on dispatch]-> check_echo --both spo2 and heart rate are received at the same time
+--				
+--				got_echo: check_echo -[on dispatch PO_Alarm_Echo]-> run
+--				
+--				late_echo: check_echo -[on dispatch timeout (PO_Alarm or PO_Alarm_Echo) IoMT_Properties::PO_Echo_Limit s]-> run
+--					{ Lost_Confirmation!}
+--				
+--				
+--		**};
+	
 	end Pulse_Oximeter_Thread.impl;
+	
+	device Pulse_Oximeter_Sensor
+		features 
+			spo2: out data port IoMT_Types::Spo2_Rate;
+			heart_rate: out data port IoMT_Types::Heart_Rate;
+	end Pulse_Oximeter_Sensor;
 
 -- Respiration Monitor using event data messages
 	system Respiration_Monitor
@@ -241,14 +283,13 @@ end Respiration_Monitor.impl;
 			
 			invariant
 			 << RA() and MRP_A()>>
-		--	<<INV: : (LOW_RP() implies RM_Alarm) and LATE_ECHO() implies Lost_Confirmation >>
 			
 			variables
 				rpr~quantity brpm; 
 				mrp~quantity brpm := 2.0 brpm 
 				<< MRP_A: : mrp = MINIMUM_RESPIRATION_RATE >>; -- what is the initial value for resp_rate
 				rma~boolean := false
-				 <<RA: : rma iff LOW_RP()>>;
+				 <<RA: : rma iff LOW_RP()>>; -- we could have used RM_Alarm
 				
 			 states
 			   start: initial state << RA() and MRP_A() >>
