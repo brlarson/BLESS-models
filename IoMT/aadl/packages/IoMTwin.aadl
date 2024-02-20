@@ -10,7 +10,7 @@ public
     def PAUSE_INFUSION_ECHO ~ boolean  --echo returned from PCA pump
     def RM_ALARM_ECHO ~ boolean -- echo returned from ICE Resource
 --define and add this to Lost_Confirmation port    
---  <<LOST_CONFIRMATION: : >>  
+--  <<LOST_CONFIRMATION: : >>   
 **};
 
 	system SysIoMT
@@ -137,15 +137,15 @@ end SysIoMT.impl;
 			lcc: port  poc.Lost_Confirmation -> Lost_Confirmation;
 			poa: port poc.PO_Alarm -> PO_Alarm;
 			poe: port PO_Alarm_Echo -> poc.PO_Alarm_Echo;
-			spc: port  pos.spo2 -> poc.spo2;
+			spc: port  pos.Spo2_Level -> poc.Spo2_Level;
 			hrr: port  pos.heart_rate -> poc.heart_rate;
 		
 	end Pulse_Oximeter.impl;
 	
 	process Pulse_Oximeter_Process
 		features
-			spo2: in data port IoMT_Types::Spo2_Rate;
-			heart_rate: in data port IoMT_Types::Heart_Rate;
+			Spo2_Level: in data port IoMT_Types::Spo2_Rate;
+			Heart_Rate: in data port IoMT_Types::Heart_Rate;
 			Lost_Confirmation: out event port;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
@@ -160,61 +160,115 @@ end SysIoMT.impl;
 			lcc: port  pot.Lost_Confirmation -> Lost_Confirmation;
 			pol: port  pot.PO_Alarm -> PO_Alarm;
 			poe: port PO_Alarm_Echo -> pot.PO_Alarm_Echo;
-			spc: port spo2 -> pot.spo2;
+			spc: port Spo2_Level -> pot.Spo2_Level;
 			hrr: port  heart_rate -> pot.heart_rate;
 		
 	end Pulse_Oximeter_Process.impl;
 	
 	thread Pulse_Oximeter_Thread
 		features
-			spo2: in data port IoMT_Types::Spo2_Rate;
-			heart_rate: in data port IoMT_Types::Heart_Rate;
+			Spo2_Level: in data port IoMT_Types::Spo2_Rate
+			 { BLESS::Value => "<< returns quantity percent := SPO2 >>";};
+			Heart_Rate: in data port IoMT_Types::Heart_Rate
+			 { BLESS::Value => "<< returns quantity bpm := HEART_RATE >>";};
 			Lost_Confirmation: out event port;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
 			
 		properties
-			Dispatch_Protocol => Timed;
+			--Dispatch protocol is Timed because we want to dispatch every period to get heart_rate and spo2 and arrival of PO_Alarm_Echo event
+			Dispatch_Protocol => Timed; 
 			Period => 200 ms;
 	end Pulse_Oximeter_Thread;
 	
 	thread implementation Pulse_Oximeter_Thread.impl
---		annex BLESS{**
---			--assert
---		--		<<LOW_SPO2_HR: : HEART_RATE>>
---			invariant 
---				<< true >>
---			variables
---				hrr~quantity bpm; --heart rate
---				mhr~quantity bpm := 60.0 bpm -- minimum heart rate
---				 << MHR_A: : mhr  = MINIMUM_HEART_RATE >> ;
---				spo2~quantity percent; -- spo2
---				pspo2~quantity percent -- programmed spo2
---				 << PSAP_A: : pspo2  = PROGRAMMED_SpO2 >> ;
---				
---			states
---				start: initial state 
---				run: complete state
---				check_echo: complete state
---			transitions
---				go: start -[ ]-> run
---				
---				got_spo2_hr: run -[on dispatch]-> check_echo --both spo2 and heart rate are received at the same time
---				
---				got_echo: check_echo -[on dispatch PO_Alarm_Echo]-> run
---				
---				late_echo: check_echo -[on dispatch timeout (PO_Alarm or PO_Alarm_Echo) IoMT_Properties::PO_Echo_Limit s]-> run
---					{ Lost_Confirmation!}
---				
---				
---		**};
+		annex BLESS{**
+			assert
+				<< LOW_SPO2_HR: :HEART_RATE < MINIMUM_HEART_RATE or SPO2 < PROGRAMMED_SPO2 >>
+				<< LOW_HR: :HEART_RATE < MINIMUM_HEART_RATE >>
+				<< LOW_SPO2: :sp < PROGRAMMED_SPO2 >>
+			
+			invariant 
+				<< INV_PO: :MHR_A() and PSPO2_A() and POA_A() >>
+				
+			variables
+				hrr~quantity bpm; --heart rate
+				mhr~quantity bpm := 60.0 bpm -- minimum heart rate
+				 << MHR_A: : mhr  = MINIMUM_HEART_RATE >> ;
+				sp~quantity percent; -- spo2
+				psp~quantity percent -- programmed spo2
+				 << PSPO2_A: : psp  = PROGRAMMED_SPO2 >> ;
+				poa~boolean := false
+				  <<POA_A: : poa iff LOW_SPO2_HR() >> -- <<POA: : pao iff (LOW_HR() or LOW_SPO2()) >> 
+								
+			states
+				start: initial state << INV_PO() >>
+				run: complete state << INV_PO() >>
+				--check_hrr: state << INV_PO() >>
+				--check_spo2: state << INV_PO() >>
+				check_echo: complete state <<INV_PO() >> 
+				
+			transitions
+				go: start -[ ]-> run
+				
+				got_hrr_spo2: run -[on dispatch]-> check_echo
+				{
+					 << INV_PO() >>
+					Heart_Rate?(hrr) 
+					; << hrr = HEART_RATE and INV_PO() >>
+					Spo2_Level?(sp)
+					 << hrr = HEART_RATE and INV_PO() and sp = SPO2 >>
+					;
+					if(hrr >= mhr and sp >= psp)~>
+						{
+							 << hrr = HEART_RATE and hrr >= mhr and sp = SPO2 and sp >= psp and INV_PO() >>
+							poa:=false & PO_Alarm!(false)
+							 << INV_PO() >>
+						}
+					[] (hrr < mhr)~> --no need to check  sp < psp
+						{
+							 << hrr = HEART_RATE and hrr < mhr and INV_PO() >>
+							poa:=true & PO_Alarm!(true)
+							 << INV_PO() >>
+						}
+					[] (sp < psp)~> --no need to check hrr < mhr
+						{
+							 << sp = psp and sp < psp and INV_PO() >>
+							poa:=true & PO_Alarm!(true)
+							 << INV_PO() >>
+						}
+					fi
+					<< INV_PO() >>
+				}--end got_spo2
+				
+				
+				got_echo: check_echo -[on dispatch PO_Alarm_Echo]-> run
+				{
+					 << INV_PO() and PO_Alarm_Echo@now >>
+			   		declare echo_val~boolean := PO_Alarm_Echo?
+			   			{ 
+			   				 << INV_PO() and (echo_val iff PO_Alarm_Echo) >>
+			   				if (echo_val = poa)~> skip  --echo was same
+					  		[]
+					  		(echo_val <> poa)~> Lost_Confirmation!  --echo was different
+					  		fi
+					 	 	 << INV_PO() >>	
+						} 
+							<< INV_PO()  >>
+				}--end got_echo
+				
+				late_echo: check_echo -[on dispatch timeout (PO_Alarm or PO_Alarm_Echo) IoMT_Properties::PO_Echo_Limit s]-> run
+					{ Lost_Confirmation!}
+				
+				
+		**};
 	
 	end Pulse_Oximeter_Thread.impl;
 	
 	device Pulse_Oximeter_Sensor
 		features 
-			spo2: out data port IoMT_Types::Spo2_Rate;
-			heart_rate: out data port IoMT_Types::Heart_Rate;
+			Spo2_Level: out data port IoMT_Types::Spo2_Rate;
+			Heart_Rate: out data port IoMT_Types::Heart_Rate;
 	end Pulse_Oximeter_Sensor;
 
 -- Respiration Monitor using event data messages
@@ -265,10 +319,10 @@ end Respiration_Monitor.impl;
 
 	thread Respiration_Monitor_Thread
 		features
-			Lost_Confirmation: out event port;
+			Lost_Confirmation: out event port; --add some assertion
 			RM_Alarm: out event data port BLESS_Types::Boolean 
 				{BLESS::Assertion => "<< RM_ALARM() >>";};
-			RM_Alarm_Echo: in event data port BLESS_Types::Boolean; 
+			RM_Alarm_Echo: in event data port BLESS_Types::Boolean; --add some assertion
 			RP_Rate: in data port IoMT_Types::Respiration_Rate 
 				{BLESS::Assertion => "<< returns quantity brpm := RESPIRATION_RATE >>";}; -- respiration rate 
 		properties
@@ -293,8 +347,8 @@ end Respiration_Monitor.impl;
 				
 			 states
 			   start: initial state << RA() and MRP_A() >>
-			   run: complete state << RA() and MRP_A()>>
-				 check_echo:   complete state << RA() and MRP_A() >>
+			   run: complete state << RA() and MRP_A() >>
+				check_echo:   complete state << RA() and MRP_A() >>
 			--   check_alarm:  state
 			   
 			  transitions
@@ -303,32 +357,37 @@ end Respiration_Monitor.impl;
 			  	got_rp: run -[ on dispatch ]-> check_echo
 			   	{
 			   	 RP_Rate?(rpr)
-			   	 << rpr = RESPIRATION_RATE and MRP_A() >>
+			   	 << rpr = RESPIRATION_RATE and MRP_A() and RA() >>
 			   	 ;
-			   	 if(rpr >= mrp)~> { 
-			   	 		<< rpr = RESPIRATION_RATE and rpr >= mrp and MRP_A() >> 
+			   	 if(rpr >= mrp)~> 
+			   	 	{ 
+			   	 		<< rpr = RESPIRATION_RATE and rpr >= mrp and MRP_A() and RA() >> 
 			   	 		rma:=false & RM_Alarm!(false)
 			   	 		<< RA() and MRP_A() >>
-			   	 } 
+			   		 } 
 			   	 []
-			   	 (rpr < mrp)~> { 
-			   	 		<< rpr = RESPIRATION_RATE and rpr < mrp and MRP_A() >> 
+			   	 (rpr < mrp)~> 
+			   	 	{ 
+			   	 		<< rpr = RESPIRATION_RATE and rpr < mrp and MRP_A() and RA() >> 
 			   	 		rma:=true & RM_Alarm!(true) 
 			   	 		<< RA() and MRP_A() >>
-			   	 }
+			   	 	}
 			   	 fi
-			   	}
+			   	} -- end got_rp
 			   	
 			   	got_echo:  check_echo -[ on dispatch  RM_Alarm_Echo]-> run
 			   	{
-			   	declare echo_val~boolean := RM_Alarm_Echo?
-			   		{
-			   		if (echo_val = rma)~> skip  --echo was same
-					  []
-					  (echo_val <> rma)~> Lost_Confirmation!  --echo was different
-					  fi	
-						}
-			   	 }
+			 		<< RA() and MRP_A() and RM_Alarm_Echo@now >>
+			   		declare echo_val~boolean := RM_Alarm_Echo?
+			   			{ << RA() and MRP_A() and (echo_val iff RM_Alarm_Echo) >>
+			   				if (echo_val = rma)~> skip  --echo was same
+					  		[]
+					  		(echo_val <> rma)~> Lost_Confirmation!  --echo was different
+					  		fi
+					 	 	<< RA() and MRP_A() >>	
+						} 
+							<< RA() and MRP_A()  >>
+			   	 }-- end got_echo
 			   	 
 			   	 late_echo: check_echo -[on dispatch timeout (RM_Alarm  or RM_Alarm_Echo) IoMT_Properties::RM_Echo_Limit s ]-> run
 			   			{ Lost_Confirmation! }

@@ -1,0 +1,126 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.3
+#  at Fri Feb 16 15:56:38 AST 2024 by ehsanahmad
+#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/RMPO.ps
+push
+sort-by-component-name[IoMTwin::Respiration_Monitor_Thread.impl]
+#IoMTwin::Respiration_Monitor_Thread.impl
+#[serial 1011] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
+make-an
+tautologies
+#[serial 1012] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+tautologies
+#[serial 1013] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1014]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+#[serial 1015]  <<M(run) and x>> A <<M(check_echo)>> for got_rp: run-[x]->check_echo{A};
+reduce
+reduce
+reduce
+reduce
+normalize
+laws
+tautologies
+push
+#IoMTwin::Respiration_Monitor_Thread.impl
+#[serial 1093]   normalization of [serial 107
+make-an
+atomic
+laws
+normalize
+tautologies
+#[serial 1095]   normalization of [serial 1079]
+replace<=
+normalize
+laws
+tautologies
+#[serial 1101]   normalization of [serial 1086]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+laws
+guided-sub-equals[MINIMUM_RESPIRATION_RATE]
+guided-sub-equals[RESPIRATION_RATE]
+replace<=
+laws
+laws
+normalize
+tautologies
+#[serial 1109]   normalization of [serial 1090]
+substitute-post
+atomic
+laws
+normalize
+substitute-both
+normalize
+split-post
+tautologies
+guided-sub-equals[MINIMUM_RESPIRATION_RATE]
+guided-sub-equals[RESPIRATION_RATE]
+tautologies
+#[serial 1113] laws applied to [serial 1103]
+atomic
+push
+make-an
+#IoMTwin::Respiration_Monitor_Thread.impl
+#[serial 1150] applied port output of value <<pre>> -> <<M(RM_Alarm)[RM_Alarm|false]>> [serial 1113] 
+substitute-both
+normalize
+replace<=
+guided-sub-equals[MINIMUM_RESPIRATION_RATE]
+guided-sub-equals[RESPIRATION_RATE]
+normalize
+tautologies
+#[serial 1151] applied port output <<pre and (not RM_ALARM())@now>> -> <<post>> [serial 1113]
+laws
+tautologies
+#[serial 1115] laws applied to [serial 1111]
+atomic
+push
+make-an
+#IoMTwin::Respiration_Monitor_Thread.impl
+#[serial 1161] applied port output of value <<pre>> -> <<M(RM_Alarm)[RM_Alarm|true]>> [serial 1115] 
+laws
+substitute-both
+guided-sub-equals[MINIMUM_RESPIRATION_RATE]
+guided-sub-equals[RESPIRATION_RATE]
+normalize
+tautologies
+#[serial 1162] applied port output <<pre and (RM_ALARM() iff true)@now>> -> <<post>> [serial 1115]
+laws
+tautologies
+#[serial 1016]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+reduce
+reduce
+reduce
+reduce
+normalize
+laws
+tautologies
+normalize
+push
+make-an
+#IoMTwin::Respiration_Monitor_Thread.impl
+#[serial 1193]   normalization of [serial 1179] 
+replace<>
+normalize
+laws
+tautologies
+#[serial 1206]   normalization of [serial 1201]
+now
+tautologies
+#[serial 1208]   normalization of [serial 1202]
+atomic
+tautologies
+#[serial 1210]   normalization of [serial 1203]
+atomic
+tautologies
+laws
+tautologies
+#[serial 1017]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
+atomic
+laws
+laws
+tautologies

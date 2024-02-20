@@ -1,0 +1,92 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
+#  at Tue Feb 20 18:46:49 AST 2024 by ehsanahmad
+#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/PO.ps
+push
+sort-by-component-name[IoMTwin::Pulse_Oximeter_Thread.impl]
+#IoMTwin::Pulse_Oximeter_Thread.impl
+#[serial 1003] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
+make-an
+substitute-pre
+normalize
+tautologies
+#[serial 1004] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+substitute-pre
+normalize
+tautologies
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+stop****
+#[serial 1007]  <<M(run) and x>> A <<M(check_echo)>> for got_hrr_spo2: run-[x]->check_echo{A};
+reduce
+reduce
+reduce
+reduce
+tautologies
+normalize
+laws
+normalize
+push
+#IoMTwin::Pulse_Oximeter_Thread.impl
+#[serial 1108]   normalization of [serial 108
+make-an
+atomic
+normalize
+tautologies
+#[serial 1110]   normalization of [serial 1086]
+atomic
+normalize
+laws
+tautologies
+#[serial 1112]   normalization of [serial 1088]
+replace<=
+normalize
+and-over-or-post
+laws
+normalize
+laws
+tautologies
+#[serial 1116]   normalization of [serial 1097]
+substitute-post
+substitute-post
+normalize
+atomic
+laws
+substitute-post
+DeMorgan
+normalize
+laws
+substitute-pre
+normalize
+split-post
+substitute-both
+normalize
+laws
+normalize
+replace<=
+normalize
+guided-sub-equals[PROGRAMMED_SPO2]
+guided-sub-equals[SPO2]
+guided-sub-equals[MINIMUM_HEART_RATE]
+guided-sub-equals[HEART_RATE]
+tautologies
+laws
+tautologies
+#[serial 1122]   normalization of [serial 1101]
+substitute-both
+substitute-both
+normalize
+laws
+normalize
+atomic
+laws
+normalize
+split-post
+tautologies
+substitute-post
+normalize
+guided-sub-equals[HEART_RATE]
+guided-sub-equals[MINIMUM_HEART_RATE]
+tautologies
+#[serial 1128]   normalization of [serial 1105]
