@@ -227,13 +227,13 @@ end SysIoMT.impl;
 						}
 					[] (hrr < mhr)~> --no need to check  sp < psp
 						{
-							 << hrr = HEART_RATE and hrr < mhr and INV_PO() >>
+							 << hrr = HEART_RATE and hrr < mhr and sp = SPO2 and INV_PO() >>
 							poa:=true & PO_Alarm!(true)
 							 << INV_PO() >>
 						}
 					[] (sp < psp)~> --no need to check hrr < mhr
 						{
-							 << sp = psp and sp < psp and INV_PO() >>
+							 << sp = psp and sp < psp and sp = SPO2 and INV_PO() >>
 							poa:=true & PO_Alarm!(true)
 							 << INV_PO() >>
 						}

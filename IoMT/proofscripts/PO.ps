@@ -1,6 +1,6 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
-#  at Tue Feb 20 18:46:49 AST 2024 by ehsanahmad
-#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/PO.ps
+#  at Tue Feb 20 13:23:01 CST 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/PO.ps
 push
 sort-by-component-name[IoMTwin::Pulse_Oximeter_Thread.impl]
 #IoMTwin::Pulse_Oximeter_Thread.impl
@@ -17,7 +17,6 @@ tautologies
 tautologies
 #[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
 tautologies
-stop****
 #[serial 1007]  <<M(run) and x>> A <<M(check_echo)>> for got_hrr_spo2: run-[x]->check_echo{A};
 reduce
 reduce
@@ -73,6 +72,7 @@ guided-sub-equals[HEART_RATE]
 tautologies
 laws
 tautologies
+stop********
 #[serial 1122]   normalization of [serial 1101]
 substitute-both
 substitute-both
@@ -90,3 +90,13 @@ guided-sub-equals[HEART_RATE]
 guided-sub-equals[MINIMUM_HEART_RATE]
 tautologies
 #[serial 1128]   normalization of [serial 1105]
+substitute-both
+substitute-both
+normalize
+atomic
+laws
+laws
+normalize
+split-post
+tautologies
+substitute-post
