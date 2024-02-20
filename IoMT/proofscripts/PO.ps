@@ -1,6 +1,6 @@
 #This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
-#  at Tue Feb 20 13:23:01 CST 2024 by brianlarson
-#  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/PO.ps
+#  at Tue Feb 20 23:40:27 AST 2024 by ehsanahmad
+#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/PO.ps
 push
 sort-by-component-name[IoMTwin::Pulse_Oximeter_Thread.impl]
 #IoMTwin::Pulse_Oximeter_Thread.impl
@@ -72,7 +72,6 @@ guided-sub-equals[HEART_RATE]
 tautologies
 laws
 tautologies
-stop********
 #[serial 1122]   normalization of [serial 1101]
 substitute-both
 substitute-both
@@ -100,3 +99,117 @@ normalize
 split-post
 tautologies
 substitute-post
+guided-sub-equals[MINIMUM_HEART_RATE]
+guided-sub-equals[PROGRAMMED_SPO2]
+guided-sub-equals[SPO2]
+normalize
+tautologies
+#[serial 1131] laws applied to [serial 1114]
+tautologies
+#[serial 1132] laws applied to [serial 1118]
+atomic
+now
+normalize
+substitute-both
+normalize
+laws
+tautologies
+replace<=
+normalize
+guided-sub-equals[HEART_RATE]
+substitute-both
+substitute-both
+normalize
+guided-sub-equals[MINIMUM_HEART_RATE]
+guided-sub-equals[PROGRAMMED_SPO2]
+guided-sub-equals[SPO2]
+normalize
+DeMorgan
+normalize
+tautologies
+#[serial 1146]   normalization of [serial 1133]
+tautologies
+#[serial 1148]   normalization of [serial 1134]
+atomic
+now
+laws
+substitute-both
+normalize
+laws
+normalize
+tautologies
+substitute-both
+normalize
+guided-sub-equals[MINIMUM_HEART_RATE]
+guided-sub-equals[HEART_RATE]
+guided-sub-equals[PROGRAMMED_SPO2]
+guided-sub-equals[SPO2]
+tautologies
+#[serial 1150]   normalization of [serial 1135]
+split-post
+tautologies
+#[serial 1152]   normalization of [serial 1136]
+atomic
+now
+laws
+normalize
+laws
+normalize
+tautologies
+substitute-both
+substitute-both
+normalize
+laws
+substitute-both
+normalize
+guided-sub-equals[MINIMUM_HEART_RATE]
+guided-sub-equals[SPO2]
+guided-sub-equals[PROGRAMMED_SPO2]
+tautologies
+#[serial 1008]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+reduce
+reduce
+reduce
+reduce
+tautologies
+push
+make-an
+#IoMTwin::Pulse_Oximeter_Thread.impl
+#[serial 1351] <<P and v=e>> -> <<A>> in behavior action block for [serial 1350] 
+laws
+normalize
+now
+tautologies
+#[serial 1357]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1356]
+normalize
+laws
+tautologies
+#[serial 1358]   <<P and B0>> S0 <<Q>> in alternative for [serial 1356]
+atomic
+normalize
+laws
+substitute-both
+substitute-both
+substitute-both
+normalize
+laws
+tautologies
+#[serial 1359]   <<P and B1>> S1 <<Q>> in alternative for [serial 1356]
+atomic
+now
+tautologies
+normalize
+laws
+normalize
+laws
+tautologies
+#[serial 1009]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
+reduce
+atomic
+now
+normalize
+laws
+tautologies
+laws
+normalize
+tautologies

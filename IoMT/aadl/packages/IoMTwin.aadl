@@ -233,7 +233,7 @@ end SysIoMT.impl;
 						}
 					[] (sp < psp)~> --no need to check hrr < mhr
 						{
-							 << sp = psp and sp < psp and sp = SPO2 and INV_PO() >>
+							 << hrr = HEART_RATE and sp < psp and sp = SPO2 and INV_PO() >>
 							poa:=true & PO_Alarm!(true)
 							 << INV_PO() >>
 						}
@@ -248,9 +248,9 @@ end SysIoMT.impl;
 			   		declare echo_val~boolean := PO_Alarm_Echo?
 			   			{ 
 			   				 << INV_PO() and (echo_val iff PO_Alarm_Echo) >>
-			   				if (echo_val = poa)~> skip  --echo was same
+			   				if (echo_val iff poa)~> skip  --echo was same
 					  		[]
-					  		(echo_val <> poa)~> Lost_Confirmation!  --echo was different
+					  		(not (echo_val iff poa))~> Lost_Confirmation!  --echo was different
 					  		fi
 					 	 	 << INV_PO() >>	
 						} 
@@ -380,9 +380,9 @@ end Respiration_Monitor.impl;
 			 		<< RA() and MRP_A() and RM_Alarm_Echo@now >>
 			   		declare echo_val~boolean := RM_Alarm_Echo?
 			   			{ << RA() and MRP_A() and (echo_val iff RM_Alarm_Echo) >>
-			   				if (echo_val = rma)~> skip  --echo was same
+			   				if (echo_val iff rma)~> skip  --echo was same
 					  		[]
-					  		(echo_val <> rma)~> Lost_Confirmation!  --echo was different
+					  		(not (echo_val iff rma))~> Lost_Confirmation!  --echo was different
 					  		fi
 					 	 	<< RA() and MRP_A() >>	
 						} 
