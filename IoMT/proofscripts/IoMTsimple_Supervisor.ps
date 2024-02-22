@@ -2,7 +2,7 @@
 #  at Sat Jan 27 21:39:50 CST 2024 by brianlarson
 #  You chose proof script: /Users/brianlarson/git3/BLESS-models/IoMT/proofscripts/proofscript
 push
-sort-by-component[IoMT::cc_app.impl]
+sort-by-component[IoMT::Supervise_PCA_Thread.simple]
 #IoMT::cc_app.impl
 #[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
@@ -50,12 +50,3 @@ tautologies
 #[serial 1011] Subcomponent's Invariant implies Control_Application.impl's Invariant
 normalize
 tautologies
-#[serial 1012] Composition of Subcomponents via Directional Connection pca_pump.Infused_Drug -> patient.Infused_Drug:
-tautologies
-#[serial 1013] Composition of Subcomponents via Directional Connection pulse_oximeter.PO_alarm -> control_app.cc_proc.cc_app.PO_alarm:
-tautologies
-#[serial 1014] Composition of Subcomponents via Directional Connection resp_monitor.RM_alarm -> control_app.cc_proc.cc_app.RM_alarm:
-tautologies
-#[serial 1015] Composition of Subcomponents via Directional Connection IoMT::SysIoMT.impl.set_infusion:
-tautologies
-#Q.E.D.

@@ -1,0 +1,23 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
+#  at Thu Feb 22 21:24:03 AST 2024 by ehsanahmad
+push
+sort-by-component[IoMTsimple::Supervise_PCA_Thread.simple]
+make-an
+#IoMTsimple::Supervise_PCA_Thread.simple
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition. 
+substitute-pre
+normalize
+tautologies
+#[serial 1004] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state check, <<M(check)>> -> <<e1 or e2 or . . . en>>
+and-over-or-post
+laws
+normalize
+laws
+tautologies
+#[serial 1006]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+#[serial 1007]  <<M(run) and x>> -> <<M(check)>> for op: run-[x]->check{};
+tautologies
+#[serial 1008]  <<M(check) and x>> A <<M(run)>> for alarm: check-[x]->run{A};
