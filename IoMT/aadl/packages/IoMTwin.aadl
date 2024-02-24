@@ -536,9 +536,9 @@ end Respiration_Monitor.impl;
 					  {
 					  declare echo_val~boolean := Pause_Infusion_Echo?
 					    {  << (echo_val iff PAUSE_INFUSION_ECHO) and INV_E() >>
-					    if (echo_val = pause_inf)~> skip  --echo was same
+					    if (echo_val iff pause_inf)~> skip  --echo was same
 					    []
-					    (echo_val <> pause_inf)~> Lost_Confirmation!  --echo was different
+					    (not (echo_val iff pause_inf))~> Lost_Confirmation!  --echo was different
 					    fi	
 					    << INV_E() >>
 					    }
