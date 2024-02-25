@@ -3,7 +3,7 @@
 package IoMTwin
 public
 
-	with IoMTsimple, BLESS, BLESS_Types, IoMT_Properties, Physical_Types, IoMT_Types;
+	with BLESS, BLESS_Types, IoMT_Properties, Physical_Types, IoMT_Types;
 
 	annex Assertion {**
   ghost variables
@@ -24,8 +24,8 @@ public
 		pulse_oximeter: system Pulse_Oximeter.impl;
 		resp_monitor: system Respiration_Monitor.impl;
 		supervisor: system ICE_Supervisor.impl;
-		network: virtual bus IoMTsimple::Network_Bus;
-		patient: abstract IoMTsimple::Patient;
+		network: virtual bus Network_Bus;
+		patient: abstract Patient;
 		nurse_station: system Nurse_Station;
 
 	connections
@@ -69,7 +69,7 @@ end SysIoMT.impl;
 			Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
 			{BLESS::Assertion => "<< returns quantity mlph:=PUMP_RATE() >>";};
 			Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
-			network_conn: requires virtual bus access IoMTsimple::Network_Bus;
+			network_conn: requires virtual bus access Network_Bus;
 		properties
 			BLESS::Invariant => "<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
 	end PCA_Pump;
@@ -121,7 +121,7 @@ end SysIoMT.impl;
 	system Pulse_Oximeter
 		features
 			Lost_Confirmation: out event port; --report to nurse's station that alarm signal to supervisor was not confirmed in time
-			network_conn: requires virtual bus access IoMTsimple::Network_Bus;
+			network_conn: requires virtual bus access Network_Bus;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
 		properties
@@ -275,7 +275,7 @@ end SysIoMT.impl;
 			Lost_Confirmation: out event port; --do we have any time limit here
 			RM_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< RM_ALARM() >>";};
 			RM_Alarm_Echo: in event data port BLESS_Types::Boolean;
-			network_conn: requires virtual bus access IoMTsimple::Network_Bus; -- no assertion on the network connection
+			network_conn: requires virtual bus access Network_Bus; -- no assertion on the network connection
 		properties
 			
 			BLESS::Invariant => "<< RM_Alarm iff RM_ALARM() >>";
@@ -410,7 +410,7 @@ end Respiration_Monitor.impl;
 			RM_Alarm_Echo: out event data port BLESS_Types::Boolean --send back RM alarm
 			{BLESS::Assertion => "<<RM_ALARM()>>";};
 			Lost_Confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
-			network_conn: requires virtual bus access IoMTsimple::Network_Bus;
+			network_conn: requires virtual bus access Network_Bus;
 			PO_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM()>>";};
 			RM_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<RM_ALARM()>>";};
 			Pause_Infusion: out event data port BLESS_Types::Boolean {
@@ -536,9 +536,9 @@ end Respiration_Monitor.impl;
 					  {
 					  declare echo_val~boolean := Pause_Infusion_Echo?
 					    {  << (echo_val iff PAUSE_INFUSION_ECHO) and INV_E() >>
-					    if (echo_val = pause_inf)~> skip  --echo was same
+					    if (echo_val iff pause_inf)~> skip  --echo was same
 					    []
-					    (echo_val <> pause_inf)~> Lost_Confirmation!  --echo was different
+					    (not (echo_val iff pause_inf))~> Lost_Confirmation!  --echo was different
 					    fi	
 					    << INV_E() >>
 					    }
@@ -557,5 +557,18 @@ end Respiration_Monitor.impl;
 					
 			**};
 	end Supervise_PCA_Thread.echo;
+	
+	--network bus
+	virtual bus Network_bus -- network can be any network, Ethernet, WLAN etc
+		
+	end Network_bus;
+	
+	-- patient
+	-- Patient	
+	abstract Patient
+		features
+			Infused_Drug: in feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+			  {BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
+	end Patient;
 
 end IoMTwin;

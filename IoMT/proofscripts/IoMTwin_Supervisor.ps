@@ -1,28 +1,25 @@
-#This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
-#  at Thu Feb 22 19:38:31 AST 2024 by ehsanahmad
-#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/IoMTwin_Supervisor.ps
 push
 sort-by-component[IoMTwin::Supervise_PCA_Thread.echo]
 #IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1019] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
+#[serial 1027] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
 make-an
 substitute-pre
 normalize
 tautologies
-#[serial 1020] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+#[serial 1028] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 substitute-pre
 normalize
 tautologies
-#[serial 1021] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1029] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 tautologies
-#[serial 1022]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+#[serial 1030]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
 tautologies
-#[serial 1023]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
+#[serial 1031]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
 reduce
 normalize
 push
 #IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1087] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 102
+#[serial 1087] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 103
 make-an
 atomic
 normalize
@@ -62,7 +59,7 @@ guided-sub-equals[rm_alarm_active]
 laws
 normalize
 tautologies
-#[serial 1024]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
+#[serial 1032]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
 normalize
 reduce
 push
@@ -107,7 +104,7 @@ substitute-pre
 substitute-pre
 normalize
 tautologies
-#[serial 1025]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+#[serial 1033]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
 reduce
 reduce
 reduce
@@ -116,29 +113,31 @@ tautologies
 normalize
 laws
 push
-make-an
 #IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1197]   normalization of [serial 1191] 
-replace<>
+#[serial 1202] laws applied to [serial 119
+make-an
 normalize
-laws
-tautologies
-#[serial 1202] laws applied to [serial 1195]
 now
 normalize
 tautologies
-#[serial 1203] laws applied to [serial 1199]
+#[serial 1203] laws applied to [serial 1197]
+tautologies
+#[serial 1204] laws applied to [serial 1199]
 atomic
 tautologies
-#[serial 1204] laws applied to [serial 1201]
-atomic
-tautologies
-laws
-tautologies
-#[serial 1026]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
+#[serial 1205] laws applied to [serial 1201]
 atomic
 normalize
 tautologies
 laws
 normalize
+tautologies
+#[serial 1034]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
+atomic
+now
+normalize
+laws
+tautologies
+normalize
+laws
 tautologies
