@@ -64,7 +64,7 @@ public
 			pca_pump: system PCA_Pump;
 			pulse_oximeter: system Pulse_Oximeter;
 			resp_monitor: system Respiration_Monitor;
-			supervisor: system ICE_Supervisor.impl;
+			supervisor: system Coordinator.impl;
 			network: virtual bus Network_Bus;
 			patient: abstract Patient;
 
@@ -122,7 +122,7 @@ public
 			  {BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
 	end Patient;
 
-	system ICE_Supervisor
+	system Coordinator
 		features
 			PO_Alarm: in data port BLESS_Types::Boolean
 		  	{BLESS::Assertion=>"<<PO_ALARM()>>";};
@@ -133,19 +133,19 @@ public
 			network_conn: requires virtual bus access Network_Bus;
 		properties
 			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";		
-	end ICE_Supervisor;
+	end Coordinator;
 	
-	system implementation ICE_Supervisor.impl
+	system implementation Coordinator.impl
 	subcomponents
-		cc_proc: process Supervise_PCA_Process.impl;
+		cc_proc: process Coordinator_Process.impl;
 
 	connections
 		poa: port PO_Alarm -> cc_proc.PO_Alarm;
 		rma: port RM_Alarm -> cc_proc.RM_Alarm;
 		pi: port cc_proc.Pause_Infusion -> Pause_Infusion;
-  end ICE_Supervisor.impl;
+  end Coordinator.impl;
 	
-	process Supervise_PCA_Process
+	process Coordinator_Process
 		features
 			PO_Alarm: in data port BLESS_Types::Boolean
 		  	{BLESS::Assertion=>"<<PO_ALARM()>>";};
@@ -156,18 +156,18 @@ public
 		--	bus_access: requires bus access Network_bus;
 		properties
 			BLESS::Invariant=> "<< (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>";
-	end Supervise_PCA_Process;
+	end Coordinator_Process;
 	
-	process implementation Supervise_PCA_Process.impl
+	process implementation Coordinator_Process.impl
 	subcomponents
-		cc_app: thread Supervise_PCA_Thread.simple;
+		cc_app: thread Coordinator_Thread.simple;
 	connections
 		poa: port PO_Alarm -> cc_app.PO_Alarm;
 		rma: port RM_Alarm -> cc_app.RM_Alarm;
 		pi: port cc_app.Pause_Infusion -> Pause_Infusion;
-  end Supervise_PCA_Process.impl;
+  end Coordinator_Process.impl;
 
-	thread Supervise_PCA_Thread
+	thread Coordinator_Thread
 	 features
 		Pause_Infusion : out data port BLESS_Types::Boolean
 			{BLESS::Assertion=>"<<PO_ALARM() or RM_ALARM()>>";}; 
@@ -182,10 +182,10 @@ public
 		properties
 			Dispatch_Protocol => Timed;
 			Period => 500 ms;
-	end Supervise_PCA_Thread;
+	end Coordinator_Thread;
 
 --simple thread implementation without message confirmation	
-	thread implementation Supervise_PCA_Thread.simple
+	thread implementation Coordinator_Thread.simple
 		annex BLESS
 			{**
 				assert 
@@ -207,7 +207,7 @@ public
 					ok: check -[not PO_Alarm? and not RM_Alarm?]-> run
 					 	{Pause_Infusion!(false)};
 			**};
-	end Supervise_PCA_Thread.simple;
+	end Coordinator_Thread.simple;
 		
 	
 	virtual bus Network_bus -- network can be any network, Ethernet, WLAN etc
