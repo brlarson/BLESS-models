@@ -5,6 +5,7 @@ c.output.directory=
 camkes.aux.src.dir=
 camkes.output.directory=
 eclipse.preferences.version=1
+enable.runtime.monitoring=false
 exclude.slang.impl=false
 max.sequence.size=16
 max.string.size=256
