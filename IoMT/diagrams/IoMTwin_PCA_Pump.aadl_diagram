@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="6bbd2dd1-f31c-437c-a25a-c6d2940d56ab" manual="true" background="#ccffcc" primaryLabelVisible="true">
+    <element uuid="fa420882-bed7-4561-81ad-44c79513d688" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Infused_Drug</seg>
+      </bo>
+      <position y="60.0"/>
+    </element>
+    <element uuid="6569433e-6802-4c05-b867-2433b68a9dfd" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>network_conn</seg>
+      </bo>
+      <position y="10.0"/>
+    </element>
+    <element uuid="4a718f79-2252-4de8-b71c-23ec6dfba489" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Pause_Infusion</seg>
+      </bo>
+      <position y="160.0"/>
+    </element>
+    <element uuid="c58fbd1b-f872-42d8-bcf9-02c90688ea44" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Pause_Infusion_Echo</seg>
+      </bo>
+      <position y="110.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>PCA_Pump</seg>
+    </bo>
+    <position x="-400.0" y="10.0"/>
+    <size width="860.0" height="320.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMTwin::PCA_Pump</seg>
+    </context>
+  </config>
+</diagram:Diagram>

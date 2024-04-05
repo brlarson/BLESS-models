@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="3abf68c5-438d-45cb-8608-78010fec8de5" manual="true" background="#ccccff" primaryLabelVisible="false">
+    <element uuid="3c7b7498-3de4-4013-b4c7-50a0ceaca651" manual="true">
+      <element uuid="9213a0d4-b9d1-47e8-b323-5dda011841de" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>lsc</seg>
+      </bo>
+    </element>
+    <element uuid="45c357b1-8fdd-41d8-8079-b4827924014a" manual="true">
+      <element uuid="a30de318-8c16-4617-a733-3281eac2f88e" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>rma</seg>
+      </bo>
+    </element>
+    <element uuid="4861444a-f855-4609-87c2-6204ac9f3c4d" manual="true">
+      <element uuid="c7c61789-a131-4aea-a624-d202ab11baa0" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>rme</seg>
+      </bo>
+    </element>
+    <element uuid="8b5d8707-d883-4ac5-9df4-60ae5265b390" manual="true">
+      <element uuid="cc9fb439-c22a-41fe-8a8b-7473a611a609" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>rpr</seg>
+      </bo>
+    </element>
+    <element uuid="be225d5d-29a9-423e-b126-95295ea7dbca" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>Lost_Confirmation</seg>
+      </bo>
+      <position x="809.7968673706055" y="180.0"/>
+    </element>
+    <element uuid="dd91f5ee-499b-475b-929e-747df56dbff3" manual="true" dockArea="top">
+      <bo>
+        <seg>feature</seg>
+        <seg>network_conn</seg>
+      </bo>
+      <position x="770.0"/>
+    </element>
+    <element uuid="d9ea9812-dadd-453f-84ac-0843b6dfd2c3" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>RM_Alarm</seg>
+      </bo>
+      <position x="855.0312576293945" y="225.0"/>
+    </element>
+    <element uuid="33622e62-aad5-42e8-b1eb-21dfaaaa2f44" manual="true" dockArea="top">
+      <bo>
+        <seg>feature</seg>
+        <seg>RM_Alarm_Echo</seg>
+      </bo>
+      <position x="600.0"/>
+    </element>
+    <element uuid="d8ba0c13-46f9-4872-b173-84b7a91368cd" manual="true">
+      <bo>
+        <seg>realization</seg>
+      </bo>
+    </element>
+    <element uuid="c5c254b4-3133-4ac7-875d-b4000759b2b8" manual="true" primaryLabelVisible="false">
+      <element uuid="3517d8e3-a323-4a05-8752-eed662b89b9e" manual="true">
+        <element uuid="38e5c890-5271-4f47-b11c-c0b30505840d" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>lsc1</seg>
+        </bo>
+      </element>
+      <element uuid="ae121529-0f19-489d-ac24-7b9067dcc803" manual="true">
+        <element uuid="e2081b1f-d5e9-4a62-93fe-e14202e9da01" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>lsc2</seg>
+        </bo>
+      </element>
+      <element uuid="bb127d5a-ce5c-4556-a9d2-6413b88d69c2" manual="true">
+        <element uuid="9d5a653d-8a48-48de-9226-95178265cbd5" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rma1</seg>
+        </bo>
+      </element>
+      <element uuid="0f5bd6eb-a54f-415c-a0ea-0fd7abe024f9" manual="true">
+        <element uuid="d15e7a6d-8294-4ebe-bc05-d5871070cf29" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rma2</seg>
+        </bo>
+      </element>
+      <element uuid="f4b39ae5-ef94-4672-bd1d-1d290eedfd47" manual="true">
+        <element uuid="3717ab59-5d88-4052-b1a0-54e14be966ee" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rmae1</seg>
+        </bo>
+        <bendpoints>
+          <point x="661.0" y="113.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="19f7f927-a0bc-45c9-bf38-57f679ebd374" manual="true">
+        <element uuid="1d79dd84-3bbc-41f0-9e7c-afc24a0bc26f" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rmaee2</seg>
+        </bo>
+      </element>
+      <element uuid="16c46e4f-1257-413e-b155-30a1de70ed10" manual="true">
+        <element uuid="9ce89143-a2a9-4c8f-b01d-d9450eae6281" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>rsr</seg>
+        </bo>
+        <bendpoints>
+          <point x="17.0" y="68.0"/>
+          <point x="11.0" y="152.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="2c7249fe-78d6-4f18-91eb-7fc4a218f4e9" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>Lost_Confirmation</seg>
+        </bo>
+        <position x="669.7968673706055" y="80.0"/>
+      </element>
+      <element uuid="041514bb-3f9b-4da2-9ee0-11c57a489733" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>RM_Alarm</seg>
+        </bo>
+        <position x="715.0312576293945" y="125.0"/>
+      </element>
+      <element uuid="53054db2-11b1-44e9-8744-c1e11d1e1e28" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>RM_Alarm_Echo</seg>
+        </bo>
+        <position x="570.0"/>
+      </element>
+      <element uuid="018007fe-ea6f-470d-9fd5-7e0052dd9e3b" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>RP_Rate</seg>
+        </bo>
+        <position x="150.0"/>
+      </element>
+      <element uuid="b62dd7e9-ac50-41cc-9764-bfc78d545c3c" manual="true" background="#ffffcc" primaryLabelVisible="false">
+        <element uuid="053255ec-8d53-4fc3-9726-c9ff296d88bb" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>lc</seg>
+          </bo>
+          <position y="60.0"/>
+        </element>
+        <element uuid="d7c4812e-b950-4daa-8d45-894714631264" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>Lost_Confirmation</seg>
+          </bo>
+          <position x="139.79686737060547" y="50.0"/>
+        </element>
+        <element uuid="21fddd84-9fc0-4f4d-b21c-cd096576193e" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>RM_Alarm</seg>
+          </bo>
+          <position x="185.03125762939453" y="95.0"/>
+        </element>
+        <element uuid="ac77d227-20cf-4de0-84dc-023e15fa06b5" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>RM_Alarm_Echo</seg>
+          </bo>
+          <position y="105.0"/>
+        </element>
+        <element uuid="7bc00975-a9ac-4526-969f-1ee6f735dfa7" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>rma</seg>
+          </bo>
+          <position y="10.0"/>
+        </element>
+        <element uuid="fbb600cc-bc5c-42bf-87b1-24713fb0b75a" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>rmae</seg>
+          </bo>
+          <position x="217.62239837646484"/>
+        </element>
+        <element uuid="8fd4ab16-2d4a-4b5f-bd96-331d3cec9d47" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>rmc</seg>
+        </bo>
+        <position x="410.0" y="30.0"/>
+        <size width="260.0" height="150.0"/>
+      </element>
+      <element uuid="0d88c069-24d1-4d07-8eb7-7b80cdfd9e7e" manual="true" background="#ccffcc" primaryLabelVisible="false">
+        <element uuid="ad65107b-1e29-41cd-a786-b420d1ad84db" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>Lost_Confirmation</seg>
+          </bo>
+          <position x="219.79686737060547" y="60.0"/>
+        </element>
+        <element uuid="48a35006-31ac-4573-a1e3-16923907e2bc" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>RM_Alarm</seg>
+          </bo>
+          <position x="265.03125762939453" y="10.0"/>
+        </element>
+        <element uuid="ad9124ed-b55f-415c-b23d-5e84ebb46443" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>RM_Alarm_Echo</seg>
+          </bo>
+          <position x="227.2252655029297" y="105.0"/>
+        </element>
+        <element uuid="d484018f-51fc-4693-97f5-374b78422e16" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>RP_Rate</seg>
+          </bo>
+          <position y="40.0"/>
+        </element>
+        <element uuid="78591524-09c5-47c2-81ff-c82fd7f5fd15" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>rmt</seg>
+        </bo>
+        <position x="40.0" y="30.0"/>
+        <size width="340.0" height="145.0"/>
+      </element>
+      <element uuid="cdfdbf35-fc72-4a17-9690-b2edafad2de7" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>rmp</seg>
+      </bo>
+      <position x="10.0" y="100.0"/>
+      <size width="790.0" height="200.0"/>
+    </element>
+    <element uuid="291f71f5-5ee5-4cd9-8d62-8f90ce5f2b5d" manual="true" primaryLabelVisible="false">
+      <element uuid="9443fb89-c687-42cd-8343-cbe572f9e2ba" manual="true" dockArea="bottom">
+        <bo>
+          <seg>feature</seg>
+          <seg>RP_Rate</seg>
+        </bo>
+        <position x="80.0" y="46.0"/>
+      </element>
+      <element uuid="1fe444a5-fd17-407c-81ad-1aa21e5e6543" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>rss</seg>
+      </bo>
+      <position x="60.0" y="10.0"/>
+      <size width="210.0" height="70.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>Respiration_Monitor.impl</seg>
+    </bo>
+    <position x="-30.0" y="-50.0"/>
+    <size width="930.0" height="320.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMTwin::Respiration_Monitor.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>
