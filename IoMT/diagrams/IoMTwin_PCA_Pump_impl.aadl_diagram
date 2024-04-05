@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="58f13a34-1954-4985-b40e-61fc5507a334" manual="true" background="#ccccff">
+    <element uuid="5aa73ecc-321f-49d7-95ee-ac14995f5d46" manual="true">
+      <element uuid="4a305763-b08b-4245-9dde-8567fc82738f" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>pd</seg>
+      </bo>
+    </element>
+    <element uuid="4fac47c6-6a6b-4909-950f-7e672e4ee286" manual="true">
+      <element uuid="d27308d5-001f-4ff3-9e6b-c35d5f6ec3e4" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>pie</seg>
+      </bo>
+    </element>
+    <element uuid="3a751aab-8a82-40c6-bb3e-d3ec0d80e46f" manual="true">
+      <element uuid="f560a3f9-8752-4ec8-8041-2463ba1c821b" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>pif</seg>
+      </bo>
+    </element>
+    <element uuid="df927b83-62f9-4631-b11c-42d99c9d12f3" manual="true">
+      <element uuid="a803a9b0-5c1f-428b-a019-1e3f1b65d318" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>pr</seg>
+      </bo>
+    </element>
+    <element uuid="c5cf6e8a-8194-4439-9e4d-bfb1fa866f28" manual="true">
+      <element uuid="e1822e7a-f348-4864-a45c-be292699e9fc" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>r2p</seg>
+      </bo>
+    </element>
+    <element uuid="84f5ab84-4516-441e-8400-49df78208949" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>infused_drug</seg>
+      </bo>
+      <position x="800.9036483764648" y="300.0"/>
+    </element>
+    <element uuid="2780f1dd-7df7-4047-966f-0f75c9b9b762" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>network_connection</seg>
+      </bo>
+      <position x="759.4062347412109" y="248.0"/>
+    </element>
+    <element uuid="375919d1-8e33-4d08-a3b3-a8e5e51ea65a" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>pause_infusion</seg>
+      </bo>
+      <position y="130.0"/>
+    </element>
+    <element uuid="48e20034-b854-4ca2-a2e7-881dbc01c8e9" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>pause_infusion_echo</seg>
+      </bo>
+      <position y="180.0"/>
+    </element>
+    <element uuid="8c51b146-59f8-41c8-a015-fa5ea9e58c19" manual="true">
+      <element uuid="a905b1c7-eb70-4f00-9df9-ab55c7ae4cfa" manual="true">
+        <element uuid="d5449327-d14d-41e0-9363-301ed2f84045" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>PCA_Pump_Process_impl_new_connection</seg>
+        </bo>
+      </element>
+      <element uuid="a73a7ba8-f20b-4734-a4d9-f795ba6a963e" manual="true">
+        <element uuid="7bb7ace0-324b-473a-91bd-2d6d9fcdb78f" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pi1</seg>
+        </bo>
+      </element>
+      <element uuid="cbca7512-7cb0-49cd-9c84-05753bdf3d95" manual="true">
+        <element uuid="9da524b8-f268-408e-b1c4-087808b71138" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pi2</seg>
+        </bo>
+      </element>
+      <element uuid="bbcccff5-e07e-469e-9c3c-c22e4f16f4f5" manual="true">
+        <element uuid="07d40f6d-3029-4a9c-922a-814e44164100" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pie1</seg>
+        </bo>
+      </element>
+      <element uuid="037b829c-e642-471d-9cbe-70c064ca0a94" manual="true">
+        <element uuid="9be9fb66-801f-4fa6-bd10-a8a27828834b" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pie2</seg>
+        </bo>
+      </element>
+      <element uuid="b3ae52df-1b04-42e0-9b63-63495dfdf5b8" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>pause_infusion</seg>
+        </bo>
+        <position y="90.0"/>
+      </element>
+      <element uuid="2e35304a-c863-4112-b9f7-22a67e7dc63d" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>pause_infusion_echo</seg>
+        </bo>
+        <position y="140.0"/>
+      </element>
+      <element uuid="9f9c269e-405b-49c7-be47-e09d690a0dd8" manual="true" dockArea="bottom">
+        <bo>
+          <seg>feature</seg>
+          <seg>pump_rate</seg>
+        </bo>
+        <position x="500.0" y="176.0"/>
+      </element>
+      <element uuid="72bef12f-195c-4cad-a5dd-8c891d1e872e" manual="true" background="#ccffcc">
+        <element uuid="92b03382-4615-4634-bf45-248e0317b62d" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>pause_infusion</seg>
+          </bo>
+          <position x="158.29947662353516" y="40.0"/>
+        </element>
+        <element uuid="65acfe44-495a-4c44-972c-eefb915a80f3" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>pause_infusion_echo</seg>
+          </bo>
+          <position y="85.0"/>
+        </element>
+        <element uuid="cc1c3ca3-defe-4331-a010-445bcf44c6e0" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>pi</seg>
+          </bo>
+          <position y="40.0"/>
+        </element>
+        <element uuid="3d3fd37e-b1ab-4cdb-80a9-19a84af65b49" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>pie</seg>
+          </bo>
+          <position x="230.20703125" y="85.0"/>
+        </element>
+        <element uuid="09665bd2-a447-41bc-86cf-e7b5801fb4d4" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>pcc</seg>
+        </bo>
+        <position x="140.0" y="50.0"/>
+        <size width="260.0" height="130.0"/>
+      </element>
+      <element uuid="0e463513-fd99-45c1-8110-44011e2aa1d1" manual="true" background="#ffe5cc">
+        <element uuid="c768ab36-16ab-4d63-aee6-90b088aecd33" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>pause_infusion</seg>
+          </bo>
+          <position y="40.0"/>
+        </element>
+        <element uuid="42b48e52-1bd2-46ea-9c1f-84510fdfca7b" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>pause_infusion_echo</seg>
+          </bo>
+          <position y="85.0"/>
+        </element>
+        <element uuid="cc337ba2-2dc5-48b2-90c6-a031015ff48b" manual="true" dockArea="bottom">
+          <bo>
+            <seg>feature</seg>
+            <seg>pump_rate</seg>
+          </bo>
+          <position x="80.0" y="101.0"/>
+        </element>
+        <element uuid="175fc747-342c-407d-9231-285c8230979e" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>pct</seg>
+        </bo>
+        <position x="420.0" y="50.0"/>
+        <size width="239.72917938232422" height="125.0"/>
+      </element>
+      <element uuid="4f36e5db-c9f3-4d44-8d08-9a561e37155b" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>pcp</seg>
+      </bo>
+      <position x="140.0" y="40.0"/>
+      <size width="680.0" height="200.0"/>
+    </element>
+    <element uuid="afa546ad-be46-4aa2-9516-28524d66d798" manual="true" background="#e0e0e0">
+      <element uuid="b9eed5f7-72ce-48b3-a1ef-52bc2b0818d0" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>drug_from_reservoir</seg>
+        </bo>
+        <position y="20.0"/>
+      </element>
+      <element uuid="0f9321f0-8268-4856-a2a7-13403a62984f" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>infused_drug</seg>
+        </bo>
+        <position x="310.90364837646484" y="30.0"/>
+      </element>
+      <element uuid="257363db-4212-4cb6-a591-a6f05f018f17" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>pump_rate</seg>
+        </bo>
+        <position x="240.0"/>
+      </element>
+      <element uuid="b4b3b17f-25a3-4619-89f2-b4d230c0cc2d" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>pmp</seg>
+      </bo>
+      <position x="400.0" y="270.0"/>
+      <size width="400.0" height="100.0"/>
+    </element>
+    <element uuid="86c57050-f071-40f8-a6c1-1859c9709046" manual="true" background="#e0e0e0">
+      <element uuid="0c89fdac-898d-4277-aed2-02972ca21c57" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>drug_source</seg>
+        </bo>
+        <position x="161.08333206176758" y="10.0"/>
+      </element>
+      <element uuid="118ee809-b70c-4691-bb3c-170a1d52778b" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>rsv</seg>
+      </bo>
+      <position x="110.0" y="280.0"/>
+      <size width="247.20442581176758" height="70.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>PCA_Pump.impl</seg>
+    </bo>
+    <position/>
+    <size width="890.0" height="390.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMTwin::PCA_Pump.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>

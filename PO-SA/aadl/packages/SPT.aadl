@@ -36,7 +36,7 @@ annex BLESS
     nts~quantity whole :=#PulseOx_Properties::Num_Trending_Samples;
     spo2_a ~ spo2_samples --holds SpO2 history
     spo2_nxt ~ spo2_samples  --temporary copy of trend for next output
-    num_samples~quantity whole := 0.0  --counts samples while filling
+    num_samples~quantity whole := 0  --counts samples while filling
       <<AXIOM_NS: : num_samples = NUM_SAMPLES and spo2_a = SPO2_HISTORY>>
   states
     start : initial state

@@ -38,7 +38,7 @@ public
 				reference (network));};
 
 		--confirmation signals
-		pause_infusion_echo: port pca_pump.Pause_Infusion_Echo -> coordinator.Pause_Infusion_Echo {
+		pause_infusion_echo: port pca_pump.pause_infusion_echo -> coordinator.Pause_Infusion_Echo {
 			Actual_Connection_Binding => (reference (network));};
 		po_alarm_echo: port coordinator.PO_Alarm_Echo -> pulse_oximeter.PO_Alarm_Echo {Actual_Connection_Binding => (
 				reference (network));};
@@ -46,18 +46,18 @@ public
 				reference (network));};
 
 		--tube and needle between pump and patient
-		infusion_set: feature pca_pump.Infused_Drug -> patient.Infused_Drug;
+		infusion_set: feature pca_pump.infused_drug -> patient.Infused_Drug;
 
 		--alarms to nurse's station
 		poa_ns: port pulse_oximeter.PO_Alarm -> nurse_station.Patient_Alarm;
 		rma_ns: port resp_monitor.RM_Alarm -> nurse_station.Patient_Alarm;
-		lcm: port pulse_oximeter.Lost_confirmation -> nurse_station.Patient_Lost_Confirmation;
+		lcm: port pulse_oximeter.lost_confirmation -> nurse_station.Patient_Lost_Confirmation;
 		rlc: port resp_monitor.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
 		slc: port coordinator.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
 
 		--virtual bus connection
-		network2pca: virtual bus access network <-> pca_pump.network_conn;
-		po2network: virtual bus access network <-> pulse_oximeter.network_conn;
+		network2pca: virtual bus access network <-> pca_pump.network_connection;
+		po2network: virtual bus access network <-> pulse_oximeter.network_connection;
 		rm2network: virtual bus access network <-> resp_monitor.network_conn;
 		ca2network: virtual bus access network <-> coordinator.network_conn;
 		
@@ -66,11 +66,11 @@ end SysIoMT.impl;
 -- PCA Pump  using event data messages
 	system PCA_Pump
 		features
-			Pause_Infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
-			Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
-			{BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
-			Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
-			network_conn: requires virtual bus access Network_Bus;
+			pause_infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			infused_drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+			  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
+			pause_infusion_echo: out event data port BLESS_Types::Boolean;
+			network_connection: requires virtual bus access Network_Bus;
 		properties
 			BLESS::Invariant => "<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
 	end PCA_Pump;
@@ -78,70 +78,77 @@ end SysIoMT.impl;
 	system implementation PCA_Pump.impl
 		subcomponents
 			pcp: process PCA_Pump_Process.impl;
-			
+			rsv: device Drug_Reservoir;
+			pmp: device Mechanical_Pump;
 		connections
-			pif: port Pause_Infusion -> pcp.Pause_Infusion;
- 			ifd: feature pcp.Infused_Drug -> Infused_Drug;
- 			pie: port pcp.Pause_Infusion_Echo -> Pause_Infusion_Echo;
-			
+			pif: port pause_infusion -> pcp.Pause_Infusion;
+ 			pie: port pcp.Pause_Infusion_Echo -> pause_infusion_echo;
+			pr : port pcp.pump_rate -> pmp.pump_rate;
+ 			r2p: feature rsv.drug_source -> pmp.drug_from_reservoir;
+			pd : feature pmp.infused_drug -> infused_drug;
 	end PCA_Pump.impl;
 	
  process PCA_Pump_Process
  	features
- 		Pause_Infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
-		Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
-		{BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
-		Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
+ 		pause_infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+		pump_rate : out data port IoMT_Types::Pump_Rate
+		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
+		pause_infusion_echo: out event data port BLESS_Types::Boolean;
  end PCA_Pump_Process;
  
  process implementation PCA_Pump_Process.impl
- 	subcomponents
- 		pct: thread PCA_Pump_Thread.impl;
- 		pcc: thread PCA_Pump_Communication_Thread;
- 	
- 	connections
- 		pi1: port Pause_Infusion -> pcc.pi;
- 		pi2: port pcc.Pause_Infusion -> pct.Pause_Infusion;
- 		
- 		pie1: port pct.Pause_Infusion_Echo -> pcc.pie;
- 		pie2: port pcc.Pause_Infusion_Echo -> Pause_Infusion_Echo;
- 		
- 		ifd1: feature pct.Infused_Drug -> pcc.id;
- 		ifd2: feature pcc.Infused_Drug -> Infused_Drug;
- 		
- 		
- 		
- end PCA_Pump_Process.impl;
+	subcomponents
+		pct: thread PCA_Pump_Thread;
+		pcc: thread PCA_Pump_Communication_Thread;
+
+	connections
+		pi1: port Pause_Infusion -> pcc.pi;
+		pi2: port pcc.Pause_Infusion -> pct.pause_infusion;
+
+		pie1: port pct.Pause_Infusion_Echo -> pcc.pie;
+		pie2: port pcc.Pause_Infusion_Echo -> pause_infusion_echo;
+
+-- 		ifd1: feature pct.Infused_Drug -> pcc.id;
+-- 		ifd2: feature pcc.Infused_Drug -> Infused_Drug;
+		PCA_Pump_Process_impl_new_connection: port pct.pump_rate -> pump_rate;
+end PCA_Pump_Process.impl;
  
  thread PCA_Pump_Thread
  	features
- 		Pause_Infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
-		Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
-		{BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
-		Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
- 		
+ 		pause_infusion: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+		pump_rate : out data port IoMT_Types::Pump_Rate
+		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
+		pause_infusion_echo: out event data port BLESS_Types::Boolean;
  end PCA_Pump_Thread;
  
- thread implementation PCA_Pump_Thread.impl
- 	
- end PCA_Pump_Thread.impl;
+  --  the drug reservoir in some PCA pumps is a hanging bag of saline into which a drug is injected
+  --  in this case the drug reservoir is a vial of concentrated drug within the PCA pump behind a locked door
+device Drug_Reservoir
+  features
+ 		drug_source: out feature Physical_Types::Fluid_Flow; --abstract AADL feature modeling drug delivery 	
+end Drug_Reservoir;
+
+-- the mechanical pump does the actual pumping at a rate determined by the PCA_Pump_Thread through the PCA_Pump_Process
+device Mechanical_Pump
+	features
+		-- physical flow of drug to patient
+		infused_drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
+		-- drug from reservoir
+		drug_from_reservoir : in  feature Physical_Types::Fluid_Flow;
+		-- pump rate determined by PCA_Pump_Thread
+		pump_rate : in data port IoMT_Types::Pump_Rate
+		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";}; 
+end Mechanical_Pump;
 
 -- PCA pump communication thread
 
 thread PCA_Pump_Communication_Thread
 	features
  		pi: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
- 		Pause_Infusion: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
-		
-		id: in feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
-		{BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
-		
-		Infused_Drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
-		{BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
-		
+ 		pause_infusion: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};			
 		pie: in event data port BLESS_Types::Boolean;
-		Pause_Infusion_Echo: out event data port BLESS_Types::Boolean;
-	
+		pause_infusion_echo: out event data port BLESS_Types::Boolean;
 end PCA_Pump_Communication_Thread;
 
 
@@ -150,8 +157,8 @@ end PCA_Pump_Communication_Thread;
 -- Pulse Oximeter using event data messages
 	system Pulse_Oximeter
 		features
-			Lost_Confirmation: out event port; --report to nurse's station that alarm signal to supervisor was not confirmed in time
-			network_conn: requires virtual bus access Network_Bus;
+			lost_confirmation: out event port; --report to nurse's station that alarm signal to supervisor was not confirmed in time
+			network_connection: requires virtual bus access Network_Bus;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
 		properties
@@ -164,7 +171,7 @@ end PCA_Pump_Communication_Thread;
 			pos: device Pulse_Oximeter_Sensor;
 			
 		connections
-			lcc: port  poc.Lost_Confirmation -> Lost_Confirmation;
+			lcc: port  poc.lost_confirmation -> lost_confirmation;
 			poa: port poc.PO_Alarm -> PO_Alarm;
 			poe: port PO_Alarm_Echo -> poc.PO_Alarm_Echo;
 			spc: port  pos.Spo2_Level -> poc.Spo2_Level;
@@ -176,7 +183,7 @@ end PCA_Pump_Communication_Thread;
 		features
 			Spo2_Level: in data port IoMT_Types::Spo2_Rate;
 			Heart_Rate: in data port IoMT_Types::Heart_Rate;
-			Lost_Confirmation: out event port;
+			lost_confirmation: out event port;
 			PO_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< PO_ALARM() >>";};
 			PO_Alarm_Echo: in event data port BLESS_Types::Boolean;
 					 
@@ -192,7 +199,7 @@ end PCA_Pump_Communication_Thread;
 			poe2: port poc.PO_Alarm_Echo -> pot.PO_Alarm_Echo;
 			
 			lcc1: port  pot.Lost_Confirmation -> poc.lc;
-			lcc2: port  poc.Lost_Confirmation -> Lost_Confirmation;
+			lcc2: port  poc.Lost_Confirmation -> lost_confirmation;
 			
 			pol1: port  pot.PO_Alarm -> poc.poa;
 			pol2: port  poc.PO_Alarm -> PO_Alarm;
