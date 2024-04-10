@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="016e066c-1dd7-492c-9b7f-9a4a98582dc0" manual="true">
+    <element uuid="9c498aa6-ef52-4abc-adec-7b8ed8a7f331" manual="true" background="#f0d0ae">
+      <element uuid="8c07173b-4806-47b4-b473-aee8bbfc06f0" manual="true" background="#ccccff">
+        <bo>
+          <seg>bless.state</seg>
+          <seg>check_echo</seg>
+        </bo>
+        <position x="210.0" y="150.0"/>
+        <size width="123.15885162353516" height="35.0"/>
+      </element>
+      <element uuid="052fbe75-5575-4f71-b1cc-08e78be93b9d" manual="true" background="#ffe5cc">
+        <bo>
+          <seg>bless.state</seg>
+          <seg>run</seg>
+        </bo>
+        <position x="120.0" y="40.0"/>
+        <size width="71.27083206176758" height="35.0"/>
+      </element>
+      <element uuid="95b70c78-c8fc-4e55-8042-08089638ea0c" manual="true" background="#ffcccc">
+        <bo>
+          <seg>bless.state</seg>
+          <seg>start</seg>
+        </bo>
+        <position x="50.0" y="130.0"/>
+        <size width="77.93098831176758" height="35.0"/>
+      </element>
+      <element uuid="e2122ace-79ce-4746-9542-c83ee8aca328" manual="true" primaryLabelVisible="true">
+        <bo>
+          <seg>bless.transition</seg>
+          <seg>go</seg>
+        </bo>
+      </element>
+      <element uuid="1a40e4aa-79d9-49de-a825-0a840f25ed21" manual="true" primaryLabelVisible="true">
+        <bo>
+          <seg>bless.transition</seg>
+          <seg>got_echo</seg>
+        </bo>
+        <bendpoints>
+          <point x="615.0" y="289.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="5b5cf0c9-e2cb-4160-b4d8-42d14413a5f7" manual="true" primaryLabelVisible="true">
+        <bo>
+          <seg>bless.transition</seg>
+          <seg>got_hrr_spo2</seg>
+        </bo>
+        <bendpoints>
+          <point x="512.0" y="353.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="552904f9-f592-411e-9ce3-9ed8c3b785a8" manual="true" primaryLabelVisible="true">
+        <bo>
+          <seg>bless.transition</seg>
+          <seg>late_echo</seg>
+        </bo>
+        <bendpoints>
+          <point x="561.0" y="323.0"/>
+        </bendpoints>
+        <primaryLabelPosition x="-30.98998026883396" y="-23.96041698351354"/>
+      </element>
+      <bo>
+        <seg>annex_subclause</seg>
+        <seg>BLESS</seg>
+        <seg>0</seg>
+      </bo>
+      <position x="130.0" y="40.0"/>
+      <size width="370.0" height="220.0"/>
+    </element>
+    <element uuid="bf4341ea-607c-45a3-a7d6-eb884a4768c9" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Heart_Rate</seg>
+      </bo>
+      <position y="160.0"/>
+    </element>
+    <element uuid="16d62c52-da47-4e34-9264-a5e3dfc6ca47" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Lost_Confirmation</seg>
+      </bo>
+      <position y="10.0"/>
+    </element>
+    <element uuid="dc4a154c-733d-401b-85db-2dda05be68e3" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>PO_Alarm</seg>
+      </bo>
+      <position y="210.0"/>
+    </element>
+    <element uuid="cb510129-60fc-438d-b786-dbced7443119" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>PO_Alarm_Echo</seg>
+      </bo>
+      <position y="60.0"/>
+    </element>
+    <element uuid="90805fdb-6624-4ec8-81eb-e84c0befcd9f" manual="true" dockArea="left">
+      <bo>
+        <seg>feature</seg>
+        <seg>Spo2_Level</seg>
+      </bo>
+      <position y="110.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>Pulse_Oximeter_Thread.impl</seg>
+    </bo>
+    <position x="210.0" y="180.0"/>
+    <size width="560.0" height="290.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMTwin::Pulse_Oximeter_Thread.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>

@@ -27,6 +27,9 @@
         <seg>connection</seg>
         <seg>po2network</seg>
       </bo>
+      <bendpoints>
+        <point x="754.0" y="393.0"/>
+      </bendpoints>
     </element>
     <element uuid="6ac6ece4-849c-4e49-92f9-f1f7cba428db" manual="true" lineWidth="4.0">
       <bo>
@@ -47,7 +50,7 @@
             <seg>subcomponent</seg>
             <seg>spc</seg>
           </bo>
-          <position x="30.0" y="103.0"/>
+          <position x="40.0" y="43.0"/>
           <size width="350.0" height="48.0"/>
         </element>
         <element uuid="af638361-8013-4aab-b12b-22a9bb5ffd2e" manual="true" background="#66ff66">
@@ -61,7 +64,7 @@
             <seg>subcomponent</seg>
             <seg>spt</seg>
           </bo>
-          <position x="60.0" y="43.0"/>
+          <position x="70.0" y="103.0"/>
           <size width="300.0" height="48.0"/>
         </element>
         <element uuid="5b0caf4a-886e-4a68-adfe-54b95fc108e6" manual="true">
@@ -87,7 +90,7 @@
         <seg>subcomponent</seg>
         <seg>coordinator</seg>
       </bo>
-      <position x="500.0" y="490.0"/>
+      <position x="410.0" y="480.0"/>
       <size width="500.0" height="230.0"/>
     </element>
     <element uuid="a66f446d-4ffe-43d5-9885-03dc540ff602" manual="true" background="#ffff00">
@@ -101,7 +104,7 @@
         <seg>subcomponent</seg>
         <seg>network</seg>
       </bo>
-      <position x="300.0" y="410.0"/>
+      <position x="210.0" y="410.0"/>
       <size width="730.0" height="55.0"/>
     </element>
     <element uuid="29b8b15c-3ce0-4d05-b1d2-12f91aeaf183" manual="true" background="#e0e0e0">
@@ -115,7 +118,7 @@
         <seg>subcomponent</seg>
         <seg>nurse_station</seg>
       </bo>
-      <position x="110.0" y="470.0"/>
+      <position x="20.0" y="470.0"/>
       <size width="160.0" height="130.0"/>
     </element>
     <element uuid="41155173-935b-43ea-8104-f42513818c07" manual="true" background="#ffcccc">
@@ -123,7 +126,7 @@
         <seg>subcomponent</seg>
         <seg>patient</seg>
       </bo>
-      <position x="350.0" y="30.0"/>
+      <position x="260.0" y="30.0"/>
       <size width="450.0" height="35.0"/>
     </element>
     <element uuid="8efa6db8-bad2-4276-9cb6-b4c9b0bdc339" manual="true" background="#ccccff">
@@ -139,7 +142,7 @@
             <seg>subcomponent</seg>
             <seg>pcc</seg>
           </bo>
-          <position x="30.0" y="107.0"/>
+          <position x="10.0" y="110.0"/>
           <size width="270.0" height="48.0"/>
         </element>
         <element uuid="f837b622-7073-4074-a6e5-02f28c8f5acc" manual="true" background="#66ff66">
@@ -153,7 +156,7 @@
             <seg>subcomponent</seg>
             <seg>pct</seg>
           </bo>
-          <position x="40.0" y="47.0"/>
+          <position x="20.0" y="50.0"/>
           <size width="270.0" height="48.0"/>
         </element>
         <element uuid="df6b41d8-d3b7-4c33-a1f4-d1f36bb89c58" manual="true">
@@ -167,7 +170,7 @@
           <seg>pcp</seg>
         </bo>
         <position x="10.0" y="110.0"/>
-        <size width="370.0" height="167.0"/>
+        <size width="310.0" height="167.0"/>
       </element>
       <element uuid="24703f25-e601-4086-9e5f-4cb18884e86f" manual="true" background="#e0e0e0">
         <element uuid="9525d20b-ff4c-400d-9fa3-8ed02540e5c8" manual="true">
@@ -180,8 +183,8 @@
           <seg>subcomponent</seg>
           <seg>pmp</seg>
         </bo>
-        <position x="220.0" y="49.0"/>
-        <size width="140.0" height="48.0"/>
+        <position x="190.0" y="50.0"/>
+        <size width="130.0" height="48.0"/>
       </element>
       <element uuid="25a4fb66-470c-4afe-9915-5cdc0782424b" manual="true" background="#e0e0e0">
         <element uuid="68996991-1e67-4655-b100-8ded5ac8a8d0" manual="true">
@@ -194,8 +197,8 @@
           <seg>subcomponent</seg>
           <seg>rsv</seg>
         </bo>
-        <position x="20.0" y="50.0"/>
-        <size width="170.0" height="48.0"/>
+        <position x="30.0" y="50.0"/>
+        <size width="120.0" height="48.0"/>
       </element>
       <element uuid="36643131-f6d2-4e56-bb15-0974e4542f23" manual="true">
         <bo>
@@ -207,8 +210,8 @@
         <seg>subcomponent</seg>
         <seg>pca_pump</seg>
       </bo>
-      <position x="10.0" y="80.0"/>
-      <size width="390.0" height="299.0"/>
+      <position x="20.0" y="80.0"/>
+      <size width="330.0" height="299.0"/>
     </element>
     <element uuid="e8faa52e-95a8-4153-98f3-c9d73ffd6dae" manual="true" background="#ccccff">
       <element uuid="c46b0d4b-a0f7-4593-b89f-9a13c941dda2" manual="true">
@@ -223,7 +226,7 @@
             <seg>subcomponent</seg>
             <seg>poc</seg>
           </bo>
-          <position x="50.0" y="110.0"/>
+          <position x="20.0" y="110.0"/>
           <size width="230.0" height="48.0"/>
         </element>
         <element uuid="06c57591-2524-47e2-a730-851411b19a30" manual="true" background="#66ff66">
@@ -237,7 +240,7 @@
             <seg>subcomponent</seg>
             <seg>pot</seg>
           </bo>
-          <position x="50.0" y="50.0"/>
+          <position x="20.0" y="50.0"/>
           <size width="230.0" height="48.0"/>
         </element>
         <element uuid="939fb133-d711-446d-a486-545a9224e6dc" manual="true">
@@ -250,8 +253,8 @@
           <seg>subcomponent</seg>
           <seg>poc</seg>
         </bo>
-        <position x="20.0" y="110.0"/>
-        <size width="340.0" height="180.0"/>
+        <position x="10.0" y="110.0"/>
+        <size width="270.0" height="180.0"/>
       </element>
       <element uuid="3e8b864e-4cf7-4a8f-8072-6d0e785bda52" manual="true" background="#e0e0e0">
         <element uuid="2cbeb1ec-629e-401f-8db1-2013c3233028" manual="true">
@@ -264,7 +267,7 @@
           <seg>subcomponent</seg>
           <seg>pos</seg>
         </bo>
-        <position x="90.0" y="50.0"/>
+        <position x="50.0" y="50.0"/>
         <size width="160.0" height="48.0"/>
       </element>
       <element uuid="a4119b8d-6f34-4826-8bdb-723252c3d3e7" manual="true">
@@ -277,8 +280,8 @@
         <seg>subcomponent</seg>
         <seg>pulse_oximeter</seg>
       </bo>
-      <position x="790.0" y="80.0"/>
-      <size width="370.0" height="300.0"/>
+      <position x="680.0" y="80.0"/>
+      <size width="290.0" height="300.0"/>
     </element>
     <element uuid="b7284683-55c4-4659-8457-3714403f13c2" manual="true" background="#ccccff">
       <element uuid="e240980b-5dc0-4e3c-9d53-9beb42b1f9f8" manual="true">
@@ -293,7 +296,7 @@
             <seg>subcomponent</seg>
             <seg>rmc</seg>
           </bo>
-          <position x="20.0" y="110.0"/>
+          <position x="10.0" y="110.0"/>
           <size width="250.0" height="48.0"/>
         </element>
         <element uuid="3e08eaaa-cb1e-42b5-b9aa-884ded25a186" manual="true" background="#66ff66">
@@ -307,7 +310,7 @@
             <seg>subcomponent</seg>
             <seg>rmt</seg>
           </bo>
-          <position x="40.0" y="48.0"/>
+          <position x="20.0" y="48.0"/>
           <size width="250.0" height="51.0"/>
         </element>
         <element uuid="74d972ad-9bbf-4af3-bb5d-a2173afab3b3" manual="true">
@@ -321,7 +324,7 @@
           <seg>rmp</seg>
         </bo>
         <position x="10.0" y="110.0"/>
-        <size width="310.0" height="170.0"/>
+        <size width="280.0" height="170.0"/>
       </element>
       <element uuid="89df770c-fd53-4b0c-82ec-a6657955d699" manual="true" background="#e0e0e0">
         <element uuid="6bc4a3b7-71ef-4585-a494-cf705506352b" manual="true">
@@ -334,7 +337,7 @@
           <seg>subcomponent</seg>
           <seg>rss</seg>
         </bo>
-        <position x="90.0" y="50.0"/>
+        <position x="70.0" y="50.0"/>
         <size width="160.0" height="48.0"/>
       </element>
       <element uuid="35fae8ab-3a22-488e-99f5-9a032cca841f" manual="true">
@@ -347,15 +350,15 @@
         <seg>subcomponent</seg>
         <seg>resp_monitor</seg>
       </bo>
-      <position x="430.0" y="80.0"/>
-      <size width="330.0" height="300.0"/>
+      <position x="360.0" y="80.0"/>
+      <size width="300.0" height="300.0"/>
     </element>
     <bo>
       <seg>classifier</seg>
       <seg>SysIoMT.impl</seg>
     </bo>
-    <position/>
-    <size width="1170.0" height="760.0"/>
+    <position x="90.0"/>
+    <size width="980.0" height="720.0"/>
   </element>
   <config type="custom" connectionPrimaryLabelsVisible="false">
     <enabledAadlProperties/>
