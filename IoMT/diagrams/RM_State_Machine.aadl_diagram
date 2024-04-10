@@ -7,7 +7,7 @@
           <seg>bless.state</seg>
           <seg>check_echo</seg>
         </bo>
-        <position x="10.0" y="140.0"/>
+        <position x="270.0" y="20.0"/>
         <size width="123.15885162353516" height="40.0"/>
       </element>
       <element uuid="77298d1a-4c82-4796-bf71-4365d7bdb3ec" manual="true" background="#ffe5cc">
@@ -15,7 +15,7 @@
           <seg>bless.state</seg>
           <seg>run</seg>
         </bo>
-        <position x="240.0" y="120.0"/>
+        <position x="110.0" y="20.0"/>
         <size width="71.27083206176758" height="50.0"/>
       </element>
       <element uuid="6692637b-ffc9-46f9-a93f-436d1534f595" manual="true" background="#ffcccc">
@@ -23,7 +23,7 @@
           <seg>bless.state</seg>
           <seg>start</seg>
         </bo>
-        <position x="230.0" y="30.0"/>
+        <position x="10.0" y="30.0"/>
         <size width="77.93098831176758" height="35.0"/>
       </element>
       <element uuid="fe32ff9e-3e67-4b9b-b131-e1b2bbaa9a46" manual="true" primaryLabelVisible="true">
@@ -37,10 +37,6 @@
           <seg>bless.transition</seg>
           <seg>got_echo</seg>
         </bo>
-        <bendpoints>
-          <point x="327.1588439941406" y="236.0"/>
-          <point x="339.1588439941406" y="236.0"/>
-        </bendpoints>
       </element>
       <element uuid="c1d35184-a7d8-4526-984e-ce74b0e9b558" manual="true" primaryLabelVisible="true">
         <bo>
@@ -48,7 +44,7 @@
           <seg>got_rp</seg>
         </bo>
         <bendpoints>
-          <point x="363.0" y="270.0"/>
+          <point x="332.0" y="160.0"/>
         </bendpoints>
       </element>
       <element uuid="8d68ba0a-fee8-4dc0-a04b-81f8d1e4c782" manual="true" primaryLabelVisible="true">
@@ -57,75 +53,51 @@
           <seg>late_echo</seg>
         </bo>
         <bendpoints>
-          <point x="341.0" y="200.0"/>
+          <point x="319.0" y="133.0"/>
         </bendpoints>
-      </element>
-      <element uuid="8c62fd2c-95e5-440d-aed9-ba768ddea26a" manual="true">
-        <bo>
-          <seg>bless.variable</seg>
-          <seg>mrp</seg>
-        </bo>
-        <position x="90.0" y="30.0"/>
-        <size width="74.96223831176758" height="35.0"/>
-      </element>
-      <element uuid="9250796d-c5aa-46b9-96f2-5fdcf93f3bd8" manual="true">
-        <bo>
-          <seg>bless.variable</seg>
-          <seg>rma</seg>
-        </bo>
-        <position x="10.0" y="70.0"/>
-        <size width="74.96223831176758" height="35.0"/>
-      </element>
-      <element uuid="47c69c54-392a-42ed-8218-7951cc99713d" manual="true">
-        <bo>
-          <seg>bless.variable</seg>
-          <seg>rpr</seg>
-        </bo>
-        <position x="10.0" y="20.0"/>
-        <size width="68.29557228088379" height="35.0"/>
       </element>
       <bo>
         <seg>annex_subclause</seg>
         <seg>BLESS</seg>
         <seg>0</seg>
       </bo>
-      <position x="110.0" y="40.0"/>
-      <size width="330.0" height="200.0"/>
+      <position x="40.0" y="20.0"/>
+      <size width="410.0" height="110.0"/>
     </element>
-    <element uuid="92559bde-c3a2-4bda-9017-2525558469fc" manual="true" dockArea="left">
+    <element uuid="92559bde-c3a2-4bda-9017-2525558469fc" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
         <seg>Lost_Confirmation</seg>
       </bo>
-      <position y="10.0"/>
+      <position x="439.79686737060547"/>
     </element>
-    <element uuid="fd20f7f8-a53c-4d19-aaca-51bc6440383c" manual="true" dockArea="left">
+    <element uuid="fd20f7f8-a53c-4d19-aaca-51bc6440383c" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
         <seg>RM_Alarm</seg>
       </bo>
-      <position y="160.0"/>
+      <position x="485.03125762939453" y="90.0"/>
     </element>
-    <element uuid="fc5dfe55-6f65-49a4-b4b1-fcb20a2416ed" manual="true" dockArea="left">
+    <element uuid="fc5dfe55-6f65-49a4-b4b1-fcb20a2416ed" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
         <seg>RM_Alarm_Echo</seg>
       </bo>
-      <position y="110.0"/>
+      <position x="447.2252655029297" y="45.0"/>
     </element>
     <element uuid="97e426d8-a2e0-4c69-a4ca-136e1596d224" manual="true" dockArea="left">
       <bo>
         <seg>feature</seg>
         <seg>RP_Rate</seg>
       </bo>
-      <position y="60.0"/>
+      <position/>
     </element>
     <bo>
       <seg>classifier</seg>
       <seg>Respiration_Monitor_Thread.impl</seg>
     </bo>
     <position x="60.0" y="40.0"/>
-    <size width="494.72393798828125" height="260.0"/>
+    <size width="560.0" height="140.0"/>
   </element>
   <config type="structure" connectionPrimaryLabelsVisible="false">
     <enabledAadlProperties/>
