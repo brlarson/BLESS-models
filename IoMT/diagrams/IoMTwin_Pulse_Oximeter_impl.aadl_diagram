@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="17cc0809-5131-4887-ac91-ce37ed5ac863" manual="true" background="#ccccff" primaryLabelVisible="false">
+    <element uuid="c6f1a995-e4fe-4d97-a86a-07e416c1ef8f" manual="true">
+      <element uuid="c000c7cd-e123-4501-8d20-0efe9eda1136" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>hrr</seg>
+      </bo>
+    </element>
+    <element uuid="938f489e-9f1e-4ae5-b257-39f7e8f8eebb" manual="true">
+      <element uuid="ffbf6908-c876-4ed6-a1dd-1bda9c2f2437" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>lcc</seg>
+      </bo>
+    </element>
+    <element uuid="365e7a1b-2c8d-408c-a69a-e0a04859a49e" manual="true">
+      <element uuid="f660cd8e-9aa5-4588-99ad-e7645aa630c6" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>poa</seg>
+      </bo>
+    </element>
+    <element uuid="54dd14ad-8a0d-42aa-b31d-8e87e8984ed8" manual="true">
+      <element uuid="e33c7cde-db1f-4e4a-80e4-c53711cbc466" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>poe</seg>
+      </bo>
+    </element>
+    <element uuid="1a780f85-f360-4723-b388-5e24397d76eb" manual="true">
+      <element uuid="7d0f8a3b-bc58-4d54-9be2-53a28e9faf58" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>spc</seg>
+      </bo>
+    </element>
+    <element uuid="c1da16f6-6003-4b4b-97fb-3329f5f7909f" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>Lost_Confirmation</seg>
+      </bo>
+      <position x="794.8111953735352" y="190.0"/>
+    </element>
+    <element uuid="bbed9c51-059d-4ef9-9d68-29e33841fd0c" manual="true" dockArea="top">
+      <bo>
+        <seg>feature</seg>
+        <seg>network_conn</seg>
+      </bo>
+      <position x="760.0"/>
+    </element>
+    <element uuid="fe59201a-f1c0-4c50-bdd9-f910afeddb45" manual="true" dockArea="right">
+      <bo>
+        <seg>feature</seg>
+        <seg>PO_Alarm</seg>
+      </bo>
+      <position x="841.5169372558594" y="250.0"/>
+    </element>
+    <element uuid="67545c94-eff7-4364-8060-93ba8347fa7f" manual="true" dockArea="top">
+      <bo>
+        <seg>feature</seg>
+        <seg>PO_Alarm_Echo</seg>
+      </bo>
+      <position x="590.0"/>
+    </element>
+    <element uuid="161015d7-70d0-41c2-ba8b-9e75a0fda354" manual="true">
+      <bo>
+        <seg>realization</seg>
+      </bo>
+    </element>
+    <element uuid="a97ff697-bcd5-477c-87a4-f601b5580cd8" manual="true" background="#ffffff" primaryLabelVisible="false">
+      <element uuid="fd272aef-d93a-4aad-8d21-d55dc78681ab" manual="true">
+        <element uuid="378da033-5361-4706-ad9c-2851bb88b507" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>hrr</seg>
+        </bo>
+        <bendpoints>
+          <point x="-295.0" y="-2.0"/>
+          <point x="-472.0" y="1.0"/>
+          <point x="-485.0" y="72.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="69222669-b5bd-4632-9757-15325673f7e5" manual="true">
+        <element uuid="3847e55b-0309-4b19-9b9f-222106657517" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>lcc1</seg>
+        </bo>
+      </element>
+      <element uuid="b6726c14-af25-491e-8e69-bf34051a7d85" manual="true">
+        <element uuid="720fc8c7-864c-4c1f-98c2-d7ca8ef6466a" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>lcc2</seg>
+        </bo>
+      </element>
+      <element uuid="ac5a0bbd-e1ed-40fe-aa34-93c7a1b422e5" manual="true">
+        <element uuid="8fe68d1d-515f-4b90-8793-950435cf83b1" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>poe1</seg>
+        </bo>
+        <bendpoints>
+          <point x="137.99998474121094" y="40.0"/>
+          <point x="121.99998474121094" y="43.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="0d7b822d-a815-40dd-9b99-4b130c011fef" manual="true">
+        <element uuid="deb7fed0-6756-4fd3-a95c-b1376aa270df" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>poe2</seg>
+        </bo>
+      </element>
+      <element uuid="92cf9465-d9a7-4e1b-b8d0-d33176662636" manual="true">
+        <element uuid="90dfeb32-6127-4e8d-8826-924c83b2a231" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pol1</seg>
+        </bo>
+      </element>
+      <element uuid="31dc6f61-a36c-452c-96f8-5d76ee8026c9" manual="true">
+        <element uuid="de2463f6-d101-4b3e-9c02-586623f0fa14" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>pol2</seg>
+        </bo>
+      </element>
+      <element uuid="67d5e768-163c-41e4-937d-e7370914817e" manual="true">
+        <element uuid="521e42b6-5f54-4af8-8a4f-2e8e65aca4fb" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>unidirectional</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>connection</seg>
+          <seg>spc</seg>
+        </bo>
+        <bendpoints>
+          <point x="-487.0" y="-9.0"/>
+          <point x="-499.0" y="121.0"/>
+        </bendpoints>
+      </element>
+      <element uuid="9902736d-3a8b-40c5-955a-f7ceb7b79776" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>Heart_Rate</seg>
+        </bo>
+        <position x="147.4296875"/>
+      </element>
+      <element uuid="87e93225-fef9-4224-a95d-9b617b3297d4" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>Lost_Confirmation</seg>
+        </bo>
+        <position x="659.7968673706055" y="80.0"/>
+      </element>
+      <element uuid="aae4d87b-0eb8-44f9-84e2-0a12c359a84c" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>PO_Alarm</seg>
+        </bo>
+        <position x="706.5026092529297" y="140.0"/>
+      </element>
+      <element uuid="cd8f20bb-42e1-42f0-9b5f-247a95301c76" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>PO_Alarm_Echo</seg>
+        </bo>
+        <position x="560.0"/>
+      </element>
+      <element uuid="d033ed9a-d1d8-4e17-a037-98bf8866737d" manual="true" dockArea="top">
+        <bo>
+          <seg>feature</seg>
+          <seg>Spo2_Level</seg>
+        </bo>
+        <position x="30.0"/>
+      </element>
+      <element uuid="3ba46dd7-6347-4da2-8735-9358610b6501" manual="true" background="#ffffcc" primaryLabelVisible="false">
+        <element uuid="ecacd7b8-49ef-446d-885a-a7621d2e1c06" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>lc</seg>
+          </bo>
+          <position y="65.0"/>
+        </element>
+        <element uuid="80af225d-f0f5-4804-9e38-eb24bca917f6" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>Lost_Confirmation</seg>
+          </bo>
+          <position x="139.79686737060547" y="45.0"/>
+        </element>
+        <element uuid="d01d2c1b-e063-479e-92c3-b60b09893cdd" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>PO_Alarm</seg>
+          </bo>
+          <position x="186.5026092529297" y="100.0"/>
+        </element>
+        <element uuid="2fc2673c-bbca-44be-81e9-c1b56bfeb3f1" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>PO_Alarm_Echo</seg>
+          </bo>
+          <position y="110.0"/>
+        </element>
+        <element uuid="19818324-ab12-409d-a38a-940cfcedfe41" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>poa</seg>
+          </bo>
+          <position y="20.0"/>
+        </element>
+        <element uuid="cb5231a5-b5b1-4dc7-9b7f-0bee6ac9f854" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>poae</seg>
+          </bo>
+          <position x="218.33854293823242"/>
+        </element>
+        <element uuid="e6351f98-a8e6-4000-8094-dfad728f143a" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>poc</seg>
+        </bo>
+        <position x="400.0" y="40.0"/>
+        <size width="260.0" height="150.0"/>
+      </element>
+      <element uuid="831f16bc-14ec-49c8-87d2-8ff8549a232f" manual="true" background="#ccffcc" primaryLabelVisible="false">
+        <element uuid="0f6128e7-71d3-4eb4-96db-a35e9ed7d56f" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>Heart_Rate</seg>
+          </bo>
+          <position y="30.0"/>
+        </element>
+        <element uuid="7987e24f-73da-453c-b441-9affeb56cfd9" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>Lost_Confirmation</seg>
+          </bo>
+          <position x="199.79686737060547" y="65.0"/>
+        </element>
+        <element uuid="f1649998-d4c9-4495-a9b9-df63c0983e0e" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>PO_Alarm</seg>
+          </bo>
+          <position x="246.5026092529297" y="20.0"/>
+        </element>
+        <element uuid="4ac0aca4-8c77-4c55-b1fa-1a1a99c3e5c9" manual="true" dockArea="right">
+          <bo>
+            <seg>feature</seg>
+            <seg>PO_Alarm_Echo</seg>
+          </bo>
+          <position x="208.69661712646484" y="110.0"/>
+        </element>
+        <element uuid="73603733-ff5a-446a-a558-aae8c42076cd" manual="true" dockArea="left">
+          <bo>
+            <seg>feature</seg>
+            <seg>Spo2_Level</seg>
+          </bo>
+          <position y="80.0"/>
+        </element>
+        <element uuid="ca9aebe4-67a6-4c58-b76e-97090e10ce68" manual="true">
+          <bo>
+            <seg>tag</seg>
+            <seg>sc_type</seg>
+          </bo>
+        </element>
+        <bo>
+          <seg>subcomponent</seg>
+          <seg>pot</seg>
+        </bo>
+        <position x="50.0" y="40.0"/>
+        <size width="320.0" height="150.0"/>
+      </element>
+      <element uuid="764a922c-c370-4a05-b0f0-5db70d951a5f" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>poc</seg>
+      </bo>
+      <position x="10.0" y="110.0"/>
+      <size width="780.0" height="210.0"/>
+    </element>
+    <element uuid="1951dcfa-0dbd-4bad-89c5-8e72252fb4b7" manual="true" primaryLabelVisible="false">
+      <element uuid="c9dc500c-ea4d-4a41-93da-8e24f9bc3ba8" manual="true" dockArea="bottom">
+        <bo>
+          <seg>feature</seg>
+          <seg>Heart_Rate</seg>
+        </bo>
+        <position x="137.4296875" y="46.0"/>
+      </element>
+      <element uuid="c8abdfc7-9df9-4ac1-9fcb-3fad6693cc4d" manual="true" dockArea="bottom">
+        <bo>
+          <seg>feature</seg>
+          <seg>Spo2_Level</seg>
+        </bo>
+        <position x="30.0" y="46.0"/>
+      </element>
+      <element uuid="0db50679-b12f-46e5-ad78-d62152cc1f29" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>sc_type</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>pos</seg>
+      </bo>
+      <position x="30.0" y="20.0"/>
+      <size width="250.0" height="70.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>Pulse_Oximeter.impl</seg>
+    </bo>
+    <position x="-540.0" y="-140.0"/>
+    <size width="915.0143280029297" height="340.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>IoMTwin::Pulse_Oximeter.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>
