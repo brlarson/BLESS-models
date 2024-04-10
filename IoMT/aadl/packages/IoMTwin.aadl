@@ -18,7 +18,7 @@ public
 			BLESS::Invariant => "<< IS_SAFE() >>";
 	end SysIoMT;
 
-	system implementation SysIoMT.impl
+system implementation SysIoMT.impl
 	subcomponents
 		pca_pump: system PCA_Pump.impl;
 		pulse_oximeter: system Pulse_Oximeter.impl;
@@ -51,15 +51,16 @@ public
 		--alarms to nurse's station
 		poa_ns: port pulse_oximeter.PO_Alarm -> nurse_station.Patient_Alarm;
 		rma_ns: port resp_monitor.RM_Alarm -> nurse_station.Patient_Alarm;
-		lcm: port pulse_oximeter.lost_confirmation -> nurse_station.Patient_Lost_Confirmation;
-		rlc: port resp_monitor.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
-		slc: port coordinator.Lost_Confirmation -> nurse_station.Patient_Lost_Confirmation;
+		lcm: port pulse_oximeter.lost_confirmation -> nurse_station.lost_confirmation;
+		rlc: port resp_monitor.Lost_Confirmation -> nurse_station.lost_confirmation;
+		slc: port coordinator.lost_confirmation -> nurse_station.lost_confirmation;
 
 		--virtual bus connection
 		network2pca: virtual bus access network <-> pca_pump.network_connection;
 		po2network: virtual bus access network <-> pulse_oximeter.network_connection;
-		rm2network: virtual bus access network <-> resp_monitor.network_conn;
-		ca2network: virtual bus access network <-> coordinator.network_conn;
+		rm2network: virtual bus access network <-> resp_monitor.network_connection;
+		ca2network: virtual bus access network <-> coordinator.network_connection;
+		ns2network: virtual bus access network <-> nurse_station.network_connection;
 		
 end SysIoMT.impl;
 
@@ -340,7 +341,7 @@ end PO_Communication_Thread;
 			Lost_Confirmation: out event port; --do we have any time limit here
 			RM_Alarm: out event data port BLESS_Types::Boolean {BLESS::Assertion => "<< RM_ALARM() >>";};
 			RM_Alarm_Echo: in event data port BLESS_Types::Boolean;
-			network_conn: requires virtual bus access Network_Bus; -- no assertion on the network connection
+			network_connection: requires virtual bus access Network_Bus; -- no assertion on the network connection
 		properties
 			
 			BLESS::Invariant => "<< RM_Alarm iff RM_ALARM() >>";
@@ -490,23 +491,23 @@ end RM_Communication_Thread;
 --Nurse's Station notified if message confirmation is lost
 	system Nurse_Station
 		features
-			Patient_Lost_Confirmation: in event port;
+			lost_confirmation: in event port;
 			Patient_Alarm: in event data port BLESS_Types::Boolean;
-	--expected to have ports for each patient supervised by the nurse's station
+			network_connection: requires virtual bus access Network_Bus;
 	end Nurse_Station;
 
 	system Coordinator
 		features
 			RM_Alarm_Echo: out event data port BLESS_Types::Boolean --send back RM alarm
-			{BLESS::Assertion => "<<RM_ALARM()>>";};
-			Lost_Confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
-			network_conn: requires virtual bus access Network_Bus;
+			  {BLESS::Assertion => "<<RM_ALARM()>>";};
+			lost_confirmation: out event port; --confirmation of Pause_Infusion not arrived in time
+			network_connection: requires virtual bus access Network_Bus;
 			PO_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<PO_ALARM()>>";};
 			RM_Alarm: in event data port BLESS_Types::Boolean {BLESS::Assertion => "<<RM_ALARM()>>";};
-			Pause_Infusion: out event data port BLESS_Types::Boolean {
-				BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
+			Pause_Infusion: out event data port BLESS_Types::Boolean 
+			  {BLESS::Assertion => "<<PO_ALARM() or RM_ALARM()>>";};
 			PO_Alarm_Echo: out event data port BLESS_Types::Boolean --send back PO alarm
-			{BLESS::Assertion => "<<PO_ALARM()>>";};
+			  {BLESS::Assertion => "<<PO_ALARM()>>";};
 			Pause_Infusion_Echo: in event data  port BLESS_Types::Boolean {
 				BLESS::Assertion => "<<PAUSE_INFUSION_ECHO>>";};
 		properties
@@ -521,7 +522,7 @@ end RM_Communication_Thread;
 			rma: port RM_Alarm -> spp.RM_Alarm;
 			pi: port spp.Pause_Infusion -> Pause_Infusion;
 			pie: port Pause_Infusion_Echo -> spp.Pause_Infusion_Echo;
-			lc: port spp.Lost_Confirmation -> Lost_Confirmation;
+			lc: port spp.Lost_Confirmation -> lost_confirmation;
 			icp: port spp.PO_Alarm_Echo -> PO_Alarm_Echo;
 			icr: port spp.RM_Alarm_Echo -> RM_Alarm_Echo;
 	end Coordinator.impl;
