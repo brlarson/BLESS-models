@@ -30,30 +30,36 @@ system implementation SysIoMT.impl
 
 	connections
 		--primary signals
-		pause_infusion: port coordinator.Pause_Infusion -> pca_pump.Pause_infusion {Actual_Connection_Binding => (
-				reference (network));};
-		po_alarm: port pulse_oximeter.PO_Alarm -> coordinator.PO_Alarm {Actual_Connection_Binding => (
-				reference (network));};
-		rm_alarm: port resp_monitor.RM_Alarm -> coordinator.RM_Alarm {Actual_Connection_Binding => (
-				reference (network));};
+		pause_infusion: port coordinator.Pause_Infusion -> pca_pump.Pause_infusion 
+		  {Actual_Connection_Binding => (reference (network));};
+		po_alarm: port pulse_oximeter.PO_Alarm -> coordinator.PO_Alarm 
+		  {Actual_Connection_Binding => (reference (network));};
+		rm_alarm: port resp_monitor.RM_Alarm -> coordinator.RM_Alarm 
+		  {Actual_Connection_Binding => (reference (network));};
 
 		--confirmation signals
-		pause_infusion_echo: port pca_pump.pause_infusion_echo -> coordinator.Pause_Infusion_Echo {
-			Actual_Connection_Binding => (reference (network));};
-		po_alarm_echo: port coordinator.PO_Alarm_Echo -> pulse_oximeter.PO_Alarm_Echo {Actual_Connection_Binding => (
-				reference (network));};
-		rm_alarm_echo: port coordinator.RM_Alarm_Echo -> resp_monitor.RM_Alarm_Echo {Actual_Connection_Binding => (
-				reference (network));};
+		pause_infusion_echo: port pca_pump.pause_infusion_echo -> coordinator.Pause_Infusion_Echo 
+		  {Actual_Connection_Binding => (reference (network));};
+		po_alarm_echo: port coordinator.PO_Alarm_Echo -> pulse_oximeter.PO_Alarm_Echo 
+		  {Actual_Connection_Binding => (reference (network));};
+		rm_alarm_echo: port coordinator.RM_Alarm_Echo -> resp_monitor.RM_Alarm_Echo 
+		  {Actual_Connection_Binding => (reference (network));};
 
 		--tube and needle between pump and patient
 		infusion_set: feature pca_pump.infused_drug -> patient.Infused_Drug;
+		patient_button : port patient.bolus_request -> pca_pump.bolus_request;
 
 		--alarms to nurse's station
-		poa_ns: port pulse_oximeter.PO_Alarm -> nurse_station.Patient_Alarm;
-		rma_ns: port resp_monitor.RM_Alarm -> nurse_station.Patient_Alarm;
-		lcm: port pulse_oximeter.lost_confirmation -> nurse_station.lost_confirmation;
-		rlc: port resp_monitor.Lost_Confirmation -> nurse_station.lost_confirmation;
-		slc: port coordinator.lost_confirmation -> nurse_station.lost_confirmation;
+		poa_ns: port pulse_oximeter.PO_Alarm -> nurse_station.Patient_Alarm
+		  {Actual_Connection_Binding => (reference (network));};
+		rma_ns: port resp_monitor.RM_Alarm -> nurse_station.Patient_Alarm
+		  {Actual_Connection_Binding => (reference (network));};
+		lcm: port pulse_oximeter.lost_confirmation -> nurse_station.lost_confirmation
+		  {Actual_Connection_Binding => (reference (network));};
+		rlc: port resp_monitor.Lost_Confirmation -> nurse_station.lost_confirmation
+		  {Actual_Connection_Binding => (reference (network));};
+		slc: port coordinator.lost_confirmation -> nurse_station.lost_confirmation
+		  {Actual_Connection_Binding => (reference (network));};
 
 		--virtual bus connection
 		network2pca: virtual bus access network <-> pca_pump.network_connection;
@@ -72,6 +78,7 @@ end SysIoMT.impl;
 			  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
 			pause_infusion_echo: out event data port BLESS_Types::Boolean;
 			network_connection: requires virtual bus access Network_Bus;
+			bolus_request: in event port;
 		properties
 			BLESS::Invariant => "<< Pause_Infusion iff (PUMP_RATE$() = KVO_RATE_property or HALT()) >>";
 	end PCA_Pump;
@@ -87,6 +94,7 @@ end SysIoMT.impl;
 			pr : port pcp.pump_rate -> pmp.pump_rate;
  			r2p: feature rsv.drug_source -> pmp.drug_from_reservoir;
 			pd : feature pmp.infused_drug -> infused_drug;
+			brp : port bolus_request -> pcp.bolus_request;
 	end PCA_Pump.impl;
 	
  process PCA_Pump_Process
@@ -95,6 +103,7 @@ end SysIoMT.impl;
 		pump_rate : out data port IoMT_Types::Pump_Rate
 		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
 		pause_infusion_echo: out event data port BLESS_Types::Boolean;
+ 		bolus_request: in event port;
  end PCA_Pump_Process;
  
  process implementation PCA_Pump_Process.impl
@@ -108,7 +117,7 @@ end SysIoMT.impl;
 
 		pie1: port pct.Pause_Infusion_Echo -> pcc.pie;
 		pie2: port pcc.Pause_Infusion_Echo -> pause_infusion_echo;
-
+    brt : port bolus_request -> pct.bolus_request;
 -- 		ifd1: feature pct.Infused_Drug -> pcc.id;
 -- 		ifd2: feature pcc.Infused_Drug -> Infused_Drug;
 		PCA_Pump_Process_impl_new_connection: port pct.pump_rate -> pump_rate;
@@ -120,6 +129,7 @@ end PCA_Pump_Process.impl;
 		pump_rate : out data port IoMT_Types::Pump_Rate
 		  {BLESS::Value => "<< returns quantity mlph:=PUMP_RATE() >>";};
 		pause_infusion_echo: out event data port BLESS_Types::Boolean;
+		bolus_request: in event port;
  end PCA_Pump_Thread;
  
   --  the drug reservoir in some PCA pumps is a hanging bag of saline into which a drug is injected
@@ -469,8 +479,7 @@ end Respiration_Monitor_Process.impl;
  		RP_Rate:out data port IoMT_Types::Respiration_Rate; --IoMT::RESPIRATION_RATE, it should be in the properties not as a ghost variable
  end Respiration_Sensor;
  
--- RM Communication Thread
-
+-- RM Communication Thread 
 thread RM_Communication_Thread
 	features
 		rmae: in event data port BLESS_Types::Boolean; 
@@ -480,12 +489,10 @@ thread RM_Communication_Thread
 		RM_Alarm: out event data port BLESS_Types::Boolean 
 			{BLESS::Assertion => "<< RM_ALARM() >>";};
 		RM_Alarm_Echo: out event data port BLESS_Types::Boolean;
-		Lost_Confirmation: out event port;
-		
+		Lost_Confirmation: out event port;		
 	properties
 		Dispatch_Protocol => Timed;
-		Period => 200 ms;
-	
+		Period => 200 ms;	
 end RM_Communication_Thread;
 
 --Nurse's Station notified if message confirmation is lost
@@ -706,17 +713,17 @@ end RM_Communication_Thread;
 			Dispatch_Protocol => Sporadic;	
 		
 	end Coordinator_Communication_Thread;
+	
 	-- network bus
 	virtual bus Network_bus -- network can be any network, Ethernet, WLAN etc
-		
 	end Network_bus;
 	
-	-- patient
 	-- Patient	
 	abstract Patient
 		features
 			Infused_Drug: in feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
 			  {BLESS::Value=> "<< returns quantity mlph := PUMP_RATE() >>";};
+			bolus_request : out event port;
 	end Patient;
 
 end IoMTwin;

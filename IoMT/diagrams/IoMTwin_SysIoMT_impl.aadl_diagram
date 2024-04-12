@@ -29,6 +29,24 @@
         <point x="257.0" y="312.0"/>
       </bendpoints>
     </element>
+    <element uuid="f40b00bf-f057-4d80-b18d-25d77319983c" manual="true">
+      <element uuid="8bb2b2d8-615c-49c4-a7e6-7514de9f8505" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>patient_button</seg>
+      </bo>
+      <bendpoints>
+        <point x="968.0" y="392.0"/>
+        <point x="963.0" y="356.0"/>
+        <point x="848.0" y="353.0"/>
+        <point x="846.0" y="322.0"/>
+      </bendpoints>
+    </element>
     <element uuid="b5a66353-28d0-4ff2-97ef-acf960d0128c" manual="true" outline="#ff0000" lineWidth="4.0">
       <element uuid="3be49383-f6a2-448c-bd57-fdbfedfdb3ac" manual="true">
         <bo>
@@ -183,7 +201,7 @@
           <seg>feature</seg>
           <seg>Pause_Infusion</seg>
         </bo>
-        <position x="158.07942962646484" y="160.0"/>
+        <position x="158.07942962646484" y="150.0"/>
       </element>
       <element uuid="d0766a9f-ceaf-485b-b482-4981826b332b" manual="true" dockArea="right">
         <bo>
@@ -197,14 +215,14 @@
           <seg>feature</seg>
           <seg>PO_Alarm</seg>
         </bo>
-        <position y="310.0"/>
+        <position y="320.0"/>
       </element>
       <element uuid="7ca28ad0-10e7-4bf8-bd0a-46779a1240f2" manual="true" dockArea="left">
         <bo>
           <seg>feature</seg>
           <seg>PO_Alarm_Echo</seg>
         </bo>
-        <position y="360.0"/>
+        <position y="365.0"/>
       </element>
       <element uuid="7d91ab69-f1a7-4c2a-8ec3-8d3b972b3498" manual="true" dockArea="left">
         <bo>
@@ -270,12 +288,19 @@
       <size width="230.0" height="110.0"/>
     </element>
     <element uuid="58af11e0-5936-4af0-b98e-37a8dba6467a" manual="true" background="#e0e0e0" primaryLabelVisible="false">
+      <element uuid="e7ee492e-2a38-4211-978e-bb901bee5348" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>bolus_request</seg>
+        </bo>
+        <position x="10.0" y="20.0"/>
+      </element>
       <element uuid="09fa94cf-19bb-45d3-a877-0bab1ff38c65" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>Infused_Drug</seg>
         </bo>
-        <position x="17.947914123535156" y="40.0"/>
+        <position x="13.7109375" y="75.0"/>
       </element>
       <element uuid="98778d6b-1d8b-475b-969e-bbac58e76018" manual="true">
         <bo>
@@ -287,23 +312,30 @@
         <seg>subcomponent</seg>
         <seg>patient</seg>
       </bo>
-      <position x="630.0" y="300.0"/>
-      <size width="110.0" height="90.0"/>
+      <position x="610.0" y="350.0"/>
+      <size width="105.76302337646484" height="115.0"/>
     </element>
     <element uuid="d875c590-7140-49ff-8a81-cbbab6845954" manual="true" background="#ccccff" primaryLabelVisible="false">
+      <element uuid="2fd860ab-fb15-4296-b7fc-5cf6aa82426d" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>bolus_request</seg>
+        </bo>
+        <position y="140.0"/>
+      </element>
       <element uuid="2482100e-e30e-4c7c-a1dc-752dddb2d2bf" manual="true" dockArea="bottom">
         <bo>
           <seg>feature</seg>
           <seg>infused_drug</seg>
         </bo>
-        <position x="60.0" y="136.0"/>
+        <position x="40.0" y="186.0"/>
       </element>
       <element uuid="7d266a4c-ebd1-4734-9816-0ce1fc81ab0e" manual="true" dockArea="left">
         <bo>
           <seg>feature</seg>
           <seg>pause_infusion</seg>
         </bo>
-        <position y="100.0"/>
+        <position y="90.0"/>
       </element>
       <element uuid="0c5600ea-47ed-40a9-a590-e0f1e94818d1" manual="true" dockArea="left">
         <bo>
@@ -323,7 +355,7 @@
         <seg>pca_pump</seg>
       </bo>
       <position x="640.0" y="110.0"/>
-      <size width="180.0" height="160.0"/>
+      <size width="170.0" height="210.0"/>
     </element>
     <element uuid="1be5f88c-3375-4183-9f9f-1be4dff6159a" manual="true" background="#ccccff" primaryLabelVisible="false">
       <element uuid="c66c1cfb-d33a-4516-a95f-07d943d8f21c" manual="true" dockArea="left">
@@ -338,14 +370,14 @@
           <seg>feature</seg>
           <seg>PO_Alarm</seg>
         </bo>
-        <position x="156.5026092529297" y="10.0"/>
+        <position x="156.5026092529297" y="20.0"/>
       </element>
       <element uuid="cbc68d78-421e-41f1-9173-34e54cb51947" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>PO_Alarm_Echo</seg>
         </bo>
-        <position x="118.69661712646484" y="55.0"/>
+        <position x="118.69661712646484" y="65.0"/>
       </element>
       <element uuid="3bc373ea-f0ae-49f2-a094-e696f9f65f19" manual="true">
         <bo>
@@ -373,14 +405,14 @@
           <seg>feature</seg>
           <seg>RM_Alarm</seg>
         </bo>
-        <position x="158.00912475585938" y="80.0"/>
+        <position x="158.03125762939453" y="80.0"/>
       </element>
       <element uuid="fbf474e1-8dcf-4c84-84e9-489206740c5f" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>RM_Alarm_Echo</seg>
         </bo>
-        <position x="120.20313262939453" y="20.0"/>
+        <position x="120.22526550292969" y="20.0"/>
       </element>
       <element uuid="d6781116-f0f7-4e44-a56c-38053b04602e" manual="true">
         <bo>
@@ -393,14 +425,14 @@
         <seg>resp_monitor</seg>
       </bo>
       <position x="40.0" y="50.0"/>
-      <size width="232.97786712646484" height="150.0"/>
+      <size width="233.0" height="150.0"/>
     </element>
     <bo>
       <seg>classifier</seg>
       <seg>SysIoMT.impl</seg>
     </bo>
     <position x="230.0" y="20.0"/>
-    <size width="840.0" height="590.0"/>
+    <size width="830.0" height="590.0"/>
   </element>
   <config type="structure" connectionPrimaryLabelsVisible="false">
     <enabledAadlProperties/>
