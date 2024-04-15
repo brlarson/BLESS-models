@@ -229,8 +229,8 @@ end PCA_Pump_Communication_Thread;
 			
 			spc: port Spo2_Level -> pot.Spo2_Level;
 			hrr: port  heart_rate -> pot.heart_rate;
---		flows
---			pop_po_alarm : end to end flow pot.po_alarm_source -> pol1 -> poc.po_alarm_flow_pct -> pol2 -> po_alarm_out;
+		flows
+			po_alarm_out : flow source pot.po_alarm_source -> pol1 -> poc.po_alarm_flow_pct -> pol2 -> PO_Alarm; -- po_alarm_out;
 		
 	end Pulse_Oximeter_Process.impl;
 	
@@ -614,6 +614,8 @@ end Coordinator_Thread;
 
 	thread implementation Coordinator_Thread.echo
 		annex BLESS {**
+				assert
+				  <<INV: : (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>
 				invariant 
 					<<INV_E: :INV()  --same invariant as IoMT::Supervise_PCA_Thread.simple
 					  and POA() and RMA() and PI() >>
