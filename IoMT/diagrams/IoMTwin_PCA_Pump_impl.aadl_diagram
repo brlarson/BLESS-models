@@ -200,6 +200,18 @@
           </bo>
           <position x="230.20703125" y="85.0"/>
         </element>
+        <element uuid="1152596d-9cef-46b7-bb84-4a522fb2ee69" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>PCA_Pump_Communication_Thread_new_flow_spec</seg>
+          </bo>
+        </element>
+        <element uuid="794de7ca-afae-47ff-8f77-233a70caa343" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>PCA_Pump_Communication_Thread_new_flow_spec2</seg>
+          </bo>
+        </element>
         <element uuid="09665bd2-a447-41bc-86cf-e7b5801fb4d4" manual="true">
           <bo>
             <seg>tag</seg>
@@ -235,6 +247,17 @@
           </bo>
           <position x="80.0" y="101.0"/>
         </element>
+        <element uuid="bfb4de98-bb09-4895-aa4c-2b4c2e4c9962" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>PCA_Pump_Thread_new_flow_spec</seg>
+          </bo>
+          <bendpoints>
+            <point x="615.0" y="166.0"/>
+            <point x="636.0" y="187.0"/>
+            <point x="618.0" y="208.0"/>
+          </bendpoints>
+        </element>
         <element uuid="175fc747-342c-407d-9231-285c8230979e" manual="true">
           <bo>
             <seg>tag</seg>
@@ -246,7 +269,7 @@
           <seg>pct</seg>
         </bo>
         <position x="420.0" y="50.0"/>
-        <size width="239.72917938232422" height="125.0"/>
+        <size width="240.0" height="125.0"/>
       </element>
       <element uuid="4f36e5db-c9f3-4d44-8d08-9a561e37155b" manual="true">
         <bo>
@@ -302,7 +325,7 @@
           <seg>feature</seg>
           <seg>drug_source</seg>
         </bo>
-        <position x="161.08333206176758" y="10.0"/>
+        <position x="160.87890625" y="10.0"/>
       </element>
       <element uuid="118ee809-b70c-4691-bb3c-170a1d52778b" manual="true">
         <bo>
@@ -315,7 +338,7 @@
         <seg>rsv</seg>
       </bo>
       <position x="110.0" y="280.0"/>
-      <size width="247.20442581176758" height="70.0"/>
+      <size width="247.0" height="70.0"/>
     </element>
     <bo>
       <seg>classifier</seg>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="3a506840-cd55-42a7-a3c2-6e7956e4e9ee" manual="true">
+    <element uuid="793cfc10-600d-4ca0-9ab8-9aeb4031adff" manual="true">
+      <bo>
+        <seg>bless.state</seg>
+        <seg>check_echo</seg>
+      </bo>
+      <position x="12.0" y="258.0"/>
+      <size width="123.15885162353516" height="50.0"/>
+    </element>
+    <element uuid="a2e268c9-77fd-407a-a489-0ee394ffb264" manual="true">
+      <bo>
+        <seg>bless.state</seg>
+        <seg>run</seg>
+      </bo>
+      <position x="230.0" y="240.0"/>
+      <size width="71.27083206176758" height="60.0"/>
+    </element>
+    <element uuid="068e83d8-c0cf-4a12-ba8e-880e964138f7" manual="true">
+      <bo>
+        <seg>bless.state</seg>
+        <seg>start</seg>
+      </bo>
+      <position x="30.0" y="190.0"/>
+      <size width="77.93098831176758" height="35.0"/>
+    </element>
+    <element uuid="f7bcaa30-5238-4a5d-a20b-e26a92164aa4" manual="true">
+      <bo>
+        <seg>bless.transition</seg>
+        <seg>go</seg>
+      </bo>
+      <bendpoints>
+        <point x="139.15884399414062" y="220.5"/>
+        <point x="145.15884399414062" y="220.5"/>
+        <point x="200.0" y="210.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="bae8edca-e62e-42bb-918a-135d47453020" manual="true">
+      <bo>
+        <seg>bless.transition</seg>
+        <seg>got_echo</seg>
+      </bo>
+      <bendpoints>
+        <point x="139.15884399414062" y="288.0"/>
+        <point x="151.15884399414062" y="288.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="63e835ae-39bc-4d56-8c07-55743b73638d" manual="true" background="#ffffcc" outline="#990000" primaryLabelVisible="true">
+      <bo>
+        <seg>bless.transition</seg>
+        <seg>got_po</seg>
+      </bo>
+      <bendpoints>
+        <point x="214.0" y="303.0"/>
+        <point x="151.15884399414062" y="298.0"/>
+        <point x="139.15884399414062" y="298.0"/>
+      </bendpoints>
+      <primaryLabelPosition x="-27.25321008126531" y="0.3668238945159601"/>
+    </element>
+    <element uuid="f61f7c8f-1ebd-44d2-a8f0-fbb0e2eeeee6" manual="true">
+      <bo>
+        <seg>bless.transition</seg>
+        <seg>got_rm</seg>
+      </bo>
+      <bendpoints>
+        <point x="151.15884399414062" y="278.0"/>
+        <point x="139.15884399414062" y="278.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="77cc9ab3-b317-487c-a731-c021ead25d82" manual="true">
+      <bo>
+        <seg>bless.transition</seg>
+        <seg>late_echo</seg>
+      </bo>
+      <bendpoints>
+        <point x="172.0" y="235.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="d19eb475-966b-4640-87d0-87642b4f9fdf" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>last_pi_ts</seg>
+      </bo>
+      <position x="12.0" y="38.0"/>
+      <size width="108.32812118530273" height="35.0"/>
+    </element>
+    <element uuid="534eb743-10a5-47ff-a71d-f0f2836fe674" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>last_po_ts</seg>
+      </bo>
+      <position x="12.0" y="93.0"/>
+      <size width="112.78124618530273" height="35.0"/>
+    </element>
+    <element uuid="9510d597-6318-45c3-a3d7-8988afed909d" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>last_rm_ts</seg>
+      </bo>
+      <position x="144.78125" y="93.0"/>
+      <size width="113.49739456176758" height="35.0"/>
+    </element>
+    <element uuid="48bd9bc0-61c5-4b68-9809-38b382bb2e91" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>pause_inf</seg>
+      </bo>
+      <position x="140.328125" y="38.0"/>
+      <size width="109.82551574707031" height="35.0"/>
+    </element>
+    <element uuid="6d129341-277d-4649-a64a-cacca12b1443" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>po_alarm_active</seg>
+      </bo>
+      <position x="12.0" y="148.0"/>
+      <size width="149.83203125" height="35.0"/>
+    </element>
+    <element uuid="51cd4962-c4da-4c20-a38e-63e7c939c2e3" manual="true">
+      <bo>
+        <seg>bless.variable</seg>
+        <seg>rm_alarm_active</seg>
+      </bo>
+      <position x="181.83203125" y="148.0"/>
+      <size width="150.5481719970703" height="35.0"/>
+    </element>
+    <bo>
+      <seg>annex_subclause</seg>
+      <seg>BLESS</seg>
+      <seg>0</seg>
+    </bo>
+    <position/>
+    <size width="560.0" height="440.0"/>
+  </element>
+  <config type="bless.state_machine" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>annex_subclause</seg>
+      <seg>classifier IoMTwin::Coordinator_Thread.echo</seg>
+      <seg>BLESS</seg>
+      <seg>0</seg>
+    </context>
+  </config>
+</diagram:Diagram>

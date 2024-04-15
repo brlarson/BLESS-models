@@ -88,16 +88,9 @@
     <element uuid="a74db31a-5ec4-4d8a-94cd-f89232bac276" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
-        <seg>Lost_Confirmation</seg>
+        <seg>lost_confirmation</seg>
       </bo>
-      <position x="999.7968673706055" y="200.0"/>
-    </element>
-    <element uuid="99e4e886-66f6-4957-9a5a-fbe671be69ce" manual="true" dockArea="top">
-      <bo>
-        <seg>feature</seg>
-        <seg>network_conn</seg>
-      </bo>
-      <position x="980.0"/>
+      <position x="1007.2122268676758" y="200.0"/>
     </element>
     <element uuid="1b309b9e-7094-40da-a8bc-c006d4106c8a" manual="true" dockArea="right">
       <bo>
@@ -483,6 +476,42 @@
           </bo>
           <position y="60.0"/>
         </element>
+        <element uuid="4fe6b6ad-96bf-4107-98fe-ce631eacff6b" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec</seg>
+          </bo>
+        </element>
+        <element uuid="d7a7e693-15a6-42f1-9e3a-744f46409781" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec2</seg>
+          </bo>
+        </element>
+        <element uuid="b1059c66-913b-4cd1-a934-3753d94aad59" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec3</seg>
+          </bo>
+        </element>
+        <element uuid="75c4942a-d705-4a83-8d97-801244995b84" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec4</seg>
+          </bo>
+        </element>
+        <element uuid="45339b6e-b8b5-46ea-ab84-0a09d46b95f6" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec5</seg>
+          </bo>
+        </element>
+        <element uuid="94df5566-0b6c-4f48-a07d-56a1b33b1d22" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Communication_Thread_new_flow_spec6</seg>
+          </bo>
+        </element>
         <element uuid="902e6865-8e21-4220-ae82-455c6a0e2839" manual="true">
           <bo>
             <seg>tag</seg>
@@ -545,6 +574,32 @@
             <seg>RM_Alarm_Echo</seg>
           </bo>
           <position x="187.2252655029297" y="65.0"/>
+        </element>
+        <element uuid="eccd5fdb-f6c7-4e83-890a-da1cd93f51c5" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Thread_new_flow_spec</seg>
+          </bo>
+        </element>
+        <element uuid="f28daae6-d714-4ac4-86b9-6d503ac8b7fb" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Thread_new_flow_spec2</seg>
+          </bo>
+        </element>
+        <element uuid="994fef59-666d-4990-b3d0-44c09d166ed2" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Thread_new_flow_spec3</seg>
+          </bo>
+          <position x="249.92057037353516" y="52.0"/>
+        </element>
+        <element uuid="520d32a9-cb81-4e64-ab40-b1ce49df7788" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Coordinator_Thread_new_flow_spec4</seg>
+          </bo>
+          <position x="50.0" y="172.0"/>
         </element>
         <element uuid="d1441276-a371-4877-b227-86e4bef1ae53" manual="true">
           <bo>

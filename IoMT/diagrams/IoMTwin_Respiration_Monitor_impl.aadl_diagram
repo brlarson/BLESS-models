@@ -56,13 +56,6 @@
       </bo>
       <position x="809.7968673706055" y="180.0"/>
     </element>
-    <element uuid="dd91f5ee-499b-475b-929e-747df56dbff3" manual="true" dockArea="top">
-      <bo>
-        <seg>feature</seg>
-        <seg>network_conn</seg>
-      </bo>
-      <position x="770.0"/>
-    </element>
     <element uuid="d9ea9812-dadd-453f-84ac-0843b6dfd2c3" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
@@ -245,6 +238,18 @@
           </bo>
           <position x="217.62239837646484"/>
         </element>
+        <element uuid="76fc21d5-4c33-4969-ae61-295197996b9c" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>RM_Communication_Thread_new_flow_spec</seg>
+          </bo>
+        </element>
+        <element uuid="340b537a-e934-4c12-b072-11c5c0d96da9" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>RM_Communication_Thread_new_flow_spec2</seg>
+          </bo>
+        </element>
         <element uuid="8fd4ab16-2d4a-4b5f-bd96-331d3cec9d47" manual="true">
           <bo>
             <seg>tag</seg>
@@ -286,6 +291,20 @@
             <seg>RP_Rate</seg>
           </bo>
           <position y="40.0"/>
+        </element>
+        <element uuid="a1eb0c88-b593-4c66-a914-4cdea19d018d" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Respiration_Monitor_Thread_new_flow_spec</seg>
+          </bo>
+          <position x="289.96874237060547" y="42.0"/>
+        </element>
+        <element uuid="7f179322-058a-4c18-b3b1-8f9d3e35586a" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>Respiration_Monitor_Thread_new_flow_spec2</seg>
+          </bo>
+          <position x="289.7747344970703" y="137.0"/>
         </element>
         <element uuid="78591524-09c5-47c2-81ff-c82fd7f5fd15" manual="true">
           <bo>

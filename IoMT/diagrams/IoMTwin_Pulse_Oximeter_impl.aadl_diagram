@@ -64,23 +64,16 @@
     <element uuid="c1da16f6-6003-4b4b-97fb-3329f5f7909f" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
-        <seg>Lost_Confirmation</seg>
+        <seg>lost_confirmation</seg>
       </bo>
-      <position x="794.8111953735352" y="190.0"/>
-    </element>
-    <element uuid="bbed9c51-059d-4ef9-9d68-29e33841fd0c" manual="true" dockArea="top">
-      <bo>
-        <seg>feature</seg>
-        <seg>network_conn</seg>
-      </bo>
-      <position x="760.0"/>
+      <position x="802.2122268676758" y="190.0"/>
     </element>
     <element uuid="fe59201a-f1c0-4c50-bdd9-f910afeddb45" manual="true" dockArea="right">
       <bo>
         <seg>feature</seg>
         <seg>PO_Alarm</seg>
       </bo>
-      <position x="841.5169372558594" y="250.0"/>
+      <position x="841.5026092529297" y="250.0"/>
     </element>
     <element uuid="67545c94-eff7-4364-8060-93ba8347fa7f" manual="true" dockArea="top">
       <bo>
@@ -148,8 +141,8 @@
           <seg>poe1</seg>
         </bo>
         <bendpoints>
-          <point x="137.99998474121094" y="40.0"/>
-          <point x="121.99998474121094" y="43.0"/>
+          <point x="138.0" y="40.0"/>
+          <point x="122.0" y="43.0"/>
         </bendpoints>
       </element>
       <element uuid="0d7b822d-a815-40dd-9b99-4b130c011fef" manual="true">
@@ -209,14 +202,14 @@
           <seg>feature</seg>
           <seg>Heart_Rate</seg>
         </bo>
-        <position x="147.4296875"/>
+        <position x="147.0"/>
       </element>
       <element uuid="87e93225-fef9-4224-a95d-9b617b3297d4" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
-          <seg>Lost_Confirmation</seg>
+          <seg>lost_confirmation</seg>
         </bo>
-        <position x="659.7968673706055" y="80.0"/>
+        <position x="667.2122268676758" y="80.0"/>
       </element>
       <element uuid="aae4d87b-0eb8-44f9-84e2-0a12c359a84c" manual="true" dockArea="right">
         <bo>
@@ -282,6 +275,12 @@
           </bo>
           <position x="218.33854293823242"/>
         </element>
+        <element uuid="ea6be1dc-b126-4b52-9309-5714928f6e2d" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>po_alarm_flow_pct</seg>
+          </bo>
+        </element>
         <element uuid="e6351f98-a8e6-4000-8094-dfad728f143a" manual="true">
           <bo>
             <seg>tag</seg>
@@ -331,6 +330,20 @@
           </bo>
           <position y="80.0"/>
         </element>
+        <element uuid="2bf84968-22a6-41b7-bde7-419f55a292c5" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>po_alarm_sink</seg>
+          </bo>
+          <position x="269.30338287353516" y="142.0"/>
+        </element>
+        <element uuid="038197b2-627b-4b5f-b6fe-bca5fc325d29" manual="true">
+          <bo>
+            <seg>flow_specification</seg>
+            <seg>po_alarm_source</seg>
+          </bo>
+          <position x="269.4973907470703" y="52.0"/>
+        </element>
         <element uuid="ca9aebe4-67a6-4c58-b76e-97090e10ce68" manual="true">
           <bo>
             <seg>tag</seg>
@@ -352,7 +365,7 @@
       </element>
       <bo>
         <seg>subcomponent</seg>
-        <seg>poc</seg>
+        <seg>pop</seg>
       </bo>
       <position x="10.0" y="110.0"/>
       <size width="780.0" height="210.0"/>
@@ -390,7 +403,7 @@
       <seg>Pulse_Oximeter.impl</seg>
     </bo>
     <position x="-540.0" y="-140.0"/>
-    <size width="915.0143280029297" height="340.0"/>
+    <size width="915.0" height="340.0"/>
   </element>
   <config type="structure" connectionPrimaryLabelsVisible="false">
     <enabledAadlProperties/>

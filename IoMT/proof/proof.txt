@@ -1,5 +1,5 @@
 This file, proof.txt, was produced the BLESS Proof Assistant v3.2.4
-  at Tue Feb 27 15:04:07 AST 2024 by ehsanahmad
+  at Fri Apr 12 17:01:13 CDT 2024 by brianlarson
 
 Theorem (1)                               [serial 1737] 
 P [198] << ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion >>
@@ -223,8 +223,8 @@ Theorem (19) [serial 1755] used for:
 Theorem (21)                               [serial 1002] 
 P [191] <<   >>
 S [194] ->
-Q [191] << Supervise_PCA_Thread.simple proof obligations >>
-Why created:  Initial proof obligations for Supervise_PCA_Thread.simple
+Q [191] << Coordinator_Thread.simple proof obligations >>
+Why created:  Initial proof obligations for Coordinator_Thread.simple
 Solved by:  Component verification conditions
  [Convert asseertion to port value.] and theorems 3 4 6 7 8 13 20:
 Theorem (3) [serial 1003] used for:
@@ -244,11 +244,11 @@ Theorem (20) [serial 1009] used for:
 
 
 Theorem (22)                               [serial 1099] 
-P [243] << MHR_A()
+P [262] << MHR_A()
   and POA_A()
   and PSPO2_A() >>
-S [228] ->
-Q [228] << MHR_A()
+S [247] ->
+Q [247] << MHR_A()
   and POA_A()
   and PSPO2_A() >>
 Why created:    normalization of [serial 1097]
@@ -256,11 +256,11 @@ Why created:    normalization of [serial 1097]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (23)                               [serial 1097] 
-P [243] << ( MHR_A()
+P [262] << ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
-S [228] ->
-Q [228] << MHR_A()
+S [247] ->
+Q [247] << MHR_A()
   and PSPO2_A()
   and POA_A() >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1011]
@@ -270,9 +270,9 @@ Theorem (22) [serial 1099] used for:
 
 
 Theorem (24)                               [serial 1011] 
-P [243] << INV_PO() >>
-S [228] ->
-Q [228] << MHR_A()
+P [262] << INV_PO() >>
+S [247] ->
+Q [247] << MHR_A()
   and PSPO2_A()
   and POA_A() >>
 Why created:  <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definition.
@@ -282,11 +282,11 @@ Theorem (23) [serial 1097] used for:
 
 
 Theorem (25)                               [serial 1102] 
-P [242] << MHR_A()
+P [261] << MHR_A()
   and POA_A()
   and PSPO2_A() >>
-S [228] ->
-Q [228] << MHR_A()
+S [247] ->
+Q [247] << MHR_A()
   and POA_A()
   and PSPO2_A() >>
 Why created:    normalization of [serial 1100]
@@ -294,11 +294,11 @@ Why created:    normalization of [serial 1100]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (26)                               [serial 1100] 
-P [242] << ( MHR_A()
+P [261] << ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
-S [228] ->
-Q [228] << MHR_A()
+S [247] ->
+Q [247] << MHR_A()
   and PSPO2_A()
   and POA_A() >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1012]
@@ -308,9 +308,9 @@ Theorem (25) [serial 1102] used for:
 
 
 Theorem (27)                               [serial 1012] 
-P [242] << INV_PO() >>
-S [228] ->
-Q [228] << MHR_A()
+P [261] << INV_PO() >>
+S [247] ->
+Q [247] << MHR_A()
   and PSPO2_A()
   and POA_A() >>
 Why created:  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
@@ -320,48 +320,48 @@ Theorem (26) [serial 1100] used for:
 
 
 Theorem (28)                               [serial 1013] 
-P [241] << INV_PO() >>
-S [241] ->
-Q [241] << true >>
+P [260] << INV_PO() >>
+S [260] ->
+Q [260] << true >>
 Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 Solved by: Anything Implies True (a1tru): P->true
 
 Theorem (29)                               [serial 1014] 
-P [241] << INV_PO() >>
-S [246] ->
-Q [242] << INV_PO() >>
+P [260] << INV_PO() >>
+S [265] ->
+Q [261] << INV_PO() >>
 Why created:   <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (30)                               [serial 1103] 
-P [242] << INV_PO() >>
-S [242] ->
-Q [250] << INV_PO() >>
+P [261] << INV_PO() >>
+S [261] ->
+Q [269] << INV_PO() >>
 Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1015]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (31)                               [serial 1104] 
-P [275] << INV_PO() >>
-S [243] ->
-Q [243] << INV_PO() >>
+P [294] << INV_PO() >>
+S [262] ->
+Q [262] << INV_PO() >>
 Why created:  <<Q3>> -> <<Q>> in sequential composition for [serial 1015]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (32)                               [serial 1175] 
-P [251] << HEART_RATE = hrr
+P [270] << HEART_RATE = hrr
   and INV_PO() >>
-S [251] ->
-Q [252] << HEART_RATE = hrr
+S [270] ->
+Q [271] << HEART_RATE = hrr
   and INV_PO() >>
 Why created:    normalization of [serial 1173]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (33)                               [serial 1173] 
-P [251] << ( INV_PO() )
+P [270] << ( INV_PO() )
   and hrr = HEART_RATE >>
-S [251] ->
-Q [252] << HEART_RATE = hrr
+S [270] ->
+Q [271] << HEART_RATE = hrr
   and INV_PO() >>
 Why created:  applied port input of value <<pre and hrr=M(Heart_Rate)>> -> <<post>> [serial 1128]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 32:
@@ -370,9 +370,9 @@ Theorem (32) [serial 1175] used for:
 
 
 Theorem (34)                               [serial 1128] 
-P [250] << INV_PO() >>
-S [251] Heart_Rate?(hrr)
-Q [252] << HEART_RATE = hrr
+P [269] << INV_PO() >>
+S [270] Heart_Rate?(hrr)
+Q [271] << HEART_RATE = hrr
   and INV_PO() >>
 Why created:    normalization of [serial 1105]
 Solved by:  Port Data Input: when <<A and v=M(p)>> -> <<B>> then <<A>> p?(v) <<B>>
@@ -382,9 +382,9 @@ Theorem (33) [serial 1173] used for:
 
 
 Theorem (35)                               [serial 1105] 
-P [250] << INV_PO() >>
-S [251] Heart_Rate?(hrr)
-Q [252] << hrr = HEART_RATE
+P [269] << INV_PO() >>
+S [270] Heart_Rate?(hrr)
+Q [271] << hrr = HEART_RATE
   and INV_PO() >>
 Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1015]
 Solved by: Equality Commutes. (eqcom) and theorem 34:
@@ -393,22 +393,22 @@ Theorem (34) [serial 1128] used for:
 
 
 Theorem (36)                               [serial 1178] 
-P [253] << ( HEART_RATE = hrr
+P [272] << ( HEART_RATE = hrr
   and INV_PO() )
   and SPO2 = sp >>
-S [253] ->
-Q [254] << HEART_RATE = hrr
+S [272] ->
+Q [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
 Why created:    normalization of [serial 1176]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (37)                               [serial 1176] 
-P [253] << ( HEART_RATE = hrr
+P [272] << ( HEART_RATE = hrr
   and INV_PO() )
   and sp = SPO2 >>
-S [253] ->
-Q [254] << HEART_RATE = hrr
+S [272] ->
+Q [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
 Why created:  applied port input of value <<pre and sp=M(Spo2_Level)>> -> <<post>> [serial 1130]
@@ -418,10 +418,10 @@ Theorem (36) [serial 1178] used for:
 
 
 Theorem (38)                               [serial 1130] 
-P [252] << HEART_RATE = hrr
+P [271] << HEART_RATE = hrr
   and INV_PO() >>
-S [253] Spo2_Level?(sp)
-Q [254] << HEART_RATE = hrr
+S [272] Spo2_Level?(sp)
+Q [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
 Why created:    normalization of [serial 1106]
@@ -433,10 +433,10 @@ Theorem (37) [serial 1176] used for:
 
 
 Theorem (39)                               [serial 1106] 
-P [252] << hrr = HEART_RATE
+P [271] << hrr = HEART_RATE
   and INV_PO() >>
-S [253] Spo2_Level?(sp)
-Q [254] << hrr = HEART_RATE
+S [272] Spo2_Level?(sp)
+Q [273] << hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 >>
 Why created:  <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1015]
@@ -446,21 +446,21 @@ Theorem (38) [serial 1130] used for:
 
 
 Theorem (40)                               [serial 1183] 
-P [254] << HEART_RATE = hrr
+P [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [256] ->
-Q [256] << ( not ( hrr < mhr ) or hrr < mhr or sp < psp )
+S [275] ->
+Q [275] << ( not ( hrr < mhr ) or hrr < mhr or sp < psp )
   and ( not ( sp < psp ) or hrr < mhr or sp < psp ) >>
 Why created:  Distributing Postcondition Or-Over-And [serial 1182]
 Solved by: Law of Excluded middle. (exmid)
 
 Theorem (41)                               [serial 1182] 
-P [254] << HEART_RATE = hrr
+P [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [256] ->
-Q [256] << ( not ( hrr < mhr )
+S [275] ->
+Q [275] << ( not ( hrr < mhr )
   and not ( sp < psp ) ) or hrr < mhr or sp < psp >>
 Why created:    normalization of [serial 1180]
 Solved by: Distribution and-over-or with wff lists. (bl.dba2owl) and theorem 40:
@@ -469,11 +469,11 @@ Theorem (40) [serial 1183] used for:
 
 
 Theorem (42)                               [serial 1180] 
-P [254] << HEART_RATE = hrr
+P [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [256] ->
-Q [256] << ( ( not ( hrr < mhr ) )
+S [275] ->
+Q [275] << ( ( not ( hrr < mhr ) )
   and ( not ( sp < psp ) ) ) or hrr < mhr or sp < psp >>
 Why created:  Replacing <= with not < of [serial 1132]
 Solved by: [Add unnecessary parentheses] and theorem 41:
@@ -482,11 +482,11 @@ Theorem (41) [serial 1182] used for:
 
 
 Theorem (43)                               [serial 1132] 
-P [254] << HEART_RATE = hrr
+P [273] << HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [256] ->
-Q [256] << ( mhr <= hrr
+S [275] ->
+Q [275] << ( mhr <= hrr
   and psp <= sp ) or hrr < mhr or sp < psp >>
 Why created:    normalization of [serial 1108]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) (bl.orcom) 
@@ -496,11 +496,11 @@ Theorem (42) [serial 1180] used for:
 
 
 Theorem (44)                               [serial 1108] 
-P [254] << hrr = HEART_RATE
+P [273] << hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 >>
-S [256] ->
-Q [256] << ( hrr >= mhr
+S [275] ->
+Q [275] << ( hrr >= mhr
   and sp >= psp ) or ( hrr < mhr ) or ( sp < psp ) >>
 Why created:    <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1107]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) Disjunction Commutes. (bl.orcom) and theorem 43:
@@ -509,13 +509,13 @@ Theorem (43) [serial 1132] used for:
 
 
 Theorem (45)                               [serial 1134] 
-P [256] << ( mhr <= hrr
+P [275] << ( mhr <= hrr
   and psp <= sp )
   and ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() ) >>
-S [258] ->
-Q [258] << mhr <= hrr
+S [277] ->
+Q [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
@@ -525,13 +525,13 @@ Why created:    normalization of [serial 1115]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (46)                               [serial 1115] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr >= mhr
   and sp >= psp ) >>
-S [258] ->
-Q [258] << hrr = HEART_RATE
+S [277] ->
+Q [277] << hrr = HEART_RATE
   and hrr >= mhr
   and sp = SPO2
   and sp >= psp
@@ -543,33 +543,33 @@ Theorem (45) [serial 1134] used for:
 
 
 Theorem (47)                               [serial 1116] 
-P [260] << INV_PO() >>
-S [260] ->
-Q [275] << INV_PO() >>
+P [279] << INV_PO() >>
+S [279] ->
+Q [294] << INV_PO() >>
 Why created:  Qk -> Q in concurrent composition for [serial 1112]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (48)                               [serial 1192] 
-P [258] << mhr <= hrr
+P [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [259] ->
-Q [275] << ( LOW_SPO2_HR() iff false )
+S [278] ->
+Q [294] << ( LOW_SPO2_HR() iff false )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp >>
 Why created:  applied wp for assignment [serial 1191]
 Solved by: The negation of a proposition is equivalent to itself being equivalent to false. (nbfal)
 
 Theorem (49)                               [serial 1191] 
-P [258] << mhr <= hrr
+P [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [259] poa := false
-Q [275] << ( LOW_SPO2_HR() iff poa )
+S [278] poa := false
+Q [294] << ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp >>
 Why created:    normalization of [serial 1189]
@@ -584,13 +584,13 @@ Theorem (48) [serial 1192] used for:
 
 
 Theorem (50)                               [serial 1189] 
-P [258] << mhr <= hrr
+P [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [259] poa := false
-Q [275] << ( ( mhr = MINIMUM_HEART_RATE )
+S [278] poa := false
+Q [294] << ( ( mhr = MINIMUM_HEART_RATE )
   and ( psp = PROGRAMMED_SPO2 )
   and ( poa iff LOW_SPO2_HR() ) ) >>
 Why created:  Substituted assertions' predicates for labels in postconditions [serial 1188]
@@ -600,13 +600,13 @@ Theorem (49) [serial 1191] used for:
 
 
 Theorem (51)                               [serial 1188] 
-P [258] << mhr <= hrr
+P [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [259] poa := false
-Q [275] << ( MHR_A()
+S [278] poa := false
+Q [294] << ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
 Why created:  Substituted assertions' predicates for labels in postconditions [serial 1136]
@@ -616,13 +616,13 @@ Theorem (50) [serial 1189] used for:
 
 
 Theorem (52)                               [serial 1136] 
-P [258] << mhr <= hrr
+P [277] << mhr <= hrr
   and psp <= sp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [259] poa := false
-Q [275] << INV_PO() >>
+S [278] poa := false
+Q [294] << INV_PO() >>
 Why created:    normalization of [serial 1117]
   Using: (eqcom) changeAtLeastToAtMost (bl.ancom) 
 Solved by: Predicate Invocation. (PI) and theorem 51:
@@ -631,13 +631,13 @@ Theorem (51) [serial 1188] used for:
 
 
 Theorem (53)                               [serial 1117] 
-P [258] << hrr = HEART_RATE
+P [277] << hrr = HEART_RATE
   and hrr >= mhr
   and sp = SPO2
   and sp >= psp
   and INV_PO() >>
-S [259] poa := false
-Q [275] << INV_PO() >>
+S [278] poa := false
+Q [294] << INV_PO() >>
 Why created:  <<P1>> S1 <<Q>> in concurrent composition for [serial 1112]
 Solved by: Equality Commutes. (eqcom) [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 52:
 Theorem (52) [serial 1136] used for:
@@ -645,25 +645,25 @@ Theorem (52) [serial 1136] used for:
 
 
 Theorem (54)                               [serial 1138] 
-P [256] << ( mhr <= hrr
+P [275] << ( mhr <= hrr
   and psp <= sp )
   and ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() ) >>
-S [259] PO_Alarm!(false)
-Q [260] << INV_PO() >>
+S [278] PO_Alarm!(false)
+Q [279] << INV_PO() >>
 Why created:    normalization of [serial 1118]
   Using: (eqcom) changeAtLeastToAtMost (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (55)                               [serial 1118] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr >= mhr
   and sp >= psp ) >>
-S [259] PO_Alarm!(false)
-Q [260] << INV_PO() >>
+S [278] PO_Alarm!(false)
+Q [279] << INV_PO() >>
 Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1112]
 Solved by: Equality Commutes. (eqcom) [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 54:
 Theorem (54) [serial 1138] used for:
@@ -671,12 +671,12 @@ Theorem (54) [serial 1138] used for:
 
 
 Theorem (56)                               [serial 1112] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr >= mhr
   and sp >= psp ) >>
-S [258]   << hrr = HEART_RATE
+S [277]   << hrr = HEART_RATE
     and hrr >= mhr
     and sp = SPO2
     and sp >= psp
@@ -685,7 +685,7 @@ S [258]   << hrr = HEART_RATE
   &
   PO_Alarm!(false)
   << INV_PO() >> 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:  <<P>> T <<Q>> in behavior action block for [serial 1109]
 Solved by:  Concurrent Composition Rule (CCk):
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
@@ -706,12 +706,12 @@ Theorem (55) [serial 1118] used for:
 
 
 Theorem (57)                               [serial 1109] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr >= mhr
   and sp >= psp ) >>
-S [257]   {
+S [276]   {
     << hrr = HEART_RATE
       and hrr >= mhr
       and sp = SPO2
@@ -722,7 +722,7 @@ S [257]   {
     PO_Alarm!(false)
     << INV_PO() >> 
   } 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:    <<P and B0>> S0 <<Q>> in alternative for [serial 1107]
 Solved by: Behavior Action Block, simple (BABs): 
     <<P>> T <<Q>> 
@@ -734,12 +734,12 @@ Theorem (56) [serial 1112] used for:
 
 
 Theorem (58)                               [serial 1140] 
-P [256] << ( HEART_RATE = hrr
+P [275] << ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() )
   and hrr < mhr >>
-S [264] ->
-Q [264] << hrr < mhr
+S [283] ->
+Q [283] << hrr < mhr
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
@@ -748,12 +748,12 @@ Why created:    normalization of [serial 1119]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (59)                               [serial 1119] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr < mhr ) >>
-S [264] ->
-Q [264] << hrr = HEART_RATE
+S [283] ->
+Q [283] << hrr = HEART_RATE
   and hrr < mhr
   and sp = SPO2
   and INV_PO() >>
@@ -764,21 +764,21 @@ Theorem (58) [serial 1140] used for:
 
 
 Theorem (60)                               [serial 1120] 
-P [266] << INV_PO() >>
-S [266] ->
-Q [275] << INV_PO() >>
+P [285] << INV_PO() >>
+S [285] ->
+Q [294] << INV_PO() >>
 Why created:  Qk -> Q in concurrent composition for [serial 1113]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (61)                               [serial 1253] 
-P [264] << ( ( LOW_SPO2_HR() iff poa )
+P [283] << ( ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp )
   and hrr < mhr
   and HEART_RATE = hrr
   and SPO2 = sp >>
-S [265] poa := true
-Q [275] << ( LOW_SPO2_HR() iff poa )
+S [284] poa := true
+Q [294] << ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp >>
 Why created:    normalization of [serial 1251]
@@ -786,14 +786,14 @@ Why created:    normalization of [serial 1251]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (62)                               [serial 1251] 
-P [264] << hrr < mhr
+P [283] << hrr < mhr
   and HEART_RATE = hrr
   and SPO2 = sp
   and ( ( mhr = MINIMUM_HEART_RATE )
   and ( psp = PROGRAMMED_SPO2 )
   and ( poa iff LOW_SPO2_HR() ) ) >>
-S [265] poa := true
-Q [275] << ( ( mhr = MINIMUM_HEART_RATE )
+S [284] poa := true
+Q [294] << ( ( mhr = MINIMUM_HEART_RATE )
   and ( psp = PROGRAMMED_SPO2 )
   and ( poa iff LOW_SPO2_HR() ) ) >>
 Why created:  Substituted assertions' predicates for labels  [serial 1250]
@@ -803,14 +803,14 @@ Theorem (61) [serial 1253] used for:
 
 
 Theorem (63)                               [serial 1250] 
-P [264] << hrr < mhr
+P [283] << hrr < mhr
   and HEART_RATE = hrr
   and SPO2 = sp
   and ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
-S [265] poa := true
-Q [275] << ( MHR_A()
+S [284] poa := true
+Q [294] << ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
 Why created:  Substituted assertions' predicates for labels  [serial 1142]
@@ -820,12 +820,12 @@ Theorem (62) [serial 1251] used for:
 
 
 Theorem (64)                               [serial 1142] 
-P [264] << hrr < mhr
+P [283] << hrr < mhr
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [265] poa := true
-Q [275] << INV_PO() >>
+S [284] poa := true
+Q [294] << INV_PO() >>
 Why created:    normalization of [serial 1121]
   Using: (eqcom) (bl.ancom) 
 Solved by: Predicate Invocation. (PI) and theorem 63:
@@ -834,12 +834,12 @@ Theorem (63) [serial 1250] used for:
 
 
 Theorem (65)                               [serial 1121] 
-P [264] << hrr = HEART_RATE
+P [283] << hrr = HEART_RATE
   and hrr < mhr
   and sp = SPO2
   and INV_PO() >>
-S [265] poa := true
-Q [275] << INV_PO() >>
+S [284] poa := true
+Q [294] << INV_PO() >>
 Why created:  <<P1>> S1 <<Q>> in concurrent composition for [serial 1113]
 Solved by: Equality Commutes. (eqcom) Conjunction Commutes. (bl.ancom) and theorem 64:
 Theorem (64) [serial 1142] used for:
@@ -847,23 +847,23 @@ Theorem (64) [serial 1142] used for:
 
 
 Theorem (66)                               [serial 1144] 
-P [256] << ( HEART_RATE = hrr
+P [275] << ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() )
   and hrr < mhr >>
-S [265] PO_Alarm!(true)
-Q [266] << INV_PO() >>
+S [284] PO_Alarm!(true)
+Q [285] << INV_PO() >>
 Why created:    normalization of [serial 1122]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (67)                               [serial 1122] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr < mhr ) >>
-S [265] PO_Alarm!(true)
-Q [266] << INV_PO() >>
+S [284] PO_Alarm!(true)
+Q [285] << INV_PO() >>
 Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1113]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 66:
 Theorem (66) [serial 1144] used for:
@@ -871,11 +871,11 @@ Theorem (66) [serial 1144] used for:
 
 
 Theorem (68)                               [serial 1113] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr < mhr ) >>
-S [264]   << hrr = HEART_RATE
+S [283]   << hrr = HEART_RATE
     and hrr < mhr
     and sp = SPO2
     and INV_PO() >>
@@ -883,7 +883,7 @@ S [264]   << hrr = HEART_RATE
   &
   PO_Alarm!(true)
   << INV_PO() >> 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:  <<P>> T <<Q>> in behavior action block for [serial 1110]
 Solved by:  Concurrent Composition Rule (CCk):
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
@@ -904,11 +904,11 @@ Theorem (67) [serial 1122] used for:
 
 
 Theorem (69)                               [serial 1110] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( hrr < mhr ) >>
-S [263]   {
+S [282]   {
     << hrr = HEART_RATE
       and hrr < mhr
       and sp = SPO2
@@ -918,7 +918,7 @@ S [263]   {
     PO_Alarm!(true)
     << INV_PO() >> 
   } 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:    <<P and B1>> S1 <<Q>> in alternative for [serial 1107]
 Solved by: Behavior Action Block, simple (BABs): 
     <<P>> T <<Q>> 
@@ -930,12 +930,12 @@ Theorem (68) [serial 1113] used for:
 
 
 Theorem (70)                               [serial 1146] 
-P [256] << ( HEART_RATE = hrr
+P [275] << ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() )
   and sp < psp >>
-S [270] ->
-Q [270] << sp < psp
+S [289] ->
+Q [289] << sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
@@ -944,12 +944,12 @@ Why created:    normalization of [serial 1123]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (71)                               [serial 1123] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( sp < psp ) >>
-S [270] ->
-Q [270] << hrr = HEART_RATE
+S [289] ->
+Q [289] << hrr = HEART_RATE
   and sp < psp
   and sp = SPO2
   and INV_PO() >>
@@ -960,35 +960,35 @@ Theorem (70) [serial 1146] used for:
 
 
 Theorem (72)                               [serial 1124] 
-P [272] << INV_PO() >>
-S [272] ->
-Q [275] << INV_PO() >>
+P [291] << INV_PO() >>
+S [291] ->
+Q [294] << INV_PO() >>
 Why created:  Qk -> Q in concurrent composition for [serial 1114]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (73)                               [serial 1273] 
-P [270] << ( ( LOW_SPO2_HR() iff poa )
+P [289] << ( ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp )
   and sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp >>
-S [271] ->
-Q [275] << ( LOW_SPO2_HR() iff true )
+S [290] ->
+Q [294] << ( LOW_SPO2_HR() iff true )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp >>
 Why created:  applied wp for assignment [serial 1272]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (74)                               [serial 1272] 
-P [270] << ( ( LOW_SPO2_HR() iff poa )
+P [289] << ( ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp )
   and sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp >>
-S [271] poa := true
-Q [275] << ( LOW_SPO2_HR() iff poa )
+S [290] poa := true
+Q [294] << ( LOW_SPO2_HR() iff poa )
   and MINIMUM_HEART_RATE = mhr
   and PROGRAMMED_SPO2 = psp >>
 Why created:    normalization of [serial 1270]
@@ -1003,14 +1003,14 @@ Theorem (73) [serial 1273] used for:
 
 
 Theorem (75)                               [serial 1270] 
-P [270] << sp < psp
+P [289] << sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp
   and ( ( mhr = MINIMUM_HEART_RATE )
   and ( psp = PROGRAMMED_SPO2 )
   and ( poa iff LOW_SPO2_HR() ) ) >>
-S [271] poa := true
-Q [275] << ( ( mhr = MINIMUM_HEART_RATE )
+S [290] poa := true
+Q [294] << ( ( mhr = MINIMUM_HEART_RATE )
   and ( psp = PROGRAMMED_SPO2 )
   and ( poa iff LOW_SPO2_HR() ) ) >>
 Why created:  Substituted assertions' predicates for labels  [serial 1269]
@@ -1020,14 +1020,14 @@ Theorem (74) [serial 1272] used for:
 
 
 Theorem (76)                               [serial 1269] 
-P [270] << sp < psp
+P [289] << sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp
   and ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
-S [271] poa := true
-Q [275] << ( MHR_A()
+S [290] poa := true
+Q [294] << ( MHR_A()
   and PSPO2_A()
   and POA_A() ) >>
 Why created:  Substituted assertions' predicates for labels  [serial 1148]
@@ -1037,12 +1037,12 @@ Theorem (75) [serial 1270] used for:
 
 
 Theorem (77)                               [serial 1148] 
-P [270] << sp < psp
+P [289] << sp < psp
   and HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() >>
-S [271] poa := true
-Q [275] << INV_PO() >>
+S [290] poa := true
+Q [294] << INV_PO() >>
 Why created:    normalization of [serial 1125]
   Using: (eqcom) (bl.ancom) 
 Solved by: Predicate Invocation. (PI) and theorem 76:
@@ -1051,12 +1051,12 @@ Theorem (76) [serial 1269] used for:
 
 
 Theorem (78)                               [serial 1125] 
-P [270] << hrr = HEART_RATE
+P [289] << hrr = HEART_RATE
   and sp < psp
   and sp = SPO2
   and INV_PO() >>
-S [271] poa := true
-Q [275] << INV_PO() >>
+S [290] poa := true
+Q [294] << INV_PO() >>
 Why created:  <<P1>> S1 <<Q>> in concurrent composition for [serial 1114]
 Solved by: Equality Commutes. (eqcom) Conjunction Commutes. (bl.ancom) and theorem 77:
 Theorem (77) [serial 1148] used for:
@@ -1064,23 +1064,23 @@ Theorem (77) [serial 1148] used for:
 
 
 Theorem (79)                               [serial 1150] 
-P [256] << ( HEART_RATE = hrr
+P [275] << ( HEART_RATE = hrr
   and SPO2 = sp
   and INV_PO() )
   and sp < psp >>
-S [271] PO_Alarm!(true)
-Q [272] << INV_PO() >>
+S [290] PO_Alarm!(true)
+Q [291] << INV_PO() >>
 Why created:    normalization of [serial 1126]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (80)                               [serial 1126] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( sp < psp ) >>
-S [271] PO_Alarm!(true)
-Q [272] << INV_PO() >>
+S [290] PO_Alarm!(true)
+Q [291] << INV_PO() >>
 Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1114]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 79:
 Theorem (79) [serial 1150] used for:
@@ -1088,11 +1088,11 @@ Theorem (79) [serial 1150] used for:
 
 
 Theorem (81)                               [serial 1114] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( sp < psp ) >>
-S [270]   << hrr = HEART_RATE
+S [289]   << hrr = HEART_RATE
     and sp < psp
     and sp = SPO2
     and INV_PO() >>
@@ -1100,7 +1100,7 @@ S [270]   << hrr = HEART_RATE
   &
   PO_Alarm!(true)
   << INV_PO() >> 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:  <<P>> T <<Q>> in behavior action block for [serial 1111]
 Solved by:  Concurrent Composition Rule (CCk):
  <<P>> -> <<P1>>,  <<P>> -> <<P2>>, . . . , <<P>> -> <<Pn>>
@@ -1121,11 +1121,11 @@ Theorem (80) [serial 1126] used for:
 
 
 Theorem (82)                               [serial 1111] 
-P [256] << ( hrr = HEART_RATE
+P [275] << ( hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 )
   and ( sp < psp ) >>
-S [269]   {
+S [288]   {
     << hrr = HEART_RATE
       and sp < psp
       and sp = SPO2
@@ -1135,7 +1135,7 @@ S [269]   {
     PO_Alarm!(true)
     << INV_PO() >> 
   } 
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:    <<P and B2>> S2 <<Q>> in alternative for [serial 1107]
 Solved by: Behavior Action Block, simple (BABs): 
     <<P>> T <<Q>> 
@@ -1147,10 +1147,10 @@ Theorem (81) [serial 1114] used for:
 
 
 Theorem (83)                               [serial 1107] 
-P [254] << hrr = HEART_RATE
+P [273] << hrr = HEART_RATE
   and INV_PO()
   and sp = SPO2 >>
-S [256]   if 
+S [275]   if 
     (hrr >= mhr
     and sp >= psp)~> 
         {
@@ -1189,7 +1189,7 @@ S [256]   if
           << INV_PO() >> 
         }  
   fi
-Q [275] << INV_PO() >>
+Q [294] << INV_PO() >>
 Why created:  <<Q2 and P3>> S3 <<Q3>> in sequential composition for [serial 1015]
 Solved by: and theorems 44 57 69 82:
 Theorem (44) [serial 1108] used for:
@@ -1203,8 +1203,8 @@ Theorem (82) [serial 1111] used for:
 
 
 Theorem (84)                               [serial 1015] 
-P [242] << INV_PO() >>
-S [250]   << INV_PO() >>
+P [261] << INV_PO() >>
+S [269]   << INV_PO() >>
   Heart_Rate?(hrr)
   ;
   << hrr = HEART_RATE
@@ -1254,7 +1254,7 @@ S [250]   << INV_PO() >>
           }  
     fi
   << INV_PO() >> 
-Q [243] << INV_PO() >>
+Q [262] << INV_PO() >>
 Why created:   <<M(run) and x>> A <<M(check_echo)>> for got_hrr_spo2: run-[x]->check_echo{A};
 Solved by:  Sequential Composition Rule (SCk):
    <<P1>> S1 <<Q1 and P2>>
@@ -1279,7 +1279,7 @@ Theorem (83) [serial 1107] used for:
 
 
 Theorem (85)                               [serial 1368] 
-P [279] << ( INV_PO() )
+P [298] << ( INV_PO() )
   and ( PO_Alarm_Echo@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -1290,59 +1290,59 @@ P [279] << ( INV_PO() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [279] ->
-Q [281] << INV_PO()
+S [298] ->
+Q [300] << INV_PO()
   and PO_Alarm_Echo@now >>
 Why created:  as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1016]
 Solved by: And Introduction Schema (bl.aiswll)(bl.aiswlr):  (X and Y and Z)->(X and Y)
 
 Theorem (86)                               [serial 1369] 
-P [291] << INV_PO() >>
-S [242] ->
-Q [242] << INV_PO() >>
+P [310] << INV_PO() >>
+S [261] ->
+Q [261] << INV_PO() >>
 Why created:  as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1016]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (87)                               [serial 1371] 
-P [281] << ( INV_PO()
+P [300] << ( INV_PO()
   and PO_Alarm_Echo@now )
   and ( echo_val iff PO_Alarm_Echo@now ) >>
-S [284] ->
-Q [284] << INV_PO()
+S [303] ->
+Q [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
 Why created:  <<P and v=e>> -> <<A>> in behavior action block for [serial 1370]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (88)                               [serial 1374] 
-P [284] << INV_PO()
+P [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
-S [284] ->
-Q [284] << INV_PO()
+S [303] ->
+Q [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
 Why created:  as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1372]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (89)                               [serial 1375] 
-P [289] << INV_PO() >>
-S [289] ->
-Q [289] << INV_PO() >>
+P [308] << INV_PO() >>
+S [308] ->
+Q [308] << INV_PO() >>
 Why created:  as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1372]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (90)                               [serial 1385] 
-P [284] << ( PO_Alarm_Echo iff echo_val )
+P [303] << ( PO_Alarm_Echo iff echo_val )
   and INV_PO() >>
-S [285] ->
-Q [285] << ( echo_val iff poa ) or not ( echo_val iff poa ) >>
+S [304] ->
+Q [304] << ( echo_val iff poa ) or not ( echo_val iff poa ) >>
 Why created:    normalization of [serial 1377]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) 
 Solved by: Law of Excluded middle. (exmid)
 
 Theorem (91)                               [serial 1377] 
-P [284] << INV_PO()
+P [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
-S [285] ->
-Q [285] << ( echo_val iff poa ) or ( not ( echo_val iff poa ) ) >>
+S [304] ->
+Q [304] << ( echo_val iff poa ) or ( not ( echo_val iff poa ) ) >>
 Why created:    <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1376]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 90:
 Theorem (90) [serial 1385] used for:
@@ -1350,21 +1350,21 @@ Theorem (90) [serial 1385] used for:
 
 
 Theorem (92)                               [serial 1389] 
-P [285] << ( ( PO_Alarm_Echo iff echo_val )
+P [304] << ( ( PO_Alarm_Echo iff echo_val )
   and INV_PO() )
   and ( echo_val iff poa ) >>
-S [285] ->
-Q [289] << INV_PO() >>
+S [304] ->
+Q [308] << INV_PO() >>
 Why created:    normalization of [serial 1387]
   Using: (bicom) (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (93)                               [serial 1387] 
-P [285] << ( INV_PO()
+P [304] << ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( echo_val iff poa ) >>
-S [285] ->
-Q [289] << INV_PO() >>
+S [304] ->
+Q [308] << INV_PO() >>
 Why created:    <<P>> -> <<Q>>
   for [serial 1378]
 Solved by: Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 92:
@@ -1373,11 +1373,11 @@ Theorem (92) [serial 1389] used for:
 
 
 Theorem (94)                               [serial 1378] 
-P [285] << ( INV_PO()
+P [304] << ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( echo_val iff poa ) >>
-S [285] skip
-Q [289] << INV_PO() >>
+S [304] skip
+Q [308] << INV_PO() >>
 Why created:    <<P and B0>> S0 <<Q>> in alternative for [serial 1376]
 Solved by:  Skip Means Implication:  <<P>> skip <<Q>>  is  <<P>> -> <<Q>>
  and theorem 93:
@@ -1387,32 +1387,32 @@ Theorem (93) [serial 1387] used for:
 
 
 Theorem (95)                               [serial 1397] 
-P [285] << ( INV_PO()
+P [304] << ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( not ( echo_val iff poa ) ) >>
-S [287] ->
-Q [287] << true >>
+S [306] ->
+Q [306] << true >>
 Why created:  applied port output <<pre>> -> <<M[Lost_Confirmation]>> [serial 1379]
 Solved by: Anything Implies True (a1tru): P->true
 
 Theorem (96)                               [serial 1401] 
-P [287] << ( ( ( PO_Alarm_Echo iff echo_val )
+P [306] << ( ( ( PO_Alarm_Echo iff echo_val )
   and INV_PO() )
   and not ( echo_val iff poa ) )
   and true >>
-S [287] ->
-Q [289] << INV_PO() >>
+S [306] ->
+Q [308] << INV_PO() >>
 Why created:    normalization of [serial 1399]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) 
 Solved by: True can be removed from conjunction. (truan)(truconj)
 
 Theorem (97)                               [serial 1399] 
-P [287] << ( ( INV_PO()
+P [306] << ( ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( not ( echo_val iff poa ) ) )
   and true >>
-S [287] ->
-Q [289] << INV_PO() >>
+S [306] ->
+Q [308] << INV_PO() >>
 Why created:  Assume Present:  P = P@now = P^0   [serial 1398]
 Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
    or if a value is constant its value at time t is the same (bl.atintroc)  [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 96:
@@ -1421,12 +1421,12 @@ Theorem (96) [serial 1401] used for:
 
 
 Theorem (98)                               [serial 1398] 
-P [287] << ( ( INV_PO()
+P [306] << ( ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( not ( echo_val iff poa ) ) )
   and true@now >>
-S [287] ->
-Q [289] << INV_PO() >>
+S [306] ->
+Q [308] << INV_PO() >>
 Why created:  applied port output <<pre and M[Lost_Confirmation]@now>> -> <<post>> [serial 1379]
 Solved by:  Assume Present:  P = P@now = P^0 
  and theorem 97:
@@ -1435,11 +1435,11 @@ Theorem (97) [serial 1399] used for:
 
 
 Theorem (99)                               [serial 1379] 
-P [285] << ( INV_PO()
+P [304] << ( INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) )
   and ( not ( echo_val iff poa ) ) >>
-S [287] Lost_Confirmation!
-Q [289] << INV_PO() >>
+S [306] Lost_Confirmation!
+Q [308] << INV_PO() >>
 Why created:    <<P and B1>> S1 <<Q>> in alternative for [serial 1376]
 Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
  and theorems 95 98:
@@ -1450,16 +1450,16 @@ Theorem (98) [serial 1398] used for:
 
 
 Theorem (100)                               [serial 1376] 
-P [284] << INV_PO()
+P [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
-S [285]   if 
+S [304]   if 
     (echo_val iff poa)~> 
       skip 
   []
     (not ( echo_val iff poa ))~> 
       Lost_Confirmation! 
   fi
-Q [289] << INV_PO() >>
+Q [308] << INV_PO() >>
 Why created:  as <<pre>> S <<post>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1372]
 Solved by: and theorems 91 94 99:
 Theorem (91) [serial 1377] used for:
@@ -1471,9 +1471,9 @@ Theorem (99) [serial 1379] used for:
 
 
 Theorem (101)                               [serial 1372] 
-P [284] << INV_PO()
+P [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
-S [284] << INV_PO()
+S [303] << INV_PO()
   and ( echo_val iff PO_Alarm_Echo ) >>
   if 
     (echo_val iff poa)~> 
@@ -1483,7 +1483,7 @@ S [284] << INV_PO()
       Lost_Confirmation! 
   fi
 << INV_PO() >>
-Q [289] << INV_PO() >>
+Q [308] << INV_PO() >>
 Why created:  <<A>> S <<B>> in behavior action block for [serial 1370]
 Solved by: null and theorems 88 89 100:
 Theorem (88) [serial 1374] used for:
@@ -1495,16 +1495,16 @@ Theorem (100) [serial 1376] used for:
 
 
 Theorem (102)                               [serial 1373] 
-P [289] << INV_PO() >>
-S [282] ->
-Q [291] << INV_PO() >>
+P [308] << INV_PO() >>
+S [301] ->
+Q [310] << INV_PO() >>
 Why created:  <<B>> -> <<Q>> in behavior action block for [serial 1370]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (103)                               [serial 1370] 
-P [281] << INV_PO()
+P [300] << INV_PO()
   and PO_Alarm_Echo@now >>
-S [282] declare 
+S [301] declare 
    echo_val ~ boolean := PO_Alarm_Echo?   {
   << INV_PO()
     and ( echo_val iff PO_Alarm_Echo ) >>
@@ -1517,7 +1517,7 @@ S [282] declare
     fi
   << INV_PO() >>
   } 
-Q [291] << INV_PO() >>
+Q [310] << INV_PO() >>
 Why created:  as <<pre>> S <<post>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1016]
 Solved by: Behavior Action Block (BAB): 
      <<P and x=e>> -> <<A>>
@@ -1534,7 +1534,7 @@ Theorem (102) [serial 1373] used for:
 
 
 Theorem (104)                               [serial 1016] 
-P [279] << ( INV_PO() )
+P [298] << ( INV_PO() )
   and ( PO_Alarm_Echo@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -1545,7 +1545,7 @@ P [279] << ( INV_PO() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [281] << INV_PO()
+S [300] << INV_PO()
   and PO_Alarm_Echo@now >>
 declare 
    echo_val ~ boolean := PO_Alarm_Echo?   {
@@ -1561,7 +1561,7 @@ declare
   << INV_PO() >>
   } 
 << INV_PO() >>
-Q [242] << INV_PO() >>
+Q [261] << INV_PO() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
 Solved by: null and theorems 85 86 103:
 Theorem (85) [serial 1368] used for:
@@ -1573,7 +1573,7 @@ Theorem (103) [serial 1370] used for:
 
 
 Theorem (105)                               [serial 1411] 
-P [294] << ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
+P [313] << ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
    that ( PO_Alarm or PO_Alarm_Echo )@t  ) )
@@ -1587,14 +1587,14 @@ P [294] << ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limi
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [295] ->
-Q [295] << true >>
+S [314] ->
+Q [314] << true >>
 Why created:    normalization of [serial 1407]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (106)                               [serial 1407] 
-P [294] << ( INV_PO() )
+P [313] << ( INV_PO() )
   and ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
@@ -1608,8 +1608,8 @@ P [294] << ( INV_PO() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [295] ->
-Q [295] << true >>
+S [314] ->
+Q [314] << true >>
 Why created:  applied port output <<pre>> -> <<M[Lost_Confirmation]>> [serial 1406]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 105:
 Theorem (105) [serial 1411] used for:
@@ -1617,7 +1617,7 @@ Theorem (105) [serial 1411] used for:
 
 
 Theorem (107)                               [serial 1413] 
-P [295] << ( ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
+P [314] << ( ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
    that ( PO_Alarm or PO_Alarm_Echo )@t  ) )
@@ -1632,14 +1632,14 @@ P [295] << ( ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Li
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) )
   and true >>
-S [295] ->
-Q [242] << INV_PO() >>
+S [314] ->
+Q [261] << INV_PO() >>
 Why created:    normalization of [serial 1409]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: True can be removed from conjunction. (truan)(truconj)
 
 Theorem (108)                               [serial 1409] 
-P [295] << ( ( INV_PO() )
+P [314] << ( ( INV_PO() )
   and ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
@@ -1654,8 +1654,8 @@ P [295] << ( ( INV_PO() )
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) )
   and true >>
-S [295] ->
-Q [242] << INV_PO() >>
+S [314] ->
+Q [261] << INV_PO() >>
 Why created:  Assume Present:  P = P@now = P^0   [serial 1408]
 Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
    or if a value is constant its value at time t is the same (bl.atintroc)  [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 107:
@@ -1664,7 +1664,7 @@ Theorem (107) [serial 1413] used for:
 
 
 Theorem (109)                               [serial 1408] 
-P [295] << ( ( INV_PO() )
+P [314] << ( ( INV_PO() )
   and ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
@@ -1679,8 +1679,8 @@ P [295] << ( ( INV_PO() )
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) )
   and true@now >>
-S [295] ->
-Q [242] << INV_PO() >>
+S [314] ->
+Q [261] << INV_PO() >>
 Why created:  applied port output <<pre and M[Lost_Confirmation]@now>> -> <<post>> [serial 1406]
 Solved by:  Assume Present:  P = P@now = P^0 
  and theorem 108:
@@ -1689,7 +1689,7 @@ Theorem (108) [serial 1409] used for:
 
 
 Theorem (110)                               [serial 1406] 
-P [294] << ( INV_PO() )
+P [313] << ( INV_PO() )
   and ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
@@ -1703,8 +1703,8 @@ P [294] << ( INV_PO() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [295] Lost_Confirmation!
-Q [242] << INV_PO() >>
+S [314] Lost_Confirmation!
+Q [261] << INV_PO() >>
 Why created:  as <<P>> S <<Q>> in <<P>> { S } <<Q>> [serial 1017]
 Solved by:  Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
  and theorems 106 109:
@@ -1715,7 +1715,7 @@ Theorem (109) [serial 1408] used for:
 
 
 Theorem (111)                               [serial 1017] 
-P [294] << ( INV_PO() )
+P [313] << ( INV_PO() )
   and ( ( PO_Alarm or PO_Alarm_Echo )@( now - IoMT_Properties::PO_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PO_Echo_Limit s ) ,, now 
@@ -1729,8 +1729,8 @@ P [294] << ( INV_PO() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PO_Echo_Limit s ) ,, u 
    that ( PO_Alarm or PO_Alarm_Echo )@t  )  ) >>
-S [295] Lost_Confirmation!
-Q [242] << INV_PO() >>
+S [314] Lost_Confirmation!
+Q [261] << INV_PO() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
 Solved by: null and theorem 110:
 Theorem (110) [serial 1406] used for:
@@ -1738,9 +1738,9 @@ Theorem (110) [serial 1406] used for:
 
 
 Theorem (112)                               [serial 1010] 
-P [222] <<   >>
-S [228] ->
-Q [222] << Pulse_Oximeter_Thread.impl proof obligations >>
+P [241] <<   >>
+S [247] ->
+Q [241] << Pulse_Oximeter_Thread.impl proof obligations >>
 Why created:  Initial proof obligations for Pulse_Oximeter_Thread.impl
 Solved by:  Component verification conditions
  and theorems 24 27 28 29 84 104 111:
@@ -1761,56 +1761,56 @@ Theorem (111) [serial 1017] used for:
 
 
 Theorem (113)                               [serial 1019] 
-P [412] << RA()
+P [431] << RA()
   and MRP_A() >>
-S [400] ->
-Q [400] << RA()
+S [419] ->
+Q [419] << RA()
   and MRP_A() >>
 Why created:  <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definition.
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (114)                               [serial 1020] 
-P [411] << RA()
+P [430] << RA()
   and MRP_A() >>
-S [400] ->
-Q [400] << RA()
+S [419] ->
+Q [419] << RA()
   and MRP_A() >>
 Why created:  <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (115)                               [serial 1021] 
-P [410] << RA()
+P [429] << RA()
   and MRP_A() >>
-S [410] ->
-Q [410] << true >>
+S [429] ->
+Q [429] << true >>
 Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 Solved by: Anything Implies True (a1tru): P->true
 
 Theorem (116)                               [serial 1022] 
-P [410] << RA()
+P [429] << RA()
   and MRP_A() >>
-S [416] ->
-Q [411] << RA()
+S [435] ->
+Q [430] << RA()
   and MRP_A() >>
 Why created:   <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (117)                               [serial 1458] 
-P [420] << ( MRP_A()
+P [439] << ( MRP_A()
   and RA() )
   and rpr = RESPIRATION_RATE >>
-S [420] ->
-Q [421] << RESPIRATION_RATE = rpr
+S [439] ->
+Q [440] << RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
 Why created:  applied port input of value <<pre and rpr=M(RP_Rate)>> -> <<post>> [serial 1435]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (118)                               [serial 1435] 
-P [411] << MRP_A()
+P [430] << MRP_A()
   and RA() >>
-S [420] RP_Rate?(rpr)
-Q [421] << RESPIRATION_RATE = rpr
+S [439] RP_Rate?(rpr)
+Q [440] << RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1419]
@@ -1822,10 +1822,10 @@ Theorem (117) [serial 1458] used for:
 
 
 Theorem (119)                               [serial 1419] 
-P [411] << RA()
+P [430] << RA()
   and MRP_A() >>
-S [420] RP_Rate?(rpr)
-Q [421] << rpr = RESPIRATION_RATE
+S [439] RP_Rate?(rpr)
+Q [440] << rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() >>
 Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1023]
@@ -1835,21 +1835,21 @@ Theorem (118) [serial 1435] used for:
 
 
 Theorem (120)                               [serial 1464] 
-P [421] << RESPIRATION_RATE = rpr
+P [440] << RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [423] ->
-Q [423] << rpr < mrp or not ( rpr < mrp ) >>
+S [442] ->
+Q [442] << rpr < mrp or not ( rpr < mrp ) >>
 Why created:    normalization of [serial 1462]
   Using: ADD_UNNECESSARY_PARETHESES (bl.orcom) 
 Solved by: Law of Excluded middle. (exmid)
 
 Theorem (121)                               [serial 1462] 
-P [421] << RESPIRATION_RATE = rpr
+P [440] << RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [423] ->
-Q [423] << rpr < mrp or ( not ( rpr < mrp ) ) >>
+S [442] ->
+Q [442] << rpr < mrp or ( not ( rpr < mrp ) ) >>
 Why created:  Replacing <= with not < of [serial 1437]
 Solved by: [Add unnecessary parentheses] Disjunction Commutes. (bl.orcom) and theorem 120:
 Theorem (120) [serial 1464] used for:
@@ -1857,11 +1857,11 @@ Theorem (120) [serial 1464] used for:
 
 
 Theorem (122)                               [serial 1437] 
-P [421] << RESPIRATION_RATE = rpr
+P [440] << RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [423] ->
-Q [423] << rpr < mrp or mrp <= rpr >>
+S [442] ->
+Q [442] << rpr < mrp or mrp <= rpr >>
 Why created:    normalization of [serial 1421]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.orcom) 
 Solved by: 'Less than' expressed in terms of 'less than or equal to'. (ltnle) and theorem 121:
@@ -1870,11 +1870,11 @@ Theorem (121) [serial 1462] used for:
 
 
 Theorem (123)                               [serial 1421] 
-P [421] << rpr = RESPIRATION_RATE
+P [440] << rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() >>
-S [423] ->
-Q [423] << ( rpr >= mrp ) or ( rpr < mrp ) >>
+S [442] ->
+Q [442] << ( rpr >= mrp ) or ( rpr < mrp ) >>
 Why created:    <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1420]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] [change A>=B to B<=A] Disjunction Commutes. (bl.orcom) and theorem 122:
 Theorem (122) [serial 1437] used for:
@@ -1882,12 +1882,12 @@ Theorem (122) [serial 1437] used for:
 
 
 Theorem (124)                               [serial 1439] 
-P [423] << ( RESPIRATION_RATE = rpr
+P [442] << ( RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() )
   and mrp <= rpr >>
-S [425] ->
-Q [425] << mrp <= rpr
+S [444] ->
+Q [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
@@ -1896,12 +1896,12 @@ Why created:    normalization of [serial 1426]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (125)                               [serial 1426] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr >= mrp ) >>
-S [425] ->
-Q [425] << rpr = RESPIRATION_RATE
+S [444] ->
+Q [444] << rpr = RESPIRATION_RATE
   and rpr >= mrp
   and MRP_A()
   and RA() >>
@@ -1912,19 +1912,19 @@ Theorem (124) [serial 1439] used for:
 
 
 Theorem (126)                               [serial 1441] 
-P [427] << MRP_A()
+P [446] << MRP_A()
   and RA() >>
-S [427] ->
-Q [412] << MRP_A()
+S [446] ->
+Q [431] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1427]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (127)                               [serial 1427] 
-P [427] << RA()
+P [446] << RA()
   and MRP_A() >>
-S [427] ->
-Q [412] << RA()
+S [446] ->
+Q [431] << RA()
   and MRP_A() >>
 Why created:  Qk -> Q in concurrent composition for [serial 1424]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 126:
@@ -1933,24 +1933,24 @@ Theorem (126) [serial 1441] used for:
 
 
 Theorem (128)                               [serial 1471] 
-P [425] << ( LOW_RP() iff rma )
+P [444] << ( LOW_RP() iff rma )
   and mrp <= rpr
   and MINIMUM_RESPIRATION_RATE = mrp
   and RESPIRATION_RATE = rpr >>
-S [426] ->
-Q [412] << ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE iff false )
+S [445] ->
+Q [431] << ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE iff false )
   and MINIMUM_RESPIRATION_RATE = mrp >>
 Why created:    normalization of [serial 1469]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) 
 Solved by: The negation of a proposition is equivalent to itself being equivalent to false. (nbfal)
 
 Theorem (129)                               [serial 1469] 
-P [425] << mrp <= rpr
+P [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( rma iff LOW_RP() ) >>
-S [426] ->
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [445] ->
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( false iff ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE ) ) >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1468]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 128:
@@ -1959,12 +1959,12 @@ Theorem (128) [serial 1471] used for:
 
 
 Theorem (130)                               [serial 1468] 
-P [425] << mrp <= rpr
+P [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [426] ->
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [445] ->
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( false iff ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE ) ) >>
 Why created:  applied wp for assignment [serial 1467]
 Solved by: Predicate Invocation. (PI) and theorem 129:
@@ -1973,12 +1973,12 @@ Theorem (129) [serial 1469] used for:
 
 
 Theorem (131)                               [serial 1467] 
-P [425] << mrp <= rpr
+P [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [426] rma := false
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [445] rma := false
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( rma iff ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE ) ) >>
 Why created:  Substituted assertions' predicates for labels in postconditions [serial 1466]
 Solved by:  Assignment (asgn)(AA):
@@ -1991,12 +1991,12 @@ Theorem (130) [serial 1468] used for:
 
 
 Theorem (132)                               [serial 1466] 
-P [425] << mrp <= rpr
+P [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [426] rma := false
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [445] rma := false
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( rma iff LOW_RP() ) >>
 Why created:  Substituted assertions' predicates for labels in postconditions [serial 1443]
 Solved by: Predicate Invocation. (PI) and theorem 131:
@@ -2005,12 +2005,12 @@ Theorem (131) [serial 1467] used for:
 
 
 Theorem (133)                               [serial 1443] 
-P [425] << mrp <= rpr
+P [444] << mrp <= rpr
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [426] rma := false
-Q [412] << MRP_A()
+S [445] rma := false
+Q [431] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1428]
   Using: (eqcom) changeAtLeastToAtMost (bl.ancom) 
@@ -2020,12 +2020,12 @@ Theorem (132) [serial 1466] used for:
 
 
 Theorem (134)                               [serial 1428] 
-P [425] << rpr = RESPIRATION_RATE
+P [444] << rpr = RESPIRATION_RATE
   and rpr >= mrp
   and MRP_A()
   and RA() >>
-S [426] rma := false
-Q [412] << RA()
+S [445] rma := false
+Q [431] << RA()
   and MRP_A() >>
 Why created:  <<P1>> S1 <<Q>> in concurrent composition for [serial 1424]
 Solved by: Equality Commutes. (eqcom) [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 133:
@@ -2034,24 +2034,24 @@ Theorem (133) [serial 1443] used for:
 
 
 Theorem (135)                               [serial 1445] 
-P [423] << ( RESPIRATION_RATE = rpr
+P [442] << ( RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() )
   and mrp <= rpr >>
-S [426] RM_Alarm!(false)
-Q [427] << MRP_A()
+S [445] RM_Alarm!(false)
+Q [446] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1429]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES changeAtLeastToAtMost (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (136)                               [serial 1429] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr >= mrp ) >>
-S [426] RM_Alarm!(false)
-Q [427] << RA()
+S [445] RM_Alarm!(false)
+Q [446] << RA()
   and MRP_A() >>
 Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1424]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] [change A>=B to B<=A] Conjunction Commutes. (bl.ancom) and theorem 135:
@@ -2060,11 +2060,11 @@ Theorem (135) [serial 1445] used for:
 
 
 Theorem (137)                               [serial 1424] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr >= mrp ) >>
-S [425]   << rpr = RESPIRATION_RATE
+S [444]   << rpr = RESPIRATION_RATE
     and rpr >= mrp
     and MRP_A()
     and RA() >>
@@ -2073,7 +2073,7 @@ S [425]   << rpr = RESPIRATION_RATE
   RM_Alarm!(false)
   << RA()
     and MRP_A() >> 
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:  <<P>> T <<Q>> in behavior action block for [serial 1422]
 Solved by:  Concurrent Composition Rule (CCk):
@@ -2095,11 +2095,11 @@ Theorem (136) [serial 1429] used for:
 
 
 Theorem (138)                               [serial 1422] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr >= mrp ) >>
-S [424]   {
+S [443]   {
     << rpr = RESPIRATION_RATE
       and rpr >= mrp
       and MRP_A()
@@ -2110,7 +2110,7 @@ S [424]   {
     << RA()
       and MRP_A() >> 
   } 
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:    <<P and B0>> S0 <<Q>> in alternative for [serial 1420]
 Solved by: Behavior Action Block, simple (BABs): 
@@ -2123,12 +2123,12 @@ Theorem (137) [serial 1424] used for:
 
 
 Theorem (139)                               [serial 1447] 
-P [423] << ( RESPIRATION_RATE = rpr
+P [442] << ( RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() )
   and rpr < mrp >>
-S [432] ->
-Q [432] << rpr < mrp
+S [451] ->
+Q [451] << rpr < mrp
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
@@ -2137,12 +2137,12 @@ Why created:    normalization of [serial 1430]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (140)                               [serial 1430] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr < mrp ) >>
-S [432] ->
-Q [432] << rpr = RESPIRATION_RATE
+S [451] ->
+Q [451] << rpr = RESPIRATION_RATE
   and rpr < mrp
   and MRP_A()
   and RA() >>
@@ -2153,19 +2153,19 @@ Theorem (139) [serial 1447] used for:
 
 
 Theorem (141)                               [serial 1449] 
-P [434] << MRP_A()
+P [453] << MRP_A()
   and RA() >>
-S [434] ->
-Q [412] << MRP_A()
+S [453] ->
+Q [431] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1431]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (142)                               [serial 1431] 
-P [434] << RA()
+P [453] << RA()
   and MRP_A() >>
-S [434] ->
-Q [412] << RA()
+S [453] ->
+Q [431] << RA()
   and MRP_A() >>
 Why created:  Qk -> Q in concurrent composition for [serial 1425]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 141:
@@ -2174,23 +2174,23 @@ Theorem (141) [serial 1449] used for:
 
 
 Theorem (143)                               [serial 1481] 
-P [432] << rpr < mrp
+P [451] << rpr < mrp
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [433] ->
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [452] ->
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( true iff LOW_RP() ) >>
 Why created:  applied wp for assignment [serial 1480]
 Solved by: Superfluity of Equivalence. (bl.seq)
 
 Theorem (144)                               [serial 1480] 
-P [432] << rpr < mrp
+P [451] << rpr < mrp
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [433] rma := true
-Q [412] << ( mrp = MINIMUM_RESPIRATION_RATE )
+S [452] rma := true
+Q [431] << ( mrp = MINIMUM_RESPIRATION_RATE )
   and ( rma iff LOW_RP() ) >>
 Why created:  Substituted assertions' predicates for labels in postconditions [serial 1451]
 Solved by:  Assignment (asgn)(AA):
@@ -2203,12 +2203,12 @@ Theorem (143) [serial 1481] used for:
 
 
 Theorem (145)                               [serial 1451] 
-P [432] << rpr < mrp
+P [451] << rpr < mrp
   and RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() >>
-S [433] rma := true
-Q [412] << MRP_A()
+S [452] rma := true
+Q [431] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1432]
   Using: (eqcom) (bl.ancom) 
@@ -2218,12 +2218,12 @@ Theorem (144) [serial 1480] used for:
 
 
 Theorem (146)                               [serial 1432] 
-P [432] << rpr = RESPIRATION_RATE
+P [451] << rpr = RESPIRATION_RATE
   and rpr < mrp
   and MRP_A()
   and RA() >>
-S [433] rma := true
-Q [412] << RA()
+S [452] rma := true
+Q [431] << RA()
   and MRP_A() >>
 Why created:  <<P1>> S1 <<Q>> in concurrent composition for [serial 1425]
 Solved by: Equality Commutes. (eqcom) Conjunction Commutes. (bl.ancom) and theorem 145:
@@ -2232,24 +2232,24 @@ Theorem (145) [serial 1451] used for:
 
 
 Theorem (147)                               [serial 1453] 
-P [423] << ( RESPIRATION_RATE = rpr
+P [442] << ( RESPIRATION_RATE = rpr
   and MRP_A()
   and RA() )
   and rpr < mrp >>
-S [433] RM_Alarm!(true)
-Q [434] << MRP_A()
+S [452] RM_Alarm!(true)
+Q [453] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1433]
   Using: (eqcom) ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (148)                               [serial 1433] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr < mrp ) >>
-S [433] RM_Alarm!(true)
-Q [434] << RA()
+S [452] RM_Alarm!(true)
+Q [453] << RA()
   and MRP_A() >>
 Why created:  <<P>> S2 <<Q2>> in concurrent composition for [serial 1425]
 Solved by: Equality Commutes. (eqcom) [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 147:
@@ -2258,11 +2258,11 @@ Theorem (147) [serial 1453] used for:
 
 
 Theorem (149)                               [serial 1425] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr < mrp ) >>
-S [432]   << rpr = RESPIRATION_RATE
+S [451]   << rpr = RESPIRATION_RATE
     and rpr < mrp
     and MRP_A()
     and RA() >>
@@ -2271,7 +2271,7 @@ S [432]   << rpr = RESPIRATION_RATE
   RM_Alarm!(true)
   << RA()
     and MRP_A() >> 
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:  <<P>> T <<Q>> in behavior action block for [serial 1423]
 Solved by:  Concurrent Composition Rule (CCk):
@@ -2293,11 +2293,11 @@ Theorem (148) [serial 1433] used for:
 
 
 Theorem (150)                               [serial 1423] 
-P [423] << ( rpr = RESPIRATION_RATE
+P [442] << ( rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() )
   and ( rpr < mrp ) >>
-S [431]   {
+S [450]   {
     << rpr = RESPIRATION_RATE
       and rpr < mrp
       and MRP_A()
@@ -2308,7 +2308,7 @@ S [431]   {
     << RA()
       and MRP_A() >> 
   } 
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:    <<P and B1>> S1 <<Q>> in alternative for [serial 1420]
 Solved by: Behavior Action Block, simple (BABs): 
@@ -2321,10 +2321,10 @@ Theorem (149) [serial 1425] used for:
 
 
 Theorem (151)                               [serial 1420] 
-P [421] << rpr = RESPIRATION_RATE
+P [440] << rpr = RESPIRATION_RATE
   and MRP_A()
   and RA() >>
-S [423]   if 
+S [442]   if 
     (rpr >= mrp)~> 
         {
           << rpr = RESPIRATION_RATE
@@ -2351,7 +2351,7 @@ S [423]   if
             and MRP_A() >> 
         }  
   fi
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:  <<Q1 and P2>> S2 <<Q2>> in sequential composition for [serial 1023]
 Solved by: and theorems 123 138 150:
@@ -2364,9 +2364,9 @@ Theorem (150) [serial 1423] used for:
 
 
 Theorem (152)                               [serial 1023] 
-P [411] << RA()
+P [430] << RA()
   and MRP_A() >>
-S [420]   RP_Rate?(rpr)
+S [439]   RP_Rate?(rpr)
   << rpr = RESPIRATION_RATE
     and MRP_A()
     and RA() >>
@@ -2398,7 +2398,7 @@ S [420]   RP_Rate?(rpr)
               and MRP_A() >> 
           }  
     fi 
-Q [412] << RA()
+Q [431] << RA()
   and MRP_A() >>
 Why created:   <<M(run) and x>> A <<M(check_echo)>> for got_rp: run-[x]->check_echo{A};
 Solved by:  Sequential Composition Rule (SCk):
@@ -2418,7 +2418,7 @@ Theorem (151) [serial 1420] used for:
 
 
 Theorem (153)                               [serial 1525] 
-P [439] << ( MRP_A()
+P [458] << ( MRP_A()
   and RA() )
   and RM_Alarm_Echo@now
   and not ( exists u ~ time 
@@ -2430,8 +2430,8 @@ P [439] << ( MRP_A()
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [439] ->
-Q [441] << RM_Alarm_Echo@now
+S [458] ->
+Q [460] << RM_Alarm_Echo@now
   and MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1512]
@@ -2439,7 +2439,7 @@ Why created:    normalization of [serial 1512]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (154)                               [serial 1512] 
-P [439] << ( RA()
+P [458] << ( RA()
   and MRP_A() )
   and ( RM_Alarm_Echo@now )
   and not ( exists u ~ time 
@@ -2451,8 +2451,8 @@ P [439] << ( RA()
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [439] ->
-Q [441] << RA()
+S [458] ->
+Q [460] << RA()
   and MRP_A()
   and RM_Alarm_Echo@now >>
 Why created:  as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1024]
@@ -2462,19 +2462,19 @@ Theorem (153) [serial 1525] used for:
 
 
 Theorem (155)                               [serial 1527] 
-P [450] << MRP_A()
+P [469] << MRP_A()
   and RA() >>
-S [411] ->
-Q [411] << MRP_A()
+S [430] ->
+Q [430] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1513]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (156)                               [serial 1513] 
-P [450] << RA()
+P [469] << RA()
   and MRP_A() >>
-S [411] ->
-Q [411] << RA()
+S [430] ->
+Q [430] << RA()
   and MRP_A() >>
 Why created:  as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1024]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 155:
@@ -2483,12 +2483,12 @@ Theorem (155) [serial 1527] used for:
 
 
 Theorem (157)                               [serial 1529] 
-P [441] << ( RM_Alarm_Echo@now
+P [460] << ( RM_Alarm_Echo@now
   and MRP_A()
   and RA() )
   and ( RM_Alarm_Echo@now iff echo_val ) >>
-S [443] ->
-Q [443] << ( RM_Alarm_Echo iff echo_val )
+S [462] ->
+Q [462] << ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1515]
@@ -2496,12 +2496,12 @@ Why created:    normalization of [serial 1515]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (158)                               [serial 1515] 
-P [441] << ( RA()
+P [460] << ( RA()
   and MRP_A()
   and RM_Alarm_Echo@now )
   and ( echo_val iff RM_Alarm_Echo@now ) >>
-S [443] ->
-Q [443] << RA()
+S [462] ->
+Q [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
 Why created:  <<P and v=e>> -> <<A>> in behavior action block for [serial 1514]
@@ -2511,11 +2511,11 @@ Theorem (157) [serial 1529] used for:
 
 
 Theorem (159)                               [serial 1531] 
-P [443] << ( RM_Alarm_Echo iff echo_val )
+P [462] << ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() >>
-S [443] ->
-Q [443] << ( RM_Alarm_Echo iff echo_val )
+S [462] ->
+Q [462] << ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1518]
@@ -2523,11 +2523,11 @@ Why created:    normalization of [serial 1518]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (160)                               [serial 1518] 
-P [443] << RA()
+P [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
-S [443] ->
-Q [443] << RA()
+S [462] ->
+Q [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
 Why created:  as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1516]
@@ -2537,19 +2537,19 @@ Theorem (159) [serial 1531] used for:
 
 
 Theorem (161)                               [serial 1533] 
-P [448] << MRP_A()
+P [467] << MRP_A()
   and RA() >>
-S [448] ->
-Q [448] << MRP_A()
+S [467] ->
+Q [467] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1519]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (162)                               [serial 1519] 
-P [448] << RA()
+P [467] << RA()
   and MRP_A() >>
-S [448] ->
-Q [448] << RA()
+S [467] ->
+Q [467] << RA()
   and MRP_A() >>
 Why created:  as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1516]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 161:
@@ -2558,21 +2558,21 @@ Theorem (161) [serial 1533] used for:
 
 
 Theorem (163)                               [serial 1535] 
-P [443] << ( RM_Alarm_Echo iff echo_val )
+P [462] << ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() >>
-S [444] ->
-Q [444] << ( echo_val iff rma ) or not ( echo_val iff rma ) >>
+S [463] ->
+Q [463] << ( echo_val iff rma ) or not ( echo_val iff rma ) >>
 Why created:    normalization of [serial 1521]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) 
 Solved by: Law of Excluded middle. (exmid)
 
 Theorem (164)                               [serial 1521] 
-P [443] << RA()
+P [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
-S [444] ->
-Q [444] << ( echo_val iff rma ) or ( not ( echo_val iff rma ) ) >>
+S [463] ->
+Q [463] << ( echo_val iff rma ) or ( not ( echo_val iff rma ) ) >>
 Why created:    <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1520]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 163:
 Theorem (163) [serial 1535] used for:
@@ -2580,24 +2580,24 @@ Theorem (163) [serial 1535] used for:
 
 
 Theorem (165)                               [serial 1537] 
-P [444] << ( ( RM_Alarm_Echo iff echo_val )
+P [463] << ( ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() )
   and ( echo_val iff rma ) >>
-S [444] skip
-Q [448] << MRP_A()
+S [463] skip
+Q [467] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1522]
   Using: (bicom) (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (166)                               [serial 1522] 
-P [444] << ( RA()
+P [463] << ( RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) )
   and ( echo_val iff rma ) >>
-S [444] skip
-Q [448] << RA()
+S [463] skip
+Q [467] << RA()
   and MRP_A() >>
 Why created:    <<P and B0>> S0 <<Q>> in alternative for [serial 1520]
 Solved by: Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 165:
@@ -2606,24 +2606,24 @@ Theorem (165) [serial 1537] used for:
 
 
 Theorem (167)                               [serial 1539] 
-P [444] << ( ( RM_Alarm_Echo iff echo_val )
+P [463] << ( ( RM_Alarm_Echo iff echo_val )
   and MRP_A()
   and RA() )
   and not ( echo_val iff rma ) >>
-S [446] Lost_Confirmation!
-Q [448] << MRP_A()
+S [465] Lost_Confirmation!
+Q [467] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1523]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (168)                               [serial 1523] 
-P [444] << ( RA()
+P [463] << ( RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) )
   and ( not ( echo_val iff rma ) ) >>
-S [446] Lost_Confirmation!
-Q [448] << RA()
+S [465] Lost_Confirmation!
+Q [467] << RA()
   and MRP_A() >>
 Why created:    <<P and B1>> S1 <<Q>> in alternative for [serial 1520]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) and theorem 167:
@@ -2632,17 +2632,17 @@ Theorem (167) [serial 1539] used for:
 
 
 Theorem (169)                               [serial 1520] 
-P [443] << RA()
+P [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
-S [444]   if 
+S [463]   if 
     (echo_val iff rma)~> 
       skip 
   []
     (not ( echo_val iff rma ))~> 
       Lost_Confirmation! 
   fi
-Q [448] << RA()
+Q [467] << RA()
   and MRP_A() >>
 Why created:  as <<pre>> S <<post>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1516]
 Solved by: and theorems 164 166 168:
@@ -2655,10 +2655,10 @@ Theorem (168) [serial 1523] used for:
 
 
 Theorem (170)                               [serial 1516] 
-P [443] << RA()
+P [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
-S [443] << RA()
+S [462] << RA()
   and MRP_A()
   and ( echo_val iff RM_Alarm_Echo ) >>
   if 
@@ -2670,7 +2670,7 @@ S [443] << RA()
   fi
 << RA()
   and MRP_A() >>
-Q [448] << RA()
+Q [467] << RA()
   and MRP_A() >>
 Why created:  <<A>> S <<B>> in behavior action block for [serial 1514]
 Solved by: null and theorems 160 162 169:
@@ -2683,19 +2683,19 @@ Theorem (169) [serial 1520] used for:
 
 
 Theorem (171)                               [serial 1541] 
-P [448] << MRP_A()
+P [467] << MRP_A()
   and RA() >>
-S [442] ->
-Q [450] << MRP_A()
+S [461] ->
+Q [469] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1517]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (172)                               [serial 1517] 
-P [448] << RA()
+P [467] << RA()
   and MRP_A() >>
-S [442] ->
-Q [450] << RA()
+S [461] ->
+Q [469] << RA()
   and MRP_A() >>
 Why created:  <<B>> -> <<Q>> in behavior action block for [serial 1514]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 171:
@@ -2704,10 +2704,10 @@ Theorem (171) [serial 1541] used for:
 
 
 Theorem (173)                               [serial 1514] 
-P [441] << RA()
+P [460] << RA()
   and MRP_A()
   and RM_Alarm_Echo@now >>
-S [442] declare 
+S [461] declare 
    echo_val ~ boolean := RM_Alarm_Echo?   {
   << RA()
     and MRP_A()
@@ -2722,7 +2722,7 @@ S [442] declare
   << RA()
     and MRP_A() >>
   } 
-Q [450] << RA()
+Q [469] << RA()
   and MRP_A() >>
 Why created:  as <<pre>> S <<post>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1024]
 Solved by: Behavior Action Block (BAB): 
@@ -2740,7 +2740,7 @@ Theorem (172) [serial 1517] used for:
 
 
 Theorem (174)                               [serial 1024] 
-P [439] << ( RA()
+P [458] << ( RA()
   and MRP_A() )
   and ( RM_Alarm_Echo@now )
   and not ( exists u ~ time 
@@ -2752,7 +2752,7 @@ P [439] << ( RA()
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [441] << RA()
+S [460] << RA()
   and MRP_A()
   and RM_Alarm_Echo@now >>
 declare 
@@ -2772,7 +2772,7 @@ declare
   } 
 << RA()
   and MRP_A() >>
-Q [411] << RA()
+Q [430] << RA()
   and MRP_A() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
 Solved by: null and theorems 154 156 173:
@@ -2785,7 +2785,7 @@ Theorem (173) [serial 1514] used for:
 
 
 Theorem (175)                               [serial 1572] 
-P [453] << ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
+P [472] << ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::RM_Echo_Limit s ) ,, now 
    that ( RM_Alarm or RM_Alarm_Echo )@t  ) )
@@ -2800,13 +2800,13 @@ P [453] << ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limi
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [454] ->
-Q [454] << true >>
+S [473] ->
+Q [473] << true >>
 Why created:    normalization of [serial 1568]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (176)                               [serial 1568] 
-P [453] << ( RA()
+P [472] << ( RA()
   and MRP_A() )
   and ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
@@ -2821,8 +2821,8 @@ P [453] << ( RA()
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [454] ->
-Q [454] << true >>
+S [473] ->
+Q [473] << true >>
 Why created:  applied port output <<pre>> -> <<M[Lost_Confirmation]>> [serial 1025]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 175:
 Theorem (175) [serial 1572] used for:
@@ -2830,7 +2830,7 @@ Theorem (175) [serial 1572] used for:
 
 
 Theorem (177)                               [serial 1574] 
-P [454] << ( ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
+P [473] << ( ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::RM_Echo_Limit s ) ,, now 
    that ( RM_Alarm or RM_Alarm_Echo )@t  ) )
@@ -2846,14 +2846,14 @@ P [454] << ( ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Li
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) )
   and true >>
-S [454] ->
-Q [411] << MRP_A()
+S [473] ->
+Q [430] << MRP_A()
   and RA() >>
 Why created:    normalization of [serial 1570]
 Solved by: True can be removed from conjunction. (truan)(truconj)
 
 Theorem (178)                               [serial 1570] 
-P [454] << ( ( RA()
+P [473] << ( ( RA()
   and MRP_A() )
   and ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
@@ -2869,8 +2869,8 @@ P [454] << ( ( RA()
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) )
   and true >>
-S [454] ->
-Q [411] << RA()
+S [473] ->
+Q [430] << RA()
   and MRP_A() >>
 Why created:  Assume Present:  P = P@now = P^0   [serial 1569]
 Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
@@ -2880,7 +2880,7 @@ Theorem (177) [serial 1574] used for:
 
 
 Theorem (179)                               [serial 1569] 
-P [454] << ( ( RA()
+P [473] << ( ( RA()
   and MRP_A() )
   and ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
@@ -2896,8 +2896,8 @@ P [454] << ( ( RA()
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) )
   and true@now >>
-S [454] ->
-Q [411] << RA()
+S [473] ->
+Q [430] << RA()
   and MRP_A() >>
 Why created:  applied port output <<pre and M[Lost_Confirmation]@now>> -> <<post>> [serial 1025]
 Solved by:  Assume Present:  P = P@now = P^0 
@@ -2907,7 +2907,7 @@ Theorem (178) [serial 1570] used for:
 
 
 Theorem (180)                               [serial 1025] 
-P [453] << ( RA()
+P [472] << ( RA()
   and MRP_A() )
   and ( ( RM_Alarm or RM_Alarm_Echo )@( now - IoMT_Properties::RM_Echo_Limit s )
   and not ( exists t ~ time 
@@ -2922,8 +2922,8 @@ P [453] << ( RA()
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::RM_Echo_Limit s ) ,, u 
    that ( RM_Alarm or RM_Alarm_Echo )@t  )  ) >>
-S [454] Lost_Confirmation!
-Q [411] << RA()
+S [473] Lost_Confirmation!
+Q [430] << RA()
   and MRP_A() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
 Solved by:  Asserted Action:  <<P>> { <<P1>> S1 <<Q1>> } <<Q>> is <<P>> -> <<P1>>, <<Q1>> -> <<Q>>, and <<P1>> S1 <<Q1>>
@@ -2936,9 +2936,9 @@ Theorem (179) [serial 1569] used for:
 
 
 Theorem (181)                               [serial 1018] 
-P [396] <<   >>
-S [400] ->
-Q [396] << Respiration_Monitor_Thread.impl proof obligations >>
+P [415] <<   >>
+S [419] ->
+Q [415] << Respiration_Monitor_Thread.impl proof obligations >>
 Why created:  Initial proof obligations for Respiration_Monitor_Thread.impl
 Solved by:  Component verification conditions
  and theorems 113 114 115 116 152 174 180:
@@ -2959,12 +2959,12 @@ Theorem (180) [serial 1025] used for:
 
 
 Theorem (182)                               [serial 1582] 
-P [607] << INV()
+P [623] << INV()
   and PI()
   and POA()
   and RMA() >>
-S [590] ->
-Q [590] << INV()
+S [606] ->
+Q [606] << INV()
   and PI()
   and POA()
   and RMA() >>
@@ -2973,12 +2973,12 @@ Why created:    normalization of [serial 1580]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (183)                               [serial 1580] 
-P [607] << ( INV()
+P [623] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
-S [590] ->
-Q [590] << INV()
+S [606] ->
+Q [606] << INV()
   and POA()
   and RMA()
   and PI() >>
@@ -2989,9 +2989,9 @@ Theorem (182) [serial 1582] used for:
 
 
 Theorem (184)                               [serial 1027] 
-P [607] << INV_E() >>
-S [590] ->
-Q [590] << INV()
+P [623] << INV_E() >>
+S [606] ->
+Q [606] << INV()
   and POA()
   and RMA()
   and PI() >>
@@ -3002,12 +3002,12 @@ Theorem (183) [serial 1580] used for:
 
 
 Theorem (185)                               [serial 1585] 
-P [605] << INV()
+P [621] << INV()
   and PI()
   and POA()
   and RMA() >>
-S [590] ->
-Q [590] << INV()
+S [606] ->
+Q [606] << INV()
   and PI()
   and POA()
   and RMA() >>
@@ -3016,12 +3016,12 @@ Why created:    normalization of [serial 1583]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (186)                               [serial 1583] 
-P [605] << ( INV()
+P [621] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
-S [590] ->
-Q [590] << INV()
+S [606] ->
+Q [606] << INV()
   and POA()
   and RMA()
   and PI() >>
@@ -3032,9 +3032,9 @@ Theorem (185) [serial 1585] used for:
 
 
 Theorem (187)                               [serial 1028] 
-P [605] << INV_E() >>
-S [590] ->
-Q [590] << INV()
+P [621] << INV_E() >>
+S [606] ->
+Q [606] << INV()
   and POA()
   and RMA()
   and PI() >>
@@ -3045,21 +3045,21 @@ Theorem (186) [serial 1583] used for:
 
 
 Theorem (188)                               [serial 1029] 
-P [604] << INV_E() >>
-S [604] ->
-Q [604] << true >>
+P [620] << INV_E() >>
+S [620] ->
+Q [620] << true >>
 Why created:  Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 Solved by: Anything Implies True (a1tru): P->true
 
 Theorem (189)                               [serial 1030] 
-P [604] << INV_E() >>
-S [611] ->
-Q [605] << INV_E() >>
+P [620] << INV_E() >>
+S [627] ->
+Q [621] << INV_E() >>
 Why created:   <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (190)                               [serial 1609] 
-P [613] << ( HEART_RATE < MINIMUM_HEART_RATE or SPO2 < PROGRAMMED_SPO2 )@now
+P [629] << ( HEART_RATE < MINIMUM_HEART_RATE or SPO2 < PROGRAMMED_SPO2 )@now
   and ( INV()
   and POA()
   and RMA()
@@ -3070,14 +3070,14 @@ P [613] << ( HEART_RATE < MINIMUM_HEART_RATE or SPO2 < PROGRAMMED_SPO2 )@now
   and not ( exists u ~ time 
    in tops ,, now 
    that ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE )@u  ) >>
-S [613] ->
-Q [615] << INV()
+S [629] ->
+Q [631] << INV()
   and RMA() >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1592]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (191)                               [serial 1592] 
-P [613] << PO_ALARM()@now
+P [629] << PO_ALARM()@now
   and INV_E()
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3085,8 +3085,8 @@ P [613] << PO_ALARM()@now
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [613] ->
-Q [615] << INV()
+S [629] ->
+Q [631] << INV()
   and RMA() >>
 Why created:    normalization of [serial 1586]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
@@ -3096,7 +3096,7 @@ Theorem (190) [serial 1609] used for:
 
 
 Theorem (192)                               [serial 1586] 
-P [613] << ( INV_E() )
+P [629] << ( INV_E() )
   and ( PO_ALARM()@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3104,8 +3104,8 @@ P [613] << ( INV_E() )
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [613] ->
-Q [615] << INV()
+S [629] ->
+Q [631] << INV()
   and RMA() >>
 Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1031]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 191:
@@ -3114,22 +3114,22 @@ Theorem (191) [serial 1592] used for:
 
 
 Theorem (193)                               [serial 1613] 
-P [616] << ( INV()
+P [632] << ( INV()
   and RMA() )
   and ( PO_ALARM() iff po_alarm_active ) >>
-S [616] ->
-Q [617] << ( PO_ALARM() iff po_alarm_active )
+S [632] ->
+Q [633] << ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() >>
 Why created:    normalization of [serial 1611]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (194)                               [serial 1611] 
-P [616] << ( INV()
+P [632] << ( INV()
   and RMA() )
   and ( po_alarm_active iff PO_ALARM() ) >>
-S [616] ->
-Q [617] << ( PO_ALARM() iff po_alarm_active )
+S [632] ->
+Q [633] << ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() >>
 Why created:  applied port input of value <<pre and po_alarm_active=M(PO_Alarm)>> -> <<post>> [serial 1594]
@@ -3139,10 +3139,10 @@ Theorem (193) [serial 1613] used for:
 
 
 Theorem (195)                               [serial 1594] 
-P [615] << INV()
+P [631] << INV()
   and RMA() >>
-S [616] PO_Alarm?(po_alarm_active)
-Q [617] << ( PO_ALARM() iff po_alarm_active )
+S [632] PO_Alarm?(po_alarm_active)
+Q [633] << ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() >>
 Why created:    normalization of [serial 1587]
@@ -3154,10 +3154,10 @@ Theorem (194) [serial 1611] used for:
 
 
 Theorem (196)                               [serial 1587] 
-P [615] << INV()
+P [631] << INV()
   and RMA() >>
-S [616] PO_Alarm?(po_alarm_active)
-Q [617] << INV()
+S [632] PO_Alarm?(po_alarm_active)
+Q [633] << INV()
   and RMA()
   and ( po_alarm_active iff PO_ALARM() ) >>
 Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1031]
@@ -3167,32 +3167,32 @@ Theorem (195) [serial 1594] used for:
 
 
 Theorem (197)                               [serial 1615] 
-P [617] << ( PO_ALARM() iff po_alarm_active )
+P [633] << ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() >>
-S [618] ->
-Q [618] << PO_ALARM() iff po_alarm_active >>
+S [634] ->
+Q [634] << PO_ALARM() iff po_alarm_active >>
 Why created:  applied port output of value <<pre>> -> <<M(PO_Alarm_Echo)[PO_Alarm_Echo|po_alarm_active]>> [serial 1596]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (198)                               [serial 1616] 
-P [618] << ( ( PO_ALARM() iff po_alarm_active )
+P [634] << ( ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() )
   and ( PO_ALARM() iff po_alarm_active )@now >>
-S [618] ->
-Q [619] << INV()
+S [634] ->
+Q [635] << INV()
   and POA()
   and RMA() >>
 Why created:  applied port output <<pre and (PO_ALARM() iff po_alarm_active)@now>> -> <<post>> [serial 1596]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (199)                               [serial 1596] 
-P [617] << ( PO_ALARM() iff po_alarm_active )
+P [633] << ( PO_ALARM() iff po_alarm_active )
   and INV()
   and RMA() >>
-S [618] PO_Alarm_Echo!(po_alarm_active)
-Q [619] << INV()
+S [634] PO_Alarm_Echo!(po_alarm_active)
+Q [635] << INV()
   and POA()
   and RMA() >>
 Why created:    normalization of [serial 1588]
@@ -3206,11 +3206,11 @@ Theorem (198) [serial 1616] used for:
 
 
 Theorem (200)                               [serial 1588] 
-P [617] << INV()
+P [633] << INV()
   and RMA()
   and ( po_alarm_active iff PO_ALARM() ) >>
-S [618] PO_Alarm_Echo!(po_alarm_active)
-Q [619] << INV()
+S [634] PO_Alarm_Echo!(po_alarm_active)
+Q [635] << INV()
   and RMA()
   and POA() >>
 Why created:  <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1031]
@@ -3220,21 +3220,21 @@ Theorem (199) [serial 1596] used for:
 
 
 Theorem (201)                               [serial 1635] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or RM_ALARM() ) ) >>
+S [636] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or RM_ALARM() ) ) >>
 Why created:  Guided Substitution of Equals 
  replacing "rm_alarm_active" with its iff "RM_ALARM()" in its postcondition [serial 1634]
 Solved by: Principle of identity for logical equivalence. (biid) 
 
 Theorem (202)                               [serial 1634] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or rm_alarm_active ) ) >>
+S [636] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or rm_alarm_active ) ) >>
 Why created:  Guided Substitution of Equals 
  replacing "po_alarm_active" with its iff "PO_ALARM()" in its postcondition [serial 1630]
 Solved by:  Guided Substitution of Equals
@@ -3245,11 +3245,11 @@ Theorem (201) [serial 1635] used for:
 
 
 Theorem (203)                               [serial 1630] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) ) >>
+S [636] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1629]
 Solved by:  Guided Substitution of Equals
@@ -3260,41 +3260,41 @@ Theorem (202) [serial 1634] used for:
 
 
 Theorem (204)                               [serial 1631] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [594] << ( PO_ALARM() iff po_alarm_active ) >>
+S [636] ->
+Q [610] << ( PO_ALARM() iff po_alarm_active ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1629]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (205)                               [serial 1632] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [596] << ( RM_ALARM() iff rm_alarm_active ) >>
+S [636] ->
+Q [612] << ( RM_ALARM() iff rm_alarm_active ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1629]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (206)                               [serial 1633] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
+S [636] ->
 Q [194] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1629]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (207)                               [serial 1629] 
-P [619] << ( PO_ALARM() iff po_alarm_active )
+P [635] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [620] ->
-Q [621] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) )
+S [636] ->
+Q [637] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) )
   and ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
@@ -3316,11 +3316,11 @@ Theorem (206) [serial 1633] used for:
 
 
 Theorem (208)                               [serial 1627] 
-P [619] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+P [635] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() ) >>
-S [620] ->
-Q [621] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [636] ->
+Q [637] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( ( po_alarm_active or rm_alarm_active ) iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3331,11 +3331,11 @@ Theorem (207) [serial 1629] used for:
 
 
 Theorem (209)                               [serial 1626] 
-P [619] << INV()
+P [635] << INV()
   and POA()
   and RMA() >>
-S [620] ->
-Q [621] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [636] ->
+Q [637] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( ( po_alarm_active or rm_alarm_active ) iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3346,11 +3346,11 @@ Theorem (208) [serial 1627] used for:
 
 
 Theorem (210)                               [serial 1625] 
-P [619] << INV()
+P [635] << INV()
   and POA()
   and RMA() >>
-S [620] pause_inf := po_alarm_active or rm_alarm_active
-Q [621] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [636] pause_inf := po_alarm_active or rm_alarm_active
+Q [637] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( pause_inf iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3365,11 +3365,11 @@ Theorem (209) [serial 1626] used for:
 
 
 Theorem (211)                               [serial 1624] 
-P [619] << INV()
+P [635] << INV()
   and POA()
   and RMA() >>
-S [620] pause_inf := po_alarm_active or rm_alarm_active
-Q [621] << ( INV()
+S [636] pause_inf := po_alarm_active or rm_alarm_active
+Q [637] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
@@ -3380,11 +3380,11 @@ Theorem (210) [serial 1625] used for:
 
 
 Theorem (212)                               [serial 1598] 
-P [619] << INV()
+P [635] << INV()
   and POA()
   and RMA() >>
-S [620] pause_inf := po_alarm_active or rm_alarm_active
-Q [621] << INV_E() >>
+S [636] pause_inf := po_alarm_active or rm_alarm_active
+Q [637] << INV_E() >>
 Why created:    normalization of [serial 1589]
 Solved by: Predicate Invocation. (PI) and theorem 211:
 Theorem (211) [serial 1624] used for:
@@ -3392,11 +3392,11 @@ Theorem (211) [serial 1624] used for:
 
 
 Theorem (213)                               [serial 1589] 
-P [619] << INV()
+P [635] << INV()
   and RMA()
   and POA() >>
-S [620] pause_inf := po_alarm_active or rm_alarm_active
-Q [621] << INV_E() >>
+S [636] pause_inf := po_alarm_active or rm_alarm_active
+Q [637] << INV_E() >>
 Why created:  <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1031]
 Solved by: Conjunction Commutes. (bl.ancom) and theorem 212:
 Theorem (212) [serial 1598] used for:
@@ -3404,23 +3404,23 @@ Theorem (212) [serial 1598] used for:
 
 
 Theorem (214)                               [serial 1608] 
-P [621] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )
+P [637] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )
   and ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [622] ->
-Q [622] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [638] ->
+Q [638] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:    normalization of [serial 1606]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) (bl.orcom) 
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (215)                               [serial 1606] 
-P [621] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+P [637] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( pause_inf iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
-S [622] ->
-Q [622] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [638] ->
+Q [638] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1605]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) Disjunction Commutes. (bl.orcom) and theorem 214:
 Theorem (214) [serial 1608] used for:
@@ -3428,12 +3428,12 @@ Theorem (214) [serial 1608] used for:
 
 
 Theorem (216)                               [serial 1605] 
-P [621] << ( INV()
+P [637] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
-S [622] ->
-Q [622] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [638] ->
+Q [638] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1600]
 Solved by: Predicate Invocation. (PI) and theorem 215:
 Theorem (215) [serial 1606] used for:
@@ -3441,9 +3441,9 @@ Theorem (215) [serial 1606] used for:
 
 
 Theorem (217)                               [serial 1600] 
-P [621] << INV_E() >>
-S [622] ->
-Q [622] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+P [637] << INV_E() >>
+S [638] ->
+Q [638] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|pause_inf]>> [serial 1590]
 Solved by: Predicate Invocation. (PI) and theorem 216:
 Theorem (216) [serial 1605] used for:
@@ -3451,19 +3451,19 @@ Theorem (216) [serial 1605] used for:
 
 
 Theorem (218)                               [serial 1604] 
-P [622] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now
+P [638] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now
   and INV_E() >>
-S [622] ->
-Q [607] << INV_E() >>
+S [638] ->
+Q [623] << INV_E() >>
 Why created:    normalization of [serial 1601]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (219)                               [serial 1601] 
-P [622] << ( INV_E() )
+P [638] << ( INV_E() )
   and ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now >>
-S [622] ->
-Q [607] << INV_E() >>
+S [638] ->
+Q [623] << INV_E() >>
 Why created:  applied port output <<pre and (( PO_ALARM() or RM_ALARM() ) iff pause_inf)@now>> -> <<post>> [serial 1590]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 218:
 Theorem (218) [serial 1604] used for:
@@ -3471,9 +3471,9 @@ Theorem (218) [serial 1604] used for:
 
 
 Theorem (220)                               [serial 1590] 
-P [621] << INV_E() >>
-S [622] Pause_Infusion!(pause_inf)
-Q [607] << INV_E() >>
+P [637] << INV_E() >>
+S [638] Pause_Infusion!(pause_inf)
+Q [623] << INV_E() >>
 Why created:  <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1031]
 Solved by:  Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
  and theorems 217 219:
@@ -3484,7 +3484,7 @@ Theorem (219) [serial 1601] used for:
 
 
 Theorem (221)                               [serial 1031] 
-P [613] << ( INV_E() )
+P [629] << ( INV_E() )
   and ( PO_ALARM()@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3492,7 +3492,7 @@ P [613] << ( INV_E() )
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [615]   << INV()
+S [631]   << INV()
     and RMA() >>
   PO_Alarm?(po_alarm_active)
   ;
@@ -3508,7 +3508,7 @@ S [615]   << INV()
   ;
   << INV_E() >>
   Pause_Infusion!(pause_inf) 
-Q [607] << INV_E() >>
+Q [623] << INV_E() >>
 Why created:   <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
 Solved by:  Sequential Composition Rule (SCk):
    <<P1>> S1 <<Q1 and P2>>
@@ -3533,7 +3533,7 @@ Theorem (220) [serial 1590] used for:
 
 
 Theorem (222)                               [serial 1646] 
-P [625] << ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE )@now
+P [641] << ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE )@now
   and ( INV()
   and POA()
   and RMA()
@@ -3544,14 +3544,14 @@ P [625] << ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE )@now
   and not ( exists u ~ time 
    in tops ,, now 
    that ( RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE )@u  ) >>
-S [625] ->
-Q [626] << INV()
+S [641] ->
+Q [642] << INV()
   and POA() >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1641]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (223)                               [serial 1641] 
-P [625] << RM_ALARM()@now
+P [641] << RM_ALARM()@now
   and INV_E()
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3559,8 +3559,8 @@ P [625] << RM_ALARM()@now
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [625] ->
-Q [626] << INV()
+S [641] ->
+Q [642] << INV()
   and POA() >>
 Why created:  <<P>> -> <<P1>> in sequential composition for [serial 1640]
 Solved by: Predicate Invocation. (PI) and theorem 222:
@@ -3569,22 +3569,22 @@ Theorem (222) [serial 1646] used for:
 
 
 Theorem (224)                               [serial 1650] 
-P [627] << ( INV()
+P [643] << ( INV()
   and POA() )
   and ( RM_ALARM() iff rm_alarm_active ) >>
-S [627] ->
-Q [628] << ( RM_ALARM() iff rm_alarm_active )
+S [643] ->
+Q [644] << ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() >>
 Why created:    normalization of [serial 1648]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (225)                               [serial 1648] 
-P [627] << ( INV()
+P [643] << ( INV()
   and POA() )
   and ( rm_alarm_active iff RM_ALARM() ) >>
-S [627] ->
-Q [628] << ( RM_ALARM() iff rm_alarm_active )
+S [643] ->
+Q [644] << ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() >>
 Why created:  applied port input of value <<pre and rm_alarm_active=M(RM_Alarm)>> -> <<post>> [serial 1642]
@@ -3594,10 +3594,10 @@ Theorem (224) [serial 1650] used for:
 
 
 Theorem (226)                               [serial 1642] 
-P [626] << INV()
+P [642] << INV()
   and POA() >>
-S [627] RM_Alarm?(rm_alarm_active)
-Q [628] << ( RM_ALARM() iff rm_alarm_active )
+S [643] RM_Alarm?(rm_alarm_active)
+Q [644] << ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() >>
 Why created:  <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1640]
@@ -3608,54 +3608,54 @@ Theorem (225) [serial 1648] used for:
 
 
 Theorem (227)                               [serial 1652] 
-P [628] << ( RM_ALARM() iff rm_alarm_active )
+P [644] << ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() >>
-S [629] ->
-Q [629] << RM_ALARM() iff rm_alarm_active >>
+S [645] ->
+Q [645] << RM_ALARM() iff rm_alarm_active >>
 Why created:  applied port output of value <<pre>> -> <<M(RM_Alarm_Echo)[RM_Alarm_Echo|rm_alarm_active]>> [serial 1643]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (228)                               [serial 1654] 
-P [629] << ( ( RM_ALARM() iff rm_alarm_active )
+P [645] << ( ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() )
   and ( RM_ALARM() iff rm_alarm_active )@now >>
-S [629] ->
-Q [630] << INV() >>
+S [645] ->
+Q [646] << INV() >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1653]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (229)                               [serial 1655] 
-P [629] << ( ( RM_ALARM() iff rm_alarm_active )
+P [645] << ( ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() )
   and ( RM_ALARM() iff rm_alarm_active )@now >>
-S [629] ->
-Q [630] << POA() >>
+S [645] ->
+Q [646] << POA() >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1653]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (230)                               [serial 1656] 
-P [629] << ( ( RM_ALARM() iff rm_alarm_active )
+P [645] << ( ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() )
   and ( RM_ALARM() iff rm_alarm_active )@now >>
-S [629] ->
-Q [630] << RMA() >>
+S [645] ->
+Q [646] << RMA() >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1653]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (231)                               [serial 1653] 
-P [629] << ( ( RM_ALARM() iff rm_alarm_active )
+P [645] << ( ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() )
   and ( RM_ALARM() iff rm_alarm_active )@now >>
-S [629] ->
-Q [630] << INV()
+S [645] ->
+Q [646] << INV()
   and POA()
   and RMA() >>
 Why created:  applied port output <<pre and (RM_ALARM() iff rm_alarm_active)@now>> -> <<post>> [serial 1643]
@@ -3672,11 +3672,11 @@ Theorem (230) [serial 1656] used for:
 
 
 Theorem (232)                               [serial 1643] 
-P [628] << ( RM_ALARM() iff rm_alarm_active )
+P [644] << ( RM_ALARM() iff rm_alarm_active )
   and INV()
   and POA() >>
-S [629] RM_Alarm_Echo!(rm_alarm_active)
-Q [630] << INV()
+S [645] RM_Alarm_Echo!(rm_alarm_active)
+Q [646] << INV()
   and POA()
   and RMA() >>
 Why created:  <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1640]
@@ -3689,21 +3689,21 @@ Theorem (231) [serial 1653] used for:
 
 
 Theorem (233)                               [serial 1674] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or RM_ALARM() ) ) >>
+S [647] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( PO_ALARM() or RM_ALARM() ) ) >>
 Why created:  Guided Substitution of Equals 
  replacing "po_alarm_active" with its iff "PO_ALARM()" in its postcondition [serial 1673]
 Solved by: Principle of identity for logical equivalence. (biid) 
 
 Theorem (234)                               [serial 1673] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or RM_ALARM() ) ) >>
+S [647] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or RM_ALARM() ) ) >>
 Why created:  Guided Substitution of Equals 
  replacing "rm_alarm_active" with its iff "RM_ALARM()" in its postcondition [serial 1669]
 Solved by:  Guided Substitution of Equals
@@ -3714,11 +3714,11 @@ Theorem (233) [serial 1674] used for:
 
 
 Theorem (235)                               [serial 1669] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [598] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) ) >>
+S [647] ->
+Q [614] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1668]
 Solved by:  Guided Substitution of Equals
@@ -3729,41 +3729,41 @@ Theorem (234) [serial 1673] used for:
 
 
 Theorem (236)                               [serial 1670] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [594] << ( PO_ALARM() iff po_alarm_active ) >>
+S [647] ->
+Q [610] << ( PO_ALARM() iff po_alarm_active ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1668]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (237)                               [serial 1671] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [596] << ( RM_ALARM() iff rm_alarm_active ) >>
+S [647] ->
+Q [612] << ( RM_ALARM() iff rm_alarm_active ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1668]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (238)                               [serial 1672] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
+S [647] ->
 Q [194] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
 Why created:  Join consequents with conjunction. (3jca)
    [serial 1668]
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (239)                               [serial 1668] 
-P [630] << ( PO_ALARM() iff po_alarm_active )
+P [646] << ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [631] ->
-Q [632] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) )
+S [647] ->
+Q [648] << ( ( PO_ALARM() or RM_ALARM() ) iff ( po_alarm_active or rm_alarm_active ) )
   and ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
@@ -3785,11 +3785,11 @@ Theorem (238) [serial 1672] used for:
 
 
 Theorem (240)                               [serial 1666] 
-P [630] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+P [646] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() ) >>
-S [631] ->
-Q [632] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [647] ->
+Q [648] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( ( po_alarm_active or rm_alarm_active ) iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3800,11 +3800,11 @@ Theorem (239) [serial 1668] used for:
 
 
 Theorem (241)                               [serial 1665] 
-P [630] << INV()
+P [646] << INV()
   and POA()
   and RMA() >>
-S [631] ->
-Q [632] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [647] ->
+Q [648] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( ( po_alarm_active or rm_alarm_active ) iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3815,11 +3815,11 @@ Theorem (240) [serial 1666] used for:
 
 
 Theorem (242)                               [serial 1664] 
-P [630] << INV()
+P [646] << INV()
   and POA()
   and RMA() >>
-S [631] pause_inf := po_alarm_active or rm_alarm_active
-Q [632] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+S [647] pause_inf := po_alarm_active or rm_alarm_active
+Q [648] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( pause_inf iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
@@ -3834,11 +3834,11 @@ Theorem (241) [serial 1665] used for:
 
 
 Theorem (243)                               [serial 1663] 
-P [630] << INV()
+P [646] << INV()
   and POA()
   and RMA() >>
-S [631] pause_inf := po_alarm_active or rm_alarm_active
-Q [632] << ( INV()
+S [647] pause_inf := po_alarm_active or rm_alarm_active
+Q [648] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
@@ -3849,11 +3849,11 @@ Theorem (242) [serial 1664] used for:
 
 
 Theorem (244)                               [serial 1644] 
-P [630] << INV()
+P [646] << INV()
   and POA()
   and RMA() >>
-S [631] pause_inf := po_alarm_active or rm_alarm_active
-Q [632] << INV_E() >>
+S [647] pause_inf := po_alarm_active or rm_alarm_active
+Q [648] << INV_E() >>
 Why created:  <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1640]
 Solved by: Predicate Invocation. (PI) and theorem 243:
 Theorem (243) [serial 1663] used for:
@@ -3861,23 +3861,23 @@ Theorem (243) [serial 1663] used for:
 
 
 Theorem (245)                               [serial 1686] 
-P [632] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )
+P [648] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )
   and ( PO_ALARM() iff po_alarm_active )
   and ( RM_ALARM() iff rm_alarm_active )
   and ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
-S [633] ->
-Q [633] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [649] ->
+Q [649] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:    normalization of [serial 1684]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) (bl.ancom) (bl.orcom) 
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (246)                               [serial 1684] 
-P [632] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
+P [648] << ( ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion )
   and ( po_alarm_active iff PO_ALARM() )
   and ( rm_alarm_active iff RM_ALARM() )
   and ( pause_inf iff ( RM_ALARM() or PO_ALARM() ) ) ) >>
-S [633] ->
-Q [633] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [649] ->
+Q [649] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1683]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) Conjunction Commutes. (bl.ancom) Disjunction Commutes. (bl.orcom) and theorem 245:
 Theorem (245) [serial 1686] used for:
@@ -3885,12 +3885,12 @@ Theorem (245) [serial 1686] used for:
 
 
 Theorem (247)                               [serial 1683] 
-P [632] << ( INV()
+P [648] << ( INV()
   and POA()
   and RMA()
   and PI() ) >>
-S [633] ->
-Q [633] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+S [649] ->
+Q [649] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  Substituted assertions' predicates for labels in preconditions [serial 1678]
 Solved by: Predicate Invocation. (PI) and theorem 246:
 Theorem (246) [serial 1684] used for:
@@ -3898,9 +3898,9 @@ Theorem (246) [serial 1684] used for:
 
 
 Theorem (248)                               [serial 1678] 
-P [632] << INV_E() >>
-S [633] ->
-Q [633] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
+P [648] << INV_E() >>
+S [649] ->
+Q [649] << ( PO_ALARM() or RM_ALARM() ) iff pause_inf >>
 Why created:  applied port output of value <<pre>> -> <<M(Pause_Infusion)[Pause_Infusion|pause_inf]>> [serial 1645]
 Solved by: Predicate Invocation. (PI) and theorem 247:
 Theorem (247) [serial 1683] used for:
@@ -3908,19 +3908,19 @@ Theorem (247) [serial 1683] used for:
 
 
 Theorem (249)                               [serial 1682] 
-P [633] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now
+P [649] << ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now
   and INV_E() >>
-S [633] ->
-Q [607] << INV_E() >>
+S [649] ->
+Q [623] << INV_E() >>
 Why created:    normalization of [serial 1679]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: And Introduction Schema (bl.aisl)(bl.aisr):  (X and Y)->X
 
 Theorem (250)                               [serial 1679] 
-P [633] << ( INV_E() )
+P [649] << ( INV_E() )
   and ( ( PO_ALARM() or RM_ALARM() ) iff pause_inf )@now >>
-S [633] ->
-Q [607] << INV_E() >>
+S [649] ->
+Q [623] << INV_E() >>
 Why created:  applied port output <<pre and (( PO_ALARM() or RM_ALARM() ) iff pause_inf)@now>> -> <<post>> [serial 1645]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 249:
 Theorem (249) [serial 1682] used for:
@@ -3928,9 +3928,9 @@ Theorem (249) [serial 1682] used for:
 
 
 Theorem (251)                               [serial 1645] 
-P [632] << INV_E() >>
-S [633] Pause_Infusion!(pause_inf)
-Q [607] << INV_E() >>
+P [648] << INV_E() >>
+S [649] Pause_Infusion!(pause_inf)
+Q [623] << INV_E() >>
 Why created:  <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1640]
 Solved by:  Port Data Output: when <<A>> -> <<B>> and <<A>> -> <<e=M(p)>> then <<A>> p!(e) <<B>>
  and theorems 248 250:
@@ -3941,7 +3941,7 @@ Theorem (250) [serial 1679] used for:
 
 
 Theorem (252)                               [serial 1640] 
-P [625] << RM_ALARM()@now
+P [641] << RM_ALARM()@now
   and INV_E()
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3949,7 +3949,7 @@ P [625] << RM_ALARM()@now
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [626]   << INV()
+S [642]   << INV()
     and POA() >>
   RM_Alarm?(rm_alarm_active)
   ;
@@ -3965,7 +3965,7 @@ S [626]   << INV()
   ;
   << INV_E() >>
   Pause_Infusion!(pause_inf) 
-Q [607] << INV_E() >>
+Q [623] << INV_E() >>
 Why created:    normalization of [serial 1032]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) (bicom) 
 Solved by:  Sequential Composition Rule (SCk):
@@ -3991,7 +3991,7 @@ Theorem (251) [serial 1645] used for:
 
 
 Theorem (253)                               [serial 1032] 
-P [625] << ( INV_E() )
+P [641] << ( INV_E() )
   and ( RM_ALARM()@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -3999,7 +3999,7 @@ P [625] << ( INV_E() )
   and not ( exists u ~ time 
    in tops ,, now 
    that RM_ALARM()@u  ) >>
-S [626]   << INV()
+S [642]   << INV()
     and POA() >>
   RM_Alarm?(rm_alarm_active)
   ;
@@ -4015,7 +4015,7 @@ S [626]   << INV()
   ;
   << INV_E() >>
   Pause_Infusion!(pause_inf) 
-Q [607] << INV_E() >>
+Q [623] << INV_E() >>
 Why created:   <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) Biconditional (iff) Commutes. (bicom) and theorem 252:
 Theorem (252) [serial 1640] used for:
@@ -4023,7 +4023,7 @@ Theorem (252) [serial 1640] used for:
 
 
 Theorem (254)                               [serial 1698] 
-P [636] << ( PAUSE_INFUSION_ECHO@now
+P [652] << ( PAUSE_INFUSION_ECHO@now
   and INV_E()
   and not ( exists u ~ time 
    in tops ,, now 
@@ -4035,15 +4035,15 @@ P [636] << ( PAUSE_INFUSION_ECHO@now
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) )
   and ( PAUSE_INFUSION_ECHO@now iff echo_val ) >>
-S [639] ->
-Q [639] << ( PAUSE_INFUSION_ECHO iff echo_val )
+S [655] ->
+Q [655] << ( PAUSE_INFUSION_ECHO iff echo_val )
   and INV_E() >>
 Why created:    normalization of [serial 1688]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) (bicom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (255)                               [serial 1688] 
-P [636] << ( ( INV_E() )
+P [652] << ( ( INV_E() )
   and ( PAUSE_INFUSION_ECHO@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -4055,8 +4055,8 @@ P [636] << ( ( INV_E() )
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) )
   and ( echo_val iff PAUSE_INFUSION_ECHO@now ) >>
-S [639] ->
-Q [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+S [655] ->
+Q [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
 Why created:  <<P and v=e>> -> <<A>> in behavior action block for [serial 1687]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) Biconditional (iff) Commutes. (bicom) and theorem 254:
@@ -4065,35 +4065,35 @@ Theorem (254) [serial 1698] used for:
 
 
 Theorem (256)                               [serial 1691] 
-P [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+P [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
-S [639] ->
-Q [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+S [655] ->
+Q [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
 Why created:  as <<P>> -> <<pre>> in <<P>> { <<pre>> S <<post>> } <<Q>> for [serial 1689]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (257)                               [serial 1692] 
-P [644] << INV_E() >>
-S [644] ->
-Q [644] << INV_E() >>
+P [660] << INV_E() >>
+S [660] ->
+Q [660] << INV_E() >>
 Why created:  as <<post>> -> <<Q>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1689]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (258)                               [serial 1700] 
-P [639] << ( PAUSE_INFUSION_ECHO iff echo_val )
+P [655] << ( PAUSE_INFUSION_ECHO iff echo_val )
   and INV_E() >>
-S [640] ->
-Q [640] << ( echo_val iff pause_inf ) or not ( echo_val iff pause_inf ) >>
+S [656] ->
+Q [656] << ( echo_val iff pause_inf ) or not ( echo_val iff pause_inf ) >>
 Why created:    normalization of [serial 1694]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) 
 Solved by: Law of Excluded middle. (exmid)
 
 Theorem (259)                               [serial 1694] 
-P [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+P [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
-S [640] ->
-Q [640] << ( echo_val iff pause_inf ) or ( not ( echo_val iff pause_inf ) ) >>
+S [656] ->
+Q [656] << ( echo_val iff pause_inf ) or ( not ( echo_val iff pause_inf ) ) >>
 Why created:    <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 1693]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) and theorem 258:
 Theorem (258) [serial 1700] used for:
@@ -4101,20 +4101,20 @@ Theorem (258) [serial 1700] used for:
 
 
 Theorem (260)                               [serial 1702] 
-P [640] << ( ( PAUSE_INFUSION_ECHO iff echo_val )
+P [656] << ( ( PAUSE_INFUSION_ECHO iff echo_val )
   and INV_E() )
   and ( echo_val iff pause_inf ) >>
-S [640] skip
-Q [644] << INV_E() >>
+S [656] skip
+Q [660] << INV_E() >>
 Why created:    normalization of [serial 1695]
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (261)                               [serial 1695] 
-P [640] << ( ( echo_val iff PAUSE_INFUSION_ECHO )
+P [656] << ( ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() )
   and ( echo_val iff pause_inf ) >>
-S [640] skip
-Q [644] << INV_E() >>
+S [656] skip
+Q [660] << INV_E() >>
 Why created:    <<P and B0>> S0 <<Q>> in alternative for [serial 1693]
 Solved by: Biconditional (iff) Commutes. (bicom) and theorem 260:
 Theorem (260) [serial 1702] used for:
@@ -4122,21 +4122,21 @@ Theorem (260) [serial 1702] used for:
 
 
 Theorem (262)                               [serial 1704] 
-P [640] << ( ( PAUSE_INFUSION_ECHO iff echo_val )
+P [656] << ( ( PAUSE_INFUSION_ECHO iff echo_val )
   and INV_E() )
   and not ( echo_val iff pause_inf ) >>
-S [642] Lost_Confirmation!
-Q [644] << INV_E() >>
+S [658] Lost_Confirmation!
+Q [660] << INV_E() >>
 Why created:    normalization of [serial 1696]
   Using: ADD_UNNECESSARY_PARETHESES (bicom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (263)                               [serial 1696] 
-P [640] << ( ( echo_val iff PAUSE_INFUSION_ECHO )
+P [656] << ( ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() )
   and ( not ( echo_val iff pause_inf ) ) >>
-S [642] Lost_Confirmation!
-Q [644] << INV_E() >>
+S [658] Lost_Confirmation!
+Q [660] << INV_E() >>
 Why created:    <<P and B1>> S1 <<Q>> in alternative for [serial 1693]
 Solved by: [Add unnecessary parentheses] Biconditional (iff) Commutes. (bicom) and theorem 262:
 Theorem (262) [serial 1704] used for:
@@ -4144,16 +4144,16 @@ Theorem (262) [serial 1704] used for:
 
 
 Theorem (264)                               [serial 1693] 
-P [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+P [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
-S [640]   if 
+S [656]   if 
     (echo_val iff pause_inf)~> 
       skip 
   []
     (not ( echo_val iff pause_inf ))~> 
       Lost_Confirmation! 
   fi
-Q [644] << INV_E() >>
+Q [660] << INV_E() >>
 Why created:  as <<pre>> S <<post>> in <<P>> { <<pre>> S <<post>> } <<Q>> [serial 1689]
 Solved by: and theorems 259 261 263:
 Theorem (259) [serial 1694] used for:
@@ -4165,9 +4165,9 @@ Theorem (263) [serial 1696] used for:
 
 
 Theorem (265)                               [serial 1689] 
-P [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+P [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
-S [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
+S [655] << ( echo_val iff PAUSE_INFUSION_ECHO )
   and INV_E() >>
   if 
     (echo_val iff pause_inf)~> 
@@ -4177,7 +4177,7 @@ S [639] << ( echo_val iff PAUSE_INFUSION_ECHO )
       Lost_Confirmation! 
   fi
 << INV_E() >>
-Q [644] << INV_E() >>
+Q [660] << INV_E() >>
 Why created:  <<A>> S <<B>> in behavior action block for [serial 1687]
 Solved by: null and theorems 256 257 264:
 Theorem (256) [serial 1691] used for:
@@ -4189,14 +4189,14 @@ Theorem (264) [serial 1693] used for:
 
 
 Theorem (266)                               [serial 1690] 
-P [644] << INV_E() >>
-S [638] ->
-Q [605] << INV_E() >>
+P [660] << INV_E() >>
+S [654] ->
+Q [621] << INV_E() >>
 Why created:  <<B>> -> <<Q>> in behavior action block for [serial 1687]
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (267)                               [serial 1687] 
-P [636] << ( INV_E() )
+P [652] << ( INV_E() )
   and ( PAUSE_INFUSION_ECHO@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -4207,7 +4207,7 @@ P [636] << ( INV_E() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) >>
-S [638] declare 
+S [654] declare 
    echo_val ~ boolean := Pause_Infusion_Echo?   {
   << ( echo_val iff PAUSE_INFUSION_ECHO )
     and INV_E() >>
@@ -4220,7 +4220,7 @@ S [638] declare
     fi
   << INV_E() >>
   } 
-Q [605] << INV_E() >>
+Q [621] << INV_E() >>
 Why created:  as <<P>> S <<Q>> in <<P>> { S } <<Q>> [serial 1033]
 Solved by: Behavior Action Block (BAB): 
      <<P and x=e>> -> <<A>>
@@ -4237,7 +4237,7 @@ Theorem (266) [serial 1690] used for:
 
 
 Theorem (268)                               [serial 1033] 
-P [636] << ( INV_E() )
+P [652] << ( INV_E() )
   and ( PAUSE_INFUSION_ECHO@now )
   and not ( exists u ~ time 
    in tops ,, now 
@@ -4248,7 +4248,7 @@ P [636] << ( INV_E() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) >>
-S [638] declare 
+S [654] declare 
    echo_val ~ boolean := Pause_Infusion_Echo?   {
   << ( echo_val iff PAUSE_INFUSION_ECHO )
     and INV_E() >>
@@ -4261,7 +4261,7 @@ S [638] declare
     fi
   << INV_E() >>
   } 
-Q [605] << INV_E() >>
+Q [621] << INV_E() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
 Solved by: null and theorem 267:
 Theorem (267) [serial 1687] used for:
@@ -4269,7 +4269,7 @@ Theorem (267) [serial 1687] used for:
 
 
 Theorem (269)                               [serial 1727] 
-P [649] << ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
+P [665] << ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  ) )
@@ -4283,14 +4283,14 @@ P [649] << ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) >>
-S [650] ->
-Q [650] << true >>
+S [666] ->
+Q [666] << true >>
 Why created:    normalization of [serial 1723]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: Absorb parentheses, middle term in conjunction (bl.anabpm)
 
 Theorem (270)                               [serial 1723] 
-P [649] << ( INV_E() )
+P [665] << ( INV_E() )
   and ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
@@ -4304,8 +4304,8 @@ P [649] << ( INV_E() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) >>
-S [650] ->
-Q [650] << true >>
+S [666] ->
+Q [666] << true >>
 Why created:  applied port output <<pre>> -> <<M[Lost_Confirmation]>> [serial 1034]
 Solved by: [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 269:
 Theorem (269) [serial 1727] used for:
@@ -4313,7 +4313,7 @@ Theorem (269) [serial 1727] used for:
 
 
 Theorem (271)                               [serial 1729] 
-P [650] << ( ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
+P [666] << ( ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  ) )
@@ -4328,14 +4328,14 @@ P [650] << ( ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) )
   and true >>
-S [650] ->
-Q [605] << INV_E() >>
+S [666] ->
+Q [621] << INV_E() >>
 Why created:    normalization of [serial 1725]
   Using: ADD_UNNECESSARY_PARETHESES (bl.ancom) 
 Solved by: True can be removed from conjunction. (truan)(truconj)
 
 Theorem (272)                               [serial 1725] 
-P [650] << ( ( INV_E() )
+P [666] << ( ( INV_E() )
   and ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
@@ -4350,8 +4350,8 @@ P [650] << ( ( INV_E() )
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) )
   and true >>
-S [650] ->
-Q [605] << INV_E() >>
+S [666] ->
+Q [621] << INV_E() >>
 Why created:  Assume Present:  P = P@now = P^0   [serial 1724]
 Solved by: At Introduction: if a predicate is always true it's true at time t (bl.atintro) 
    or if a value is constant its value at time t is the same (bl.atintroc)  [Add unnecessary parentheses] Conjunction Commutes. (bl.ancom) and theorem 271:
@@ -4360,7 +4360,7 @@ Theorem (271) [serial 1729] used for:
 
 
 Theorem (273)                               [serial 1724] 
-P [650] << ( ( INV_E() )
+P [666] << ( ( INV_E() )
   and ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
@@ -4375,8 +4375,8 @@ P [650] << ( ( INV_E() )
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) )
   and true@now >>
-S [650] ->
-Q [605] << INV_E() >>
+S [666] ->
+Q [621] << INV_E() >>
 Why created:  applied port output <<pre and M[Lost_Confirmation]@now>> -> <<post>> [serial 1034]
 Solved by:  Assume Present:  P = P@now = P^0 
  and theorem 272:
@@ -4385,7 +4385,7 @@ Theorem (272) [serial 1725] used for:
 
 
 Theorem (274)                               [serial 1034] 
-P [649] << ( INV_E() )
+P [665] << ( INV_E() )
   and ( ( Pause_Infusion or Pause_Infusion_Echo )@( now - IoMT_Properties::PCA_Echo_Limit s )
   and not ( exists t ~ time 
    in ( now - IoMT_Properties::PCA_Echo_Limit s ) ,, now 
@@ -4399,8 +4399,8 @@ P [649] << ( INV_E() )
   and not ( exists t ~ time 
    in ( u - IoMT_Properties::PCA_Echo_Limit s ) ,, u 
    that ( Pause_Infusion or Pause_Infusion_Echo )@t  )  ) >>
-S [650] Lost_Confirmation!
-Q [605] << INV_E() >>
+S [666] Lost_Confirmation!
+Q [621] << INV_E() >>
 Why created:   <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
 Solved by:  Asserted Action:  <<P>> { <<P1>> S1 <<Q1>> } <<Q>> is <<P>> -> <<P1>>, <<Q1>> -> <<Q>>, and <<P1>> S1 <<Q1>>
   Port Event Output: when <<A and p@now>> -> <<B>> and <<A>> -> <<M(p)>> then <<A>> p! <<B>>
@@ -4412,10 +4412,10 @@ Theorem (273) [serial 1724] used for:
 
 
 Theorem (275)                               [serial 1026] 
-P [589] <<   >>
-S [590] ->
-Q [589] << Supervise_PCA_Thread.echo proof obligations >>
-Why created:  Initial proof obligations for Supervise_PCA_Thread.echo
+P [605] <<   >>
+S [606] ->
+Q [605] << Coordinator_Thread.echo proof obligations >>
+Why created:  Initial proof obligations for Coordinator_Thread.echo
 Solved by:  Component verification conditions
  and theorems 184 187 188 189 221 253 268 274:
 Theorem (184) [serial 1027] used for:
@@ -4526,7 +4526,7 @@ Theorem (282)                               [serial 1036]
 P [1] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
 S    ->
 Q [2] << ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion >>
-Why created:  Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant
+Why created:  Subcomponent's Invariant implies Coordinator.impl's Invariant
 Solved by: [Add unnecessary parentheses] and theorem 281:
 Theorem (281) [serial 1776] used for:
     normalization of [serial 1036] 
@@ -4622,26 +4622,26 @@ Theorem (289)                               [serial 1038]
 P [1] << ( ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion ) >>
 S    ->
 Q [2] << ( PO_ALARM() or RM_ALARM() ) implies Pause_Infusion >>
-Why created:  Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant
+Why created:  Subcomponent's Invariant implies Coordinator.impl's Invariant
 Solved by: [Add unnecessary parentheses] and theorem 288:
 Theorem (288) [serial 1786] used for:
     normalization of [serial 1038] 
 
 
 Theorem (290)                               [serial 1039] 
-P [1] << Infused_Drug_id = PUMP_RATE() >>
-S [2] ->
-Q [1] << Infused_Drug_id = PUMP_RATE() >>
-Why created:  Composition of Subcomponents via Directional Connection pct.Infused_Drug -> pcc.id:
- Infused_Drug -> id
-Solved by: Identity (id):  P->P is tautology
-
-Theorem (291)                               [serial 1040] 
 P [1] << PO_ALARM() or RM_ALARM() >>
 S [2] ->
 Q [1] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection pcc.Pause_Infusion -> pct.Pause_Infusion:
- Pause_Infusion -> Pause_Infusion
+Why created:  Composition of Subcomponents via Directional Connection pcc.pause_infusion -> pct.pause_infusion:
+ pause_infusion -> pause_infusion
+Solved by: Identity (id):  P->P is tautology
+
+Theorem (291)                               [serial 1040] 
+P [1] << pump_rate = PUMP_RATE() >>
+S [2] ->
+Q [1] << pump_rate = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection pcp.pct.pump_rate -> pmp.pump_rate:
+ pump_rate -> pump_rate
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (292)                               [serial 1041] 
@@ -4709,18 +4709,18 @@ Why created:  Composition of Subcomponents via Directional Connection spc.Pause_
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (300)                               [serial 1049] 
-P [1] << Infused_Drug = PUMP_RATE() >>
+P [1] << infused_drug = PUMP_RATE() >>
 S [2] ->
-Q [1] << Infused_Drug = PUMP_RATE() >>
-Why created:  Composition of Subcomponents via Directional Connection pca_pump.pcp.pcc.Infused_Drug -> patient.Infused_Drug:
- Infused_Drug -> Infused_Drug
+Q [1] << infused_drug = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection pca_pump.pmp.infused_drug -> patient.Infused_Drug:
+ infused_drug -> Infused_Drug
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (301)                               [serial 1050] 
 P [1] << PO_ALARM() >>
 S [2] ->
 Q [1] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection pulse_oximeter.poc.poc.PO_Alarm -> supervisor.spp.spc.poa:
+Why created:  Composition of Subcomponents via Directional Connection pulse_oximeter.poc.poc.PO_Alarm -> coordinator.spp.spc.poa:
  PO_Alarm -> poa
 Solved by: Identity (id):  P->P is tautology
 
@@ -4728,7 +4728,7 @@ Theorem (302)                               [serial 1051]
 P [1] << RM_ALARM() >>
 S [2] ->
 Q [1] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> supervisor.spp.spc.rma:
+Why created:  Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> coordinator.spp.spc.rma:
  RM_Alarm -> rma
 Solved by: Identity (id):  P->P is tautology
 
@@ -4736,7 +4736,7 @@ Theorem (303)                               [serial 1052]
 P [1] << PO_ALARM() or RM_ALARM() >>
 S [2] ->
 Q [1] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection supervisor.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
+Why created:  Composition of Subcomponents via Directional Connection coordinator.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
  Pause_Infusion -> pi
 Solved by: Identity (id):  P->P is tautology
 
@@ -4776,7 +4776,7 @@ Theorem (308)                               [serial 1057]
 P [128] << PO_ALARM() >>
 S [143] ->
 Q [151] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.poa:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.poa:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
@@ -4784,7 +4784,7 @@ Theorem (309)                               [serial 1058]
 P [130] << RM_ALARM() >>
 S [144] ->
 Q [153] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.rma:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.rma:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
@@ -4792,7 +4792,7 @@ Theorem (310)                               [serial 1059]
 P [155] << PO_ALARM() or RM_ALARM() >>
 S [145] ->
 Q [132] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.pi:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.pi:
  Pause_Infusion -> Pause_Infusion
 Solved by: Identity (id):  P->P is tautology
 
@@ -4800,7 +4800,7 @@ Theorem (311)                               [serial 1060]
 P [151] << PO_ALARM() >>
 S [165] ->
 Q [176] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.poa:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.poa:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
@@ -4808,7 +4808,7 @@ Theorem (312)                               [serial 1061]
 P [153] << RM_ALARM() >>
 S [166] ->
 Q [179] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.rma:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.rma:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
@@ -4816,279 +4816,279 @@ Theorem (313)                               [serial 1062]
 P [173] << PO_ALARM() or RM_ALARM() >>
 S [167] ->
 Q [155] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.pi:
+Why created:  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.pi:
  Pause_Infusion -> Pause_Infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (314)                               [serial 1063] 
-P [70] << Infused_Drug = PUMP_RATE() >>
+P [78] << infused_drug = PUMP_RATE() >>
 S [49] ->
-Q [710] << Infused_Drug = PUMP_RATE() >>
+Q [725] << infused_drug = PUMP_RATE() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.infusion_set:
- Infused_Drug -> Infused_Drug
+ infused_drug -> Infused_Drug
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (315)                               [serial 1064] 
-P [499] << PO_ALARM() or RM_ALARM() >>
+P [515] << PO_ALARM() or RM_ALARM() >>
 S [33] ->
-Q [69] << PO_ALARM() or RM_ALARM() >>
+Q [77] << PO_ALARM() or RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.pause_infusion:
- Pause_Infusion -> Pause_Infusion
+ Pause_Infusion -> pause_infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (316)                               [serial 1065] 
-P [155] << PO_ALARM() >>
+P [174] << PO_ALARM() >>
 S [35] ->
-Q [497] << PO_ALARM() >>
+Q [513] << PO_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.po_alarm:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (317)                               [serial 1066] 
-P [334] << RM_ALARM() >>
+P [353] << RM_ALARM() >>
 S [37] ->
-Q [498] << RM_ALARM() >>
+Q [514] << RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.rm_alarm:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (318)                               [serial 1067] 
-P [92] << Infused_Drug = PUMP_RATE() >>
-S [83] ->
-Q [70] << Infused_Drug = PUMP_RATE() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.ifd:
- Infused_Drug -> Infused_Drug
+P [147] << infused_drug = PUMP_RATE() >>
+S [96] ->
+Q [78] << infused_drug = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pd:
+ infused_drug -> infused_drug
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (319)                               [serial 1068] 
-P [69] << PO_ALARM() or RM_ALARM() >>
-S [82] ->
-Q [91] << PO_ALARM() or RM_ALARM() >>
+P [77] << PO_ALARM() or RM_ALARM() >>
+S [92] ->
+Q [103] << PO_ALARM() or RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pif:
- Pause_Infusion -> Pause_Infusion
+ pause_infusion -> pause_infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (320)                               [serial 1069] 
-P [119] << Infused_Drug_id = PUMP_RATE() >>
-S [108] ->
-Q [136] << Infused_Drug_id = PUMP_RATE() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd1:
- Infused_Drug -> id
+P [104] << pump_rate = PUMP_RATE() >>
+S [94] ->
+Q [152] << pump_rate = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pr:
+ pump_rate -> pump_rate
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (321)                               [serial 1070] 
-P [139] << Infused_Drug = PUMP_RATE() >>
-S [109] ->
-Q [92] << Infused_Drug = PUMP_RATE() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd2:
- Infused_Drug -> Infused_Drug
+P [103] << PO_ALARM() or RM_ALARM() >>
+S [115] ->
+Q [160] << PO_ALARM() or RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi1:
+ pause_infusion -> pi
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (322)                               [serial 1071] 
-P [91] << PO_ALARM() or RM_ALARM() >>
-S [102] ->
-Q [133] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi1:
- Pause_Infusion -> pi
+P [161] << PO_ALARM() or RM_ALARM() >>
+S [116] ->
+Q [129] << PO_ALARM() or RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi2:
+ pause_infusion -> pause_infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (323)                               [serial 1072] 
-P [134] << PO_ALARM() or RM_ALARM() >>
-S [103] ->
-Q [118] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi2:
- Pause_Infusion -> Pause_Infusion
+P [130] << pump_rate = PUMP_RATE() >>
+S [123] ->
+Q [104] << pump_rate = PUMP_RATE() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.PCA_Pump_Process_impl_new_connection:
+ pump_rate -> pump_rate
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (324)                               [serial 1073] 
-P [180] << PO_ALARM() >>
-S [167] ->
-Q [155] << PO_ALARM() >>
+P [199] << PO_ALARM() >>
+S [186] ->
+Q [174] << PO_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter.impl.poa:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (325)                               [serial 1074] 
-P [212] << PO_ALARM() >>
-S [196] ->
-Q [313] << PO_ALARM() >>
+P [231] << PO_ALARM() >>
+S [215] ->
+Q [332] << PO_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol1:
  PO_Alarm -> poa
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (326)                               [serial 1075] 
-P [314] << PO_ALARM() >>
-S [197] ->
-Q [180] << PO_ALARM() >>
+P [333] << PO_ALARM() >>
+S [216] ->
+Q [199] << PO_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol2:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (327)                               [serial 1076] 
-P [357] << RM_ALARM() >>
-S [347] ->
-Q [334] << RM_ALARM() >>
+P [376] << RM_ALARM() >>
+S [366] ->
+Q [353] << RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor.impl.rma:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (328)                               [serial 1077] 
-P [385] << RM_ALARM() >>
-S [375] ->
-Q [469] << RM_ALARM() >>
+P [404] << RM_ALARM() >>
+S [394] ->
+Q [487] << RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma1:
  RM_Alarm -> rma
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (329)                               [serial 1078] 
-P [472] << RM_ALARM() >>
-S [376] ->
-Q [357] << RM_ALARM() >>
+P [490] << RM_ALARM() >>
+S [395] ->
+Q [376] << RM_ALARM() >>
 Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma2:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (330)                               [serial 1079] 
-P [497] << PO_ALARM() >>
-S [512] ->
-Q [527] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.poa:
+P [513] << PO_ALARM() >>
+S [528] ->
+Q [543] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.poa:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (331)                               [serial 1080] 
-P [498] << RM_ALARM() >>
-S [513] ->
-Q [528] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.rma:
+P [514] << RM_ALARM() >>
+S [529] ->
+Q [544] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.rma:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (332)                               [serial 1081] 
-P [529] << PO_ALARM() or RM_ALARM() >>
-S [514] ->
-Q [499] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pi:
+P [545] << PO_ALARM() or RM_ALARM() >>
+S [530] ->
+Q [515] << PO_ALARM() or RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pi:
  Pause_Infusion -> Pause_Infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (333)                               [serial 1082] 
-P [503] << PAUSE_INFUSION_ECHO >>
-S [515] ->
-Q [533] << PAUSE_INFUSION_ECHO >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pie:
+P [519] << PAUSE_INFUSION_ECHO >>
+S [531] ->
+Q [549] << PAUSE_INFUSION_ECHO >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pie:
  Pause_Infusion_Echo -> Pause_Infusion_Echo
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (334)                               [serial 1083] 
-P [531] << PO_ALARM() >>
-S [517] ->
-Q [501] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icp:
+P [547] << PO_ALARM() >>
+S [533] ->
+Q [517] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icp:
  PO_Alarm_Echo -> PO_Alarm_Echo
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (335)                               [serial 1084] 
-P [524] << RM_ALARM() >>
-S [518] ->
-Q [493] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icr:
+P [540] << RM_ALARM() >>
+S [534] ->
+Q [509] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icr:
  RM_Alarm_Echo -> RM_Alarm_Echo
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (336)                               [serial 1085] 
-P [527] << PO_ALARM() >>
-S [544] ->
-Q [666] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa1:
+P [543] << PO_ALARM() >>
+S [560] ->
+Q [682] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa1:
  PO_Alarm -> poa
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (337)                               [serial 1086] 
-P [667] << PO_ALARM() >>
-S [545] ->
-Q [576] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa2:
+P [683] << PO_ALARM() >>
+S [561] ->
+Q [592] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa2:
  PO_Alarm -> PO_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (338)                               [serial 1087] 
-P [528] << RM_ALARM() >>
-S [548] ->
-Q [669] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma1:
+P [544] << RM_ALARM() >>
+S [564] ->
+Q [685] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma1:
  RM_Alarm -> rma
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (339)                               [serial 1088] 
-P [671] << RM_ALARM() >>
-S [549] ->
-Q [577] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma2:
+P [687] << RM_ALARM() >>
+S [565] ->
+Q [593] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma2:
  RM_Alarm -> RM_Alarm
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (340)                               [serial 1089] 
-P [533] << PAUSE_INFUSION_ECHO >>
-S [552] ->
-Q [674] << PAUSE_INFUSION_ECHO >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie1:
+P [549] << PAUSE_INFUSION_ECHO >>
+S [568] ->
+Q [690] << PAUSE_INFUSION_ECHO >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie1:
  Pause_Infusion_Echo -> pie
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (341)                               [serial 1090] 
-P [676] << PAUSE_INFUSION_ECHO >>
-S [553] ->
-Q [582] << PAUSE_INFUSION_ECHO >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie2:
+P [692] << PAUSE_INFUSION_ECHO >>
+S [569] ->
+Q [598] << PAUSE_INFUSION_ECHO >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie2:
  Pause_Infusion_Echo -> Pause_Infusion_Echo
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (342)                               [serial 1091] 
-P [578] << PO_ALARM() or RM_ALARM() >>
-S [555] ->
-Q [679] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi1:
+P [594] << PO_ALARM() or RM_ALARM() >>
+S [571] ->
+Q [695] << PO_ALARM() or RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi1:
  Pause_Infusion -> pi
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (343)                               [serial 1092] 
-P [681] << PO_ALARM() or RM_ALARM() >>
-S [556] ->
-Q [529] << PO_ALARM() or RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi2:
+P [697] << PO_ALARM() or RM_ALARM() >>
+S [572] ->
+Q [545] << PO_ALARM() or RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi2:
  Pause_Infusion -> Pause_Infusion
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (344)                               [serial 1093] 
-P [573] << RM_ALARM() >>
-S [558] ->
-Q [684] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme1:
+P [589] << RM_ALARM() >>
+S [574] ->
+Q [700] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme1:
  RM_Alarm_Echo -> rmae
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (345)                               [serial 1094] 
-P [686] << RM_ALARM() >>
-S [559] ->
-Q [524] << RM_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme2:
+P [702] << RM_ALARM() >>
+S [575] ->
+Q [540] << RM_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme2:
  RM_Alarm_Echo -> RM_Alarm_Echo
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (346)                               [serial 1095] 
-P [580] << PO_ALARM() >>
-S [561] ->
-Q [689] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe1:
+P [596] << PO_ALARM() >>
+S [577] ->
+Q [705] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe1:
  PO_Alarm_Echo -> poae
 Solved by: Identity (id):  P->P is tautology
 
 Theorem (347)                               [serial 1096] 
-P [691] << PO_ALARM() >>
-S [562] ->
-Q [531] << PO_ALARM() >>
-Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe2:
+P [707] << PO_ALARM() >>
+S [578] ->
+Q [547] << PO_ALARM() >>
+Why created:  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe2:
  PO_Alarm_Echo -> PO_Alarm_Echo
 Solved by: Identity (id):  P->P is tautology
 
@@ -5097,27 +5097,27 @@ Why created:  All verification conditions have been proved correct.
 Solved by:  Component and Connection Proofs
  and theorems 21 112 181 275 280 282 287 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347:
 Theorem (21) [serial 1002] used for:
-  Initial proof obligations for Supervise_PCA_Thread.simple 
+  Initial proof obligations for Coordinator_Thread.simple 
 Theorem (112) [serial 1010] used for:
   Initial proof obligations for Pulse_Oximeter_Thread.impl 
 Theorem (181) [serial 1018] used for:
   Initial proof obligations for Respiration_Monitor_Thread.impl 
 Theorem (275) [serial 1026] used for:
-  Initial proof obligations for Supervise_PCA_Thread.echo 
+  Initial proof obligations for Coordinator_Thread.echo 
 Theorem (280) [serial 1035] used for:
   Conjunction of Subcomponents' Invariants imply SysIoMT.impl's Invariant 
 Theorem (282) [serial 1036] used for:
-  Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant 
+  Subcomponent's Invariant implies Coordinator.impl's Invariant 
 Theorem (287) [serial 1037] used for:
   Conjunction of Subcomponents' Invariants imply SysIoMT.impl's Invariant 
 Theorem (289) [serial 1038] used for:
-  Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant 
+  Subcomponent's Invariant implies Coordinator.impl's Invariant 
 Theorem (290) [serial 1039] used for:
-  Composition of Subcomponents via Directional Connection pct.Infused_Drug -> pcc.id:
- Infused_Drug -> id 
+  Composition of Subcomponents via Directional Connection pcc.pause_infusion -> pct.pause_infusion:
+ pause_infusion -> pause_infusion 
 Theorem (291) [serial 1040] used for:
-  Composition of Subcomponents via Directional Connection pcc.Pause_Infusion -> pct.Pause_Infusion:
- Pause_Infusion -> Pause_Infusion 
+  Composition of Subcomponents via Directional Connection pcp.pct.pump_rate -> pmp.pump_rate:
+ pump_rate -> pump_rate 
 Theorem (292) [serial 1041] used for:
   Composition of Subcomponents via Directional Connection pot.PO_Alarm -> poc.poa:
  PO_Alarm -> poa 
@@ -5143,16 +5143,16 @@ Theorem (299) [serial 1048] used for:
   Composition of Subcomponents via Directional Connection spc.Pause_Infusion_Echo -> spt.Pause_Infusion_Echo:
  Pause_Infusion_Echo -> Pause_Infusion_Echo 
 Theorem (300) [serial 1049] used for:
-  Composition of Subcomponents via Directional Connection pca_pump.pcp.pcc.Infused_Drug -> patient.Infused_Drug:
- Infused_Drug -> Infused_Drug 
+  Composition of Subcomponents via Directional Connection pca_pump.pmp.infused_drug -> patient.Infused_Drug:
+ infused_drug -> Infused_Drug 
 Theorem (301) [serial 1050] used for:
-  Composition of Subcomponents via Directional Connection pulse_oximeter.poc.poc.PO_Alarm -> supervisor.spp.spc.poa:
+  Composition of Subcomponents via Directional Connection pulse_oximeter.poc.poc.PO_Alarm -> coordinator.spp.spc.poa:
  PO_Alarm -> poa 
 Theorem (302) [serial 1051] used for:
-  Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> supervisor.spp.spc.rma:
+  Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> coordinator.spp.spc.rma:
  RM_Alarm -> rma 
 Theorem (303) [serial 1052] used for:
-  Composition of Subcomponents via Directional Connection supervisor.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
+  Composition of Subcomponents via Directional Connection coordinator.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
  Pause_Infusion -> pi 
 Theorem (304) [serial 1053] used for:
   Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.infusion_set:
@@ -5167,29 +5167,29 @@ Theorem (307) [serial 1056] used for:
   Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.resp_alarm:
  RM_Alarm -> RM_Alarm 
 Theorem (308) [serial 1057] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.poa:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.poa:
  PO_Alarm -> PO_Alarm 
 Theorem (309) [serial 1058] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.rma:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.rma:
  RM_Alarm -> RM_Alarm 
 Theorem (310) [serial 1059] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.pi:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator.impl.pi:
  Pause_Infusion -> Pause_Infusion 
 Theorem (311) [serial 1060] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.poa:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.poa:
  PO_Alarm -> PO_Alarm 
 Theorem (312) [serial 1061] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.rma:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.rma:
  RM_Alarm -> RM_Alarm 
 Theorem (313) [serial 1062] used for:
-  Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.pi:
+  Composition of Subcomponents via Directional Connection IoMTsimple::Coordinator_Process.impl.pi:
  Pause_Infusion -> Pause_Infusion 
 Theorem (314) [serial 1063] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.infusion_set:
- Infused_Drug -> Infused_Drug 
+ infused_drug -> Infused_Drug 
 Theorem (315) [serial 1064] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.pause_infusion:
- Pause_Infusion -> Pause_Infusion 
+ Pause_Infusion -> pause_infusion 
 Theorem (316) [serial 1065] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.po_alarm:
  PO_Alarm -> PO_Alarm 
@@ -5197,23 +5197,23 @@ Theorem (317) [serial 1066] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.rm_alarm:
  RM_Alarm -> RM_Alarm 
 Theorem (318) [serial 1067] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.ifd:
- Infused_Drug -> Infused_Drug 
+  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pd:
+ infused_drug -> infused_drug 
 Theorem (319) [serial 1068] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pif:
- Pause_Infusion -> Pause_Infusion 
+ pause_infusion -> pause_infusion 
 Theorem (320) [serial 1069] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd1:
- Infused_Drug -> id 
+  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pr:
+ pump_rate -> pump_rate 
 Theorem (321) [serial 1070] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd2:
- Infused_Drug -> Infused_Drug 
-Theorem (322) [serial 1071] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi1:
- Pause_Infusion -> pi 
-Theorem (323) [serial 1072] used for:
+ pause_infusion -> pi 
+Theorem (322) [serial 1071] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi2:
- Pause_Infusion -> Pause_Infusion 
+ pause_infusion -> pause_infusion 
+Theorem (323) [serial 1072] used for:
+  Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.PCA_Pump_Process_impl_new_connection:
+ pump_rate -> pump_rate 
 Theorem (324) [serial 1073] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter.impl.poa:
  PO_Alarm -> PO_Alarm 
@@ -5233,59 +5233,59 @@ Theorem (329) [serial 1078] used for:
   Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma2:
  RM_Alarm -> RM_Alarm 
 Theorem (330) [serial 1079] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.poa:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.poa:
  PO_Alarm -> PO_Alarm 
 Theorem (331) [serial 1080] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.rma:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.rma:
  RM_Alarm -> RM_Alarm 
 Theorem (332) [serial 1081] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pi:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pi:
  Pause_Infusion -> Pause_Infusion 
 Theorem (333) [serial 1082] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pie:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pie:
  Pause_Infusion_Echo -> Pause_Infusion_Echo 
 Theorem (334) [serial 1083] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icp:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icp:
  PO_Alarm_Echo -> PO_Alarm_Echo 
 Theorem (335) [serial 1084] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icr:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icr:
  RM_Alarm_Echo -> RM_Alarm_Echo 
 Theorem (336) [serial 1085] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa1:
  PO_Alarm -> poa 
 Theorem (337) [serial 1086] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa2:
  PO_Alarm -> PO_Alarm 
 Theorem (338) [serial 1087] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma1:
  RM_Alarm -> rma 
 Theorem (339) [serial 1088] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma2:
  RM_Alarm -> RM_Alarm 
 Theorem (340) [serial 1089] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie1:
  Pause_Infusion_Echo -> pie 
 Theorem (341) [serial 1090] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie2:
  Pause_Infusion_Echo -> Pause_Infusion_Echo 
 Theorem (342) [serial 1091] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi1:
  Pause_Infusion -> pi 
 Theorem (343) [serial 1092] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi2:
  Pause_Infusion -> Pause_Infusion 
 Theorem (344) [serial 1093] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme1:
  RM_Alarm_Echo -> rmae 
 Theorem (345) [serial 1094] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme2:
  RM_Alarm_Echo -> RM_Alarm_Echo 
 Theorem (346) [serial 1095] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe1:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe1:
  PO_Alarm_Echo -> poae 
 Theorem (347) [serial 1096] used for:
-  Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe2:
+  Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe2:
  PO_Alarm_Echo -> PO_Alarm_Echo 
 
 
-closing proof file "/Users/ehsanahmad/OSATE2_User/osate2130vf/osate2.app/Contents/MacOS/proof.txt" 
+closing proof file "/Applications/osate2_2023-12-master/Eclipse.app/Contents/MacOS/proof.txt" 
