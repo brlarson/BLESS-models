@@ -100,9 +100,9 @@
           <seg>hrr</seg>
         </bo>
         <bendpoints>
-          <point x="-295.0" y="-2.0"/>
-          <point x="-472.0" y="1.0"/>
-          <point x="-485.0" y="72.0"/>
+          <point x="-245.0" y="-432.0"/>
+          <point x="-422.0" y="-429.0"/>
+          <point x="-435.0" y="-358.0"/>
         </bendpoints>
       </element>
       <element uuid="69222669-b5bd-4632-9757-15325673f7e5" manual="true">
@@ -141,8 +141,8 @@
           <seg>poe1</seg>
         </bo>
         <bendpoints>
-          <point x="138.0" y="40.0"/>
-          <point x="122.0" y="43.0"/>
+          <point x="188.0" y="-390.0"/>
+          <point x="172.0" y="-387.0"/>
         </bendpoints>
       </element>
       <element uuid="0d7b822d-a815-40dd-9b99-4b130c011fef" manual="true">
@@ -193,8 +193,8 @@
           <seg>spc</seg>
         </bo>
         <bendpoints>
-          <point x="-487.0" y="-9.0"/>
-          <point x="-499.0" y="121.0"/>
+          <point x="-437.0" y="-439.0"/>
+          <point x="-449.0" y="-309.0"/>
         </bendpoints>
       </element>
       <element uuid="9902736d-3a8b-40c5-955a-f7ceb7b79776" manual="true" dockArea="top">
@@ -330,19 +330,12 @@
           </bo>
           <position y="80.0"/>
         </element>
-        <element uuid="2bf84968-22a6-41b7-bde7-419f55a292c5" manual="true">
-          <bo>
-            <seg>flow_specification</seg>
-            <seg>po_alarm_sink</seg>
-          </bo>
-          <position x="269.30338287353516" y="142.0"/>
-        </element>
         <element uuid="038197b2-627b-4b5f-b6fe-bca5fc325d29" manual="true">
           <bo>
             <seg>flow_specification</seg>
             <seg>po_alarm_source</seg>
           </bo>
-          <position x="269.4973907470703" y="52.0"/>
+          <position x="269.0" y="52.0"/>
         </element>
         <element uuid="ca9aebe4-67a6-4c58-b76e-97090e10ce68" manual="true">
           <bo>
@@ -402,7 +395,7 @@
       <seg>classifier</seg>
       <seg>Pulse_Oximeter.impl</seg>
     </bo>
-    <position x="-540.0" y="-140.0"/>
+    <position x="-490.0" y="-570.0"/>
     <size width="915.0" height="340.0"/>
   </element>
   <config type="structure" connectionPrimaryLabelsVisible="false">

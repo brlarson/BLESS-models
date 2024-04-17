@@ -1,4 +1,5 @@
 #Compositions_All.ps
+#[serial 1027] Conjunction of Subcomponents' Invariants imply SysIoMT.impl's Invariant
 sub-equals-and
 substitute-post
 substitute-both
@@ -6,134 +7,109 @@ normalize
 laws
 normalize
 tautologies
-#[serial 1036] Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant
+#[serial 1028] Subcomponent's Invariant implies Coordinator.impl's Invariant
 normalize
 tautologies
-#[serial 1037] Conjunction of Subcomponents' Invariants imply SysIoMT.impl's Invariant
-sub-equals-and
+#[serial 1029] Composition of Subcomponents via Directional Connection pcc.pause_infusion -> pct.pause_infusion:
 substitute-post
 substitute-both
 normalize
 laws
 normalize
 tautologies
-#[serial 1038] Subcomponent's Invariant implies ICE_Supervisor.impl's Invariant
+#[serial 1030] Composition of Subcomponents via Directional Connection pcp.pct.pump_rate -> pmp.pump_rate:
 normalize
 tautologies
-#[serial 1039] Composition of Subcomponents via Directional Connection pct.Infused_Drug -> pcc.id:
+#[serial 1031] Composition of Subcomponents via Directional Connection pot.PO_Alarm -> poc.poa:
 tautologies
-#[serial 1040] Composition of Subcomponents via Directional Connection pcc.Pause_Infusion -> pct.Pause_Infusion:
+#[serial 1032] Composition of Subcomponents via Directional Connection rmt.RM_Alarm -> rmc.rma:
 tautologies
-#[serial 1041] Composition of Subcomponents via Directional Connection pot.PO_Alarm -> poc.poa:
+#[serial 1033] Composition of Subcomponents via Directional Connection spt.RM_Alarm_Echo -> spc.rmae:
 tautologies
-#[serial 1042] Composition of Subcomponents via Directional Connection rmt.RM_Alarm -> rmc.rma:
+#[serial 1034] Composition of Subcomponents via Directional Connection spt.Pause_Infusion -> spc.pi:
 tautologies
-#[serial 1043] Composition of Subcomponents via Directional Connection spt.RM_Alarm_Echo -> spc.rmae:
+#[serial 1035] Composition of Subcomponents via Directional Connection spt.PO_Alarm_Echo -> spc.poae:
 tautologies
-#[serial 1044] Composition of Subcomponents via Directional Connection spt.Pause_Infusion -> spc.pi:
+#[serial 1036] Composition of Subcomponents via Directional Connection spc.PO_Alarm -> spt.PO_Alarm:
 tautologies
-#[serial 1045] Composition of Subcomponents via Directional Connection spt.PO_Alarm_Echo -> spc.poae:
+#[serial 1037] Composition of Subcomponents via Directional Connection spc.RM_Alarm -> spt.RM_Alarm:
 tautologies
-#[serial 1046] Composition of Subcomponents via Directional Connection spc.PO_Alarm -> spt.PO_Alarm:
+#[serial 1038] Composition of Subcomponents via Directional Connection spc.Pause_Infusion_Echo -> spt.Pause_Infusion_Echo:
 tautologies
-#[serial 1047] Composition of Subcomponents via Directional Connection spc.RM_Alarm -> spt.RM_Alarm:
+#[serial 1039] Composition of Subcomponents via Directional Connection pca_pump.pmp.infused_drug -> patient.Infused_Drug:
 tautologies
-#[serial 1048] Composition of Subcomponents via Directional Connection spc.Pause_Infusion_Echo -> spt.Pause_Infusion_Echo:
+#[serial 1040] Composition of Subcomponents via Directional Connection pulse_oximeter.pop.poc.PO_Alarm -> coordinator.spp.spc.poa:
 tautologies
-#[serial 1049] Composition of Subcomponents via Directional Connection pca_pump.pcp.pcc.Infused_Drug -> patient.Infused_Drug:
+#[serial 1041] Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> coordinator.spp.spc.rma:
 tautologies
-#[serial 1050] Composition of Subcomponents via Directional Connection pulse_oximeter.poc.poc.PO_Alarm -> supervisor.spp.spc.poa:
+#[serial 1042] Composition of Subcomponents via Directional Connection coordinator.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
 tautologies
-#[serial 1051] Composition of Subcomponents via Directional Connection resp_monitor.rmp.rmc.RM_Alarm -> supervisor.spp.spc.rma:
+#[serial 1043] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.infusion_set:
 tautologies
-#[serial 1052] Composition of Subcomponents via Directional Connection supervisor.spp.spc.Pause_Infusion -> pca_pump.pcp.pcc.pi:
+#[serial 1044] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.pause_infusion:
 tautologies
-#[serial 1053] Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.infusion_set:
+#[serial 1045] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.po_alarm:
 tautologies
-#[serial 1054] Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.pause_infusion:
+#[serial 1046] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.rm_alarm:
 tautologies
-#[serial 1055] Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.spo2_alarm:
+#[serial 1047] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pd:
 tautologies
-#[serial 1056] Composition of Subcomponents via Directional Connection IoMTsimple::SysIoMT.impl.resp_alarm:
+#[serial 1048] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pif:
 tautologies
-#[serial 1057] Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.poa:
+#[serial 1049] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pr:
 tautologies
-#[serial 1058] Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.rma:
+#[serial 1050] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi1:
 tautologies
-#[serial 1059] Composition of Subcomponents via Directional Connection IoMTsimple::ICE_Supervisor.impl.pi:
+#[serial 1051] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi2:
 tautologies
-#[serial 1060] Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.poa:
+#[serial 1052] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.PCA_Pump_Process_impl_new_connection:
 tautologies
-#[serial 1061] Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.rma:
+#[serial 1053] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter.impl.poa:
 tautologies
-#[serial 1062] Composition of Subcomponents via Directional Connection IoMTsimple::Supervise_PCA_Process.impl.pi:
+#[serial 1054] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol1:
 tautologies
-#[serial 1063] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.infusion_set:
+#[serial 1055] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol2:
 tautologies
-#[serial 1064] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.pause_infusion:
+#[serial 1056] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor.impl.rma:
 tautologies
-#[serial 1065] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.po_alarm:
+#[serial 1057] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma1:
 tautologies
-#[serial 1066] Composition of Subcomponents via Directional Connection IoMTwin::SysIoMT.impl.rm_alarm:
+#[serial 1058] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma2:
 tautologies
-#[serial 1067] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.ifd:
+#[serial 1059] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.poa:
 tautologies
-#[serial 1068] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump.impl.pif:
+#[serial 1060] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.rma:
 tautologies
-#[serial 1069] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd1:
+#[serial 1061] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pi:
 tautologies
-#[serial 1070] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.ifd2:
+#[serial 1062] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.pie:
 tautologies
-#[serial 1071] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi1:
+#[serial 1063] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icp:
 tautologies
-#[serial 1072] Composition of Subcomponents via Directional Connection IoMTwin::PCA_Pump_Process.impl.pi2:
+#[serial 1064] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator.impl.icr:
 tautologies
-#[serial 1073] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter.impl.poa:
+#[serial 1065] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa1:
 tautologies
-#[serial 1074] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol1:
+#[serial 1066] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poa2:
 tautologies
-#[serial 1075] Composition of Subcomponents via Directional Connection IoMTwin::Pulse_Oximeter_Process.impl.pol2:
+#[serial 1067] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma1:
 tautologies
-#[serial 1076] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor.impl.rma:
+#[serial 1068] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rma2:
 tautologies
-#[serial 1077] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma1:
+#[serial 1069] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie1:
 tautologies
-#[serial 1078] Composition of Subcomponents via Directional Connection IoMTwin::Respiration_Monitor_Process.impl.rma2:
+#[serial 1070] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pie2:
 tautologies
-#[serial 1079] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.poa:
+#[serial 1071] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi1:
 tautologies
-#[serial 1080] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.rma:
+#[serial 1072] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.pi2:
 tautologies
-#[serial 1081] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pi:
+#[serial 1073] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme1:
 tautologies
-#[serial 1082] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.pie:
+#[serial 1074] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.rme2:
 tautologies
-#[serial 1083] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icp:
+#[serial 1075] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe1:
 tautologies
-#[serial 1084] Composition of Subcomponents via Directional Connection IoMTwin::ICE_Supervisor.impl.icr:
+#[serial 1076] Composition of Subcomponents via Directional Connection IoMTwin::Coordinator_Process.impl.poe2:
 tautologies
-#[serial 1085] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa1:
-tautologies
-#[serial 1086] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poa2:
-tautologies
-#[serial 1087] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma1:
-tautologies
-#[serial 1088] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rma2:
-tautologies
-#[serial 1089] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie1:
-tautologies
-#[serial 1090] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pie2:
-tautologies
-#[serial 1091] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi1:
-tautologies
-#[serial 1092] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.pi2:
-tautologies
-#[serial 1093] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme1:
-tautologies
-#[serial 1094] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.rme2:
-tautologies
-#[serial 1095] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe1:
-tautologies
-#[serial 1096] Composition of Subcomponents via Directional Connection IoMTwin::Supervise_PCA_Process.impl.poe2:
-tautologies
-#Q.E.D.
+

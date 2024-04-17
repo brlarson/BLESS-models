@@ -15,6 +15,8 @@ public
 		  def LAST_ACTION_A ~ last_action 
 		  def KVO_RATE_property ~ quantity mlph
 		  def PAUSE_INFUSION ~ boolean 
+      def PAUSE_INFUSION_ECHO ~ boolean  --echo returned from PCA pump
+      def RM_ALARM_ECHO ~ boolean -- echo returned from ICE Resource
 		    --ANTLR-generated lexer won't handle "::" properly
 		  << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >> -- can we use def for consistancy
 		  
