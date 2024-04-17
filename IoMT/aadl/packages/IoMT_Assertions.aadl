@@ -16,8 +16,10 @@ public
 		  def KVO_RATE_property ~ quantity mlph
 		  def PAUSE_INFUSION ~ boolean 
       def PAUSE_INFUSION_ECHO ~ boolean  --echo returned from PCA pump
-      def RM_ALARM_ECHO ~ boolean -- echo returned from ICE Resource
-		    --ANTLR-generated lexer won't handle "::" properly
+      def RM_ALARM_ECHO ~ boolean -- echo returned from Coordinator to Respiration Mnitor
+      def PO_ALARM_ECHO ~ boolean -- echo returned from Coordinator to Pulse Oximeter
+      
+		    -- kludge because ANTLR-generated lexer of AADL property strings won't handle "::" properly
 		  << GIVEN_KVO_RATE: :KVO_RATE_property = #IoMT_Properties::KVO_Rate mlph >> -- can we use def for consistancy
 		  
 		  <<PO_ALARM: : HEART_RATE < MINIMUM_HEART_RATE or SPO2 < PROGRAMMED_SPO2 >>
@@ -35,9 +37,9 @@ public
   			[
   			( HALT() )-> 0.0 mlph,                                 			--no flow
   			( KVO_RATE() )-> KVO_RATE_property,      			--KVO rate
- 			( PB_RATE() )-> PATIENT_BOLUS_RATE,							--maximum infusion upon patient request
- 		 	( CCB_RATE() )-> SQUARE_BOLUS_RATE,             			--square bolus rate=vtbi/duration, from data port
- 	 		( PRIME_RATE() )-> #IoMT_Properties::Prime_Rate,  			--pump priming
+ 			  ( PB_RATE() )-> PATIENT_BOLUS_RATE,							--maximum infusion upon patient request
+ 		 	  ( CCB_RATE() )-> SQUARE_BOLUS_RATE,             			--square bolus rate=vtbi/duration, from data port
+ 	 		  ( PRIME_RATE() )-> #IoMT_Properties::Prime_Rate,  			--pump priming
   			( BASAL_RATE_A() )-> BASAL_RATE                   			--basal rate, from data port
   			]
   			>>
