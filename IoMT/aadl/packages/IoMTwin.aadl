@@ -124,7 +124,9 @@ thread PCA_Pump_Thread
     pause_infusion_echo: out event data port BLESS_Types::Boolean 
       {BLESS::Assertion => "<< PAUSE_INFUSION_ECHO >>";};
   flows
-  pi_flow_ppt: flow path pause_infusion -> pause_infusion_echo;
+    pi_flow_ppt: flow path pause_infusion -> pause_infusion_echo;
+  properties
+    BLESS::Invariant => "<< PAUSE_INFUSION implies PUMP_RATE$() = KVO_RATE_property >>";
 end PCA_Pump_Thread;
  
   --  the drug reservoir in some PCA pumps is a hanging bag of saline into which a drug is injected
@@ -605,6 +607,7 @@ thread Coordinator_Thread
     pi_echo_sink: flow sink Pause_Infusion_Echo;
   properties
     Dispatch_Protocol => Sporadic;
+    BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies PAUSE_INFUSION >>";
 end Coordinator_Thread;
 
 thread implementation Coordinator_Thread.echo
