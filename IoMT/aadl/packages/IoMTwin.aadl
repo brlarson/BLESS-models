@@ -89,7 +89,7 @@ end PCA_Pump.impl;
 process PCA_Pump_Process
   features
     pause_infusion: in event data port BLESS_Types::Boolean 
-      {BLESS::Assertion => "<< PAUSE_INFUSION() >>";};
+      {BLESS::Assertion => "<< PAUSE_INFUSION >>";};
     pump_rate : out data port IoMT_Types::Pump_Rate
       {BLESS::Value => "<< returns quantity mlph := PUMP_RATE$() >>";};
     pause_infusion_echo: out event data port BLESS_Types::Boolean 
@@ -154,9 +154,9 @@ end Mechanical_Pump;
 thread PCA_Pump_Communication_Thread
   features
     pi: in event data port BLESS_Types::Boolean 
-      {BLESS::Assertion => "<< PAUSE_INFUSION() >>";};
+      {BLESS::Assertion => "<< PAUSE_INFUSION >>";};
     pause_infusion: out event data port BLESS_Types::Boolean  
-      {BLESS::Assertion => "<< PAUSE_INFUSION() >>";};
+      {BLESS::Assertion => "<< PAUSE_INFUSION >>";};
     pie: in event data port BLESS_Types::Boolean;
     pause_infusion_echo: out event data port BLESS_Types::Boolean;
   flows
@@ -522,7 +522,7 @@ end Nurse_Station;
    flows
      po_alarm_sink_sys : flow sink PO_Alarm;
    properties
-     BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies PAUSE_INFUSION >>";
+     BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) iff PAUSE_INFUSION >>";
  end Coordinator;
 
 system implementation Coordinator.impl
@@ -558,7 +558,7 @@ process Coordinator_Process
   flows
     po_alarm_sink_cp : flow sink PO_Alarm;
   properties  
-    BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies PAUSE_INFUSION >>";
+    BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) iff PAUSE_INFUSION >>";
   end Coordinator_Process;
 
 process implementation Coordinator_Process.impl
@@ -607,14 +607,14 @@ thread Coordinator_Thread
     pi_echo_sink: flow sink Pause_Infusion_Echo;
   properties
     Dispatch_Protocol => Sporadic;
-    BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) implies PAUSE_INFUSION >>";
+    BLESS::Invariant => "<< (PO_ALARM() or RM_ALARM()) iff PAUSE_INFUSION >>";
 end Coordinator_Thread;
 
 thread implementation Coordinator_Thread.echo
   annex BLESS 
   {**
     assert
-      <<INV: : (PO_ALARM() or RM_ALARM()) implies Pause_Infusion >>
+      <<INV: : (PO_ALARM() or RM_ALARM()) iff Pause_Infusion >>
     invariant 
       <<INV_E: :INV()  --same invariant as IoMT::Supervise_PCA_Thread.simple
       and POA() and RMA() and PI() >>
