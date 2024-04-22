@@ -48,9 +48,9 @@ annex Assertion
      ]
      >>
    
-   <<IS_SAFE: : (HEART_RATE < MINIMUM_HEART_RATE
+   <<IS_SAFE: : ((HEART_RATE < MINIMUM_HEART_RATE
       or SPO2 < PROGRAMMED_SPO2 
       or RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE)
-      implies (PUMP_RATE$() = KVO_RATE_property or HALT()) >>
+      implies PUMP_RATE$() = KVO_RATE_property) or HALT() >>
 **};
 end IoMT_Assertions;

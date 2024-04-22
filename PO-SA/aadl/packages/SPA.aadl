@@ -156,6 +156,7 @@ annex BLESS
       fi        
       ;	    
           <<RUN_AV() and AXIOM_LB()>>
+          
       {
     	  <<all k~quantity whole in (lb+1) ..(ub - 1) 
     	    are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-ub)>>	

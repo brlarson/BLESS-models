@@ -1,25 +1,38 @@
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
+#  at Fri Apr 19 15:01:45 AST 2024 by ehsanahmad
+#  You chose proof script: /Users/ehsanahmad/git/BLESS-models/IoMT/proofscripts/IoMTwin_Coordinator.ps
 push
 sort-by-component[IoMTwin::Coordinator_Thread.echo]
-#IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1027] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definitio
+#IoMTwin::Coordinator_Thread.echo
+#[serial 1019] <<I>> -> BLESS::Invariant of thread Coordinator_Thread.ec
 make-an
 substitute-pre
 normalize
+substitute-pre
+normalize
+substitute-post
+normalize
+laws
+replace-port
 tautologies
-#[serial 1028] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+#[serial 1020] <<M(check_echo)>> -> <<I>> from invariant I when complete state check_echo has Assertion <<M(check_echo)>> in its definition.
 substitute-pre
 normalize
 tautologies
-#[serial 1029] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+#[serial 1021] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definition.
+substitute-pre
+normalize
 tautologies
-#[serial 1030]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+#[serial 1022] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
 tautologies
-#[serial 1031]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
+#[serial 1023]  <<M(start)>> -> <<M(run)>> for go: start-[ ]->run{};
+tautologies
+#[serial 1024]  <<M(run) and x>> A <<M(check_echo)>> for got_po: run-[x]->check_echo{A};
 reduce
 normalize
 push
-#IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1087] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 103
+#IoMTwin::Coordinator_Thread.echo
+#[serial 1103] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 102
 make-an
 atomic
 normalize
@@ -27,17 +40,20 @@ tautologies
 substitute-pre
 substitute-pre
 normalize
+replace-port
+guided-sub-equals[PAUSE_INFUSION]
+normalize
 tautologies
-#[serial 1089]   normalization of [serial 1083]
+#[serial 1105]   normalization of [serial 1099]
 substitute-pre
 laws
 tautologies
-#[serial 1091]   normalization of [serial 1084]
+#[serial 1107]   normalization of [serial 1100]
 atomic
 normalize
 laws
 tautologies
-#[serial 1093]   normalization of [serial 1085]
+#[serial 1109]   normalization of [serial 1101]
 atomic
 tautologies
 laws
@@ -46,7 +62,7 @@ tautologies
 substitute-post
 normalize
 tautologies
-#[serial 1095]   normalization of [serial 1086]
+#[serial 1111]   normalization of [serial 1102]
 substitute-post
 substitute-post
 atomic
@@ -59,22 +75,22 @@ guided-sub-equals[rm_alarm_active]
 laws
 normalize
 tautologies
-#[serial 1032]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
+#[serial 1025]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
 normalize
 reduce
 push
-#IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1138] <<P>> -> <<P1>> in sequential composition for [serial 113
+#IoMTwin::Coordinator_Thread.echo
+#[serial 1158] <<P>> -> <<P1>> in sequential composition for [serial 115
 make-an
 substitute-pre
 laws
 tautologies
-#[serial 1139] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1137]
+#[serial 1159] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1157]
 atomic
 normalize
 laws
 tautologies
-#[serial 1140] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1137]
+#[serial 1160] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1157]
 atomic
 tautologies
 split-post
@@ -83,7 +99,7 @@ tautologies
 substitute-post
 normalize
 tautologies
-#[serial 1141] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1137]
+#[serial 1161] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1157]
 substitute-post
 substitute-post
 atomic
@@ -96,12 +112,15 @@ guided-sub-equals[po_alarm_active]
 laws
 normalize
 tautologies
-#[serial 1142] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1137]
+#[serial 1162] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1157]
 atomic
 normalize
 tautologies
 substitute-pre
 substitute-pre
+normalize
+replace-port
+guided-sub-equals[PAUSE_INFUSION]
 normalize
 tautologies
 #[serial 1033]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
