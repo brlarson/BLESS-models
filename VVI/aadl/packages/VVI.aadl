@@ -73,11 +73,11 @@ states
   power_on : initial state  --powered-up, 
     <<now = 0.0 s>>	--start with "sense"
   pace : complete state 
-      --a ventricular pace has occured in the 
+      --a ventricular pace has occurred in the 
       --previous LRL-interval milliseconds
     << PACE(now)>> 
   sense : complete state  
-      --a ventricular sense has occured in the 
+      --a non-refractory ventricular sense has occurred in the 
       --previous LRL-interval milliseconds
     << SENSE(now)>>   
   check_pace_vrp : state  
