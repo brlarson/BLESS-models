@@ -32,7 +32,7 @@ reduce
 normalize
 push
 #IoMTwin::Coordinator_Thread.echo
-#[serial 1103] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 102
+#[serial 1105] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 102
 make-an
 atomic
 normalize
@@ -44,25 +44,30 @@ replace-port
 guided-sub-equals[PAUSE_INFUSION]
 normalize
 tautologies
-#[serial 1105]   normalization of [serial 1099]
+#[serial 1107]   normalization of [serial 1101]
 substitute-pre
 laws
 tautologies
-#[serial 1107]   normalization of [serial 1100]
+#[serial 1109]   normalization of [serial 1102]
 atomic
+remove-axioms-post
 normalize
 laws
+laws
 tautologies
-#[serial 1109]   normalization of [serial 1101]
+#[serial 1111]   normalization of [serial 1103]
 atomic
-tautologies
 laws
 split-post
 tautologies
 substitute-post
 normalize
 tautologies
-#[serial 1111]   normalization of [serial 1102]
+guided-sub-equals[po_alarm_active]
+substitute-pre
+normalize
+tautologies
+#[serial 1113]   normalization of [serial 1104]
 substitute-post
 substitute-post
 atomic
@@ -76,54 +81,59 @@ laws
 normalize
 tautologies
 #[serial 1025]  <<M(run) and x>> A <<M(check_echo)>> for got_rm: run-[x]->check_echo{A};
-normalize
 reduce
 push
 #IoMTwin::Coordinator_Thread.echo
-#[serial 1158] <<P>> -> <<P1>> in sequential composition for [serial 115
+#[serial 1165] <<P>> -> <<P1>> in sequential composition for [serial 102
 make-an
+normalize
 substitute-pre
 laws
 tautologies
-#[serial 1159] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1157]
+#[serial 1166] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1025]
+remove-axioms-post
+laws
 atomic
-normalize
 laws
 tautologies
-#[serial 1160] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1157]
+#[serial 1167] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1025]
 atomic
-tautologies
+laws
 split-post
-laws
 tautologies
 substitute-post
-normalize
 tautologies
-#[serial 1161] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1157]
-substitute-post
-substitute-post
-atomic
 substitute-pre
-normalize
-split-post
-tautologies
 guided-sub-equals[rm_alarm_active]
+guided-sub-equals[RM_ALARM_ECHO]
+substitute-post
+laws
+tautologies
+#[serial 1168] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1025]
+substitute-post
+substitute-post
+atomic
+substitute-pre
+normalize
+split-post
+tautologies
 guided-sub-equals[po_alarm_active]
+guided-sub-equals[rm_alarm_active]
 laws
 normalize
 tautologies
-#[serial 1162] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1157]
+#[serial 1169] <<Q3 and P4>> S4 <<Q4>> in sequential composition for [serial 1025]
+substitute-both
+substitute-both
 atomic
 normalize
 tautologies
-substitute-pre
-substitute-pre
-normalize
 replace-port
 guided-sub-equals[PAUSE_INFUSION]
-normalize
+guided-sub-equals[pause_inf]
+laws
 tautologies
-#[serial 1033]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
+#[serial 1026]  <<M(check_echo) and x>> A <<M(run)>> for got_echo: check_echo-[x]->run{A};
 reduce
 reduce
 reduce
@@ -131,32 +141,18 @@ reduce
 tautologies
 normalize
 laws
-push
-#IoMTwin::Supervise_PCA_Thread.echo
-#[serial 1202] laws applied to [serial 119
-make-an
 normalize
+tautologies
+atomic
+tautologies
+laws
+tautologies
 now
-normalize
 tautologies
-#[serial 1203] laws applied to [serial 1197]
-tautologies
-#[serial 1204] laws applied to [serial 1199]
-atomic
-tautologies
-#[serial 1205] laws applied to [serial 1201]
+#[serial 1027]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
 atomic
 normalize
 tautologies
 laws
 normalize
-tautologies
-#[serial 1034]  <<M(check_echo) and x>> A <<M(run)>> for late_echo: check_echo-[x]->run{A};
-atomic
-now
-normalize
-laws
-tautologies
-normalize
-laws
 tautologies
