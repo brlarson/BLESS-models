@@ -48,7 +48,7 @@ system implementation SysIoMT.impl
       {Actual_Connection_Binding => (reference (network));};
     slc: port coordinator.lost_confirmation -> nurse_station.lost_confirmation
       {Actual_Connection_Binding => (reference (network));};
-  --virtual bus connection
+  --virtual bus connections
     network2pca: virtual bus access network <-> pca_pump.network_connection;
     po2network: virtual bus access network <-> pulse_oximeter.network_connection;
     rm2network: virtual bus access network <-> resp_monitor.network_connection;
@@ -63,7 +63,7 @@ system PCA_Pump
   features
     pause_infusion: in event data port BLESS_Types::Boolean 
       {BLESS::Assertion => "<< PAUSE_INFUSION >>";};
-    infused_drug: out feature Physical_Types::Fluid_Flow --abstract AADL feature modeling drug delivery
+    infused_drug: out feature Physical_Types::Fluid_Flow 
       {BLESS::Value => "<< returns quantity mlph := PUMP_RATE$() >>";};
     pause_infusion_echo: out event data port BLESS_Types::Boolean 
       {BLESS::Assertion => "<< PAUSE_INFUSION_ECHO >>";};
@@ -110,8 +110,6 @@ process implementation PCA_Pump_Process.impl
     pie1: port pct.Pause_Infusion_Echo -> pcc.pie;
     pie2: port pcc.Pause_Infusion_Echo -> pause_infusion_echo;
     brt : port bolus_request -> pct.bolus_request;
---   ifd1: feature pct.Infused_Drug -> pcc.id;
---   ifd2: feature pcc.Infused_Drug -> Infused_Drug;
   PCA_Pump_Process_impl_new_connection: port pct.pump_rate -> pump_rate;
 end PCA_Pump_Process.impl;
  
@@ -130,14 +128,11 @@ thread PCA_Pump_Thread
     BLESS::Invariant => "<< PAUSE_INFUSION implies PUMP_RATE$() = KVO_RATE_property >>";
 end PCA_Pump_Thread;
  
-  --  the drug reservoir in some PCA pumps is a hanging bag of saline into which a drug is injected
-  --  in this case the drug reservoir is a vial of concentrated drug within the PCA pump behind a locked door
 device Drug_Reservoir
   features
     drug_source: out feature Physical_Types::Fluid_Flow; --abstract AADL feature modeling drug delivery   
 end Drug_Reservoir;
 
--- the mechanical pump does the actual pumping at a rate determined by the PCA_Pump_Thread through the PCA_Pump_Process
 device Mechanical_Pump
   features
   -- physical flow of drug to patient
@@ -149,8 +144,6 @@ device Mechanical_Pump
   pump_rate : in data port IoMT_Types::Pump_Rate
     {BLESS::Value => "<< returns quantity mlph := PUMP_RATE$() >>";}; 
 end Mechanical_Pump;
-
--- PCA pump communication thread
 
 thread PCA_Pump_Communication_Thread
   features
@@ -165,13 +158,9 @@ thread PCA_Pump_Communication_Thread
     pi_echo_flow_ppct: flow path pie -> pause_infusion_echo;
 end PCA_Pump_Communication_Thread;
 
-
-
-
--- Pulse Oximeter using event data messages
 system Pulse_Oximeter
   features
-    lost_confirmation: out event port; --report to nurse's station that alarm signal to supervisor was not confirmed in time
+    lost_confirmation: out event port; 
     network_connection: requires virtual bus access Network_Bus;
     PO_Alarm: out event data port BLESS_Types::Boolean 
       {BLESS::Assertion => "<< PO_ALARM() >>";};
@@ -283,13 +272,13 @@ thread implementation Pulse_Oximeter_Thread.impl
          << INV_PO() >>
         }
       [] 
-      (hrr < mhr)~> --no need to check  sp < psp
+      (hrr < mhr)~> 
         {
          << hrr = HEART_RATE and hrr < mhr and sp = SPO2 and INV_PO() >>
         poa:=true & PO_Alarm!(true)
          << INV_PO() >>
         }
-      [] (sp < psp)~> --no need to check hrr < mhr
+      [] (sp < psp)~> 
         {
          << hrr = HEART_RATE and sp < psp and sp = SPO2 and INV_PO() >>
         poa:=true & PO_Alarm!(true)
@@ -318,8 +307,6 @@ thread implementation Pulse_Oximeter_Thread.impl
   
 end Pulse_Oximeter_Thread.impl;
   
-
--- PO Communication Thread
 thread PO_Communication_Thread
   features
     Lost_Confirmation: out event port;
@@ -344,14 +331,13 @@ device Pulse_Oximeter_Sensor
     Heart_Rate: out data port IoMT_Types::Heart_Rate;
 end Pulse_Oximeter_Sensor;
 
--- Respiration Monitor using event data messages
 system Respiration_Monitor
   features
-    Lost_Confirmation: out event port; --do we have any time limit here
+    Lost_Confirmation: out event port; 
     RM_Alarm: out event data port BLESS_Types::Boolean 
       {BLESS::Assertion => "<< RM_ALARM() >>";};
     RM_Alarm_Echo: in event data port BLESS_Types::Boolean;
-    network_connection: requires virtual bus access Network_Bus; -- no assertion on the network connection
+    network_connection: requires virtual bus access Network_Bus; 
 end Respiration_Monitor;
 
 system implementation Respiration_Monitor.impl
@@ -651,7 +637,7 @@ thread implementation Coordinator_Thread.echo
         }  --end of got_echo    
       --start timeout duration upon Pause_Infusion!, expires if Pause_Infusion_Echo not received within time limit
       late_echo: check_echo -[on dispatch timeout (Pause_Infusion  or Pause_Infusion_Echo) IoMT_Properties::PCA_Echo_Limit s ]-> run
-      { Lost_Confirmation! }
+        { Lost_Confirmation! }
   **};
 end Coordinator_Thread.echo;
   
