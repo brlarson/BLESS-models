@@ -260,66 +260,60 @@ thread implementation Pulse_Oximeter_Thread.impl
     psp~quantity percent -- programmed spo2
      << PSPO2_A: : psp  = PROGRAMMED_SPO2 >> ;
     poa~boolean := false
-      <<POA_A: : poa iff LOW_SPO2_HR() >> -- <<POA: : pao iff (LOW_HR() or LOW_SPO2()) >> 
-        
+      <<POA_A: : poa iff LOW_SPO2_HR() >> -- <<POA: : pao iff (LOW_HR() or LOW_SPO2()) >>        
   states
     start: initial state << INV_PO() >>
     run: complete state << INV_PO() >>
-    check_echo: complete state <<INV_PO() >> 
-    
+    check_echo: complete state <<INV_PO() >>     
   transitions
-    go: start -[ ]-> run
-    
+    go: start -[ ]-> run   
     got_hrr_spo2: run -[on dispatch]-> check_echo
-    {
+      {
        << INV_PO() >>
       Heart_Rate?(hrr) 
       ; << hrr = HEART_RATE and INV_PO() >>
       Spo2_Level?(sp)
        << hrr = HEART_RATE and INV_PO() and sp = SPO2 >>
       ;
-      if(hrr >= mhr and sp >= psp)~>
-      {
+      if 
+      (hrr >= mhr and sp >= psp)~>
+        {
          << hrr = HEART_RATE and hrr >= mhr and sp = SPO2 and sp >= psp and INV_PO() >>
         poa:=false & PO_Alarm!(false)
          << INV_PO() >>
-      }
-      [] (hrr < mhr)~> --no need to check  sp < psp
-      {
+        }
+      [] 
+      (hrr < mhr)~> --no need to check  sp < psp
+        {
          << hrr = HEART_RATE and hrr < mhr and sp = SPO2 and INV_PO() >>
         poa:=true & PO_Alarm!(true)
          << INV_PO() >>
-      }
+        }
       [] (sp < psp)~> --no need to check hrr < mhr
-      {
+        {
          << hrr = HEART_RATE and sp < psp and sp = SPO2 and INV_PO() >>
         poa:=true & PO_Alarm!(true)
          << INV_PO() >>
-      }
+        }
       fi
       << INV_PO() >>
-    }--end got_spo2
-    
-    
+      }  --end got_spo2    
     got_echo: check_echo -[on dispatch PO_Alarm_Echo]-> run
-    {
-       << INV_PO() and PO_Alarm_Echo@now >>
-       declare echo_val~boolean := PO_Alarm_Echo?
-         { 
-          << INV_PO() and (echo_val iff PO_Alarm_Echo) >>
-         if (echo_val iff poa)~> skip  --echo was same
+      {
+      << INV_PO() and PO_Alarm_Echo@now >>
+      declare echo_val~boolean := PO_Alarm_Echo?
+        {  << INV_PO() and (echo_val iff PO_Alarm_Echo) >>
+        if 
+          (echo_val iff poa)~> skip  --echo was same
         []
-        (not (echo_val iff poa))~> Lost_Confirmation!  --echo was different
+          (not (echo_val iff poa))~> Lost_Confirmation!  --echo was different
         fi
-         << INV_PO() >>  
-      } 
-        << INV_PO()  >>
-    }--end got_echo
-    
+        << INV_PO() >>  
+        } 
+      << INV_PO()  >>
+      }  --end got_echo  
     late_echo: check_echo -[on dispatch timeout (PO_Alarm or PO_Alarm_Echo) IoMT_Properties::PO_Echo_Limit s]-> run
-      { Lost_Confirmation!}
-    
-    
+      { Lost_Confirmation! } 
   **};
   
 end Pulse_Oximeter_Thread.impl;
@@ -407,28 +401,26 @@ thread Respiration_Monitor_Thread
     rm_alarm_echo_sink_rmt: flow sink RM_Alarm_Echo;
   properties
     Dispatch_Protocol => Timed;
-    Period => 200ms;
+    Period => 20 sec;
 end Respiration_Monitor_Thread;
   
 thread implementation Respiration_Monitor_Thread.impl
   annex BLESS
   {**
-  assert
-    <<LOW_RP: : RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE >>  
   invariant
      << RA() and MRP_A()>>    
   variables
-    rpr~quantity brpm; 
-    mrp~quantity brpm := 2.0 brpm 
+    rpr~quantity brpm; --measured respiration rate
+    mrp~quantity brpm := 2.0 brpm  --minimum respiration rate
       << MRP_A: : mrp = MINIMUM_RESPIRATION_RATE >>; 
-    rma~boolean := false
-      <<RA: : rma iff LOW_RP()>>; 
+    rma~boolean := false  --respiration monitor alarm
+      <<RA: : rma iff (RESPIRATION_RATE < MINIMUM_RESPIRATION_RATE) >>; 
   states
     start: initial state << RA() and MRP_A() >>
     run: complete state << RA() and MRP_A() >>
     check_echo:   complete state << RA() and MRP_A() >>
   transitions
-    go: start -[ ]-> run    
+    go: start -[ ]-> run {}   
     got_rp: run -[ on dispatch ]-> check_echo
       {
       RP_Rate?(rpr)
@@ -444,8 +436,7 @@ thread implementation Respiration_Monitor_Thread.impl
         rma:=true & RM_Alarm!(true) 
         << RA() and MRP_A() >> }
       fi
-      } -- end got_rp
-       
+      } -- end of got_rp    
     got_echo:  check_echo -[ on dispatch  RM_Alarm_Echo]-> run
       { << RA() and MRP_A() and RM_Alarm_Echo@now >>
       declare echo_val~boolean := RM_Alarm_Echo?
@@ -457,9 +448,8 @@ thread implementation Respiration_Monitor_Thread.impl
           << RA() and MRP_A() >> 
         } 
         << RA() and MRP_A() >>
-      }-- end got_echo
-      
-    late_echo: check_echo -[on dispatch timeout (RM_Alarm  or RM_Alarm_Echo) IoMT_Properties::RM_Echo_Limit s ]-> run
+      } -- end of got_echo   
+    late_echo: check_echo -[on dispatch timeout (RM_Alarm or RM_Alarm_Echo) IoMT_Properties::RM_Echo_Limit s ]-> run
       { Lost_Confirmation! }
   **};
 end Respiration_Monitor_Thread.impl;
