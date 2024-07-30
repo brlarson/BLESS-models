@@ -31,7 +31,7 @@ process pg_process
   mark_V: out event data port mark::VentricularlMarker;	--ventricular marker to telemetry and history
   mark_X: out event data port mark::ExtraordinaryMarker;	--extra-line marker to telemetry and history
   properties
-    	BLESS::Invariant => "<<LRL_A(now)>>";  
+    	BLESS::Invariant => "<<LRL_A(now)>>"; 
 end pg_process;
 
 process implementation pg_process.imp
@@ -39,8 +39,8 @@ process implementation pg_process.imp
 		ddd: thread sw::pacer.imp;
 		rc: thread rc::RateController.normal;   -- in modes (normal);
 -- ATR components
---		atr_rc: thread rc::RateController.atr;   -- in modes (atr_mode);
---		atr: thread group ATR::AtrialTachyResponse.imp;
+		atr_rc: thread rc::RateController.atr;   -- in modes (atr_mode);
+		atr: thread group ATR::AtrialTachyResponse.imp;
 		mkr: thread mark::Markers.imp;
 		stg: thread Rx::Settings.imp;
 	connections
@@ -52,12 +52,12 @@ process implementation pg_process.imp
 		dap: port ddd.ap -> ap; --pace atrium 
 		dvp: port ddd.vp -> vp; --pace ventricle
 		--telemetry
---		tel: port settings <-> stg.settings; --prescriptions
+		tel: port settings <-> stg.settings; --prescriptions
 		--sensors
 		xlrc: port xl -> rc.xl;
 		magrc: port magnet -> rc.mag;
---		xlatr: port xl -> atr_rc.xl;
---		magatr: port magnet -> atr_rc.mag;
+		xlatr: port xl -> atr_rc.xl;
+		magatr: port magnet -> atr_rc.mag;
 		--settings to DDD
 		lsd: port stg.lrl -> ddd.lrl; --LRLi
 		usd: port stg.url -> ddd.url; --URLi
@@ -138,26 +138,29 @@ process implementation pg_process.imp
 		mkv: port mkr.mark_V -> mark_V;
 		mkx: port mkr.mark_X -> mark_X;
 		--Atrial Tachycardia Response
---		fbad: port atr.fb -> ddd.fb;
+		fbad: port atr.fb -> ddd.fb;
+		--rc.fb now handled by mode switch from normal to atr_mode
 --    fbarc: port atr.fb -> rc.fb;
---		asda: port ddd.as -> atr.as;
---		atda: port ddd.at -> atr.at;
---		dctam: port atr.atr_detect -> mkr.atr_dct;
---		fbam: port atr.atr_fallback -> mkr.atr_fb;
---		endam: port atr.atr_end -> mkr.atr_end;
+		asda: port ddd.as -> atr.as;
+		atda: port ddd.at -> atr.at;
+		dctam: port atr.atr_detect -> mkr.atr_dct;
+		fbam: port atr.atr_fallback -> mkr.atr_fb;
+		endam: port atr.atr_end -> mkr.atr_end;
 		--rate smoothing
 		drssd: port stg.drs -> rc.drs; --down-rate smoothing
 		urssd: port stg.urs -> rc.urs; --up-rate smoothing
---		drsatr: port stg.drs -> atr_rc.drs;
---		ursatr: port stg.urs -> atr_rc.urs;
+		drsatr: port stg.drs -> atr_rc.drs;
+		ursatr: port stg.urs -> atr_rc.urs;
 		--settings
 		stngs: port settings -> stg.settings;
 		
---	modes
---		normal: initial mode;
---		atr_mode: mode;
---		start_atr: normal -[atr.atr_fallback]-> atr_mode;
---		end_atr: atr_mode -[atr.atr_end]-> normal;
+	modes
+		normal: initial mode;
+		atr_mode: mode;  --atr_mode should have property BLESS::Assertion=>{"<<FB(d,now)>>") 
+		                 --except "d", the time ATR_DETECT became true, is buried as a local variable
+		                 --in ATR::ATRcontrol.imp
+		start_atr: normal -[atr.atr_fallback]-> atr_mode;
+		end_atr: atr_mode -[atr.atr_end]-> normal;
 end pg_process.imp;
 
 end PGprocess;

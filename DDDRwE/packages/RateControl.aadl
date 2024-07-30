@@ -160,60 +160,60 @@ end RateController.normal;
 
 
 --in ATR mode
---thread implementation RateController.atr
---annex BLESS 
---{**
---	assert
---	<<AXIOM_FB_NONZERO: :FBT <> 0.0 s>>  --needed for fall_back rate division
-----Must slow pacing from URL to LRL over fallback time,  LRL until mode switch ends
---  <<FallBack_MaxCCI: dur_met~time, n~time returns time :=( if ((n-dur_met)>FBT) then LRL 
---	  else URL+(((n-dur_met)*(LRL-URL))/FBT))>>  --duration met at time dur_met
---  <<FB_MaxCCI: n~time returns time :=FallBack_MaxCCI(dur_met:dur_met, n:n)>>
---invariant <<true>>	
---variables
---  dur_met ~ time := 0.0 s;  --ATR duration met, start of ATR fallback
---states
---  start_atr : initial state;
---  atr_fallback : complete state;
---  check_atr : state;
---  done : final state;
---transitions
-----begin atrial tachycardia response fallback from URL to LRL
---ATR_RC1_init: start_atr -[ ]-> atr_fallback
---  { 
---  min_cci!(DefaultValue::Upper_Rate_Limit ms) 
---  &
---  max_cci!(DefaultValue::Lower_Rate_Limit ms)
---  &
---  atr_max_cci!(DefaultValue::Lower_Rate_Limit ms)
---  &
---  dav!(DefaultValue::AV_Delay ms)
---  &
---  dur_met:=now
---    <<dur_met=now>>
---  };  --end of RC4_start_fallback
---  
---ATR_RC5_atr_cci: atr_fallback -[on dispatch cci]-> check_atr{};
---
---ATR_RC6_continure_atr: check_atr -[(now-dur_met) > fb_time]-> atr_fallback
---  {  <<(now-dur_met) > fb_time>>
---  atr_max_cci!(lrl)
---  };  --end of RC6_continure_atr
---ATR_RC_fallback: check_atr -[(now-dur_met) <= fb_time]-> atr_fallback 
---  {  <<(now-dur_met) <= fb_time and AXIOM_FB_NONZERO()>>
---  	declare
---  	  fallback_rate ~ time := url + (((now-dur_met)*(lrl-url))/fb_time);
---    {
---      <<fallback_rate=FB_MaxCCI(now) and (now-dur_met) <= fb_time>>
---    atr_max_cci!(fallback_rate)
---      <<(now-dur_met) <= fb_time>>
---    }
---  };   --end of RC_fallback
---  
-----RCX : atr_fallback -[on dispatch stop]-> done{};
---  
---**};
---  
---end RateController.atr;
+thread implementation RateController.atr
+annex BLESS 
+{**
+	assert
+	<<AXIOM_FB_NONZERO: :FBT <> 0.0 s>>  --needed for fall_back rate division
+--Must slow pacing from URL to LRL over fallback time,  LRL until mode switch ends
+  <<FallBack_MaxCCI: dur_met~time, n~time returns time :=( if ((n-dur_met)>FBT) then LRL 
+	  else URL+(((n-dur_met)*(LRL-URL))/FBT))>>  --duration met at time dur_met
+  <<FB_MaxCCI: n~time returns time :=FallBack_MaxCCI(dur_met:dur_met, n:n)>>
+invariant <<true>>	
+variables
+  dur_met ~ time := 0.0 s;  --ATR duration met, start of ATR fallback
+states
+  start_atr : initial state;
+  atr_fallback : complete state;
+  check_atr : state;
+  done : final state;
+transitions
+--begin atrial tachycardia response fallback from URL to LRL
+ATR_RC1_init: start_atr -[ ]-> atr_fallback
+  { 
+  min_cci!(DefaultValue::Upper_Rate_Limit ms) 
+  &
+  max_cci!(DefaultValue::Lower_Rate_Limit ms)
+  &
+  atr_max_cci!(DefaultValue::Lower_Rate_Limit ms)
+  &
+  dav!(DefaultValue::AV_Delay ms)
+  &
+  dur_met:=now
+    <<dur_met=now>>
+  };  --end of RC4_start_fallback
+  
+ATR_RC5_atr_cci: atr_fallback -[on dispatch cci]-> check_atr{};
+
+ATR_RC6_continure_atr: check_atr -[(now-dur_met) > fb_time]-> atr_fallback
+  {  <<(now-dur_met) > fb_time>>
+  atr_max_cci!(lrl)
+  };  --end of RC6_continure_atr
+ATR_RC_fallback: check_atr -[(now-dur_met) <= fb_time]-> atr_fallback 
+  {  <<(now-dur_met) <= fb_time and AXIOM_FB_NONZERO()>>
+  	declare
+  	  fallback_rate ~ time := url + (((now-dur_met)*(lrl-url))/fb_time);
+    {
+      <<fallback_rate=FB_MaxCCI(now) and (now-dur_met) <= fb_time>>
+    atr_max_cci!(fallback_rate)
+      <<(now-dur_met) <= fb_time>>
+    }
+  };   --end of RC_fallback
+  
+--RCX : atr_fallback -[on dispatch stop]-> done{};
+  
+**};
+  
+end RateController.atr;
 
 end rc;

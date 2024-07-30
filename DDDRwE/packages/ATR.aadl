@@ -90,11 +90,11 @@ public
 			  {BLESS::Assertion=>"<<AS>>";};
 			at: in event port --non-refractory atrial sense above URL
 			  {BLESS::Assertion=>"<<AT>>";};
-			atr_detect: out data port flag  --ATR detection met
+			atr_detect: out event port  --ATR detection met
 			{BLESS::Assertion => "<<ATR_DETECT(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
 			{BLESS::Assertion => "<<FB_START>>";};
-			atr_end: out data port flag  --resume DDD; marker ATR-End
+			atr_end: out event port  --resume DDD; marker ATR-End
 			{BLESS::Assertion => "<<ATR_END(now)>>";};
 
 	end AtrialTachyResponse;
@@ -122,81 +122,106 @@ public
 			enable: in data port flag {BLESS::Assertion => "<<ATR_ENABLE>>";};
 			as: in event port {BLESS::Assertion => "<<AS>>";};
 			at: in event port {BLESS::Assertion => "<<AT>>";};
-			atr_detect: out data port flag {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
-			atr_end: out data port flag {BLESS::Assertion => "<<ATR_END(now)>>";};
+			atr_detect: out event port {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
+			atr_end: out event port {BLESS::Assertion => "<<ATR_END(now)>>";};
 		properties
 			Dispatch_Protocol => Sporadic;
 --    BLESS::Invariant => "<<AS_COUNT(now)>>"; 
 	end AtCounter;
 
+--this behavior adapted from project PO-SA (pulse oximeter smart alarm) SPA::SpO2AverageThread.imp
 	thread implementation AtCounter.imp
 		annex BLESS 
 {**
-  invariant  <<true>>
+	assert
+	  <<AXIOM_LB1: :lb<(lb+1)>>  --used to contract universal quantification
+  invariant 
+    <<INV_ATC: :AS_TIMESTAMP() and AT_HISTORY() and AT_COUNT() >>
   variables
+    --use circular buffer, actual loactions lb mod 7 to ub mod 7
+    ub~quantity whole :=0;  --location of most recent AS timestamp and AT history
+    lb~quantity whole :=0;  --location of oldest sample in window
     -- timestamps for the previous 7 AS (#1 is oldest; #7 is newest)
-    asTimestamp ~ array [1 .. 7] of time
-      <<AS_TIMESTAMP: : all i ~ quantity whole in 1 .. 7 are AS@asTimestamp[i] >>
+    asTimestamp ~ array [0 .. 6] of time := 0.0 ms
+      <<AS_TIMESTAMP: : all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i] >>
     --history whether the previous 7 atrial senses was faster than upper rate limit
-    atHistory ~ array [1 .. 7] of boolean
-      <<AT_HISTORY: : all i ~ quantity whole in 1 .. 7 are atHistory[i] iff AT@asTimestamp[i] >>
+    atHistory ~ array [0 .. 6] of boolean := false
+      <<AT_HISTORY: : all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i] >>
     --count of how many of the previous seven AS were also AT
     c ~ quantity whole:=0  --count of AT for last seven AS
-      <<AT_COUNT: n ~ time : c = (numberof t~time in asTimestamp[1]..n that AT@t) >>;
-    --counter to determene when at lease seven AS have been received  
-    fill_count ~ quantity whole := 0
-      <<FILLING: : all i ~ quantity whole in 1 .. fill_count are ( AS@asTimestamp[i] and atHistory[i] iff AT@asTimestamp[i] ) >>
+      <<AT_COUNT: : c = (numberof j ~ quantity whole
+      	in lb .. (ub - 1) that atHistory[j]) >>;
+    numSamplesInWindow~quantity whole := 0;
+    oldestSample~quantity whole := 0;
   states
-    start: initial state <<c=0 and fill_count=0 >>
+    start: initial state 
+      <<(numSamplesInWindow=0) and (ub=0) and (oldestSample=0) and (lb=0) and (c=0)>>;
     --fill the arrays with 7 samples
     fill : complete state 
-      << FILLING() >>
+      << (ub-lb)<7 and INV_ATC() >>
     check_fill : state
-      << as@now and FILLING() >>
+      << as@now and INV_ATC() >>
     run : complete state 
-      << AS_TIMESTAMP() and AT_HISTORY() >> 
-    err : final state  --error occurred
+      << (ub-lb)=7 and INV_ATC() >>
+     err : final state  --error occurred
   transitions
     atc_init: start -[ ]-> fill
-      {
-       atr_detect!(false) & atr_end!(false) 
-      } 
     atc_fill: fill -[on dispatch as]-> check_fill
-    atc_full: check_fill -[ fill_count = 7 ]-> run
-    atc_serb: check_fill -[ fill_count > 7 ]-> err  --for Serban's Theorem
-    atc_filling: check_fill -[ fill_count < 7 ]-> fill
-      {  --still filling
-      | asTimestamp[fill_count+1], atHistory[fill_count + 1], fill_count := now, at, fill_count+1 |
+    atc_full: check_fill -[ (ub-lb)=7 ]-> run
+    atc_serb: check_fill -[ (ub-lb)>7 ]-> err  --for Serban's Theorem (should never occur)
+    atc_filling: check_fill -[ (ub-lb)<7 ]-> fill  --still filling
+      {  << (ub-lb)<7 and INV_ATC() and as@now >>
+      	{
+      	  << (ub-lb)<7 and INV_ATC() and as@now >>
+    	  --store current timestamp of as
+      	asTimestamp[ub mod 7] := now
+      	  << AS_TIMESTAMP() and asTimestamp[ub mod 7]=now and as@now >>
+      	&  --update total number of AT in window
+      	c := c + (if at then 1 else 0)
+      	  << c = (if at then 1 else 0) + (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]) >>
+      	&  --store whether AT happened
+      	atHistory[ub mod 7] := at
+      	  << (atHistory[ub mod 7] iff at) and AT_HISTORY() >>
+      	}
+				<< (all i ~ quantity whole in lb .. ub are AS@asTimestamp[i]) and
+				   (all i ~ quantity whole in lb .. ub are atHistory[i] iff AT@asTimestamp[i]) and
+				   (c = (numberof j ~ quantity whole in lb .. ub that atHistory[j]))	>>
+				;  --increment upper bound
+				ub := ub+1
+				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i]) and
+				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i]) and
+				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]))	>>
+				
       }
     atc_run: run -[ on dispatch as ]-> run
-      {  --have 7 samples
-      declare
-        tempTimestamp  ~ array [1 .. 7] of time
-        tempHistory ~ array [1 .. 7] of boolean
-      {
-      forall j in 1 .. 6 
-        { | tempTimestamp[j], tempHistory[j] := asTimestamp[j+1], atHistory[j+1] | }
-       <<  (all i ~ quantity whole in 1 .. 6 are AS@tempTimestamp[i]) and 
-            (all i ~ quantity whole in 1 .. 6 are tempHistory[i] iff AT@tempTimestamp[i]) >>  
-      ;
-      --put in new values
-      | tempHistory[7], tempTimestamp[7] := at, now |
-       <<  (all i ~ quantity whole in 1 .. 7 are AS@tempTimestamp[i]) and 
-            (all i ~ quantity whole in 1 .. 7 are tempHistory[i] iff AT@tempTimestamp[i]) >>  
-      ;      
-      -- add to count if AT and subtract last atHistory
-      c := c + (if at then 1 else 0) + (if atHistory[1] then -1 else 0)
-      ;
-      --copy back
-      | atHistory, asTimestamp := tempHistory, tempTimestamp |
+      {  << INV_ATC() and as@now and AXIOM_LB1()>>
+      	{
+      	  << (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i]) >>
+    	  --store current timestamp of as
+      	asTimestamp[ub mod 7] := now
+      	  << (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i])
+      	     and asTimestamp[ub mod 7]=now and as@now >>
+      	&  --update total number of AT in window
+      	  << c = (if atHistory[lb] then 1 else 0) + 
+      	    (numberof j ~ quantity whole in (lb+1) .. (ub - 1) that atHistory[j]) >>
+      	c := (c + (if at then 1 else 0)) - (if atHistory[lb] then 1 else 0)
+      	  << c = (if at then 1 else 0) + (numberof j ~ quantity whole
+      	    in (lb+1) .. (ub - 1) that atHistory[j]) >>
+      	&  --store whether AT happened
+      	  << AT_HISTORY() >>
+      	atHistory[ub mod 7] := at
+      	  << (atHistory[ub mod 7] iff at) and AT_HISTORY() and AXIOM_LB1() >>
+      	}
+				<< (all i ~ quantity whole in (lb+1) .. ub are AS@asTimestamp[i]) and
+				   (all i ~ quantity whole in (lb+1) .. ub are atHistory[i] iff AT@asTimestamp[i]) and
+				   (c = (numberof j ~ quantity whole in (lb+1) .. ub that atHistory[j]))	>>
+				;  --increment upper bound, and lower bound
+				| ub, lb := ub+1, lb+1 |
+				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i]) and
+				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i]) and
+				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]))	>>
+				
       }
-      ;
-      --ATR detected?
-      atr_detect!(c>=5)
-      ;
-      --ATR ended?
-      atr_end!(c<=3)      	     
-      }  --end of atc_run
 **};
 	end AtCounter.imp;
 
@@ -208,9 +233,9 @@ public
 			  {BLESS::Value => "<<returns quantity whole := DUR >>";}; 
 			fb: out data port flag --fall-back to LRL, ignore A-channel
 			  {BLESS::Assertion => "<<FB>>";};
-			atr_detect: in event data port flag --ATR detection met
+			atr_detect: in event port --ATR detection met
 			  {BLESS::Assertion => "<<ATR_DETECT(now)>>";};
-			atr_end : in event  data port flag 
+			atr_end : in event port 
 			  {BLESS::Assertion => "<<ATR_END(now)>>";};
 			atr_fallback: out event port --start fall-back to VVI; marker ATR-FB
 			  {BLESS::Assertion => "<<FB_START>>";};
