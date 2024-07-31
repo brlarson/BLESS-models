@@ -1,169 +1,176 @@
-#atcounter.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.4
+#  at Tue Jul 30 22:23:56 CDT 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/DDDRwE/proof-scripts/subscripts/atcounter.ps
 push
 sort-by-component[ATR::AtCounter.imp]
-#[serial 1020] <<M(wait)>> -> <<I>> from invariant I when complete state wait has Assertion <<M(wait)>> in its definition
+#ATR::AtCounter.imp
+#[serial 1003] <<M(run)>> -> <<I>> from invariant I when complete state run has Assertion <<M(run)>> in its definitio
 make-an
+substitute-pre
+tautologies
+#[serial 1004] <<M(fill)>> -> <<I>> from invariant I when complete state fill has Assertion <<M(fill)>> in its definition.
+substitute-pre
 normalize
-axioms
-#[serial 1021] <<M(go)>> -> <<I>> from invariant I when complete state go has Assertion <<M(go)>> in its definition.
-normalize
-axioms
-#[serial 1022] Serban's Theorem:  disjunction of execute conditions leaving execution state check_wait, <<M(check_wait)>> -> <<e1 or e2 or . . . en>>
-normalize
-laws
-axioms
-#[serial 1023] Serban's Theorem:  disjunction of execute conditions leaving execution state check_go, <<M(check_go)>> -> <<e1 or e2 or . . . en>>
-normalize
-laws
-axioms
-#[serial 1024] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
-axioms
-#[serial 1025]  <<M(start)>> -> <<M(wait)>> for dc_begin:start-[ ]->wait{};
-axioms
-#[serial 1026]  <<M(wait) and x>> -> <<M(check_wait)>> for dc_was:wait-[x]->check_wait{};
+tautologies
+#[serial 1005] Serban's Theorem:  disjunction of execute conditions leaving execution state start, <<M(start)>> -> <<e1 or e2 or . . . en>>
+tautologies
+#[serial 1006] Serban's Theorem:  disjunction of execute conditions leaving execution state check_fill, <<M(check_fill)>> -> <<e1 or e2 or . . . en>>
 normalize
 laws
-axioms
-#[serial 1027]  <<M(check_wait) and x>> A <<M(wait)>> for dc_wnen:check_wait-[x]->wait{A};
+tautologies
+#[serial 1007]  <<M(start)>> -> <<M(fill)>> for atc_init: start-[ ]->fill{};
+normalize
+substitute-post
+substitute-post
+guided-sub-equals[ub]
+guided-sub-equals[lb]
+normalize
+laws
+laws
+quant
+normalize
+laws
+tautologies
+#[serial 1008]  <<M(fill) and x>> A <<M(check_fill)>> for atc_fill: fill-[x]->check_fill{A};
 reduce
-atomic
-normalize
-laws
-now
-??
-axioms
-#[serial 1028]  <<M(check_wait) and x>> A <<M(go)>> for dc_wen:check_wait-[x]->go{A};
-reduce
-atomic
-laws
-normalize
-laws
-axioms
-normalize
 push
 #ATR::AtCounter.imp
-#[serial 1179] Law of And-Simplification:  P and true is P [serial 1168
+#[serial 1228] <<P>> -> <<P1>> in sequential composition for [serial 100
 make-an
-split@
 normalize
-now
 laws
-axioms
-#[serial 1180] Law of And-Simplification:  P and true is P [serial 1170]
-now
-laws
-axioms
-#[serial 1182]   normalization of [serial 1176]
-split@
-normalize
-axioms
-#[serial 1184]   normalization of [serial 1177]
+replace-port
+tautologies
+#[serial 1229] <<Q5>> -> <<Q>> in sequential composition for [serial 1008]
 substitute-post
 substitute-post
 normalize
+tautologies
+#[serial 1230] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1008]
+atomic
+replace-port
+laws
+laws
+normalize
+laws
+tautologies
+#[serial 1231] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1008]
+atomic
+normalize
+split-post
+tautologies
+guided-sub-equals[asTimestamp[ub mod 7 ]]
+replace-port
+now
+laws
+normalize
+tautologies
+#[serial 1232] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1008]
+atomic
+substitute-pre
 laws
 normalize
 split-post
-push
-#ATR::AtCounter.imp
-#[serial 1215] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213
-make-an
-guided-sub-equals[et]
-split@
-laws
-axioms
-#[serial 1216] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
-guided-sub-equals[last_at]
-axioms
-#[serial 1217] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
-guided-sub-equals[last_at]
-guided-sub-equals[et]
+tautologies
+substitute-pre
+normalize
 guided-sub-equals[c]
-counting
-axioms
-#[serial 1218] Sequent Composition: if A->B and A->C and A->D then A->(B and C and D) [serial 1213]
-guided-sub-equals[last_at]
-laws
-normalize
-axioms
-#[serial 1186]   normalization of [serial 1178]
-??
-guided-sub-equals[et]
-now
-guided-sub-equals[atCount]
-counting
-now
-axioms
-#[serial 1029]  <<M(go) and x>> -> <<M(check_go)>> for dc_gas:go-[x]->check_go{};
-normalize
-axioms
-#[serial 1030]  <<M(check_go) and x>> A <<M(wait)>> for dc_gnen:check_go-[x]->wait{A};
-reduce
-atomic
 normalize
 laws
+tautologies
+#[serial 1233] <<Q3 and P4>> S4 <<Q4 and P5>> in sequential composition for [serial 1008]
+substitute-pre
 normalize
-axioms
-now
-axioms
-??
-axioms
-#[serial 1031]  <<M(check_go) and x>> A <<M(go)>> for dc_ggo:check_go-[x]->go{A};
-reduce
-axioms
 atomic
+qtiming
+tautologies
+#[serial 1234] <<Q4 and P5>> S5 <<Q5>> in sequential composition for [serial 1008]
+atomic
+normalize
+tautologies
+#[serial 1009]  <<M(check_fill) and x>> -> <<M(run)>> for atc_full: check_fill-[x]->run{};
+normalize
+tautologies
+#[serial 1010]  <<M(check_fill) and x>> -> <<M(err)>> for atc_serb: check_fill-[x]->err{};
+tautologies
+#[serial 1011]  <<M(check_fill) and x>> -> <<M(fill)>> for atc_filling: check_fill-[x]->fill{};
+normalize
+tautologies
+#[serial 1012]  <<M(run) and x>> A <<M(run)>> for atc_run: run-[x]->run{A};
+reduce
 normalize
 laws
 normalize
 push
 #ATR::AtCounter.imp
-#[serial 1294]   normalization of [serial 1287
+#[serial 1305]   normalization of [serial 129
 make-an
-substitute-both
+substitute-post
+substitute-post
+laws
+normalize
+tautologies
+#[serial 1307]   normalization of [serial 1297]
+atomic
+guided-sub-equals[c]
+normalize
+split-post
+tautologies
+elim-subtract
+normalize
+laws
+tautologies
+#[serial 1309]   normalization of [serial 1298]
+atomic
+substitute-post
+laws
+normalize
+replace-port
+laws
+laws
+laws
+tautologies
+#[serial 1311]   normalization of [serial 1299]
+atomic
+split-post
+tautologies
+guided-sub-equals[asTimestamp[ub mod 7 ]]
+replace-port
+now
+laws
+normalize
+tautologies
+#[serial 1313]   normalization of [serial 1300]
+atomic
 substitute-pre
 normalize
 laws
 normalize
 split-post
-axioms
-counting
+tautologies
+guided-sub-equals[c]
 normalize
-axioms
-#[serial 1314] Law of And-Simplification:  P and true is P [serial 1310]
-dist^
+qtiming
+laws
+tautologies
+#[serial 1315]   normalization of [serial 1301]
+atomic
+normalize
+laws
+normalize
+tautologies
+#[serial 1324]   normalization of [serial 1316]
+qtiming
+substitute-pre
+substitute-pre
 laws
 normalize
 split-post
-axioms
-now
-axioms
-#[serial 1315] Law of And-Simplification:  P and true is P [serial 1311]
-split-post
-axioms
-now
-laws
-axioms
-#[serial 1318]   normalization of [serial 1309]
-dist^
-laws
+tautologies
+replace-port
+tautologies
+qtiming
+tautologies
 normalize
-axioms
-#[serial 1320]   normalization of [serial 1312]
-substitute-post
-substitute-both
-normalize
-laws
-normalize
-guided-sub-equals[last_at]
-laws
-normalize
-laws
-split-post
-axioms
-guided-sub-equals[now]
-axioms
-#[serial 1322]   normalization of [serial 1313]
-now
-??
-guided-sub-equals[atCount]
-axioms
+qtiming
+tautologies

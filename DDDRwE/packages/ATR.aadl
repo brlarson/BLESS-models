@@ -143,83 +143,91 @@ public
     lb~quantity whole :=0;  --location of oldest sample in window
     -- timestamps for the previous 7 AS (#1 is oldest; #7 is newest)
     asTimestamp ~ array [0 .. 6] of time := 0.0 ms
-      <<AS_TIMESTAMP: : all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i] >>
+      <<AS_TIMESTAMP: : all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i mod 7] >>
     --history whether the previous 7 atrial senses was faster than upper rate limit
     atHistory ~ array [0 .. 6] of boolean := false
-      <<AT_HISTORY: : all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i] >>
+      <<AT_HISTORY: : all i ~ quantity whole in lb .. (ub - 1) are atHistory[i mod 7] iff AT@asTimestamp[i mod 7] >>
     --count of how many of the previous seven AS were also AT
     c ~ quantity whole:=0  --count of AT for last seven AS
       <<AT_COUNT: : c = (numberof j ~ quantity whole
-      	in lb .. (ub - 1) that atHistory[j]) >>;
+      	in lb .. (ub - 1) that atHistory[j mod 7]) >>;
     numSamplesInWindow~quantity whole := 0;
     oldestSample~quantity whole := 0;
   states
     start: initial state 
-      <<(numSamplesInWindow=0) and (ub=0) and (oldestSample=0) and (lb=0) and (c=0)>>;
+      <<(numSamplesInWindow=0) and (ub=0) and (oldestSample=0) and (lb=0) and (c=0) and (0<7)>>;
     --fill the arrays with 7 samples
     fill : complete state 
-      << (ub-lb)<7 and INV_ATC() >>
+      << INV_ATC() and (ub-lb)<7 >>
     check_fill : state
-      << as@now and INV_ATC() >>
+      << INV_ATC() >>
     run : complete state 
       << (ub-lb)=7 and INV_ATC() >>
      err : final state  --error occurred
   transitions
     atc_init: start -[ ]-> fill
     atc_fill: fill -[on dispatch as]-> check_fill
+      {  << (ub-lb)<7 and INV_ATC() and as@now >>
+     	  --store current timestamp of as
+      	asTimestamp[ub mod 7] := now
+      	  << asTimestamp[ub mod 7]=now and AS@asTimestamp[ub mod 7] and INV_ATC() and as@now >>
+      	; --store whether AT happened
+      	atHistory[ub mod 7] := at
+      	  << (atHistory[ub mod 7] iff AT@asTimestamp[ub mod 7]) and 
+             asTimestamp[ub mod 7]=now and AS@asTimestamp[ub mod 7] and INV_ATC() and as@now >>
+      	;  --update total number of AT in window
+      	c := c + (if atHistory[ub mod 7] then 1 else 0)
+      	  << c = (if atHistory[ub mod 7] then 1 else 0) + 
+      	     (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j mod 7]) and 
+      	     (atHistory[ub mod 7] iff AT@asTimestamp[ub mod 7]) and 
+             asTimestamp[ub mod 7]=now and AS@asTimestamp[ub mod 7] and 
+             AS_TIMESTAMP() and AT_HISTORY() and as@now >>
+        ; skip
+				<< (all i ~ quantity whole in lb .. ub are AS@asTimestamp[i mod 7]) and
+				   (all i ~ quantity whole in lb .. ub are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+				   (c = (numberof j ~ quantity whole in lb .. ub that atHistory[j mod 7]))	>>
+				;  --increment upper bound
+				ub := ub+1
+				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i mod 7]) and
+				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j mod 7]))	>>
+				
+      }
     atc_full: check_fill -[ (ub-lb)=7 ]-> run
     atc_serb: check_fill -[ (ub-lb)>7 ]-> err  --for Serban's Theorem (should never occur)
     atc_filling: check_fill -[ (ub-lb)<7 ]-> fill  --still filling
-      {  << (ub-lb)<7 and INV_ATC() and as@now >>
-      	{
-      	  << (ub-lb)<7 and INV_ATC() and as@now >>
-    	  --store current timestamp of as
-      	asTimestamp[ub mod 7] := now
-      	  << AS_TIMESTAMP() and asTimestamp[ub mod 7]=now and as@now >>
-      	&  --update total number of AT in window
-      	c := c + (if at then 1 else 0)
-      	  << c = (if at then 1 else 0) + (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]) >>
-      	&  --store whether AT happened
-      	atHistory[ub mod 7] := at
-      	  << (atHistory[ub mod 7] iff at) and AT_HISTORY() >>
-      	}
-				<< (all i ~ quantity whole in lb .. ub are AS@asTimestamp[i]) and
-				   (all i ~ quantity whole in lb .. ub are atHistory[i] iff AT@asTimestamp[i]) and
-				   (c = (numberof j ~ quantity whole in lb .. ub that atHistory[j]))	>>
-				;  --increment upper bound
-				ub := ub+1
-				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i]) and
-				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i]) and
-				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]))	>>
-				
-      }
     atc_run: run -[ on dispatch as ]-> run
-      {  << INV_ATC() and as@now and AXIOM_LB1()>>
-      	{
-      	  << (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i]) >>
+      {  
+      	<<as@now and (ub-lb)=7 and --get ready to remove element "lb"
+      	 (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i mod 7]) and AS@asTimestamp[lb mod 7] and
+      	 (all i ~ quantity whole in (lb+1) .. (ub - 1) are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+      	 (atHistory[lb mod 7] iff AT@asTimestamp[lb mod 7]) and
+      	 (c = (if atHistory[lb mod 7] then 1 else 0) + (numberof j ~ quantity whole in (lb+1) .. (ub - 1) that atHistory[j mod 7]))
+      	 >>
+      	 --subtract oldest AT from count
+      	 c := c - (if atHistory[lb mod 7] then 1 else 0)
+        ;	<<LB: : as@now and (ub-lb)=7 and  --remove element "lb"
+      	  (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i mod 7]) and
+      	  (all i ~ quantity whole in (lb+1) .. (ub - 1) are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+      	  (c = (numberof j ~ quantity whole in (lb+1) .. (ub - 1) that atHistory[j mod 7]))
+      	  >>
     	  --store current timestamp of as
       	asTimestamp[ub mod 7] := now
-      	  << (all i ~ quantity whole in (lb+1) .. (ub - 1) are AS@asTimestamp[i])
-      	     and asTimestamp[ub mod 7]=now and as@now >>
-      	&  --update total number of AT in window
-      	  << c = (if atHistory[lb] then 1 else 0) + 
-      	    (numberof j ~ quantity whole in (lb+1) .. (ub - 1) that atHistory[j]) >>
-      	c := (c + (if at then 1 else 0)) - (if atHistory[lb] then 1 else 0)
-      	  << c = (if at then 1 else 0) + (numberof j ~ quantity whole
-      	    in (lb+1) .. (ub - 1) that atHistory[j]) >>
-      	&  --store whether AT happened
-      	  << AT_HISTORY() >>
+      	; << LB() and asTimestamp[ub mod 7]=now and AS@asTimestamp[ub mod 7] >>    
+        --store whether AT happened
       	atHistory[ub mod 7] := at
-      	  << (atHistory[ub mod 7] iff at) and AT_HISTORY() and AXIOM_LB1() >>
-      	}
-				<< (all i ~ quantity whole in (lb+1) .. ub are AS@asTimestamp[i]) and
-				   (all i ~ quantity whole in (lb+1) .. ub are atHistory[i] iff AT@asTimestamp[i]) and
-				   (c = (numberof j ~ quantity whole in (lb+1) .. ub that atHistory[j]))	>>
+      	; << LB() and asTimestamp[ub mod 7]=now and AS@asTimestamp[ub mod 7] and
+      	     (atHistory[ub mod 7] iff AT@asTimestamp[ub mod 7]) >> 
+        -- add newest AT to count
+      	c := c + (if atHistory[ub mod 7] then 1 else 0)
+				  << (all i ~ quantity whole in (lb+1) .. ub are AS@asTimestamp[i mod 7]) and  (ub-lb)=7 and
+				   (all i ~ quantity whole in (lb+1) .. ub are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+				   (c = (numberof j ~ quantity whole in (lb+1) .. ub that atHistory[j mod 7]))	>>
 				;  --increment upper bound, and lower bound
 				| ub, lb := ub+1, lb+1 |
-				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i]) and
-				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i] iff AT@asTimestamp[i]) and
-				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j]))	>>
+				<< (all i ~ quantity whole in lb .. (ub - 1) are AS@asTimestamp[i mod 7]) and  (ub-lb)=7 and
+				   (all i ~ quantity whole in lb .. (ub - 1) are atHistory[i mod 7] iff AT@asTimestamp[i mod 7]) and
+				   (c = (numberof j ~ quantity whole in lb .. (ub - 1) that atHistory[j mod 7]))	>>
 				
       }
 **};
