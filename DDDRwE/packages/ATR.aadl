@@ -11,71 +11,6 @@ public
 	def DUR~quantity whole  --When in ATR Duration, the PG shall delay a programmed number of cardiac 
 --   cycles before entering Fallback.
 
--- 5.6 Atrial Tachycardia Response (ATR)
--- The Atrial Tachycardia Response prevents long term pacing of a patient at 
--- unacceptably high rates during atrial tachycardia. When Atrial Tachycardia 
--- Response is enabled, the pulse generator shall declare an atrial tachycardia 
--- if the intrinsic atrial rate exceeds the URL for a sufficient amount of time.
-
--- 5.6.1 Atrial Tachycardia Detection
--- The atrial tachycardia (AT) detection algorithm determines onset and cessation
---   of atrial tachycardia.
--- 1. AT onset shall be detected when the intervals between atrial senses are 
---   predominately, but not exclusively, faster than URL.
--- 2. AT cessation shall be detected when the intervals between atrial senses are 
---   mostly, but not exclusively, SLOWER than URL.
--- 3. The detection period shall be short enough so ATR therapy is not unnessarily 
---   delayed nor continued.
--- 4. The detection period shall be long enough that occasional premature atrial 
---   contractions do not cause unnecessary ATR therapy, nor cease necessary ATR 
---   therapy upon occasional slow beats.	
-
--- ATR_DETECT interprets 5.6.1.1 that "predominantly" means at least 5 of the last 7
--- atrial senses had less then the Upper Ralte Limit Interval since the previous atrial sense
--- Atrial senses faster than URL are considered "AT" atrial tachycrdia
-<<ATR_DETECT: x~time :  --at least 5 of 7 A-events were AT
-  exists s~time which s<x that  --there is an earlier time s
-   ((7=(numberof t~time in s..x that AS@t))  --seven atrial senses
-    and (5<=(numberof t~time in s..x that (AS@t and AT@t))))>>  --five or more were faster than URL
- 
--- ATR_END interprets 5.6.1.2 as 3 or fewer of the previous 7 atrial senses were AT    
-<<ATR_END: x~time :  --at most 3 of 7 A-events were AT
-  exists s~time which s<x that  --there is an earlier time s
-   (7 = (numberof t~time in s..x that AS@t)  --seven atrial senses
-    and 3 >= (numberof t~time in s..x that (AS@t and AT@t)))>>  --three or fewer were faster than URL
-
-
--- 5.6.2 ATR Duration
--- ATR Duration works as follows:
--- 1. When atrial tachycardia is detected, the ATR algorithm shall enter an 
---   ATR Duration state.
--- 2. When in ATR Duration, the PG shall delay a programmed number of cardiac 
---   cycles before entering Fallback.
--- 3. The Duration delay shall be terminated immediately and Fallback shall 
---   be avoided if, during the Duration delay, the ATR detection algorithm 
---   determines that atrial tachycardia is over.
-<<ATR_DURATION: d~time, x~time:  --wait to be sure a-tachy continues
-  ATR_DETECT(d) and  --detection met at time d
-  (DUR > (numberof t~time in d..x that AS@t))  --cc since then is less than needed for fall-back
-  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
- 
--- 5.6.3 ATR Fallback
--- If the atrial tachycardia condition exists after the ATR Duration delay 
---   is over, the following shall occur:
--- 1. The PG enters a Fallback state and switches to a VVIR Fallback Mode.
--- 2. The pacing rate is dropped to the lower rate limit. The fallback time is 
---   the total time required to drop the rate to the LRL.
--- 3. During Fallback, if the ATR detection algorithm determines that atrial 
---   tachycardia is over, the following shall occur:
---     Fallback is terminated immediately
---     The mode is switched back to normal
--- 4. ATR-related mode switches shall always be synchronized to a ventricular 
---   paced or sensed event. 
-<<FB: d~time, x~time : 
-  ATR_DETECT(d) and  --detection met at time d
-  (DUR<=(numberof t~time in d..x that AS@t))  --cc since then is more than needed for fall-back
-  and  (all t2~time in d..x are not ATR_END(t2)) >>  --not ended ATR since then
-
 		
 	**};
 
@@ -281,6 +216,7 @@ variables
   duration_count ~ quantity whole := 0 --number of cardiac cycles since detection
     <<DC: x~time returns quantity whole := (numberof t~time in detection_time .. x that AS@t ) >>
   detection_time ~ time := 0.0 ms
+    <<DETECT_TIME: : detection_time = DT >>
   
 states
   start : initial state 
