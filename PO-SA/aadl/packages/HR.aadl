@@ -55,8 +55,8 @@ annex BLESS
     fail : final state;  --error termination
   transitions
     hrtt0: start-[ ]->fill
-      {|nts',heart_rate_store',hr_nxt',num_samples' := 
-    	        nts,heart_rate_store,hr_nxt,num_samples|};
+--      {|nts',heart_rate_store',hr_nxt',num_samples' := 
+--    	        nts,heart_rate_store,hr_nxt,num_samples|};
     hrtt1: fill-[on dispatch]->check
       {
         <<INV_HR() and (num_samples<#PulseOx_Properties::Num_Trending_Samples) and AXIOM_HRT() >>
@@ -104,9 +104,9 @@ annex BLESS
         are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)) >>
       };
     hrtt2a: check-[num_samples<#PulseOx_Properties::Num_Trending_Samples]->fill
-       {|nts',heart_rate_store',hr_nxt',num_samples':=nts,heart_rate_store,hr_nxt,num_samples|};
+--       {|nts',heart_rate_store',hr_nxt',num_samples':=nts,heart_rate_store,hr_nxt,num_samples|};
     hrtt2b: check-[num_samples=#PulseOx_Properties::Num_Trending_Samples]->run
-       {|nts',heart_rate_store',hr_nxt',num_samples':=nts,heart_rate_store,hr_nxt,num_samples|};
+--       {|nts',heart_rate_store',hr_nxt',num_samples':=nts,heart_rate_store,hr_nxt,num_samples|};
     hrtt2c: check-[num_samples>#PulseOx_Properties::Num_Trending_Samples]->fail{};
     hrtt3: run-[on dispatch]->run
       {
@@ -156,12 +156,11 @@ annex BLESS
       <<(all i~quantity whole in 1 ..num_samples 
       	  are heart_rate_store[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))
          and num_samples=#PulseOx_Properties::Num_Trending_Samples >>   	
-      ;
-      |heart_rate_store',num_samples':=heart_rate_store,num_samples|
-      <<(all i~quantity whole in 1 ..num_samples 
-      	  are heart_rate_store[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))
-         and num_samples'=#PulseOx_Properties::Num_Trending_Samples >>   	
-
+--      ;
+--      |heart_rate_store',num_samples':=heart_rate_store,num_samples|
+--      <<(all i~quantity whole in 1 ..num_samples 
+--      	  are heart_rate_store[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 Hz else HEART_RATE^(1-i)))
+--         and num_samples'=#PulseOx_Properties::Num_Trending_Samples >>   	
       };
 --    hrtt4: fill,run-[on dispatch stop]->halt{};  
 **};

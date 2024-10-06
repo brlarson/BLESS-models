@@ -52,7 +52,8 @@ annex BLESS
     halt : final state;  --normal termination
     fail : final state;  --error termination
   transitions
-    sptt0: start-[ ]->loading{num_samples' := num_samples};
+    sptt0: start-[ ]->loading
+--      {num_samples' := num_samples};
     sptt1: loading-[on dispatch]->check
       {
         <<SpO2_INV() and (num_samples < #PulseOx_Properties::Num_Trending_Samples)
@@ -102,9 +103,9 @@ annex BLESS
       <<all i~quantity whole in 1 ..num_samples are spo2_a[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))>>
       };
     sptt2a: check-[num_samples<#PulseOx_Properties::Num_Trending_Samples]->loading
-      {|spo2_a',num_samples':=spo2_a,num_samples|};
+--      {|spo2_a',num_samples':=spo2_a,num_samples|};
     sptt2b: check-[num_samples=#PulseOx_Properties::Num_Trending_Samples]->run
-      {|spo2_a',num_samples':=spo2_a,num_samples|};
+--      {|spo2_a',num_samples':=spo2_a,num_samples|};
     sptt2c: check-[num_samples>#PulseOx_Properties::Num_Trending_Samples]->fail{};
     sptt3: run-[on dispatch]->run
       {
@@ -147,23 +148,23 @@ annex BLESS
           num_samples=#PulseOx_Properties::Num_Trending_Samples and
           (all i~quantity whole in 2 ..num_samples 
           	 are spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))>>
-      ;
-      forall i in 1 ..num_samples
-        {
-          <<spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
-            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
-        spo2_a[i]':=spo2_nxt[i] --copy back
-          <<spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
-            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
-        }
-      <<(all i~quantity whole in 1 ..num_samples 
-      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
-         and num_samples=#PulseOx_Properties::Num_Trending_Samples >> 
-      ;
-      num_samples':=num_samples  	
-      <<(all i~quantity whole in 1 ..num_samples 
-      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
-         and num_samples'=#PulseOx_Properties::Num_Trending_Samples>> 
+--      ;
+--      forall i in 1 ..num_samples
+--        {
+--          <<spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
+--            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
+--        spo2_a[i]':=spo2_nxt[i] --copy back
+--          <<spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
+--            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
+--        }
+--      <<(all i~quantity whole in 1 ..num_samples 
+--      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
+--         and num_samples=#PulseOx_Properties::Num_Trending_Samples >> 
+--      ;
+--      num_samples':=num_samples  	
+--      <<(all i~quantity whole in 1 ..num_samples 
+--      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
+--         and num_samples'=#PulseOx_Properties::Num_Trending_Samples>> 
       };
  --   sptt4: loading,run-[on dispatch stop]->halt{};    
 **};

@@ -90,9 +90,9 @@ annex BLESS
     fail : final state;  --failure termination
   transitions
     SpAT0: start-[(ub-lb)<window_size]->fillingWindow
-      {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
+--     {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
     SpAT0a: start-[(ub-lb)>=window_size]->fail
-      {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
+--      {|ub',lb',window_size',totalSpO2',goodCount':=ub,lb,window_size,totalSpO2,goodCount|};  --copy current values to next period
     SpAT1: fillingWindow-[on dispatch]->chooseToRun
       { <<FW()>> 
       {
@@ -136,14 +136,14 @@ annex BLESS
     	   (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
       };  --end of SpAt1
     SpAT2: chooseToRun-[(ub-lb)<window_size]->fillingWindow  --still fewer samples than window size
-      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
-      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
+--      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
+--      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
     SpAT3: chooseToRun-[(ub-lb)=window_size]->run  --enough samples to fill window
-      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
-      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
+--      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
+--      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
     SpAT3a: chooseToRun-[(ub-lb)>window_size]->fail  --error
-      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
-      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
+--      {|ub',lb',window_size',totalSpO2',goodCount',goodSamp',spo2_hist'
+--      	  :=ub,lb,window_size,totalSpO2,goodCount,goodSamp,spo2_hist|};
     SpAt4: run-[on dispatch]->run
       {   <<RUN_AV()>>
       if  --output average if there have been valid SpO2 readings
@@ -199,27 +199,27 @@ annex BLESS
     	  (all k~quantity whole in (lb+1) ..ub 
     	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples] iff
     	      (SENSOR_CONNECTED^(k-ub) and not MOTION_ARTIFACT^(k-ub)))>>
-      ;
-      --increment upper bound and lower bound, copy window size, total SpO2, and count of good samples
-      |ub,lb,window_size',totalSpO2',goodCount':=ub+1,lb+1,window_size,totalSpO2,goodCount|
-        <<(all k~quantity whole in lb..(ub - 1) 
-    	  are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-(ub- 1))) and
-    	  (totalSpO2'=(sum k~quantity whole in lb..(ub - 1) of SSQ(k-(ub- 1))))  and (((ub- 1) - (lb- 1))=window_size') and
-    	  (goodCount'=(numberof k~quantity whole in lb .. (ub - 1) that 
-    	  	(SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1)))
-    	  )) and
-    	  (all k~quantity whole in lb..(ub - 1) 
-    	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples] iff
-    	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
-      ;
-      |spo2_hist',goodSamp',ub',lb':=spo2_hist,goodSamp,ub,lb|
-        <<(all k~quantity whole in lb..(ub - 1) 
-    	  are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples]' = SSQ(k-(ub- 1))) and
-    	  (totalSpO2' = (sum k~quantity whole in lb..(ub - 1) of SSQ(k-(ub- 1))))  and (((ub'- 1) - (lb'- 1))=window_size') and
-    	  (goodCount' =(numberof k~quantity whole in lb .. (ub - 1) that (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))) and
-    	  (all k~quantity whole in lb..(ub - 1) 
-    	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples]' iff
-    	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
+--      ;
+--      --increment upper bound and lower bound, copy window size, total SpO2, and count of good samples
+--      |ub,lb,window_size',totalSpO2',goodCount':=ub+1,lb+1,window_size,totalSpO2,goodCount|
+--        <<(all k~quantity whole in lb..(ub - 1) 
+--    	  are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples] = SSQ(k-(ub- 1))) and
+--    	  (totalSpO2'=(sum k~quantity whole in lb..(ub - 1) of SSQ(k-(ub- 1))))  and (((ub- 1) - (lb- 1))=window_size') and
+--    	  (goodCount'=(numberof k~quantity whole in lb .. (ub - 1) that 
+--    	  	(SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1)))
+--    	  )) and
+--    	  (all k~quantity whole in lb..(ub - 1) 
+--    	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples] iff
+--    	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
+--      ;
+--      |spo2_hist',goodSamp',ub',lb':=spo2_hist,goodSamp,ub,lb|
+--        <<(all k~quantity whole in lb..(ub - 1) 
+--    	  are spo2_hist[k mod #PulseOx_Properties::Max_Window_Samples]' = SSQ(k-(ub- 1))) and
+--    	  (totalSpO2' = (sum k~quantity whole in lb..(ub - 1) of SSQ(k-(ub- 1))))  and (((ub'- 1) - (lb'- 1))=window_size') and
+--    	  (goodCount' =(numberof k~quantity whole in lb .. (ub - 1) that (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))) and
+--    	  (all k~quantity whole in lb..(ub - 1) 
+--    	    are goodSamp[k mod #PulseOx_Properties::Max_Window_Samples]' iff
+--    	      (SENSOR_CONNECTED^(k-(ub- 1)) and not MOTION_ARTIFACT^(k-(ub- 1))))>>
       };  --end of SpAt4     
 --    SpATstop: fillingWindow,run-[on dispatch stop]->halt{};     
 **};
