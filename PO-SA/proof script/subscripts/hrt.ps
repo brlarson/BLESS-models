@@ -1,4 +1,7 @@
 #hrt.ps
+#This file, script.txt, was produced the BLESS Proof Assistant v3.2.5
+#  at Fri Oct 11 10:57:42 CDT 2024 by brianlarson
+#  You chose proof script: /Users/brianlarson/git3/BLESS-models/PO-SA/proof script/subscripts/hrt.ps
 push
 sort-by-component[HR::HeartRateTrendThread.imp]
 #HR::HeartRateTrendThread.imp
@@ -17,239 +20,295 @@ tautologies
 normalize
 laws
 tautologies
-#[serial 1012]  <<M(start)>> A <<M(fill)>> for hrtt0: start-[ ]->fill{A};
-completesub
-alldist^
-atomic
-guided-sub-equals[num_samples]
-laws
+#[serial 1012]  <<M(start)>> -> <<M(fill)>> for hrtt0: start-[ ]->fill{};
 split-post
-quant
-normalize
 tautologies
-guided-sub-equals[0]
+substitute-post
+guided-sub-equals[NUM_SAMPLES]
+normalize
+laws
+quant
 tautologies
 #[serial 1013]  <<M(fill) and x>> A <<M(check)>> for hrtt1: fill-[x]->check{A};
-normalize
 reduce
+push
+#HR::HeartRateTrendThread.imp
+#[serial 1112] <<P>> -> <<P1>> in sequential composition for [serial 101
+make-an
+dist^
+remove-axioms-post
+laws
+normalize
+tautologies
+#[serial 1113] <<Q6>> -> <<Q>> in sequential composition for [serial 1013]
+remove-axioms-post
+laws
+normalize
+tautologies
+#[serial 1114] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1013]
+substitute-both
+substitute-pre
+atomic
+laws
+alldist^
+guided-sub-equals[num_samples]
+tautologies
+#[serial 1115] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1013]
 reduce
 atomic
-normalize
 tautologies
-laws
+zeroquantlb
 tautologies
-remove-givens-post
-laws
+replace-qv
+tautologies
+#[serial 1116] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1013]
+reduce
 tautologies
 push
 #HR::HeartRateTrendThread.imp
-#[serial 1174] <<Q6>> -> <<Q>> in sequential composition for [serial 117
+#[serial 1157]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 111
 make-an
+laws
+tautologies
+#[serial 1158]   <<P and B0>> -> <<P0>> in alternative for [serial 1116]
 substitute-post
-replace-qv
 tautologies
-#[serial 1185]   <<P and B0>> -> <<P0>> in alternative for [serial 1178]
+#[serial 1159]   <<P0>> S0 <<Q0>> in alternative for [serial 1116]
 substitute-both
+atomic
 split-post
 tautologies
-zeroquantlb
-laws
 normalize
-elim-subtract
-normalize
-tautologies
-#[serial 1199] applied wp for assignment [serial 1186]
-split-post
-tautologies
 ??
-now
 laws
 tautologies
-#[serial 1187]   <<Q0>> -> <<Q>> in alternative  for [serial 1178]
+#[serial 1161]   <<P and B1>> -> <<P1>> in alternative for [serial 1116]
+substitute-post
+tautologies
+#[serial 1162]   <<P1>> S1 <<Q1>> in alternative for [serial 1116]
+atomic
 split-post
 tautologies
-substitute-pre
+substitute-post
 normalize
-zeroquantlb
-elim-subtract
-normalize
-laws
-normalize
-tautologies
-#[serial 1200] applied wp for assignment [serial 1189]
 ??
-split-post
-tautologies
 replace-port-value
 now
 laws
 tautologies
-#[serial 1190]   <<Q1>> -> <<Q>> in alternative  for [serial 1178]
+#[serial 1117] <<Q3 and P4>> S4 <<Q4 and P5>> in sequential composition for [serial 1013]
+atomic
+normalize
+substitute-both
 substitute-pre
 normalize
-split-post
-tautologies
-zeroquantlb
-elim-subtract
-normalize
-laws
-normalize
-elim-subtract
-tautologies
-#[serial 1201] applied wp for assignment [serial 1179]
 qtiming
 tautologies
-#[serial 1206]   normalization of [serial 1194]
-substitute-pre
+#[serial 1118] <<Q4 and P5>> S5 <<Q5 and P6>> in sequential composition for [serial 1013]
+remove-axioms-post
+substitute-post
+reduce
+tautologies
+atomic
+tautologies
 laws
 normalize
-tautologies
-#[serial 1210]   normalization of [serial 1196]
 substitute-pre
+normalize
+tautologies
+#[serial 1119] <<Q5 and P6>> S6 <<Q6>> in sequential composition for [serial 1013]
+reduce
+reduce
+atomic
+push
+#HR::HeartRateTrendThread.imp
+#[serial 1208] applied port output <<pre and (HeartRateTrend=heart_rate_store)^0>> -> <<post>> [serial 120
+make-an
+substitute-both
+substitute-post
 laws
 normalize
-tautologies
-#[serial 1214]   normalization of [serial 1182]
-substitute-pre
-normalize
+laws
+guided-sub-equals[NUM_SAMPLES]
 replace-qv
 tautologies
-#[serial 1223]   normalization of [serial 1188]
+#[serial 1209] applied port output <<pre and (HeartRateTrend=heart_rate_store)^0>> -> <<(HeartRateTrend=HEART_RATE_HISTORY)^0>> [serial 1206]
+now
+normalize
+guided-sub-equals[HeartRateTrend]
+substitute-pre
+laws
+laws
+guided-sub-equals[HEART_RATE_HISTORY]
+laws
+tautologies
+#[serial 1210] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<post>> [serial 1207]
 substitute-post
-normalize
-tautologies
-#[serial 1014]  <<M(check) and x>> A <<M(fill)>> for hrtt2a: check-[x]->fill{A};
 substitute-both
 normalize
-alldist^
-atomic
-elim-subtract
+laws
+laws
+guided-sub-equals[NUM_SAMPLES]
+replace-qv
 tautologies
-#[serial 1015]  <<M(check) and x>> A <<M(run)>> for hrtt2b: check-[x]->run{A};
+#[serial 1211] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<(NumSamples=NUM_SAMPLES)^0>> [serial 1207]
+now
+substitute-pre
+laws
+laws
+normalize
+guided-sub-equals[NUM_SAMPLES]
+guided-sub-equals[NumSamples]
+laws
+tautologies
+#[serial 1014]  <<M(check) and x>> -> <<M(fill)>> for hrtt2a: check-[x]->fill{};
 substitute-both
-alldist^
-atomic
-elim-subtract
+normalize
+laws
+split-post
+tautologies
+guided-sub-equals[NUM_SAMPLES]
+tautologies
+#[serial 1015]  <<M(check) and x>> -> <<M(run)>> for hrtt2b: check-[x]->run{};
 tautologies
 #[serial 1016]  <<M(check) and x>> -> <<M(fail)>> for hrtt2c: check-[x]->fail{};
+substitute-pre
+laws
+normalize
 tautologies
 #[serial 1017]  <<M(run) and x>> A <<M(run)>> for hrtt3: run-[x]->run{A};
 reduce
-reduce
-normalize
-laws
-normalize
-tautologies
-remove-givens-post
-laws
 push
 #HR::HeartRateTrendThread.imp
-#[serial 1371]   normalization of [serial 134
+#[serial 1257] <<P>> -> <<P1>> in sequential composition for [serial 101
 make-an
-substitute-post
-alldist^
-split-post
+remove-axioms-post
+laws
+normalize
 tautologies
-replace-qv
-elim-subtract
+#[serial 1258] <<Q6>> -> <<Q>> in sequential composition for [serial 1017]
 tautologies
-#[serial 1377]   normalization of [serial 1356]
+#[serial 1259] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1017]
+substitute-both
 substitute-pre
-zeroquantlb
-contract-uqr
-replace-qv
-split-quant
+atomic
 laws
-normalize
+alldist^
+guided-sub-equals[num_samples]
 tautologies
-#[serial 1379]   normalization of [serial 1357]
-split-quant
-laws
-normalize
-tautologies
-#[serial 1381]   normalization of [serial 1355]
+#[serial 1260] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1017]
+reduce
 atomic
 tautologies
-#[serial 1387]   normalization of [serial 1360]
+zeroquantlb
+tautologies
+replace-qv
+tautologies
+#[serial 1261] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1017]
+reduce
+push
+#HR::HeartRateTrendThread.imp
+#[serial 1297]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 126
+make-an
+laws
+tautologies
+#[serial 1298]   <<P and B0>> -> <<P0>> in alternative for [serial 1261]
+substitute-post
+tautologies
+#[serial 1299]   <<P0>> S0 <<Q0>> in alternative for [serial 1261]
+substitute-both
 atomic
 split-post
 tautologies
+normalize
 ??
 laws
 tautologies
-#[serial 1389]   normalization of [serial 1361]
-substitute-pre
-normalize
+#[serial 1300]   <<Q0>> -> <<Q>> in alternative  for [serial 1261]
+remove-axioms-post
 laws
-normalize
+tautologies
+#[serial 1301]   <<P and B1>> -> <<P1>> in alternative for [serial 1261]
+substitute-post
+tautologies
+#[serial 1302]   <<P1>> S1 <<Q1>> in alternative for [serial 1261]
+atomic
 split-post
 tautologies
-zeroquantlb
-elim-subtract
+substitute-post
 normalize
-laws
-normalize
-elim-subtract
-tautologies
-#[serial 1393]   normalization of [serial 1363]
-atomic
 ??
 replace-port-value
 now
 laws
-normalize
-laws
-normalize
 tautologies
-#[serial 1395]   normalization of [serial 1364]
-qtiming
+#[serial 1303]   <<Q1>> -> <<Q>> in alternative  for [serial 1261]
+remove-axioms-post
+laws
+tautologies
+#[serial 1262] <<Q3 and P4>> S4 <<Q4 and P5>> in sequential composition for [serial 1017]
+atomic
 substitute-pre
-laws
 normalize
-split-post
-tautologies
+substitute-both
+normalize
 qtiming
-zeroquantlb
+contract-uqr
 tautologies
-#[serial 1397]   normalization of [serial 1366]
-qtiming
-split-quant
-laws
+#[serial 1263] <<Q4 and P5>> S5 <<Q5 and P6>> in sequential composition for [serial 1017]
+remove-axioms-post
+substitute-post
+reduce
 tautologies
-#[serial 1399]   normalization of [serial 1367]
-split-quant
-laws
-tautologies
-#[serial 1401]   normalization of [serial 1365]
 atomic
 tautologies
-#[serial 1403]   normalization of [serial 1354]
-atomic
+laws
+normalize
+substitute-pre
 normalize
 tautologies
-#[serial 1406] laws applied to [serial 1391]
+#[serial 1264] <<Q5 and P6>> S6 <<Q6>> in sequential composition for [serial 1017]
+reduce
+reduce
+atomic
+push
+#HR::HeartRateTrendThread.imp
+#[serial 1353] applied port output <<pre and (HeartRateTrend=heart_rate_store)^0>> -> <<post>> [serial 135
+make-an
+substitute-both
 substitute-post
 laws
 normalize
+laws
+guided-sub-equals[NUM_SAMPLES]
+replace-qv
 tautologies
-#[serial 1424]   normalization of [serial 1405]
+#[serial 1354] applied port output <<pre and (HeartRateTrend=heart_rate_store)^0>> -> <<(HeartRateTrend=HEART_RATE_HISTORY)^0>> [serial 1351]
+now
+normalize
+guided-sub-equals[HeartRateTrend]
+substitute-pre
+laws
+laws
+guided-sub-equals[HEART_RATE_HISTORY]
+laws
+tautologies
+#[serial 1355] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<post>> [serial 1352]
 substitute-post
+substitute-both
 normalize
 laws
-tautologies
-#[serial 1429] laws applied to [serial 1426]
-tautologies
-#[serial 1430] laws applied to [serial 1427]
-atomic
 laws
+guided-sub-equals[NUM_SAMPLES]
+replace-qv
 tautologies
+#[serial 1356] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<(NumSamples=NUM_SAMPLES)^0>> [serial 1352]
+now
 substitute-pre
 laws
-tautologies
-#[serial 1431] laws applied to [serial 1428]
-atomic
 laws
-tautologies
-substitute-pre
+normalize
+guided-sub-equals[NUM_SAMPLES]
+guided-sub-equals[NumSamples]
 laws
 tautologies

@@ -12,7 +12,7 @@ thread SpO2TrendThread
     MotionArtifact : in data port BLESS_Types::Boolean  -- indication of motion noise in sensor reading
        {BLESS::Assertion=>"<<MOTION_ARTIFACT>>";};  
     SpO2Trend : out data port PulseOx_Types::SpO2Samples  --one SpO2 reading each minute for the past hour
-      {BLESS::Assertion=>"<<SPO2_TREND()>>";};  
+      {BLESS::Value=>"<< returns spo2_samples := SPO2_HISTORY >>";};  
     NumSamples : out data port BLESS_Types::Integer
       {BLESS::Value=>"<< returns quantity percent := NUM_SAMPLES>>";};
   properties
@@ -26,29 +26,30 @@ thread implementation SpO2TrendThread.imp
 annex BLESS 
 {**
   assert
-    <<HOLD:n~quantity whole: all s~quantity whole in 1 ..n --holds current values for SpO2; spo2_a[1]=SPO2^0
-         are spo2_a[s]=(if MOTION_ARTIFACT^(1-s) or not SENSOR_CONNECTED^(1-s) then 0.0 percent else SPO2^(1-s))>>
-    <<AXIOM_CR2: : (num_samples - 2) < (num_samples - 1)>>
+    --SPV defines the intended oxygen saturation measure, SpO2, k periods prior to now
+    <<SPV: k ~ quantity whole returns quantity percent := 
+      (if MOTION_ARTIFACT^(-k) or not SENSOR_CONNECTED^(-k) then 0.0 percent else SPO2^(-k))>>
+    --history values for SpO2;
+    <<HOLD:n~quantity whole: all s~quantity whole in 0 .. (n - 1) 
+         are spo2_store[s]=SPV(s)>>
+    <<GIVEN_STT: : num_samples = NUM_SAMPLES and spo2_store = SPO2_HISTORY>>
   invariant 
-    <<SpO2_INV: :all s~quantity whole in 1 ..num_samples 
-         are spo2_a[s]=(if MOTION_ARTIFACT^(-s) or not SENSOR_CONNECTED^(-s) then 0.0 percent else SPO2^(-s))>>  
+    <<SpO2_INV: :all s~quantity whole in 0 .. (num_samples - 1) 
+         are spo2_store[s]=SPV(s)>>  
   variables
     nts~quantity whole :=#PulseOx_Properties::Num_Trending_Samples;
-    spo2_a ~ spo2_samples --holds SpO2 history
+    spo2_store ~ spo2_samples --holds SpO2 history
     spo2_nxt ~ spo2_samples  --temporary copy of trend for next output
     num_samples~quantity whole := 0  --counts samples while filling
-      <<AXIOM_NS: : num_samples = NUM_SAMPLES and spo2_a = SPO2_HISTORY>>
   states
     start : initial state
-      <<(num_samples<#PulseOx_Properties::Num_Trending_Samples) and (num_samples=0) and
-        (all s~quantity whole in (num_samples+1) .. #PulseOx_Properties::Num_Trending_Samples
-         	are not SENSOR_CONNECTED^(-s))>>;
+      << num_samples<#PulseOx_Properties::Num_Trending_Samples and num_samples=0 >>;
     loading : complete state  --loading spo2_a
-      <<SpO2_INV() and (num_samples<#PulseOx_Properties::Num_Trending_Samples)>>;    
+      <<SpO2_INV() and num_samples<#PulseOx_Properties::Num_Trending_Samples >>;    
     check : state  --check if full
-      <<HOLD(num_samples)>>;
+      <<HOLD(num_samples) >>;
     run : complete state   --full spo2_a
-      <<SpO2_INV() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)>>;    
+      <<SpO2_INV() >>;    
     halt : final state;  --normal termination
     fail : final state;  --error termination
   transitions
@@ -56,115 +57,106 @@ annex BLESS
 --      {num_samples' := num_samples};
     sptt1: loading-[on dispatch]->check
       {
-        <<SpO2_INV() and (num_samples < #PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_NS() >>
-      SpO2Trend!(spo2_a)  --put out new SpO2 trend for ui
-      ;
-        <<SpO2_INV() and (num_samples < #PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_NS() >>
-      NumSamples!(num_samples)
-      ;
-        <<SpO2_INV() and (num_samples < #PulseOx_Properties::Num_Trending_Samples)>>
-      forall i in 1 ..num_samples
+        <<SpO2_INV()^-1 >>
+        --persistent variables hold values from previous period
+      |num_samples,spo2_store := 'num_samples,'spo2_store|
+        << all s~quantity whole in 0 .. (num_samples - 1)
+         are spo2_store[s]=SPV(s + 1)>>
+      ; --copy old values to temporary hr_nxt, shifted by one
+      forall i in 0 .. (num_samples - 1)
         {
-          <<spo2_a[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i))>>
-        spo2_nxt[i+1]:=spo2_a[i] --shift old samples
-          <<spo2_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i))>>
+          <<spo2_store[i]=SPV(i + 1) >>
+        spo2_nxt[i+1]:=spo2_store[i] --shift old samples
+          <<spo2_nxt[i+1]=SPV(i + 1) >>
         }
-      <<SHFT: :all i~quantity whole in 1 ..num_samples 
-         are spo2_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i))>>
-      ;  
+        <<SHFT_SP: :all i~quantity whole in 1 .. num_samples
+         are spo2_nxt[i]=SPV(i) >>
+      ;  -- fill in current reading hr_nxt[0]
       if
         (MotionArtifact? or not SensorConnected?)~>
-            <<SHFT() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1] := 0.0 percent  --bad sample
-            <<SHFT() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
-               and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0))>>
+            <<SHFT_SP() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
+          spo2_nxt[0] := 0.0 percent  --bad sample
+            <<SHFT_SP() and spo2_nxt[0]=SPV(0) >>
       []
         (not (MotionArtifact? or not SensorConnected?))~>
-             <<SHFT() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1] := SpO2  --add current sample
-            <<SHFT() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
-               and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0))>>
+             <<SHFT_SP() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
+          spo2_nxt[0] := SpO2  --add current sample
+            <<SHFT_SP() and spo2_nxt[0]=SPV(0) >>
       fi    
-        <<(spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0)) and
-          (all i~quantity whole in 2 .. (num_samples+1) are 
-          	spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))>>
-      ;    
-      num_samples:=num_samples+1  --increment count of samples
-      <<all i~quantity whole in 1 ..num_samples are spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))>>
-      ;
-      forall i in 1 ..num_samples
+        <<SHFT_SP() and spo2_nxt[0]=SPV(0) >>      
+      ;  --increment count of samples  
+      num_samples:=num_samples+1  
+      <<all i~quantity whole in 0 .. (num_samples - 1)
+        are spo2_nxt[i]=SPV(i)>>
+      ;  -- copy spo2_nxt to spo2_store
+      forall i in 0 .. (num_samples - 1)
         {
-          <<spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))>>
-        spo2_a[i]:=spo2_nxt[i] --copy back
-          <<spo2_a[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))>>
+          <<spo2_nxt[i]=SPV(i) >>
+        spo2_store[i]:=spo2_nxt[i] --copy back
+          <<spo2_store[i]=SPV(i) >>
         }
-      <<all i~quantity whole in 1 ..num_samples are spo2_a[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))>>
+      <<(all i~quantity whole in 0 .. (num_samples - 1)
+        are spo2_store[i]=SPV(i)) and GIVEN_STT()>>  
+      ;
+        {
+        SpO2Trend!(spo2_store)  --put out new SpO2 trend for ui
+        &
+        NumSamples!(num_samples)
+        }
+      <<HOLD(num_samples)>>
       };
     sptt2a: check-[num_samples<#PulseOx_Properties::Num_Trending_Samples]->loading
---      {|spo2_a',num_samples':=spo2_a,num_samples|};
     sptt2b: check-[num_samples=#PulseOx_Properties::Num_Trending_Samples]->run
---      {|spo2_a',num_samples':=spo2_a,num_samples|};
     sptt2c: check-[num_samples>#PulseOx_Properties::Num_Trending_Samples]->fail{};
     sptt3: run-[on dispatch]->run
       {
-        <<SpO2_INV() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_NS() >>
-      SpO2Trend!(spo2_a)  --put out new SpO2 trend for ui
-      ;
-        <<SpO2_INV() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_NS() >>
-      NumSamples!(num_samples)
-      ;
-        <<SpO2_INV() and (num_samples=#PulseOx_Properties::Num_Trending_Samples)
-          and AXIOM_CR2()>>
-      forall i in 1 .. (num_samples - 1)
+        <<SpO2_INV()^-1 and GIVEN_STT() >>
+        --persistent variables hold values from previous period
+      |num_samples,spo2_store := 'num_samples,'spo2_store|
+        << all s~quantity whole in 0 .. (num_samples - 1)
+         are spo2_store[s]=SPV(s + 1)>>
+      ; --copy old values to temporary hr_nxt, shifted by one
+      forall i in 0 .. (num_samples - 1)
         {
-          <<spo2_a[i]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i))
-            and (num_samples=#PulseOx_Properties::Num_Trending_Samples)>>
-        spo2_nxt[i+1]:=spo2_a[i] --shift old samples
-          <<spo2_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i))
-            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
+          <<spo2_store[i]=SPV(i + 1) >>
+        spo2_nxt[i+1]:=spo2_store[i] --shift old samples
+          <<spo2_nxt[i+1]=SPV(i + 1) >>
         }
-        <<SHFTR: :(all i~quantity whole in 1 .. (num_samples - 1) 
-        	are spo2_nxt[i+1]=(if MOTION_ARTIFACT^(-i) or not SENSOR_CONNECTED^(-i) then 0.0 percent else SPO2^(-i)))
-          and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
-      ;  
+        <<SHFT_SP: :all i~quantity whole in 1 .. num_samples
+         are spo2_nxt[i]=SPV(i) >>
+      ;  -- fill in current reading hr_nxt[0]
       if
         (MotionArtifact? or not SensorConnected?)~>
-            <<SHFTR() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1] := 0.0 percent  --bad sample
-            <<SHFTR() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
-               and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0))>>
+            <<SHFT_SP() and (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
+          spo2_nxt[0] := 0.0 percent  --bad sample
+            <<SHFT_SP() and spo2_nxt[0]=SPV(0) >>
       []
         (not (MotionArtifact? or not SensorConnected?))~>
-             <<SHFTR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
-          spo2_nxt[1] := SpO2  --add current sample
-            <<SHFTR() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)
-               and (spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0))>>
+             <<SHFT_SP() and not (MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0)>>
+          spo2_nxt[0] := SpO2  --add current sample
+            <<SHFT_SP() and spo2_nxt[0]=SPV(0) >>
       fi    
-        <<spo2_nxt[1]=(if MOTION_ARTIFACT^0 or not SENSOR_CONNECTED^0 then 0.0 percent else SPO2^0) and 
-          num_samples=#PulseOx_Properties::Num_Trending_Samples and
-          (all i~quantity whole in 2 ..num_samples 
-          	 are spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))>>
---      ;
---      forall i in 1 ..num_samples
---        {
---          <<spo2_nxt[i]=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
---            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
---        spo2_a[i]':=spo2_nxt[i] --copy back
---          <<spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i))
---            and num_samples=#PulseOx_Properties::Num_Trending_Samples >>
---        }
---      <<(all i~quantity whole in 1 ..num_samples 
---      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
---         and num_samples=#PulseOx_Properties::Num_Trending_Samples >> 
---      ;
---      num_samples':=num_samples  	
---      <<(all i~quantity whole in 1 ..num_samples 
---      	  are spo2_a[i]'=(if MOTION_ARTIFACT^(1-i) or not SENSOR_CONNECTED^(1-i) then 0.0 percent else SPO2^(1-i)))
---         and num_samples'=#PulseOx_Properties::Num_Trending_Samples>> 
+        <<SHFT_SP() and spo2_nxt[0]=SPV(0) and GIVEN_CR()>>      
+      ;  --increment count of samples  
+      skip 
+      <<all i~quantity whole in 0 .. (num_samples - 1)
+        are spo2_nxt[i]=SPV(i)>>
+      ;  -- copy spo2_nxt to spo2_store
+      forall i in 0 .. (num_samples - 1)
+        {
+          <<spo2_nxt[i]=SPV(i) >>
+        spo2_store[i]:=spo2_nxt[i] --copy back
+          <<spo2_store[i]=SPV(i) >>
+        }
+      <<(all i~quantity whole in 0 .. (num_samples - 1)
+        are spo2_store[i]=SPV(i)) and GIVEN_STT()>>  
+      ;
+        {
+        SpO2Trend!(spo2_store)  --put out new SpO2 trend for ui
+        &
+        NumSamples!(num_samples)
+        }
+      <<HOLD(num_samples)>>
       };
  --   sptt4: loading,run-[on dispatch stop]->halt{};    
 **};

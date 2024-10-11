@@ -17,245 +17,278 @@ tautologies
 normalize
 laws
 tautologies
-#[serial 1023]  <<M(start)>> A <<M(loading)>> for sptt0: start-[ ]->loading{A};
-substitute-post
-normalize
-alldist^
-atomic
+#[serial 1023]  <<M(start)>> -> <<M(loading)>> for sptt0: start-[ ]->loading{};
 split-post
 tautologies
-normalize
+substitute-post
 guided-sub-equals[num_samples]
+normalize
 laws
 quant
 tautologies
 #[serial 1024]  <<M(loading) and x>> A <<M(check)>> for sptt1: loading-[x]->check{A};
 reduce
-reduce
-remove-givens-post
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1112] <<P>> -> <<P1>> in sequential composition for [serial 102
+make-an
+dist^
+normalize
+tautologies
+#[serial 1113] <<Q6>> -> <<Q>> in sequential composition for [serial 1024]
+tautologies
+#[serial 1114] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1024]
+substitute-both
+substitute-pre
 atomic
 normalize
-laws
+alldist^
+tautologies
+#[serial 1115] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1024]
+reduce
+atomic
+tautologies
+zeroquantlb
+tautologies
+replace-qv
+tautologies
+#[serial 1116] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1024]
+reduce
 tautologies
 push
 #SPT::SpO2TrendThread.imp
-#[serial 1612]   normalization of [serial 158
+#[serial 1151]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 111
 make-an
-substitute-post
-normalize
-replace-qv
-tautologies
-#[serial 1614]   normalization of [serial 1602]
-substitute-pre
 laws
-normalize
 tautologies
-#[serial 1618]   normalization of [serial 1588]
-substitute-pre
-normalize
-replace-qv
+#[serial 1152]   <<P and B0>> -> <<P0>> in alternative for [serial 1116]
+substitute-post
 tautologies
-#[serial 1626]   normalization of [serial 1591]
+#[serial 1153]   <<P0>> S0 <<Q0>> in alternative for [serial 1116]
+substitute-both
+atomic
 split-post
 tautologies
-substitute-post
 normalize
-tautologies
-#[serial 1628]   normalization of [serial 1605]
 ??
 laws
-normalize
-laws
 tautologies
-#[serial 1630]   normalization of [serial 1593]
-substitute-pre
-split-post
+#[serial 1155]   <<P and B1>> -> <<P1>> in alternative for [serial 1116]
+substitute-post
 tautologies
-zeroquantlb
-laws
-normalize
-elim-subtract
-normalize
-laws
-normalize
-tautologies
-#[serial 1632]   normalization of [serial 1594]
+#[serial 1156]   <<P1>> S1 <<Q1>> in alternative for [serial 1116]
+atomic
 split-post
 tautologies
 substitute-post
 normalize
-tautologies
-#[serial 1634]   normalization of [serial 1606]
-split-post
-tautologies
 ??
 replace-port-value
 now
 laws
 tautologies
-#[serial 1636]   normalization of [serial 1596]
-qtiming
-substitute-pre
-qtiming
-zeroquantlb
-tautologies
-#[serial 1638]   normalization of [serial 1607]
-qtiming
-tautologies
-#[serial 1648]   normalization of [serial 1609]
+#[serial 1117] <<Q3 and P4>> S4 <<Q4 and P5>> in sequential composition for [serial 1024]
+atomic
+normalize
 substitute-both
+substitute-pre
+normalize
+qtiming
+tautologies
+#[serial 1118] <<Q4 and P5>> S5 <<Q5 and P6>> in sequential composition for [serial 1024]
+remove-axioms-post
+substitute-post
+reduce
+tautologies
+atomic
+tautologies
+laws
+normalize
+substitute-pre
+normalize
+tautologies
+#[serial 1119] <<Q5 and P6>> S6 <<Q6>> in sequential composition for [serial 1024]
+reduce
+reduce
+atomic
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1202] applied port output <<pre and (SpO2Trend=spo2_store)^0>> -> <<post>> [serial 120
+make-an
+substitute-both
+substitute-post
+laws
+normalize
+laws
+replace-qv
+tautologies
+#[serial 1203] applied port output <<pre and (SpO2Trend=spo2_store)^0>> -> <<(SpO2Trend=SPO2_HISTORY)^0>> [serial 1200]
+now
+normalize
+guided-sub-equals[SpO2Trend]
+substitute-pre
+laws
+laws
+guided-sub-equals[SPO2_HISTORY]
+laws
+tautologies
+#[serial 1204] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<post>> [serial 1201]
+substitute-post
+substitute-both
+normalize
+replace-qv
+laws
+tautologies
+#[serial 1205] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<(NumSamples=NUM_SAMPLES)^0>> [serial 1201]
+now
+guided-sub-equals[NumSamples]
+substitute-pre
+laws
 laws
 guided-sub-equals[NUM_SAMPLES]
-guided-sub-equals[SPO2_HISTORY]
+laws
 tautologies
-#[serial 1654] laws applied to [serial 1650]
-completesub
-alldist^
-laws
-normalize
-laws
+#[serial 1025]  <<M(check) and x>> -> <<M(loading)>> for sptt2a: check-[x]->loading{};
+substitute-both
 normalize
 tautologies
-#[serial 1025]  <<M(check) and x>> A <<M(loading)>> for sptt2a: check-[x]->loading{A};
-completesub
-alldist^
-atomic
-elim-subtract
-tautologies
-#[serial 1026]  <<M(check) and x>> A <<M(run)>> for sptt2b: check-[x]->run{A};
-completesub
-alldist^
-atomic
-elim-subtract
+#[serial 1026]  <<M(check) and x>> -> <<M(run)>> for sptt2b: check-[x]->run{};
+substitute-both
+normalize
 tautologies
 #[serial 1027]  <<M(check) and x>> -> <<M(fail)>> for sptt2c: check-[x]->fail{};
 tautologies
 #[serial 1028]  <<M(run) and x>> A <<M(run)>> for sptt3: run-[x]->run{A};
 reduce
-reduce
-remove-givens-post
-normalize
-laws
-normalize
-tautologies
 push
 #SPT::SpO2TrendThread.imp
-#[serial 1814]   normalization of [serial 179
+#[serial 1241] <<P>> -> <<P1>> in sequential composition for [serial 102
 make-an
-substitute-post
-alldist^
-replace-qv
-elim-subtract
+remove-axioms-post
+laws
+normalize
 tautologies
-#[serial 1816]   normalization of [serial 1798]
+#[serial 1242] <<Q6>> -> <<Q>> in sequential composition for [serial 1028]
 substitute-both
-normalize
-zeroquantlb
-elim-subtract
-normalize
-contract-uqr
-replace-qv
-split-quant
-split-post
 tautologies
-laws
-normalize
-tautologies
-#[serial 1818]   normalization of [serial 1799]
-split-quant
-laws
-tautologies
-#[serial 1820]   normalization of [serial 1797]
-atomic
-tautologies
-#[serial 1826]   normalization of [serial 1802]
-atomic
-??
-split-post
-tautologies
-remove-units
-remove-units
-laws
-tautologies
-#[serial 1828]   normalization of [serial 1803]
+#[serial 1243] <<P1>> S1 <<Q1 and P2>> in sequential composition for [serial 1028]
+substitute-both
 substitute-pre
-normalize
-split-post
-tautologies
+atomic
 laws
+alldist^
+tautologies
+#[serial 1244] <<Q1 and P2>> S2 <<Q2 and P3>> in sequential composition for [serial 1028]
+reduce
+atomic
 tautologies
 zeroquantlb
-laws
-normalize
-elim-subtract
-normalize
-elim-subtract
-laws
-normalize
 tautologies
-#[serial 1832]   normalization of [serial 1805]
+replace-qv
+tautologies
+#[serial 1245] <<Q2 and P3>> S3 <<Q3 and P4>> in sequential composition for [serial 1028]
+reduce
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1281]   <<P>> -> <<B1 or B2 or ... or Bn>> in alternative for [serial 124
+make-an
+laws
+tautologies
+#[serial 1282]   <<P and B0>> -> <<P0>> in alternative for [serial 1245]
+substitute-post
+tautologies
+#[serial 1283]   <<P0>> S0 <<Q0>> in alternative for [serial 1245]
+substitute-both
 atomic
-??
 split-post
 tautologies
+normalize
+??
+laws
+tautologies
+#[serial 1284]   <<Q0>> -> <<Q>> in alternative  for [serial 1245]
+remove-axioms-post
+laws
+tautologies
+#[serial 1285]   <<P and B1>> -> <<P1>> in alternative for [serial 1245]
+substitute-post
+tautologies
+#[serial 1286]   <<P1>> S1 <<Q1>> in alternative for [serial 1245]
+atomic
+split-post
+tautologies
+substitute-post
+normalize
+??
 replace-port-value
 now
 laws
 tautologies
-#[serial 1834]   normalization of [serial 1806]
+#[serial 1287]   <<Q1>> -> <<Q>> in alternative  for [serial 1245]
+remove-axioms-post
+laws
+tautologies
+#[serial 1246] <<Q3 and P4>> S4 <<Q4 and P5>> in sequential composition for [serial 1028]
+atomic
 substitute-pre
-laws
 normalize
-split-post
-tautologies
-zeroquantlb
-elim-subtract
-normalize
-elim-subtract
-laws
-normalize
-tautologies
-#[serial 1836]   normalization of [serial 1808]
-qtiming
-split-quant
-laws
-tautologies
-#[serial 1838]   normalization of [serial 1809]
-split-quant
-laws
-tautologies
-#[serial 1840]   normalization of [serial 1807]
-atomic
-normalize
-tautologies
-#[serial 1842]   normalization of [serial 1796]
-atomic
-normalize
-tautologies
-#[serial 1851] laws applied to [serial 1830]
-substitute-post
-normalize
-laws
-tautologies
-#[serial 1853] laws applied to [serial 1846]
-atomic
-laws
-normalize
-tautologies
 substitute-both
-laws
-guided-sub-equals[NUM_SAMPLES]
-guided-sub-equals[SPO2_HISTORY]
+normalize
+qtiming
+contract-uqr
 tautologies
-#[serial 1854] laws applied to [serial 1848]
+#[serial 1247] <<Q4 and P5>> S5 <<Q5 and P6>> in sequential composition for [serial 1028]
+remove-axioms-post
+substitute-post
+reduce
+tautologies
 atomic
-laws
 tautologies
+laws
+normalize
+substitute-pre
+normalize
+tautologies
+#[serial 1248] <<Q5 and P6>> S6 <<Q6>> in sequential composition for [serial 1028]
+reduce
+reduce
+atomic
+push
+#SPT::SpO2TrendThread.imp
+#[serial 1337] applied port output <<pre and (SpO2Trend=spo2_store)^0>> -> <<post>> [serial 133
+make-an
+substitute-both
+substitute-post
+laws
+normalize
+laws
+replace-qv
+tautologies
+#[serial 1338] applied port output <<pre and (SpO2Trend=spo2_store)^0>> -> <<(SpO2Trend=SPO2_HISTORY)^0>> [serial 1335]
+now
+normalize
+guided-sub-equals[SpO2Trend]
 substitute-pre
 laws
+laws
+guided-sub-equals[SPO2_HISTORY]
+laws
 tautologies
-#[serial 1869]   normalization of [serial 1850]
+#[serial 1339] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<post>> [serial 1336]
 substitute-post
+substitute-both
 normalize
+laws
+laws
+replace-qv
+tautologies
+#[serial 1340] applied port output <<pre and (NumSamples=num_samples)^0>> -> <<(NumSamples=NUM_SAMPLES)^0>> [serial 1336]
+now
+substitute-pre
+laws
+laws
+normalize
+guided-sub-equals[NUM_SAMPLES]
+guided-sub-equals[NumSamples]
 laws
 tautologies
